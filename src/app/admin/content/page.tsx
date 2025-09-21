@@ -7,7 +7,7 @@ import Link from 'next/link';
 interface ContentItem {
   id: string;
   title: string;
-  type: 'page' | 'asset' | 'blog' | 'announcement';
+  type: 'page' | 'asset' | 'blog' | 'announcement' | 'document';
   status: 'published' | 'draft' | 'archived';
   lastModified: string;
   author: string;

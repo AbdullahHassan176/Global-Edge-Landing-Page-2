@@ -9,6 +9,10 @@ export interface ReportData {
     totalInvestments?: number;
     averageReturn?: number;
     riskLevel?: string;
+    overallRisk?: string;
+    diversificationScore?: number;
+    volatilityIndex?: number;
+    [key: string]: any; // Allow additional summary properties
   };
 }
 
