@@ -163,17 +163,17 @@ class NotificationService {
     }
   };
 
-  // Webhook Endpoints Configuration
+  // Webhook Endpoints Configuration (Mock URLs for Development)
   private webhookEndpoints = {
     account_created: [
-      'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
-      'https://api.sendgrid.com/v3/mail/send',
-      'https://api.mailgun.net/v3/globaledge.com/messages'
+      'https://mock-webhook.example.com/slack/account-created',
+      'https://mock-webhook.example.com/sendgrid/mail/send',
+      'https://mock-webhook.example.com/mailgun/globaledge/messages'
     ],
     partner_application: [
-      'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
-      'https://api.hubspot.com/contacts/v1/contact/',
-      'https://api.salesforce.com/services/data/v52.0/sobjects/Lead/'
+      'https://mock-webhook.example.com/slack/partner-application',
+      'https://mock-webhook.example.com/hubspot/contacts/v1/contact',
+      'https://mock-webhook.example.com/salesforce/services/data/v52.0/sobjects/Lead'
     ]
   };
 
