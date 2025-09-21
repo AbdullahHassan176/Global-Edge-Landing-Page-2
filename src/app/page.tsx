@@ -1,6 +1,7 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 
 export default function HomePage() {
   return (
@@ -17,13 +18,13 @@ export default function HomePage() {
               Invest in asset-backed tokens with complete transparency. Own fractions of shipping containers, real estate, and trade inventory with blockchain-verified provenance.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
+              <Link href="/assets" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
                 Explore Assets
-                <FontAwesomeIcon icon="arrow-right" className="ml-2" />
-              </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                <Icon name="arrow-right" className="ml-2" size={8} />
+              </Link>
+              <Link href="/investors" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
                 Join Investor Waitlist
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -65,36 +66,36 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-5 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
-                <FontAwesomeIcon icon="user-check" className="text-white text-2xl" />
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="user-check" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Verify Identity</h3>
               <p className="text-sm text-gray-600">Complete KYC/KYB verification to access tokenized assets</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
-                <FontAwesomeIcon icon="search" className="text-white text-2xl" />
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="search" className="text-white text-lg" size={8} />
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Browse Assets</h3>
               <p className="text-sm text-gray-600">Explore containers, real estate, and trade inventory tokens</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
-                <FontAwesomeIcon icon="chart-line" className="text-white text-2xl" />
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="chart-line" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Review Performance</h3>
               <p className="text-sm text-gray-600">Analyze yields, risk profiles, and asset provenance</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
-                <FontAwesomeIcon icon="coins" className="text-white text-2xl" />
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="coins" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Invest</h3>
               <p className="text-sm text-gray-600">Purchase fractional ownership through blockchain tokens</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
-                <FontAwesomeIcon icon="trophy" className="text-white text-2xl" />
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="trophy" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Earn Returns</h3>
               <p className="text-sm text-gray-600">Receive payouts as assets generate revenue</p>
@@ -113,7 +114,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon="ship" className="text-blue-600 text-xl" />
+                <Icon name="ship" className="text-blue-600 text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Containers</h3>
               <p className="text-gray-600 mb-4">Shipping containers with GPS tracking and verified cargo</p>
@@ -121,7 +122,7 @@ export default function HomePage() {
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon="building" className="text-green-600 text-xl" />
+                <Icon name="building" className="text-green-600 text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Property</h3>
               <p className="text-gray-600 mb-4">Commercial and residential real estate with rental income</p>
@@ -129,7 +130,7 @@ export default function HomePage() {
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon="boxes-stacked" className="text-purple-600 text-xl" />
+                <Icon name="boxes-stacked" className="text-purple-600 text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">TradeTokens</h3>
               <p className="text-gray-600 mb-4">Commodity inventory with verified supply chain data</p>
@@ -137,7 +138,7 @@ export default function HomePage() {
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon="vault" className="text-orange-600 text-xl" />
+                <Icon name="vault" className="text-orange-600 text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Vault</h3>
               <p className="text-gray-600 mb-4">Precious metals and secure storage with insurance coverage</p>
@@ -156,22 +157,22 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <FontAwesomeIcon icon="shield-halved" className="text-white text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="shield-halved" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">KYC/KYB Verification</h3>
               <p className="text-gray-600">Comprehensive identity verification for all participants using industry-leading providers</p>
             </div>
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <FontAwesomeIcon icon="lock" className="text-white text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="lock" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Secure Custody</h3>
               <p className="text-gray-600">Multi-signature wallets and cold storage with institutional-grade security protocols</p>
             </div>
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <FontAwesomeIcon icon="certificate" className="text-white text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="certificate" className="text-white text-lg" size={12} />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Oracle Attestations</h3>
               <p className="text-gray-600">Third-party verification of asset condition, location, and performance metrics</p>
@@ -188,32 +189,32 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60">
             <div className="flex justify-center">
-              <div className="w-24 h-12 bg-gray-300 rounded flex items-center justify-center">
+              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
                 <span className="text-xs font-semibold text-gray-500">MAERSK</span>
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="w-24 h-12 bg-gray-300 rounded flex items-center justify-center">
+              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
                 <span className="text-xs font-semibold text-gray-500">DHL</span>
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="w-24 h-12 bg-gray-300 rounded flex items-center justify-center">
+              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
                 <span className="text-xs font-semibold text-gray-500">FEDEX</span>
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="w-24 h-12 bg-gray-300 rounded flex items-center justify-center">
+              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
                 <span className="text-xs font-semibold text-gray-500">COSCO</span>
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="w-24 h-12 bg-gray-300 rounded flex items-center justify-center">
+              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
                 <span className="text-xs font-semibold text-gray-500">MSC</span>
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="w-24 h-12 bg-gray-300 rounded flex items-center justify-center">
+              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
                 <span className="text-xs font-semibold text-gray-500">CMA CGM</span>
               </div>
             </div>
@@ -229,10 +230,10 @@ export default function HomePage() {
               <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Latest Insights</h2>
               <p className="text-xl text-gray-600">Stay informed about market trends and opportunities</p>
             </div>
-            <button className="text-global-teal font-medium hover:text-edge-purple transition-colors">
+            <Link href="/insights" className="text-global-teal font-medium hover:text-edge-purple transition-colors">
               View All Articles
-              <FontAwesomeIcon icon="arrow-right" className="ml-2" />
-            </button>
+              <Icon name="arrow-right" className="ml-2" size={8} />
+            </Link>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <article className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
@@ -288,12 +289,12 @@ export default function HomePage() {
             Join thousands of investors already earning returns from tokenized real-world assets
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
+            <Link href="/get-started" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
               Start Investing Today
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+            </Link>
+            <a href="https://calendly.com/mohammed-sidat-/global-next-global-edge" target="_blank" rel="noopener noreferrer" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
               Become a Partner
-            </button>
+            </a>
           </div>
         </div>
       </section>

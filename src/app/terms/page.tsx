@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Link from 'next/link';
 
 export default function TermsPage() {
@@ -170,7 +170,7 @@ export default function TermsPage() {
                               <p className="text-gray-700">
                                   <strong>Global Edge</strong><br />
                                   Email: legal@globaledge.com<br />
-                                  Phone: +1 (555) 012-3456<br />
+                                  Phone: +1 (555) 123-4567<br />
                                   Address: 123 Financial District, New York, NY 10004
                               </p>
                           </div>
@@ -188,7 +188,7 @@ export default function TermsPage() {
               <div className="grid md:grid-cols-3 gap-6">
                   <Link href="/privacy" className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 transition-colors">
-                          <FontAwesomeIcon icon="shield-alt" className="text-blue-600 text-2xl group-hover:text-white" />
+                          
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Privacy Policy</h3>
                       <p className="text-sm text-gray-600">How we collect, use, and protect your personal information</p>
@@ -196,7 +196,7 @@ export default function TermsPage() {
 
                   <Link href="/risk-disclosures" className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">
                       <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-red-600 transition-colors">
-                          <FontAwesomeIcon icon="exclamation-triangle" className="text-red-600 text-2xl group-hover:text-white" />
+                          
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Risk Disclosures</h3>
                       <p className="text-sm text-gray-600">Important information about investment risks</p>
@@ -204,7 +204,7 @@ export default function TermsPage() {
 
                   <Link href="/cookies" className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 transition-colors">
-                          <FontAwesomeIcon icon="cookie-bite" className="text-green-600 text-2xl group-hover:text-white" />
+                          
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Cookie Policy</h3>
                       <p className="text-sm text-gray-600">How we use cookies and tracking technologies</p>

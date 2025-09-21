@@ -1,5 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 
 export default function SecurityPage() {
   return (
@@ -33,7 +34,7 @@ export default function SecurityPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="shield-halved" className="text-blue-600 text-3xl" />
+                          <Icon name="user-check" className="text-blue-600 text-3xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">KYC/KYB Verification</h3>
                       <p className="text-gray-600">Comprehensive identity verification for all participants using industry-leading providers and regulatory compliance standards.</p>
@@ -41,7 +42,7 @@ export default function SecurityPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="lock" className="text-green-600 text-3xl" />
+                          <Icon name="shield-halved" className="text-green-600 text-3xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Secure Custody</h3>
                       <p className="text-gray-600">Multi-signature wallets and cold storage with institutional-grade security protocols and insurance coverage.</p>
@@ -49,7 +50,7 @@ export default function SecurityPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="certificate" className="text-purple-600 text-3xl" />
+                          <Icon name="lock-closed" className="text-purple-600 text-3xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Oracle Attestations</h3>
                       <p className="text-gray-600">Third-party verification of asset condition, location, and performance metrics with tamper-proof blockchain records.</p>
@@ -57,7 +58,7 @@ export default function SecurityPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="database" className="text-orange-600 text-3xl" />
+                          <Icon name="eye" className="text-orange-600 text-3xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Data Encryption</h3>
                       <p className="text-gray-600">End-to-end encryption for all data transmission and storage using AES-256 encryption standards.</p>
@@ -65,7 +66,7 @@ export default function SecurityPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="eye" className="text-red-600 text-3xl" />
+                          <Icon name="exclamation-triangle" className="text-red-600 text-3xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">24/7 Monitoring</h3>
                       <p className="text-gray-600">Continuous monitoring of all systems with automated threat detection and response capabilities.</p>
@@ -73,7 +74,7 @@ export default function SecurityPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="balance-scale" className="text-teal-600 text-3xl" />
+                          <Icon name="cog" className="text-teal-600 text-3xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Regulatory Compliance</h3>
                       <p className="text-gray-600">Full compliance with international financial regulations and regular third-party security audits.</p>
@@ -96,7 +97,7 @@ export default function SecurityPage() {
                       <div className="space-y-6">
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="check" className="text-green-600 text-xl" />
+                                  <Icon name="check-circle" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">SOC 2 Type II Certified</h4>
@@ -106,7 +107,7 @@ export default function SecurityPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="check" className="text-green-600 text-xl" />
+                                  <Icon name="check-circle" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">ISO 27001 Compliant</h4>
@@ -116,7 +117,7 @@ export default function SecurityPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="check" className="text-green-600 text-xl" />
+                                  <Icon name="check-circle" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">PCI DSS Level 1</h4>
@@ -126,7 +127,7 @@ export default function SecurityPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="check" className="text-green-600 text-xl" />
+                                  <Icon name="check-circle" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">GDPR Compliant</h4>
@@ -141,7 +142,7 @@ export default function SecurityPage() {
                       <div className="space-y-6">
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="shield" className="text-blue-600 text-xl" />
+                                  <Icon name="check-circle" className="text-blue-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Multi-Factor Authentication</h4>
@@ -151,7 +152,7 @@ export default function SecurityPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="key" className="text-blue-600 text-xl" />
+                                  <Icon name="check-circle" className="text-blue-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Hardware Security Modules</h4>
@@ -161,7 +162,7 @@ export default function SecurityPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="network-wired" className="text-blue-600 text-xl" />
+                                  <Icon name="check-circle" className="text-blue-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Zero-Trust Architecture</h4>
@@ -171,7 +172,7 @@ export default function SecurityPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="bug" className="text-blue-600 text-xl" />
+                                  <Icon name="check-circle" className="text-blue-600 text-xl" />
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Penetration Testing</h4>
@@ -195,7 +196,7 @@ export default function SecurityPage() {
               <div className="grid md:grid-cols-3 gap-8">
                   <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center">
                       <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="shield-alt" className="text-white text-2xl" />
+                          <Icon name="shield-halved" className="text-white text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Asset Insurance</h3>
                       <div className="text-3xl font-poppins font-bold text-blue-600 mb-2">$500M</div>
@@ -204,7 +205,7 @@ export default function SecurityPage() {
 
                   <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center">
                       <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="lock" className="text-white text-2xl" />
+                          <Icon name="check-circle" className="text-white text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Custody Insurance</h3>
                       <div className="text-3xl font-poppins font-bold text-green-600 mb-2">$100M</div>
@@ -213,7 +214,7 @@ export default function SecurityPage() {
 
                   <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center">
                       <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="user-shield" className="text-white text-2xl" />
+                          <Icon name="lock-closed" className="text-white text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Professional Liability</h3>
                       <div className="text-3xl font-poppins font-bold text-purple-600 mb-2">$50M</div>
@@ -268,9 +269,9 @@ export default function SecurityPage() {
                   <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
                       Start Investing Today
                   </button>
-                  <Link href="/contact" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                  <a href="mailto:info@globalnext.rocks?subject=Security Inquiry" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
                       Contact Security Team
-                  </Link>
+                  </a>
               </div>
           </div>
       </section>

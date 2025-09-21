@@ -1,7 +1,9 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
+import Link from 'next/link';
 
 const partnerCategories = [
   {
@@ -75,8 +77,8 @@ export default function PartnersPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {partnershipBenefits.map((benefit, index) => (
               <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                  <FontAwesomeIcon icon={benefit.icon as any} className="text-white text-3xl" />
+                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Icon name={benefit.icon} className="text-white text-lg" size={20} />
                 </div>
                 <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">{benefit.title}</h3>
                 <p className="text-gray-600">{benefit.description}</p>
@@ -122,7 +124,7 @@ export default function PartnersPage() {
           
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">1</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Submit Application</h3>
@@ -130,7 +132,7 @@ export default function PartnersPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">2</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Due Diligence</h3>
@@ -138,7 +140,7 @@ export default function PartnersPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">3</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Partnership Agreement</h3>
@@ -146,7 +148,7 @@ export default function PartnersPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">4</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Launch & Scale</h3>
@@ -166,12 +168,20 @@ export default function PartnersPage() {
             Join our ecosystem and unlock new opportunities in asset tokenization
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
+            <Link 
+              href="/partner-application"
+              className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors"
+            >
               Apply Now
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+            </Link>
+            <a 
+              href="https://calendly.com/mohammed-sidat-/global-next-global-edge" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors"
+            >
               Contact Sales
-            </button>
+            </a>
           </div>
         </div>
       </section>

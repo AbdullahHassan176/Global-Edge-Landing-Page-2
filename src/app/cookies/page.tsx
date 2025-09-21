@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
 export default function CookiesPage() {
@@ -183,9 +183,9 @@ export default function CookiesPage() {
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
                                   <strong>Global Edge Privacy Team</strong><br />
-                                  Email: privacy@globaledge.com<br />
-                                  Phone: +1 (555) 012-3456<br />
-                                  Address: 123 Financial District, New York, NY 10004
+                                  Email: abdullah.hassan@globalnext.rocks / mohammed.sidat@globalnext.rocks<br />
+                                  Phone: +971 (50) 940 4961<br />
+                                  Address: P20, S13, Al Warsan, Dubai, UAE
                               </p>
                           </div>
                       </div>

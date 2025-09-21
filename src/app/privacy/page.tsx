@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Link from 'next/link';
 
 export default function PrivacyPage() {
@@ -188,7 +188,7 @@ export default function PrivacyPage() {
                               <p className="text-gray-700">
                                   <strong>Global Edge Privacy Team</strong><br />
                                   Email: privacy@globaledge.com<br />
-                                  Phone: +1 (555) 012-3456<br />
+                                  Phone: +1 (555) 123-4567<br />
                                   Address: 123 Financial District, New York, NY 10004
                               </p>
                           </div>
@@ -207,7 +207,7 @@ export default function PrivacyPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                              <FontAwesomeIcon icon="eye" className="text-blue-600 text-2xl" />
+                              
                           </div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal">Right to Access</h3>
                       </div>
@@ -217,7 +217,7 @@ export default function PrivacyPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                              <FontAwesomeIcon icon="edit" className="text-green-600 text-2xl" />
+                              
                           </div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal">Right to Rectification</h3>
                       </div>
@@ -227,7 +227,7 @@ export default function PrivacyPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mr-4">
-                              <FontAwesomeIcon icon="trash" className="text-red-600 text-2xl" />
+                              
                           </div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal">Right to Erasure</h3>
                       </div>
@@ -237,7 +237,7 @@ export default function PrivacyPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                              <FontAwesomeIcon icon="download" className="text-purple-600 text-2xl" />
+                              
                           </div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal">Right to Portability</h3>
                       </div>

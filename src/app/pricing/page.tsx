@@ -1,7 +1,21 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 
 export default function PricingPage() {
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const handleUpgradeToPro = () => {
+    setShowUpgradeModal(true);
+  };
+
+  const handleContactSales = () => {
+    setShowContactModal(true);
+  };
   return (
     <>
       {/* COMPONENT: Pricing Hero */}
@@ -41,19 +55,19 @@ export default function PricingPage() {
                       </div>
                       <ul className="space-y-4 mb-8">
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Access to all tokenized assets</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Basic portfolio tracking</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Email support</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Standard transaction fees (2.5%)</span>
                           </li>
                       </ul>
@@ -75,27 +89,30 @@ export default function PricingPage() {
                       </div>
                       <ul className="space-y-4 mb-8">
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Everything in Basic</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Advanced analytics & insights</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Priority customer support</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Reduced transaction fees (1.5%)</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Early access to new assets</span>
                           </li>
                       </ul>
-                      <button className="w-full bg-global-teal text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+                      <button 
+                          onClick={handleUpgradeToPro}
+                          className="w-full bg-global-teal text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+                      >
                           Upgrade to Pro
                       </button>
                   </div>
@@ -110,27 +127,30 @@ export default function PricingPage() {
                       </div>
                       <ul className="space-y-4 mb-8">
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Everything in Pro</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Dedicated account manager</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Custom reporting & API access</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">White-label solutions</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3 text-sm" />
+                              
                               <span className="text-gray-700">Negotiated transaction fees</span>
                           </li>
                       </ul>
-                      <button className="w-full bg-edge-purple text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+                      <button 
+                          onClick={handleContactSales}
+                          className="w-full bg-edge-purple text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+                      >
                           Contact Sales
                       </button>
                   </div>
@@ -149,7 +169,7 @@ export default function PricingPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                   <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="coins" className="text-blue-600 text-2xl" />
+                          
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Investment Fees</h3>
                       <div className="text-3xl font-poppins font-bold text-global-teal mb-2">1.5-2.5%</div>
@@ -158,7 +178,7 @@ export default function PricingPage() {
 
                   <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="chart-line" className="text-green-600 text-2xl" />
+                          
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Management Fees</h3>
                       <div className="text-3xl font-poppins font-bold text-global-teal mb-2">0%</div>
@@ -167,7 +187,7 @@ export default function PricingPage() {
 
                   <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
                       <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="exchange-alt" className="text-purple-600 text-2xl" />
+                          
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Trading Fees</h3>
                       <div className="text-3xl font-poppins font-bold text-global-teal mb-2">0.1%</div>
@@ -176,7 +196,7 @@ export default function PricingPage() {
 
                   <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
                       <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="download" className="text-orange-600 text-2xl" />
+                          
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Withdrawal Fees</h3>
                       <div className="text-3xl font-poppins font-bold text-global-teal mb-2">$5</div>
@@ -231,12 +251,109 @@ export default function PricingPage() {
                   <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
                       Start Free Today
                   </button>
-                  <Link href="/contact" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                  <button 
+                      onClick={handleContactSales}
+                      className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors"
+                  >
                       Contact Sales
-                  </Link>
+                  </button>
               </div>
           </div>
       </section>
+
+      {/* Upgrade to Pro Modal */}
+      {showUpgradeModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-poppins font-bold text-charcoal">Upgrade to Pro</h3>
+              <button
+                onClick={() => setShowUpgradeModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Icon name="times" className="text-xl" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <p className="text-gray-600">Upgrade to Pro to unlock advanced features:</p>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-500 mr-2" />
+                  Advanced portfolio analytics
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-500 mr-2" />
+                  Priority customer support
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-500 mr-2" />
+                  Early access to new assets
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-500 mr-2" />
+                  Reduced transaction fees
+                </li>
+              </ul>
+              <div className="flex space-x-4 pt-4">
+                <button
+                  onClick={() => setShowUpgradeModal(false)}
+                  className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+                <Link
+                  href="/register"
+                  className="flex-1 bg-global-teal text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors text-center"
+                >
+                  Upgrade Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Sales Modal */}
+      {showContactModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-poppins font-bold text-charcoal">Contact Sales</h3>
+              <button
+                onClick={() => setShowContactModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Icon name="times" className="text-xl" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <p className="text-gray-600">Get in touch with our sales team for custom pricing and enterprise solutions.</p>
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Icon name="envelope" className="text-global-teal mr-3" />
+                  <a href="mailto:info@globalnext.rocks?subject=Sales Inquiry" className="text-global-teal hover:text-edge-purple">
+                    info@globalnext.rocks
+                  </a>
+                </div>
+                <div className="flex items-center">
+                  <Icon name="phone" className="text-global-teal mr-3" />
+                  <a href="tel:+1-555-123-4567" className="text-global-teal hover:text-edge-purple">
+                    +1 (555) 123-4567
+                  </a>
+                </div>
+              </div>
+              <div className="pt-4">
+                <button
+                  onClick={() => setShowContactModal(false)}
+                  className="w-full bg-global-teal text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

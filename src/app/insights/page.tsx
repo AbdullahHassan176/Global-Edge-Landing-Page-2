@@ -1,6 +1,6 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { useState } from 'react';
 import { Insight } from '@/types';
 
@@ -185,7 +185,7 @@ export default function InsightsPage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gradient-to-br from-global-teal to-edge-purple rounded-2xl p-8 text-white">
               <div className="flex items-center mb-4">
-                <FontAwesomeIcon icon="chart-line" className="text-2xl mr-3" />
+                
                 <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">MARKET REPORT</span>
               </div>
               <h3 className="text-2xl font-poppins font-bold mb-4">2024 Tokenization Market Report</h3>
@@ -197,7 +197,7 @@ export default function InsightsPage() {
             
             <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-8 text-white">
               <div className="flex items-center mb-4">
-                <FontAwesomeIcon icon="users" className="text-2xl mr-3" />
+                
                 <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">INVESTOR GUIDE</span>
               </div>
               <h3 className="text-2xl font-poppins font-bold mb-4">Investor's Guide to RWA Tokenization</h3>

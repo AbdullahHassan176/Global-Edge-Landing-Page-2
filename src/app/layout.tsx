@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import '@/styles/globals.css';
-import '@/lib/fontawesome';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -22,7 +21,12 @@ export const metadata: Metadata = {
   keywords: 'tokenization, real estate, shipping containers, blockchain, investment, assets',
   authors: [{ name: 'Global Edge' }],
   robots: 'index, follow',
-  metadataBase: new URL('https://globaledge.com'),
+  metadataBase: new URL('https://globalnext.rocks'),
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     title: 'Global Edge - Tokenizing Real-World Assets',
     description: 'Invest in tokenized real-world assets with complete transparency',

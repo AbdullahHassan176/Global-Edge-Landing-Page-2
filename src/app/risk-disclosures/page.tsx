@@ -1,5 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 
 export default function RiskDisclosuresPage() {
   return (
@@ -28,7 +29,7 @@ export default function RiskDisclosuresPage() {
               <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-red-500">
                   <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <FontAwesomeIcon icon="exclamation-triangle" className="text-red-600 text-xl" />
+                          <Icon name="exclamation-triangle" className="text-red-600 text-xl" />
                       </div>
                       <div>
                           <h2 className="text-2xl font-poppins font-bold text-red-800 mb-4">Important Risk Warning</h2>
@@ -54,7 +55,7 @@ export default function RiskDisclosuresPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-red-500">
                       <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
-                          <FontAwesomeIcon icon="chart-line" className="text-red-600 text-2xl" />
+                          <Icon name="chart-line" className="text-red-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Market Risk</h3>
                       <p className="text-gray-600">Asset values may fluctuate due to market conditions, economic factors, and supply and demand dynamics. You may lose money even if the underlying asset performs well.</p>
@@ -62,7 +63,7 @@ export default function RiskDisclosuresPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-orange-500">
                       <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
-                          <FontAwesomeIcon icon="coins" className="text-orange-600 text-2xl" />
+                          <Icon name="clock" className="text-orange-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Liquidity Risk</h3>
                       <p className="text-gray-600">Tokenized assets may have limited liquidity. You may not be able to sell your tokens quickly or at fair market value, especially during market stress.</p>
@@ -70,7 +71,7 @@ export default function RiskDisclosuresPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-yellow-500">
                       <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
-                          <FontAwesomeIcon icon="gavel" className="text-yellow-600 text-2xl" />
+                          <Icon name="shield-halved" className="text-yellow-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Regulatory Risk</h3>
                       <p className="text-gray-600">Changes in laws, regulations, or government policies may adversely affect the value of your investments or the platform's ability to operate.</p>
@@ -78,7 +79,7 @@ export default function RiskDisclosuresPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-purple-500">
                       <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                          <FontAwesomeIcon icon="cog" className="text-purple-600 text-2xl" />
+                          <Icon name="cog" className="text-purple-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Technology Risk</h3>
                       <p className="text-gray-600">Blockchain technology and smart contracts may have bugs, vulnerabilities, or technical failures that could result in loss of funds or platform disruption.</p>
@@ -86,7 +87,7 @@ export default function RiskDisclosuresPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-blue-500">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                          <FontAwesomeIcon icon="building" className="text-blue-600 text-2xl" />
+                          <Icon name="users" className="text-blue-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Counterparty Risk</h3>
                       <p className="text-gray-600">The failure of service providers, custodians, or other third parties could result in loss of your investments or inability to access your funds.</p>
@@ -94,7 +95,7 @@ export default function RiskDisclosuresPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-green-500">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                          <FontAwesomeIcon icon="globe" className="text-green-600 text-2xl" />
+                          <Icon name="exclamation-triangle" className="text-green-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Operational Risk</h3>
                       <p className="text-gray-600">Platform operations may be disrupted by cyber attacks, system failures, or other operational issues that could affect your ability to trade or access your investments.</p>
@@ -115,7 +116,7 @@ export default function RiskDisclosuresPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-6">
-                              <FontAwesomeIcon icon="ship" className="text-blue-600 text-2xl" />
+                              <Icon name="truck" className="text-blue-600 text-2xl" />
                           </div>
                           <div>
                               <h3 className="text-2xl font-poppins font-bold text-charcoal">Shipping Container Risks</h3>
@@ -135,7 +136,7 @@ export default function RiskDisclosuresPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-6">
-                              <FontAwesomeIcon icon="building" className="text-green-600 text-2xl" />
+                              <Icon name="building" className="text-green-600 text-2xl" />
                           </div>
                           <div>
                               <h3 className="text-2xl font-poppins font-bold text-charcoal">Real Estate Risks</h3>
@@ -155,7 +156,7 @@ export default function RiskDisclosuresPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mr-6">
-                              <FontAwesomeIcon icon="boxes-stacked" className="text-purple-600 text-2xl" />
+                              <Icon name="coins" className="text-purple-600 text-2xl" />
                           </div>
                           <div>
                               <h3 className="text-2xl font-poppins font-bold text-charcoal">Trade Token Risks</h3>
@@ -175,7 +176,7 @@ export default function RiskDisclosuresPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mr-6">
-                              <FontAwesomeIcon icon="vault" className="text-orange-600 text-2xl" />
+                              
                           </div>
                           <div>
                               <h3 className="text-2xl font-poppins font-bold text-charcoal">Vault Asset Risks</h3>
@@ -288,7 +289,7 @@ export default function RiskDisclosuresPage() {
           <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
               <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-red-200">
                   <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <FontAwesomeIcon icon="exclamation-triangle" className="text-red-600 text-3xl" />
+                      
                   </div>
                   <h2 className="text-3xl font-poppins font-bold text-red-800 mb-6">Final Risk Warning</h2>
                   <p className="text-red-700 leading-relaxed text-lg mb-6">
@@ -316,15 +317,15 @@ export default function RiskDisclosuresPage() {
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Risk Management Team</h3>
                           <p className="text-gray-700">
                               Email: risk@globaledge.com<br />
-                              Phone: +1 (555) 012-3456<br />
+                              Phone: +1 (555) 123-4567<br />
                               Available: Monday-Friday, 9 AM - 6 PM EST
                           </p>
                       </div>
                       <div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">General Support</h3>
                           <p className="text-gray-700">
-                              Email: support@globaledge.com<br />
-                              Phone: +1 (555) 012-3457<br />
+                              Email: info@globalnext.rocks<br />
+                              Phone: +1 (555) 123-4568<br />
                               Available: 24/7 for urgent matters
                           </p>
                       </div>

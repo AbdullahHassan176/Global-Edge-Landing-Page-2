@@ -1,6 +1,6 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Icon from '@/components/ui/Icon';
 import { useEffect, useState } from 'react';
 
 export default function AssetDetailsPage({ params }: { params: { id: string } }) {
@@ -21,9 +21,9 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
           <nav className="flex items-center space-x-2 text-sm">
             <span className="text-gray-500 hover:text-global-teal cursor-pointer">Assets</span>
-            <FontAwesomeIcon icon="chevron-right" className="text-gray-400 text-xs" />
+            <Icon name="chevron-right" className="text-gray-400 text-xs"  />
             <span className="text-gray-500 hover:text-global-teal cursor-pointer">Containers</span>
-            <FontAwesomeIcon icon="chevron-right" className="text-gray-400 text-xs" />
+            <Icon name="chevron-right" className="text-gray-400 text-xs"  />
             <span className="text-charcoal font-medium">CONT-7842-SH</span>
           </nav>
         </div>
@@ -34,8 +34,8 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start space-x-6 mb-6 lg:mb-0">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
-                <FontAwesomeIcon icon="ship" className="text-blue-600 text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center">
+                <Icon name="ship" className="text-blue-600 text-lg"  />
               </div>
               <div>
                 <div className="flex items-center space-x-3 mb-2">
@@ -44,18 +44,18 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
                     Active
                   </div>
                   <div className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                    <FontAwesomeIcon icon="shield" className="mr-1" />
+                    <Icon name="shield" className="mr-1"  />
                     Verified
                   </div>
                 </div>
                 <p className="text-gray-600 mb-2">40ft High Cube Container • Shanghai to Rotterdam</p>
                 <div className="flex items-center space-x-4 text-sm text-gray-500">
                   <span className="flex items-center">
-                    <FontAwesomeIcon icon="calendar" className="mr-1" />
+                    <Icon name="calendar" className="mr-1"  />
                     Issued: Dec 15, 2024
                   </span>
                   <span className="flex items-center">
-                    <FontAwesomeIcon icon="map-marker-alt" className="mr-1" />
+                    <Icon name="location-dot" className="mr-1"  />
                     Currently: Port of Hamburg
                   </span>
                 </div>
@@ -63,11 +63,11 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
             </div>
             <div className="flex items-center space-x-4">
               <button className="border border-gray-300 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-50 transition-colors">
-                <FontAwesomeIcon icon="heart" className="mr-2" />
+                <Icon name="heart" className="mr-2"  />
                 Watchlist
               </button>
               <button className="border border-gray-300 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-50 transition-colors">
-                <FontAwesomeIcon icon="share" className="mr-2" />
+                <Icon name="share" className="mr-2"  />
                 Share
               </button>
             </div>
@@ -195,7 +195,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
                   <div className="bg-gray-50 rounded-xl p-6">
                     <div className="h-64 flex items-center justify-center">
                       <div className="text-center">
-                        <FontAwesomeIcon icon="chart-line" className="text-4xl text-gray-400 mb-4" />
+                        <Icon name="chart-line-up" className="text-lg text-gray-400 mb-4"  />
                         <p className="text-gray-600">Chart visualization would be implemented here</p>
                         <p className="text-sm text-gray-500 mt-2">Asset value: $132,400 (+5.9%)</p>
                       </div>
@@ -297,7 +297,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
 
               <div className="text-center">
                 <button className="text-gray-600 hover:text-global-teal text-sm font-medium">
-                  <FontAwesomeIcon icon="calculator" className="mr-1" />
+                  <Icon name="calculator-alt" className="mr-1"  />
                   Calculate Returns
                 </button>
               </div>
@@ -309,13 +309,13 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon="check" className="text-green-600 text-sm" />
+                    <Icon name="check" className="text-green-600 text-sm"  />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
                       <span className="text-sm font-medium text-charcoal">Manufactured</span>
                       <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center">
-                        <FontAwesomeIcon icon="shield" className="text-blue-600 text-xs" />
+                        <Icon name="shield" className="text-blue-600 text-xs"  />
                       </div>
                     </div>
                     <div className="text-xs text-gray-500">Dec 1, 2024 • Shanghai</div>
@@ -323,13 +323,13 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon="check" className="text-green-600 text-sm" />
+                    <Icon name="check" className="text-green-600 text-sm"  />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
                       <span className="text-sm font-medium text-charcoal">Loaded</span>
                       <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center">
-                        <FontAwesomeIcon icon="shield" className="text-blue-600 text-xs" />
+                        <Icon name="shield" className="text-blue-600 text-xs"  />
                       </div>
                     </div>
                     <div className="text-xs text-gray-500">Dec 3, 2024 • Port of Shanghai</div>
@@ -337,13 +337,13 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon="check" className="text-green-600 text-sm" />
+                    <Icon name="check" className="text-green-600 text-sm"  />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
                       <span className="text-sm font-medium text-charcoal">Departed</span>
                       <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center">
-                        <FontAwesomeIcon icon="shield" className="text-blue-600 text-xs" />
+                        <Icon name="shield" className="text-blue-600 text-xs"  />
                       </div>
                     </div>
                     <div className="text-xs text-gray-500">Dec 5, 2024 • Shanghai Port</div>
@@ -351,13 +351,13 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon="clock" className="text-blue-600 text-sm" />
+                    <Icon name="clock" className="text-blue-600 text-sm"  />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
                       <span className="text-sm font-medium text-charcoal">In Transit</span>
                       <div className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center">
-                        <FontAwesomeIcon icon="satellite-dish" className="text-blue-600 text-xs" />
+                        <Icon name="satellite-dish" className="text-blue-600 text-xs"  />
                       </div>
                     </div>
                     <div className="text-xs text-gray-500">Current • Port of Hamburg</div>
@@ -365,7 +365,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon="clock" className="text-gray-400 text-sm" />
+                    <Icon name="clock" className="text-gray-400 text-sm"  />
                   </div>
                   <div className="flex-1">
                     <span className="text-sm text-gray-500">Expected Delivery</span>
@@ -382,7 +382,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
       <section className="bg-yellow-50 border border-yellow-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex items-start space-x-3">
-            <FontAwesomeIcon icon="exclamation-triangle" className="text-yellow-600 text-lg mt-1" />
+            <Icon name="triangle-exclamation" className="text-yellow-600 text-lg mt-1"  />
             <div>
               <h4 className="font-medium text-yellow-800 mb-2">Important Risk Disclosure</h4>
               <p className="text-sm text-yellow-700 leading-relaxed">
@@ -400,7 +400,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
             <h2 className="text-2xl font-poppins font-bold text-charcoal">Similar Assets</h2>
             <button className="text-global-teal hover:text-edge-purple font-medium">
               View All Containers
-              <FontAwesomeIcon icon="arrow-right" className="ml-2" />
+              <Icon name="arrow-right" className="ml-2"  />
             </button>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -408,7 +408,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <FontAwesomeIcon icon="ship" className="text-blue-600" />
+                    <Icon name="ship" className="text-blue-600"  />
                   </div>
                   <div className="text-right">
                     <div className="text-lg font-poppins font-bold text-global-teal">12.8%</div>
@@ -431,7 +431,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <FontAwesomeIcon icon="ship" className="text-blue-600" />
+                    <Icon name="ship" className="text-blue-600"  />
                   </div>
                   <div className="text-right">
                     <div className="text-lg font-poppins font-bold text-global-teal">15.6%</div>
@@ -454,7 +454,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <FontAwesomeIcon icon="ship" className="text-blue-600" />
+                    <Icon name="ship" className="text-blue-600"  />
                   </div>
                   <div className="text-right">
                     <div className="text-lg font-poppins font-bold text-global-teal">11.4%</div>

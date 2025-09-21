@@ -1,9 +1,10 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Logo from '../ui/Logo';
+import Icon from '../ui/Icon';
 
 const navigationItems = [
   { label: 'How It Works', href: '/how-it-works' },
@@ -15,18 +16,46 @@ const navigationItems = [
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const pathname = usePathname();
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
+
+  const handleNotificationClick = () => {
+    setIsNotificationsOpen(!isNotificationsOpen);
+    setIsUserMenuOpen(false);
+  };
+
+  const handleUserClick = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+    setIsNotificationsOpen(false);
+  };
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setIsNotificationsOpen(false);
+      }
+      if (userRef.current && !userRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-global-teal to-edge-purple rounded-lg flex items-center justify-center">
-                <FontAwesomeIcon icon="cube" className="text-white text-lg" />
-              </div>
-              <span className="text-xl font-poppins font-bold text-charcoal">Global Edge</span>
+            <Link href="/" className="flex items-center">
+              <Logo size="md" />
             </Link>
             <div className="hidden md:flex space-x-8">
               {navigationItems.map((item) => (
@@ -45,20 +74,88 @@ export default function Header() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <button className="hidden md:block text-gray-600 hover:text-charcoal transition-colors">
-              <FontAwesomeIcon icon="bell" className="text-xl" />
-            </button>
-            <button className="hidden md:block text-gray-600 hover:text-charcoal transition-colors">
-              <FontAwesomeIcon icon="user" className="text-xl" />
-            </button>
-            <button className="btn-primary">
+            <div className="relative" ref={notificationRef}>
+              <button 
+                onClick={handleNotificationClick}
+                className="hidden md:block text-gray-600 hover:text-charcoal transition-colors relative"
+              >
+                <Icon name="bell" className="text-lg" size={12} />
+                {/* Notification badge */}
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                  3
+                </span>
+              </button>
+              
+              {/* Notifications dropdown */}
+              {isNotificationsOpen && (
+                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="p-4 border-b border-gray-200">
+                    <h3 className="text-lg font-semibold text-charcoal">Notifications</h3>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    <div className="p-4 border-b border-gray-100 hover:bg-gray-50">
+                      <p className="text-sm text-gray-800">New asset available: Container #GE-2024-001</p>
+                      <p className="text-xs text-gray-500 mt-1">2 minutes ago</p>
+                    </div>
+                    <div className="p-4 border-b border-gray-100 hover:bg-gray-50">
+                      <p className="text-sm text-gray-800">Your investment in Property Token #PT-2024-003 has been confirmed</p>
+                      <p className="text-xs text-gray-500 mt-1">1 hour ago</p>
+                    </div>
+                    <div className="p-4 hover:bg-gray-50">
+                      <p className="text-sm text-gray-800">Monthly report is ready for download</p>
+                      <p className="text-xs text-gray-500 mt-1">1 day ago</p>
+                    </div>
+                  </div>
+                  <div className="p-4 border-t border-gray-200">
+                    <Link href="/admin/notifications" className="text-sm text-global-teal hover:text-edge-purple">
+                      View all notifications
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="relative" ref={userRef}>
+              <button 
+                onClick={handleUserClick}
+                className="hidden md:block text-gray-600 hover:text-charcoal transition-colors"
+              >
+                <Icon name="user" className="text-lg" size={12} />
+              </button>
+              
+              {/* User menu dropdown */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="py-1">
+                    <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Profile
+                    </Link>
+                    <Link href="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Settings
+                    </Link>
+                    <Link href="/reports" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Reports
+                    </Link>
+                    <div className="border-t border-gray-100"></div>
+                    <Link href="/login" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Sign In
+                    </Link>
+                    <Link href="/get-started" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Sign Up
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link href="/dashboard" className="btn-primary">
               Dashboard
-            </button>
+            </Link>
             <button 
               className="md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <FontAwesomeIcon icon="bars" className="text-charcoal text-xl" />
+              <Icon name="bars" className="text-charcoal text-lg" size={12} />
             </button>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
 
 export default function InvestorsPage() {
@@ -28,24 +29,24 @@ export default function InvestorsPage() {
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <FontAwesomeIcon icon="chart-line" className="text-white text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="chart-line-up" className="text-white text-lg"  />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Diversified Returns</h3>
               <p className="text-gray-600">Access multiple asset classes with competitive yields ranging from 6-18% APR</p>
             </div>
             
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <FontAwesomeIcon icon="shield" className="text-white text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="shield" className="text-white text-lg"  />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Risk Management</h3>
               <p className="text-gray-600">Comprehensive due diligence, insurance coverage, and oracle verification for all assets</p>
             </div>
             
             <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
-                <FontAwesomeIcon icon="eye" className="text-white text-3xl" />
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="eye" className="text-white text-lg"  />
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Full Transparency</h3>
               <p className="text-gray-600">Real-time tracking, blockchain verification, and complete audit trails for all investments</p>
@@ -64,7 +65,7 @@ export default function InvestorsPage() {
           
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">1</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Complete KYC</h3>
@@ -72,7 +73,7 @@ export default function InvestorsPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">2</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Fund Account</h3>
@@ -80,7 +81,7 @@ export default function InvestorsPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">3</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Browse Assets</h3>
@@ -88,7 +89,7 @@ export default function InvestorsPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-poppins font-bold text-xl">4</span>
               </div>
               <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Start Investing</h3>
@@ -108,12 +109,18 @@ export default function InvestorsPage() {
             Join thousands of investors earning returns from tokenized real-world assets
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
+            <Link 
+              href="/get-started"
+              className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors"
+            >
               Start KYC Process
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
-              Download App
-            </button>
+            </Link>
+            <Link 
+              href="/dashboard"
+              className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors"
+            >
+              Access Dashboard
+            </Link>
           </div>
         </div>
       </section>

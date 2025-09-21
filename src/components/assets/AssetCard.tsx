@@ -1,6 +1,6 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Icon from '@/components/ui/Icon';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Asset } from '@/types';
@@ -92,14 +92,15 @@ export default function AssetCard({
             onClick={() => onToggleWatchlist?.(asset.id)}
             className="bg-white bg-opacity-90 text-gray-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-opacity-100 transition-colors"
           >
-            <FontAwesomeIcon 
-              icon={isWatched ? "heart" : ["far", "heart"]} 
+            <Icon 
+              name="heart" 
               className={isWatched ? "text-red-500" : ""}
+              size={12}
             />
           </button>
         </div>
         <div className="absolute bottom-4 right-4 bg-white bg-opacity-90 text-xs font-medium px-2 py-1 rounded">
-          <FontAwesomeIcon icon="location-dot" className="text-blue-600 mr-1" />
+          <Icon name="location-dot" className="text-blue-600 mr-1" size={12} />
           {asset.location}
         </div>
       </div>
@@ -144,9 +145,10 @@ export default function AssetCard({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-              <FontAwesomeIcon 
-                icon="shield" 
+              <Icon 
+                name="shield-halved" 
                 className="text-green-600 text-xs" 
+                size={12}
               />
             </div>
             <span className="text-xs text-gray-600">

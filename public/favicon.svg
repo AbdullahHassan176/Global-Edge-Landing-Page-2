@@ -1,0 +1,40 @@
+<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Isometric Cube Logo -->
+  <!-- Top face - teal gradient -->
+  <path
+    d="M20 5 L35 15 L25 25 L10 15 Z"
+    fill="url(#topGradient)"
+    stroke="url(#topGradient)"
+    stroke-width="2"
+  />
+  <!-- Left face - teal to purple gradient -->
+  <path
+    d="M10 15 L25 25 L25 40 L10 30 Z"
+    fill="url(#leftGradient)"
+    stroke="url(#leftGradient)"
+    stroke-width="2"
+  />
+  <!-- Right face - purple -->
+  <path
+    d="M25 25 L35 15 L35 30 L25 40 Z"
+    fill="url(#rightGradient)"
+    stroke="url(#rightGradient)"
+    stroke-width="2"
+  />
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="topGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#14B8A6" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+    <linearGradient id="leftGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+    <linearGradient id="rightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#6D28D9" />
+    </linearGradient>
+  </defs>
+</svg>

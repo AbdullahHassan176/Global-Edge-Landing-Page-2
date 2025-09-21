@@ -11,6 +11,13 @@
   --aqua-end: #7F5CD0;
   --charcoal: #2B2D42;
   --soft-white: #F7F9FC;
+  
+  /* Icon sizes */
+  --icon-xs: 16px;
+  --icon-sm: 20px;
+  --icon-md: 24px;
+  --icon-lg: 32px;
+  --icon-xl: 40px;
 }
 
 * {
@@ -70,6 +77,71 @@ html, body {
   
   .text-gradient {
     @apply bg-gradient-to-r from-global-teal to-edge-purple bg-clip-text text-transparent;
+  }
+  
+  /* Icon utilities */
+  .icon {
+    display: inline-block;
+    line-height: 1;
+  }
+  
+  .icon-xs {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+    font-size: var(--icon-xs);
+  }
+  
+  .icon-sm {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+    font-size: var(--icon-sm);
+  }
+  
+  .icon-md {
+    width: var(--icon-md);
+    height: var(--icon-md);
+    font-size: var(--icon-md);
+  }
+  
+  .icon-lg {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+    font-size: var(--icon-lg);
+  }
+  
+  .icon-xl {
+    width: var(--icon-xl);
+    height: var(--icon-xl);
+    font-size: var(--icon-xl);
+  }
+
+  /* Force small icon sizes */
+  .force-icon-small {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    font-size: 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+  }
+  
+  .force-icon-medium {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    font-size: 22px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
   }
 }
 

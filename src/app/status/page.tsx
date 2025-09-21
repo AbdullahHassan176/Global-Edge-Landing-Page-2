@@ -1,7 +1,37 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 
 export default function StatusPage() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short'
+    });
+  };
+
+  const handleSubscribe = () => {
+    setIsSubscribed(true);
+    setTimeout(() => setIsSubscribed(false), 3000);
+  };
   return (
     <>
       {/* COMPONENT: Status Hero */}
@@ -26,7 +56,7 @@ export default function StatusPage() {
                   <div className="flex items-center justify-between mb-8">
                       <div>
                           <h2 className="text-3xl font-poppins font-bold text-charcoal">All Systems Operational</h2>
-                          <p className="text-gray-600">Last updated: December 20, 2024 at 2:30 PM EST</p>
+                          <p className="text-gray-600">Last updated: {formatTime(currentTime)}</p>
                       </div>
                       <div className="flex items-center space-x-3">
                           <div className="w-4 h-4 bg-green-500 rounded-full"></div>
@@ -66,7 +96,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="globe" className="text-green-600 text-xl" />
+                                  <Icon name="globe" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Website</h3>
@@ -84,7 +114,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="database" className="text-green-600 text-xl" />
+                                  <Icon name="code" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">API Services</h3>
@@ -102,7 +132,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="lock" className="text-green-600 text-xl" />
+                                  <Icon name="shield-check" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Authentication</h3>
@@ -120,7 +150,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="credit-card" className="text-green-600 text-xl" />
+                                  <Icon name="credit-card" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Payment Processing</h3>
@@ -138,7 +168,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="link" className="text-green-600 text-xl" />
+                                  <Icon name="cube" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Blockchain Services</h3>
@@ -156,7 +186,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="satellite" className="text-green-600 text-xl" />
+                                  <Icon name="eye" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Oracle Services</h3>
@@ -174,7 +204,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="envelope" className="text-green-600 text-xl" />
+                                  <Icon name="envelope" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Email Services</h3>
@@ -192,7 +222,7 @@ export default function StatusPage() {
                       <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                  <FontAwesomeIcon icon="comments" className="text-green-600 text-xl" />
+                                  <Icon name="chat-alt-2" className="text-green-600 text-xl" />
                               </div>
                               <div>
                                   <h3 className="text-xl font-poppins font-semibold text-charcoal">Support Chat</h3>
@@ -217,7 +247,7 @@ export default function StatusPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="tachometer-alt" className="text-blue-600 text-2xl" />
+                          <Icon name="clock" className="text-blue-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Response Time</h3>
                       <div className="text-3xl font-poppins font-bold text-blue-600 mb-2">45ms</div>
@@ -226,7 +256,7 @@ export default function StatusPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="chart-line" className="text-green-600 text-2xl" />
+                          <Icon name="check-circle" className="text-green-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Uptime</h3>
                       <div className="text-3xl font-poppins font-bold text-green-600 mb-2">99.9%</div>
@@ -235,7 +265,7 @@ export default function StatusPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="users" className="text-purple-600 text-2xl" />
+                          <Icon name="users" className="text-purple-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Active Users</h3>
                       <div className="text-3xl font-poppins font-bold text-purple-600 mb-2">2,847</div>
@@ -244,7 +274,7 @@ export default function StatusPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="server" className="text-orange-600 text-2xl" />
+                          <Icon name="server" className="text-orange-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Server Load</h3>
                       <div className="text-3xl font-poppins font-bold text-orange-600 mb-2">23%</div>
@@ -262,7 +292,7 @@ export default function StatusPage() {
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="text-center py-12">
                       <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="check-circle" className="text-green-600 text-3xl" />
+                          <Icon name="check-circle" className="text-green-600 text-3xl" />
                       </div>
                       <h3 className="text-2xl font-poppins font-semibold text-charcoal mb-4">No Recent Incidents</h3>
                       <p className="text-gray-600 text-lg">
@@ -282,7 +312,7 @@ export default function StatusPage() {
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="text-center py-12">
                       <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="calendar" className="text-blue-600 text-3xl" />
+                          <Icon name="calendar" className="text-blue-600 text-3xl" />
                       </div>
                       <h3 className="text-2xl font-poppins font-semibold text-charcoal mb-4">No Scheduled Maintenance</h3>
                       <p className="text-gray-600 text-lg">
@@ -302,7 +332,7 @@ export default function StatusPage() {
               <div className="grid md:grid-cols-2 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="rss" className="text-blue-600 text-2xl" />
+                          <Icon name="rss" className="text-blue-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">RSS Feed</h3>
                       <p className="text-gray-600 mb-6">Subscribe to our status RSS feed for real-time updates</p>
@@ -313,13 +343,22 @@ export default function StatusPage() {
 
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <FontAwesomeIcon icon="envelope" className="text-green-600 text-2xl" />
+                          <Icon name="envelope" className="text-green-600 text-2xl" />
                       </div>
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Email Notifications</h3>
                       <p className="text-gray-600 mb-6">Get notified by email when incidents occur</p>
-                      <button className="text-global-teal hover:text-edge-purple font-medium">
-                          Subscribe to Updates
+                      <button 
+                        onClick={handleSubscribe}
+                        className="text-global-teal hover:text-edge-purple font-medium"
+                      >
+                          {isSubscribed ? 'Subscribed!' : 'Subscribe to Updates'}
                       </button>
+                      {isSubscribed && (
+                        <p className="text-green-600 text-sm mt-2 flex items-center justify-center">
+                          <Icon name="check-circle" size={12} className="mr-1" />
+                          Successfully subscribed to status updates!
+                        </p>
+                      )}
                   </div>
               </div>
           </div>
@@ -336,8 +375,8 @@ export default function StatusPage() {
                       <div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Technical Support</h3>
                           <p className="text-gray-700">
-                              Email: support@globaledge.com<br />
-                              Phone: +1 (555) 012-3456<br />
+                              Email: info@globalnext.rocks<br />
+                              Phone: +1 (555) 123-4567<br />
                               Available: 24/7
                           </p>
                       </div>

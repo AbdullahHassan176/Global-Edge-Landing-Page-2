@@ -1,7 +1,21 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
 
 export default function FAQPage() {
+  const [activeCategory, setActiveCategory] = useState('general');
+
+  const scrollToSection = (category: string) => {
+    setActiveCategory(category);
+    const sectionId = `${category}-faq`;
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   return (
     <>
       {/* COMPONENT: FAQ Hero */}
@@ -31,33 +45,69 @@ export default function FAQPage() {
               </div>
 
               <div className="grid md:grid-cols-4 gap-6 mb-16">
-                  <button className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group border-2 border-global-teal">
-                      <div className="w-16 h-16 bg-global-teal rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="question-circle" className="text-white text-2xl" />
+                  <button 
+                      onClick={() => scrollToSection('general')}
+                      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group ${
+                          activeCategory === 'general' ? 'border-2 border-global-teal' : 'border-2 border-transparent'
+                      }`}
+                  >
+                      <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                          activeCategory === 'general' ? 'bg-global-teal' : 'bg-gray-100 group-hover:bg-global-teal'
+                      } transition-colors`}>
+                          <Icon name="question-mark-circle" className={`text-xl ${
+                              activeCategory === 'general' ? 'text-white' : 'text-gray-600 group-hover:text-white'
+                          } transition-colors`} />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">General</h3>
                       <p className="text-sm text-gray-600">Platform basics and general questions</p>
                   </button>
 
-                  <button className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">
-                      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 transition-colors">
-                          <FontAwesomeIcon icon="coins" className="text-blue-600 text-2xl group-hover:text-white" />
+                  <button 
+                      onClick={() => scrollToSection('investing')}
+                      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group ${
+                          activeCategory === 'investing' ? 'border-2 border-blue-500' : 'border-2 border-transparent'
+                      }`}
+                  >
+                      <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                          activeCategory === 'investing' ? 'bg-blue-500' : 'bg-blue-100 group-hover:bg-blue-500'
+                      } transition-colors`}>
+                          <Icon name="chart-line" className={`text-xl ${
+                              activeCategory === 'investing' ? 'text-white' : 'text-blue-600 group-hover:text-white'
+                          } transition-colors`} />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Investing</h3>
                       <p className="text-sm text-gray-600">Investment process and requirements</p>
                   </button>
 
-                  <button className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 transition-colors">
-                          <FontAwesomeIcon icon="shield-alt" className="text-green-600 text-2xl group-hover:text-white" />
+                  <button 
+                      onClick={() => scrollToSection('security')}
+                      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group ${
+                          activeCategory === 'security' ? 'border-2 border-green-500' : 'border-2 border-transparent'
+                      }`}
+                  >
+                      <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                          activeCategory === 'security' ? 'bg-green-500' : 'bg-green-100 group-hover:bg-green-500'
+                      } transition-colors`}>
+                          <Icon name="shield-halved" className={`text-xl ${
+                              activeCategory === 'security' ? 'text-white' : 'text-green-600 group-hover:text-white'
+                          } transition-colors`} />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Security</h3>
                       <p className="text-sm text-gray-600">Security measures and compliance</p>
                   </button>
 
-                  <button className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">
-                      <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 transition-colors">
-                          <FontAwesomeIcon icon="credit-card" className="text-purple-600 text-2xl group-hover:text-white" />
+                  <button 
+                      onClick={() => scrollToSection('payments')}
+                      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group ${
+                          activeCategory === 'payments' ? 'border-2 border-purple-500' : 'border-2 border-transparent'
+                      }`}
+                  >
+                      <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                          activeCategory === 'payments' ? 'bg-purple-500' : 'bg-purple-100 group-hover:bg-purple-500'
+                      } transition-colors`}>
+                          <Icon name="credit-card" className={`text-xl ${
+                              activeCategory === 'payments' ? 'text-white' : 'text-purple-600 group-hover:text-white'
+                          } transition-colors`} />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Payments</h3>
                       <p className="text-sm text-gray-600">Payment methods and fees</p>
@@ -196,16 +246,16 @@ export default function FAQPage() {
               <div className="grid md:grid-cols-3 gap-6 mb-12">
                   <div className="bg-white rounded-2xl p-6 shadow-lg">
                       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="envelope" className="text-blue-600 text-2xl" />
+                          <Icon name="envelope" className="text-blue-600 text-2xl" />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Email Support</h3>
                       <p className="text-sm text-gray-600 mb-4">Get help via email within 24 hours</p>
-                      <a href="mailto:support@globaledge.com" className="text-global-teal hover:text-edge-purple font-medium">support@globaledge.com</a>
+                      <a href="mailto:info@globalnext.rocks" className="text-global-teal hover:text-edge-purple font-medium">info@globalnext.rocks</a>
                   </div>
 
                   <div className="bg-white rounded-2xl p-6 shadow-lg">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="comments" className="text-green-600 text-2xl" />
+                          <Icon name="chat-bubble-left-right" className="text-green-600 text-2xl" />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Live Chat</h3>
                       <p className="text-sm text-gray-600 mb-4">Chat with our support team in real-time</p>
@@ -214,11 +264,11 @@ export default function FAQPage() {
 
                   <div className="bg-white rounded-2xl p-6 shadow-lg">
                       <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <FontAwesomeIcon icon="phone" className="text-purple-600 text-2xl" />
+                          <Icon name="phone" className="text-purple-600 text-2xl" />
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Phone Support</h3>
                       <p className="text-sm text-gray-600 mb-4">Call us for urgent matters</p>
-                      <a href="tel:+1-555-0123" className="text-global-teal hover:text-edge-purple font-medium">+1 (555) 012-3456</a>
+                      <a href="tel:+1-555-123-4567" className="text-global-teal hover:text-edge-purple font-medium">+1 (555) 123-4567</a>
                   </div>
               </div>
 

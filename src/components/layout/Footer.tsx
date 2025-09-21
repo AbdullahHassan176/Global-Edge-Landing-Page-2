@@ -1,16 +1,24 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import Logo from '../ui/Logo';
+import Icon from '../ui/Icon';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle newsletter subscription
     console.log('Newsletter subscription:', email);
+    setIsSubscribed(true);
     setEmail('');
+    
+    // Reset success message after 3 seconds
+    setTimeout(() => {
+      setIsSubscribed(false);
+    }, 3000);
   };
 
   return (
@@ -18,24 +26,21 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-global-teal to-edge-purple rounded-lg flex items-center justify-center">
-                <FontAwesomeIcon icon="cube" className="text-white text-lg" />
-              </div>
-              <span className="text-xl font-poppins font-bold">Global Edge</span>
+            <div className="mb-6">
+              <Logo size="md" variant="white" />
             </div>
             <p className="text-gray-400 mb-6">
               Tokenizing trade, containers & real estate for the next generation of investors.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FontAwesomeIcon icon={['fab', 'twitter']} className="text-xl" />
+                <Icon name="twitter" className="text-lg" size={12} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FontAwesomeIcon icon={['fab', 'linkedin']} className="text-xl" />
+                <Icon name="linkedin" className="text-lg" size={12} />
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <FontAwesomeIcon icon={['fab', 'github']} className="text-xl" />
+                <Icon name="github" className="text-lg" size={12} />
               </a>
             </div>
           </div>
@@ -76,14 +81,20 @@ export default function Footer() {
                 type="submit"
                 className="bg-global-teal px-6 py-2 rounded-r-full hover:bg-opacity-90 transition-colors"
               >
-                <FontAwesomeIcon icon="paper-plane" />
+                <Icon name="paper-plane" size={12} />
               </button>
             </form>
+            {isSubscribed && (
+              <p className="text-green-400 text-sm mt-2 flex items-center">
+                <Icon name="check-circle" size={12} className="mr-1" />
+                Successfully subscribed to newsletter!
+              </p>
+            )}
           </div>
         </div>
         
         <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">© 2024 Global Edge. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">© 2025 Global Edge. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">Terms & Conditions</a>
             <a href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>

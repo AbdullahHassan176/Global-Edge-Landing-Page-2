@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Link from 'next/link';
 
 export default function GetStartedPage() {
@@ -36,7 +36,7 @@ export default function GetStartedPage() {
                           <span className="text-white font-poppins font-bold text-2xl">1</span>
                       </div>
                       <h3 className="text-2xl font-poppins font-semibold text-charcoal mb-4">Create Account</h3>
-                      <p className="text-gray-600 mb-6">Sign up with your email and create a secure password. We'll send you a verification link to get started.</p>
+                      <p className="text-gray-600 mb-6">Sign up with your email and create a secure password. We&apos;ll send you a verification link to get started.</p>
                       <div className="bg-gray-50 rounded-xl p-6">
                           <div className="text-sm text-gray-500 mb-2">What you'll need:</div>
                           <ul className="text-sm text-gray-600 space-y-1">
@@ -95,7 +95,7 @@ export default function GetStartedPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                              <FontAwesomeIcon icon="user" className="text-blue-600 text-2xl" />
+                              
                           </div>
                           <div>
                               <h3 className="text-2xl font-poppins font-bold text-charcoal">Individual Account</h3>
@@ -104,19 +104,19 @@ export default function GetStartedPage() {
                       </div>
                       <ul className="space-y-4 mb-8">
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Access to all tokenized assets</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Minimum investment: $50</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Standard transaction fees</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Email support</span>
                           </li>
                       </ul>
@@ -128,7 +128,7 @@ export default function GetStartedPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-global-teal">
                       <div className="flex items-center mb-6">
                           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                              <FontAwesomeIcon icon="building" className="text-green-600 text-2xl" />
+                              
                           </div>
                           <div>
                               <h3 className="text-2xl font-poppins font-bold text-charcoal">Business Account</h3>
@@ -137,23 +137,23 @@ export default function GetStartedPage() {
                       </div>
                       <ul className="space-y-4 mb-8">
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Everything in Individual</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Higher investment limits</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Reduced transaction fees</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">Dedicated account manager</span>
                           </li>
                           <li className="flex items-center">
-                              <FontAwesomeIcon icon="check" className="text-green-500 mr-3" />
+                              
                               <span className="text-gray-700">API access</span>
                           </li>
                       </ul>
@@ -179,7 +179,7 @@ export default function GetStartedPage() {
                       <div className="space-y-6">
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="id-card" className="text-blue-600 text-xl" />
+                                  
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Identity Verification</h4>
@@ -189,7 +189,7 @@ export default function GetStartedPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="home" className="text-green-600 text-xl" />
+                                  
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Address Verification</h4>
@@ -199,7 +199,7 @@ export default function GetStartedPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="university" className="text-purple-600 text-xl" />
+                                  
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Financial Verification</h4>
@@ -209,7 +209,7 @@ export default function GetStartedPage() {
 
                           <div className="flex items-start space-x-4">
                               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="shield-check" className="text-orange-600 text-xl" />
+                                  
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal mb-2">Compliance Check</h4>
@@ -254,7 +254,7 @@ export default function GetStartedPage() {
 
                           <div className="flex items-center space-x-4">
                               <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FontAwesomeIcon icon="check" className="text-white text-sm" />
+                                  
                               </div>
                               <div>
                                   <h4 className="font-poppins font-semibold text-charcoal">Approval</h4>
@@ -265,7 +265,7 @@ export default function GetStartedPage() {
 
                       <div className="mt-8 bg-green-50 rounded-xl p-6">
                           <div className="flex items-center mb-2">
-                              <FontAwesomeIcon icon="clock" className="text-green-600 mr-2" />
+                              
                               <span className="font-semibold text-green-800">Average Processing Time</span>
                           </div>
                           <div className="text-2xl font-poppins font-bold text-green-600">5-10 minutes</div>

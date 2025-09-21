@@ -1,6 +1,6 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
 interface HeroSectionProps {
@@ -68,7 +68,7 @@ export default function HeroSection({
             >
               {primaryButtonText}
               {showArrow && (
-                <FontAwesomeIcon icon="arrow-right" className="ml-2" />
+                <Icon name="arrow-right" className="ml-2"  />
               )}
             </Link>
             
