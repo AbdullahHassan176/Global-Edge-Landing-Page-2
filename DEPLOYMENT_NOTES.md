@@ -12,9 +12,10 @@ The application is configured for **static export** to work with Azure Static We
 - **Responsive Design**: Works on all devices
 
 ### ⚠️ Limitations:
-- **API Routes**: `/api/auth/github` and `/api/auth/linkedin` are not available in static export
+- **API Routes**: `/api/auth/github` and `/api/auth/linkedin` are not available in Azure Static Web Apps
 - **Server-Side Features**: No server-side rendering or API endpoints
 - **Real OAuth**: Currently uses mock authentication for development
+- **Azure Static Web Apps**: Limited support for Next.js API routes
 
 ## OAuth Implementation
 
@@ -48,6 +49,7 @@ The application is configured for **static export** to work with Azure Static We
 - Mock OAuth flow with loading states
 - User dashboard with profile display
 - Session management with localStorage
+- **Note**: API routes for OAuth are disabled in Azure Static Web Apps deployment
 
 ### ✅ Admin Dashboard:
 - Notifications monitoring

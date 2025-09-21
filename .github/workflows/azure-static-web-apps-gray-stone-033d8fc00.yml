@@ -45,7 +45,7 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations ######
           app_location: "/" # App source code path
-          api_location: "src/app/api" # API source code path
+          api_location: "" # API source code path - empty for Azure Static Web Apps compatibility
           output_location: ".next" # Built app content directory
           skip_app_build: true # Skip app build since we already built it
           ###### End of Repository/Build Configurations ######
