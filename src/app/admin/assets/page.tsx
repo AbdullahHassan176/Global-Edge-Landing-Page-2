@@ -27,7 +27,7 @@ export default function AdminAssetsPage() {
   const loadRequests = async () => {
     try {
       const allRequests = assetCreationService.getAllAssetRequests();
-      const allAssets = assetService.getAllAssetsForAdmin();
+      const allAssets = await assetService.getAllAssetsForAdmin();
       setRequests(allRequests);
       setAssets(allAssets);
     } catch (error) {
@@ -48,7 +48,7 @@ export default function AdminAssetsPage() {
     return allUsers.find(user => user.id === issuerId);
   };
 
-  const filteredAssets = assets.filter(asset => {
+  const filteredAssets = (assets || []).filter(asset => {
     switch (activeTab) {
       case 'pending': return asset.status === 'pending';
       case 'approved': return asset.status === 'approved' || asset.status === 'active';
@@ -219,7 +219,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {assets.filter(a => a.status === 'pending').length}
+                      {(assets || []).filter(a => a.status === 'pending').length}
                     </h3>
                     <p className="text-gray-600">Pending Approval</p>
                   </div>
@@ -233,7 +233,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {assets.filter(a => a.status === 'approved' || a.status === 'active').length}
+                      {(assets || []).filter(a => a.status === 'approved' || a.status === 'active').length}
                     </h3>
                     <p className="text-gray-600">Approved Assets</p>
                   </div>
@@ -247,7 +247,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {new Set(assets.map(a => a.issuerId)).size}
+                      {new Set((assets || []).map(a => a.issuerId)).size}
                     </h3>
                     <p className="text-gray-600">Active Issuers</p>
                   </div>
@@ -261,7 +261,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {formatCurrency(assets.reduce((sum, asset) => sum + (asset.value || 0), 0))}
+                      {formatCurrency((assets || []).reduce((sum, asset) => sum + (asset.value || 0), 0))}
                     </h3>
                     <p className="text-gray-600">Total Value</p>
                   </div>
@@ -272,9 +272,9 @@ export default function AdminAssetsPage() {
             {/* Tabs */}
             <div className="flex flex-wrap gap-4 mb-8">
               {[
-                { key: 'pending', label: 'Pending Approval', count: assets.filter(a => a.status === 'pending').length, icon: 'clock' },
-                { key: 'approved', label: 'Approved Assets', count: assets.filter(a => a.status === 'approved' || a.status === 'active').length, icon: 'check-circle' },
-                { key: 'all', label: 'All Assets', count: assets.length, icon: 'boxes' }
+                { key: 'pending', label: 'Pending Approval', count: (assets || []).filter(a => a.status === 'pending').length, icon: 'clock' },
+                { key: 'approved', label: 'Approved Assets', count: (assets || []).filter(a => a.status === 'approved' || a.status === 'active').length, icon: 'check-circle' },
+                { key: 'all', label: 'All Assets', count: (assets || []).length, icon: 'boxes' }
               ].map(({ key, label, count, icon }) => (
                 <button
                   key={key}
