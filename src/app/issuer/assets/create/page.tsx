@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import ValidationPanel from '@/components/asset/ValidationPanel';
 import { userAuthService } from '@/lib/userAuthService';
 import { assetCreationService, AssetCreationRequest, AssetCreationStep, DOCUMENT_REQUIREMENTS } from '@/lib/assetCreationService';
+import { assetValidationService, ValidationResult } from '@/lib/assetValidationService';
 
 export default function CreateAssetPage() {
   const router = useRouter();
@@ -14,6 +16,8 @@ export default function CreateAssetPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [currentValidation, setCurrentValidation] = useState<ValidationResult | null>(null);
+  const [showValidation, setShowValidation] = useState(false);
 
   const steps: { key: AssetCreationStep; title: string; description: string }[] = [
     { key: 'basic_info', title: 'Basic Information', description: 'Asset details and location' },
@@ -30,6 +34,12 @@ export default function CreateAssetPage() {
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (request) {
+      validateCurrentStep();
+    }
+  }, [request, currentStep]);
 
   const loadData = async () => {
     try {
@@ -71,11 +81,19 @@ export default function CreateAssetPage() {
   const handleNext = async () => {
     if (!request) return;
 
+    // Check validation before proceeding
+    if (currentValidation && !currentValidation.isValid) {
+      setErrors({ submit: 'Please fix all errors before proceeding to the next step.' });
+      setShowValidation(true);
+      return;
+    }
+
     await handleSave();
     
     const currentIndex = steps.findIndex(step => step.key === currentStep);
     if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1].key);
+      setShowValidation(false); // Reset validation panel for next step
     }
   };
 
@@ -111,9 +129,21 @@ export default function CreateAssetPage() {
     }
   };
 
+  const validateCurrentStep = () => {
+    if (!request) return;
+    
+    const validation = assetValidationService.validateStep(request, currentStep);
+    setCurrentValidation(validation);
+  };
+
   const getRequiredDocuments = () => {
     if (!request) return [];
     return assetCreationService.getRequiredDocuments(request.assetType, request.tokenStandard);
+  };
+
+  const getStepValidationStatus = (stepKey: AssetCreationStep) => {
+    if (!request) return null;
+    return assetValidationService.validateStep(request, stepKey);
   };
 
   if (loading) {
@@ -167,6 +197,9 @@ export default function CreateAssetPage() {
                 {steps.map((step, index) => {
                   const isActive = step.key === currentStep;
                   const isCompleted = steps.findIndex(s => s.key === currentStep) > index;
+                  const stepValidation = getStepValidationStatus(step.key);
+                  const hasErrors = stepValidation && stepValidation.errors.length > 0;
+                  const hasWarnings = stepValidation && stepValidation.warnings.length > 0;
                   
                   return (
                     <button
@@ -177,7 +210,11 @@ export default function CreateAssetPage() {
                           ? 'bg-global-teal text-white' 
                           : isCompleted 
                             ? 'bg-green-50 text-green-700 hover:bg-green-100' 
-                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                            : hasErrors
+                              ? 'bg-red-50 text-red-700 hover:bg-red-100'
+                              : hasWarnings
+                                ? 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100'
+                                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                       }`}
                     >
                       <div className="flex items-center">
@@ -186,16 +223,43 @@ export default function CreateAssetPage() {
                             ? 'bg-white text-global-teal' 
                             : isCompleted 
                               ? 'bg-green-500 text-white' 
-                              : 'bg-gray-300 text-gray-600'
+                              : hasErrors
+                                ? 'bg-red-500 text-white'
+                                : hasWarnings
+                                  ? 'bg-yellow-500 text-white'
+                                  : 'bg-gray-300 text-gray-600'
                         }`}>
                           {isCompleted ? (
                             <Icon name="check" className="text-xs" />
+                          ) : hasErrors ? (
+                            <Icon name="x-circle" className="text-xs" />
+                          ) : hasWarnings ? (
+                            <Icon name="exclamation-triangle" className="text-xs" />
                           ) : (
                             <span className="text-xs font-semibold">{index + 1}</span>
                           )}
                         </div>
-                        <div>
-                          <p className="font-medium text-sm">{step.title}</p>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between">
+                            <p className="font-medium text-sm">{step.title}</p>
+                            {stepValidation && (
+                              <div className="flex items-center space-x-1">
+                                {hasErrors && (
+                                  <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">
+                                    {stepValidation.errors.length} errors
+                                  </span>
+                                )}
+                                {hasWarnings && (
+                                  <span className="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">
+                                    {stepValidation.warnings.length} warnings
+                                  </span>
+                                )}
+                                <span className="text-xs text-gray-500">
+                                  {stepValidation.score}/100
+                                </span>
+                              </div>
+                            )}
+                          </div>
                           <p className="text-xs opacity-75">{step.description}</p>
                         </div>
                       </div>
@@ -254,6 +318,18 @@ export default function CreateAssetPage() {
                 
                 {currentStep === 'review_submission' && (
                   <ReviewSubmissionStep request={request} errors={errors} />
+                )}
+
+                {/* Validation Panel */}
+                {currentValidation && (
+                  <div className="mt-6">
+                    <ValidationPanel
+                      validation={currentValidation}
+                      stepName={steps.find(s => s.key === currentStep)?.title || 'Current Step'}
+                      isExpanded={showValidation}
+                      onToggle={() => setShowValidation(!showValidation)}
+                    />
+                  </div>
                 )}
 
                 {/* Error Display */}
