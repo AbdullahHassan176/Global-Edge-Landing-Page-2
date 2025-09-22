@@ -4,10 +4,15 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { AssetMetricsService, AssetMetrics } from '@/lib/assetMetricsService';
+import { getPartnersForLandingPage } from '@/lib/partnersData';
+import Image from 'next/image';
 
 export default function HomePage() {
   const [metrics, setMetrics] = useState<AssetMetrics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Get partners for landing page
+  const landingPagePartners = getPartnersForLandingPage();
 
   useEffect(() => {
     // Simulate loading time for better UX
@@ -323,36 +328,36 @@ export default function HomePage() {
             <h3 className="text-lg font-poppins font-medium text-gray-600 mb-8">Trusted by leading logistics and financial partners</h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60">
-            <div className="flex justify-center">
-              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
-                <span className="text-xs font-semibold text-gray-500">MAERSK</span>
+            {landingPagePartners.map((partner) => (
+              <div key={partner.id} className="flex justify-center">
+                <a 
+                  href={partner.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group transition-all duration-300 hover:opacity-100 hover:scale-105"
+                  title={partner.description}
+                >
+                  <div className="w-24 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-2 group-hover:shadow-md transition-shadow">
+                    <Image
+                      src={partner.logo}
+                      alt={`${partner.name} logo`}
+                      width={80}
+                      height={40}
+                      className="max-w-full max-h-full object-contain"
+                      onError={(e) => {
+                        // Fallback to text if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<span class="text-xs font-semibold text-gray-500">${partner.name}</span>`;
+                        }
+                      }}
+                    />
+                  </div>
+                </a>
               </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
-                <span className="text-xs font-semibold text-gray-500">DHL</span>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
-                <span className="text-xs font-semibold text-gray-500">FEDEX</span>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
-                <span className="text-xs font-semibold text-gray-500">COSCO</span>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
-                <span className="text-xs font-semibold text-gray-500">MSC</span>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-20 h-10 bg-gray-300 rounded flex items-center justify-center">
-                <span className="text-xs font-semibold text-gray-500">CMA CGM</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

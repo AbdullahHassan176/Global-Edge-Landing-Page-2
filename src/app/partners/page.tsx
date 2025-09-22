@@ -4,27 +4,29 @@ import { useState } from 'react';
 import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
 import Link from 'next/link';
+import { partners, getPartnersByCategory } from '@/lib/partnersData';
+import Image from 'next/image';
 
 const partnerCategories = [
   {
+    id: 'logistics',
     title: 'Logistics Partners',
-    description: 'Leading shipping and logistics companies',
-    partners: ['Maersk', 'MSC', 'CMA CGM', 'COSCO', 'Hapag-Lloyd', 'ONE']
+    description: 'Leading shipping and logistics companies'
   },
   {
-    title: 'Technology Partners',
-    description: 'Blockchain and oracle infrastructure providers',
-    partners: ['Chainlink', 'Polygon', 'Ethereum', 'IPFS', 'The Graph', 'Alchemy']
-  },
-  {
+    id: 'financial',
     title: 'Financial Partners',
-    description: 'Banking and financial service providers',
-    partners: ['JPMorgan', 'Goldman Sachs', 'BlackRock', 'Fidelity', 'Vanguard', 'State Street']
+    description: 'Banking and financial service providers'
   },
   {
+    id: 'technology',
+    title: 'Technology Partners',
+    description: 'Blockchain and oracle infrastructure providers'
+  },
+  {
+    id: 'legal',
     title: 'Legal & Compliance',
-    description: 'Legal and regulatory compliance partners',
-    partners: ['DLA Piper', 'Clifford Chance', 'Latham & Watkins', 'Skadden', 'Sullivan & Cromwell', 'Cravath']
+    description: 'Legal and regulatory compliance partners'
   }
 ];
 
@@ -97,19 +99,51 @@ export default function PartnersPage() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-12">
-            {partnerCategories.map((category, index) => (
-              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
-                <h3 className="text-2xl font-poppins font-bold text-charcoal mb-3">{category.title}</h3>
-                <p className="text-gray-600 mb-6">{category.description}</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {category.partners.map((partner, partnerIndex) => (
-                    <div key={partnerIndex} className="bg-gray-50 rounded-lg p-4 text-center">
-                      <span className="font-semibold text-charcoal">{partner}</span>
-                    </div>
-                  ))}
+            {partnerCategories.map((category, index) => {
+              const categoryPartners = getPartnersByCategory(category.id as any);
+              return (
+                <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">
+                  <h3 className="text-2xl font-poppins font-bold text-charcoal mb-3">{category.title}</h3>
+                  <p className="text-gray-600 mb-6">{category.description}</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    {categoryPartners.map((partner) => (
+                      <a
+                        key={partner.id}
+                        href={partner.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-gray-50 rounded-lg p-4 text-center hover:bg-gray-100 transition-colors group"
+                        title={partner.description}
+                      >
+                        <div className="flex flex-col items-center space-y-2">
+                          <div className="w-12 h-8 flex items-center justify-center">
+                            <Image
+                              src={partner.logo}
+                              alt={`${partner.name} logo`}
+                              width={48}
+                              height={32}
+                              className="max-w-full max-h-full object-contain"
+                              onError={(e) => {
+                                // Fallback to text if image fails to load
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = `<span class="text-xs font-semibold text-gray-500">${partner.name}</span>`;
+                                }
+                              }}
+                            />
+                          </div>
+                          <span className="font-semibold text-charcoal text-sm group-hover:text-global-teal transition-colors">
+                            {partner.name}
+                          </span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
