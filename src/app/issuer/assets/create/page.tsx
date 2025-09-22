@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import ValidationPanel from '@/components/asset/ValidationPanel';
+import ErrorExplanationModal from '@/components/asset/ErrorExplanationModal';
+import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 import { userAuthService } from '@/lib/userAuthService';
 import { assetCreationService, AssetCreationRequest, AssetCreationStep, DOCUMENT_REQUIREMENTS } from '@/lib/assetCreationService';
 import { assetValidationService, ValidationResult } from '@/lib/assetValidationService';
@@ -18,6 +20,8 @@ export default function CreateAssetPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [currentValidation, setCurrentValidation] = useState<ValidationResult | null>(null);
   const [showValidation, setShowValidation] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const { notifications, addNotification, removeNotification } = useNotifications();
 
   const steps: { key: AssetCreationStep; title: string; description: string }[] = [
     { key: 'basic_info', title: 'Basic Information', description: 'Asset details and location' },
@@ -83,8 +87,21 @@ export default function CreateAssetPage() {
 
     // Check validation before proceeding
     if (currentValidation && !currentValidation.isValid) {
-      setErrors({ submit: 'Please fix all errors before proceeding to the next step.' });
-      setShowValidation(true);
+      addNotification({
+        type: 'error',
+        title: 'Cannot Proceed',
+        message: 'Please fix all errors before proceeding to the next step.',
+        actions: [
+          {
+            label: 'View Errors',
+            action: () => {
+              setShowValidation(true);
+              setShowErrorModal(true);
+            },
+            variant: 'primary'
+          }
+        ]
+      });
       return;
     }
 
@@ -94,6 +111,13 @@ export default function CreateAssetPage() {
     if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1].key);
       setShowValidation(false); // Reset validation panel for next step
+      
+      addNotification({
+        type: 'success',
+        title: 'Step Saved',
+        message: 'Progress saved successfully. Moving to next step.',
+        duration: 3000
+      });
     }
   };
 
@@ -134,6 +158,55 @@ export default function CreateAssetPage() {
     
     const validation = assetValidationService.validateStep(request, currentStep);
     setCurrentValidation(validation);
+
+    // Show notifications for validation results
+    if (validation.errors.length > 0) {
+      addNotification({
+        type: 'error',
+        title: 'Validation Errors Found',
+        message: `${validation.errors.length} error(s) need to be fixed before proceeding.`,
+        actions: [
+          {
+            label: 'View Details',
+            action: () => setShowErrorModal(true),
+            variant: 'primary'
+          }
+        ]
+      });
+    } else if (validation.warnings.length > 0) {
+      addNotification({
+        type: 'warning',
+        title: 'Validation Warnings',
+        message: `${validation.warnings.length} warning(s) found. Consider addressing them for better results.`,
+        actions: [
+          {
+            label: 'View Details',
+            action: () => setShowErrorModal(true),
+            variant: 'primary'
+          }
+        ]
+      });
+    } else if (validation.suggestions.length > 0) {
+      addNotification({
+        type: 'info',
+        title: 'Improvement Suggestions',
+        message: `${validation.suggestions.length} suggestion(s) available to improve your submission.`,
+        actions: [
+          {
+            label: 'View Details',
+            action: () => setShowErrorModal(true),
+            variant: 'primary'
+          }
+        ]
+      });
+    } else {
+      addNotification({
+        type: 'success',
+        title: 'Step Complete!',
+        message: 'This step is ready to proceed.',
+        duration: 3000
+      });
+    }
   };
 
   const getRequiredDocuments = () => {
@@ -169,6 +242,24 @@ export default function CreateAssetPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Notification System */}
+      <NotificationSystem
+        notifications={notifications}
+        onRemove={removeNotification}
+      />
+
+      {/* Error Explanation Modal */}
+      {currentValidation && (
+        <ErrorExplanationModal
+          isOpen={showErrorModal}
+          onClose={() => setShowErrorModal(false)}
+          errors={currentValidation.errors}
+          warnings={currentValidation.warnings}
+          suggestions={currentValidation.suggestions}
+          stepName={steps.find(s => s.key === currentStep)?.title || 'Current Step'}
+        />
+      )}
+
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
@@ -239,28 +330,28 @@ export default function CreateAssetPage() {
                             <span className="text-xs font-semibold">{index + 1}</span>
                           )}
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <p className="font-medium text-sm">{step.title}</p>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col space-y-1">
+                            <p className="font-medium text-sm truncate">{step.title}</p>
                             {stepValidation && (
-                              <div className="flex items-center space-x-1">
+                              <div className="flex flex-wrap gap-1">
                                 {hasErrors && (
-                                  <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">
+                                  <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full whitespace-nowrap">
                                     {stepValidation.errors.length} errors
                                   </span>
                                 )}
                                 {hasWarnings && (
-                                  <span className="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">
+                                  <span className="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full whitespace-nowrap">
                                     {stepValidation.warnings.length} warnings
                                   </span>
                                 )}
-                                <span className="text-xs text-gray-500">
+                                <span className="text-xs text-gray-500 whitespace-nowrap">
                                   {stepValidation.score}/100
                                 </span>
                               </div>
                             )}
                           </div>
-                          <p className="text-xs opacity-75">{step.description}</p>
+                          <p className="text-xs opacity-75 mt-1 line-clamp-2">{step.description}</p>
                         </div>
                       </div>
                     </button>
@@ -329,6 +420,30 @@ export default function CreateAssetPage() {
                       isExpanded={showValidation}
                       onToggle={() => setShowValidation(!showValidation)}
                     />
+                    
+                    {/* Quick Action Buttons */}
+                    <div className="mt-4 flex space-x-3">
+                      <button
+                        onClick={() => setShowErrorModal(true)}
+                        className="flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                      >
+                        <Icon name="eye" className="mr-2" />
+                        View Detailed Explanation
+                      </button>
+                      
+                      {currentValidation.errors.length > 0 && (
+                        <button
+                          onClick={() => {
+                            setShowValidation(true);
+                            setShowErrorModal(true);
+                          }}
+                          className="flex items-center px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                        >
+                          <Icon name="exclamation-triangle" className="mr-2" />
+                          Fix Errors ({currentValidation.errors.length})
+                        </button>
+                      )}
+                    </div>
                   </div>
                 )}
 

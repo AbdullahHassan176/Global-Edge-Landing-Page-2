@@ -222,16 +222,16 @@ export default function ValidationPanel({
                       <div key={index} className={`p-3 rounded-lg border ${getPriorityColor(suggestion.priority)}`}>
                         <div className="flex items-start">
                           <Icon name={getCategoryIcon(suggestion.category)} className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between mb-1">
-                              <p className="font-medium text-sm">{suggestion.message}</p>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(suggestion.priority)}`}>
-                                {suggestion.priority}
-                              </span>
-                            </div>
-                            <p className="text-xs mt-1 opacity-75">Field: {suggestion.field}</p>
-                            <p className="text-xs mt-1 font-medium">💡 {suggestion.message}</p>
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between mb-2">
+                            <p className="font-medium text-sm flex-1 mr-2">{suggestion.message}</p>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getPriorityColor(suggestion.priority)}`}>
+                              {suggestion.priority}
+                            </span>
                           </div>
+                          <p className="text-xs text-gray-600 mb-1">Field: {suggestion.field}</p>
+                          <p className="text-xs font-medium text-blue-700">💡 {suggestion.message}</p>
+                        </div>
                         </div>
                       </div>
                     ))}
