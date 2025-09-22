@@ -109,23 +109,101 @@ export default function AdminAuthGuard({
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Icon name="lock-closed" className="text-slate-600 text-2xl" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-global-teal/20 to-edge-purple/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-edge-purple/20 to-global-teal/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-global-teal/10 to-edge-purple/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+        </div>
+
+        {/* Floating Security Icons */}
+        <div className="absolute top-20 left-20 text-global-teal/30 animate-bounce delay-300">
+          <Icon name="shield-halved" className="text-4xl" />
+        </div>
+        <div className="absolute top-32 right-32 text-edge-purple/30 animate-bounce delay-700">
+          <Icon name="lock-closed" className="text-3xl" />
+        </div>
+        <div className="absolute bottom-32 left-32 text-global-teal/30 animate-bounce delay-1000">
+          <Icon name="key" className="text-3xl" />
+        </div>
+        <div className="absolute bottom-20 right-20 text-edge-purple/30 animate-bounce delay-500">
+          <Icon name="eye" className="text-4xl" />
+        </div>
+
+        {/* Main Content Card */}
+        <div className="relative z-10 max-w-lg w-full mx-4">
+          <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 text-center">
+            {/* Animated Lock Icon */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+                <Icon name="lock-closed" className="text-white text-3xl" />
+              </div>
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center animate-ping">
+                <div className="w-3 h-3 bg-white rounded-full"></div>
+              </div>
+            </div>
+
+            {/* Title with Gradient Text */}
+            <h1 className="text-4xl font-poppins font-bold mb-4">
+              <span className="bg-gradient-to-r from-global-teal to-edge-purple bg-clip-text text-transparent">
+                Access Required
+              </span>
+            </h1>
+            
+            <p className="text-white/80 text-lg mb-8 leading-relaxed">
+              This area is restricted to authorized administrators only. 
+              Please authenticate to continue.
+            </p>
+
+            {/* Security Features List */}
+            <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10">
+              <h3 className="text-white font-semibold mb-4 flex items-center justify-center">
+                <Icon name="shield-halved" className="mr-2 text-global-teal" />
+                Security Features
+              </h3>
+              <div className="space-y-3 text-sm text-white/70">
+                <div className="flex items-center justify-center">
+                  <Icon name="check-circle" className="mr-2 text-green-400" />
+                  Multi-factor authentication
+                </div>
+                <div className="flex items-center justify-center">
+                  <Icon name="check-circle" className="mr-2 text-green-400" />
+                  Role-based access control
+                </div>
+                <div className="flex items-center justify-center">
+                  <Icon name="check-circle" className="mr-2 text-green-400" />
+                  Encrypted data transmission
+                </div>
+              </div>
+            </div>
+
+            {/* Login Button */}
+            <button
+              onClick={handleLoginRedirect}
+              className="w-full bg-gradient-to-r from-global-teal to-edge-purple text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-global-teal/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center group"
+            >
+              <Icon name="arrow-right" className="mr-2 group-hover:translate-x-1 transition-transform" />
+              Access Admin Portal
+            </button>
+
+            {/* Footer */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <p className="text-white/50 text-sm">
+                Need help? Contact your system administrator
+              </p>
+            </div>
           </div>
-          <h2 className="text-2xl font-poppins font-bold text-gray-800 mb-4">
-            Access Required
-          </h2>
-          <p className="text-gray-600 mb-6">
-            You need to be logged in as an administrator to access this area.
-          </p>
-          <button
-            onClick={handleLoginRedirect}
-            className="w-full bg-gradient-to-r from-slate-600 to-slate-800 text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transition-opacity"
-          >
-            Go to Admin Login
-          </button>
+        </div>
+
+        {/* Bottom Security Badge */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="bg-white/10 backdrop-blur-xl rounded-full px-6 py-3 border border-white/20">
+            <div className="flex items-center space-x-2 text-white/70">
+              <Icon name="shield-halved" className="text-global-teal" />
+              <span className="text-sm font-medium">Secure Admin Access</span>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -133,40 +211,112 @@ export default function AdminAuthGuard({
 
   if (!hasAccess) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Icon name="exclamation-triangle" className="text-slate-600 text-2xl" />
-          </div>
-          <h2 className="text-2xl font-poppins font-bold text-gray-800 mb-4">
-            Insufficient Permissions
-          </h2>
-          <p className="text-gray-600 mb-4">
-            You don't have the required permissions to access this area.
-          </p>
-          {user && (
-            <div className="bg-gray-50 rounded-xl p-4 mb-6">
-              <p className="text-sm text-gray-600 mb-1">
-                <strong>Current Role:</strong> {user.role}
-              </p>
-              <p className="text-sm text-gray-600">
-                <strong>Permissions:</strong> {user.permissions.join(', ')}
+      <div className="min-h-screen bg-gradient-to-br from-orange-900 via-red-900 to-orange-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+        </div>
+
+        {/* Floating Warning Icons */}
+        <div className="absolute top-20 left-20 text-orange-400/30 animate-bounce delay-300">
+          <Icon name="exclamation-triangle" className="text-4xl" />
+        </div>
+        <div className="absolute top-32 right-32 text-red-400/30 animate-bounce delay-700">
+          <Icon name="ban" className="text-3xl" />
+        </div>
+        <div className="absolute bottom-32 left-32 text-orange-400/30 animate-bounce delay-1000">
+          <Icon name="user-x" className="text-3xl" />
+        </div>
+        <div className="absolute bottom-20 right-20 text-red-400/30 animate-bounce delay-500">
+          <Icon name="shield-exclamation" className="text-4xl" />
+        </div>
+
+        {/* Main Content Card */}
+        <div className="relative z-10 max-w-lg w-full mx-4">
+          <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 text-center">
+            {/* Animated Warning Icon */}
+            <div className="relative mb-8">
+              <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto shadow-2xl animate-pulse">
+                <Icon name="exclamation-triangle" className="text-white text-3xl" />
+              </div>
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center animate-ping">
+                <div className="w-3 h-3 bg-white rounded-full"></div>
+              </div>
+            </div>
+
+            {/* Title with Gradient Text */}
+            <h1 className="text-4xl font-poppins font-bold mb-4">
+              <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                Access Denied
+              </span>
+            </h1>
+            
+            <p className="text-white/80 text-lg mb-8 leading-relaxed">
+              You don't have the required permissions to access this area. 
+              Contact your administrator for access.
+            </p>
+
+            {/* User Info Card */}
+            {user && (
+              <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10">
+                <h3 className="text-white font-semibold mb-4 flex items-center justify-center">
+                  <Icon name="user" className="mr-2 text-orange-400" />
+                  Current Access Level
+                </h3>
+                <div className="space-y-3 text-sm text-white/70">
+                  <div className="flex items-center justify-between">
+                    <span>Role:</span>
+                    <span className="text-orange-400 font-medium capitalize">{user.role}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Username:</span>
+                    <span className="text-orange-400 font-medium">{user.username}</span>
+                  </div>
+                  <div className="flex items-center justify-center mt-4">
+                    <span className="text-xs text-white/50">
+                      Permissions: {user.permissions.join(', ')}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="space-y-4">
+              <button
+                onClick={() => router.push('/admin')}
+                className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-orange-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center group"
+              >
+                <Icon name="arrow-left" className="mr-2 group-hover:-translate-x-1 transition-transform" />
+                Back to Dashboard
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full bg-white/10 backdrop-blur-xl text-white py-3 px-6 rounded-2xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300 flex items-center justify-center group"
+              >
+                <Icon name="logout" className="mr-2 group-hover:translate-x-1 transition-transform" />
+                Switch Account
+              </button>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <p className="text-white/50 text-sm">
+                Need elevated permissions? Contact your system administrator
               </p>
             </div>
-          )}
-          <div className="space-y-3">
-            <button
-              onClick={() => router.push('/admin')}
-              className="w-full bg-gray-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
-            >
-              Back to Admin Dashboard
-            </button>
-            <button
-              onClick={handleLogout}
-              className="w-full border border-gray-300 text-gray-700 py-3 px-6 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
-            >
-              Logout
-            </button>
+          </div>
+        </div>
+
+        {/* Bottom Warning Badge */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="bg-white/10 backdrop-blur-xl rounded-full px-6 py-3 border border-white/20">
+            <div className="flex items-center space-x-2 text-white/70">
+              <Icon name="exclamation-triangle" className="text-orange-400" />
+              <span className="text-sm font-medium">Insufficient Permissions</span>
+            </div>
           </div>
         </div>
       </div>
