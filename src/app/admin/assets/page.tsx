@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Icon } from '@/components/ui/Icon';
-import { AdminAuthGuard } from '@/components/admin/AdminAuthGuard';
+import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { assetService, Asset } from '@/lib/assetService';
 import Image from 'next/image';
 
