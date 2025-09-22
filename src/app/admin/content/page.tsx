@@ -482,7 +482,7 @@ function ContentManagementDashboard() {
       <div className="min-h-screen bg-soft-white">
         <NotificationSystem
           notifications={notifications}
-          onDismiss={removeNotification}
+          onRemove={removeNotification}
         />
 
         {/* Header */}

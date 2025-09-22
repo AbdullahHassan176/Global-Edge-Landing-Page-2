@@ -8,7 +8,9 @@
 import { workingDatabaseService } from '@/lib/database/workingDatabaseService';
 import { userAuthService } from '@/lib/userAuthService';
 import { assetService } from '@/lib/assetService';
-import { reportGenerator } from '@/lib/reportGenerator';
+import { ReportGenerator } from '@/lib/reportGenerator';
+
+const reportGenerator = new ReportGenerator();
 
 export class ReportIntegration {
   private useDatabase = true; // Toggle between database and mock data
