@@ -274,7 +274,25 @@ class NotificationService {
       failed: 2,
       emailsSent: 98,
       webhooksDelivered: 45,
-      averageDeliveryTime: '2.3s'
+      averageDeliveryTime: '2.3s',
+      emailStats: {
+        total: 98,
+        sent: 85,
+        failed: 8,
+        pending: 5
+      },
+      webhookStats: {
+        total: 45,
+        sent: 42,
+        failed: 2,
+        pending: 1
+      },
+      adminStats: {
+        total: 7,
+        new: 3,
+        reviewed: 2,
+        processed: 2
+      }
     };
   }
 

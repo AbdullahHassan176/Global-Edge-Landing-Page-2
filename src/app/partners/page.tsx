@@ -114,16 +114,9 @@ export default function PartnersPage() {
                         className="bg-gray-50 rounded-lg p-4 text-center hover:bg-gray-100 transition-colors group"
                         title={partner.description}
                       >
-                        <div className="flex flex-col items-center space-y-2">
-                          <div className="w-12 h-8 flex items-center justify-center">
-                            <div className="w-full h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
-                              <span className="text-white font-bold text-xs">{partner.name}</span>
-                            </div>
-                          </div>
-                          <span className="font-semibold text-charcoal text-sm group-hover:text-global-teal transition-colors">
-                            {partner.name}
-                          </span>
-                        </div>
+                        <span className="font-semibold text-charcoal text-sm group-hover:text-global-teal transition-colors">
+                          {partner.name}
+                        </span>
                       </a>
                     ))}
                   </div>

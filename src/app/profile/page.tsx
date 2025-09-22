@@ -1,24 +1,70 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { userAuthService } from '@/lib/userAuthService';
+import { userAuthIntegration } from '@/lib/integration/userAuthIntegration';
+import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [profileData, setProfileData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
-    dateOfBirth: '1990-01-15',
-    address: '123 Main Street, New York, NY 10001',
-    occupation: 'Software Engineer',
-    company: 'Tech Corp',
-    annualIncome: '75000-100000',
-    investmentExperience: 'intermediate',
-    riskTolerance: 'moderate'
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    dateOfBirth: '',
+    address: '',
+    occupation: '',
+    company: '',
+    annualIncome: '',
+    investmentExperience: '',
+    riskTolerance: ''
   });
+  const [originalData, setOriginalData] = useState(profileData);
+  const { notifications, addNotification, removeNotification } = useNotifications();
+
+  // Load user data on component mount
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  const loadUserProfile = async () => {
+    setIsLoading(true);
+    try {
+      const currentUser = userAuthService.getCurrentUser();
+      if (currentUser) {
+        const userData = {
+          firstName: currentUser.firstName || '',
+          lastName: currentUser.lastName || '',
+          email: currentUser.email || '',
+          phone: currentUser.phone || '',
+          dateOfBirth: '', // Not in current user model
+          address: '', // Not in current user model
+          occupation: '', // Not in current user model
+          company: currentUser.company || '',
+          annualIncome: '', // Not in current user model
+          investmentExperience: '', // Not in current user model
+          riskTolerance: '' // Not in current user model
+        };
+        setProfileData(userData);
+        setOriginalData(userData);
+      }
+    } catch (error) {
+      console.error('Error loading user profile:', error);
+      addNotification({
+        type: 'error',
+        title: 'Loading Error',
+        message: 'Failed to load profile data',
+        duration: 5000
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setProfileData(prev => ({
@@ -27,14 +73,92 @@ export default function ProfilePage() {
     }));
   };
 
-  const handleSave = () => {
-    // Simulate save operation
-    setIsEditing(false);
-    // Here you would typically make an API call to save the data
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const currentUser = userAuthService.getCurrentUser();
+      if (!currentUser) {
+        addNotification({
+          type: 'error',
+          title: 'Error',
+          message: 'No user logged in',
+          duration: 5000
+        });
+        return;
+      }
+
+      // Update user data
+      const updates = {
+        firstName: profileData.firstName,
+        lastName: profileData.lastName,
+        phone: profileData.phone,
+        company: profileData.company
+      };
+
+      // Try to update via integration service (database + fallback)
+      const result = await userAuthIntegration.updateUser(currentUser.id, updates);
+      
+      if (result.success) {
+        setOriginalData(profileData);
+        setIsEditing(false);
+        addNotification({
+          type: 'success',
+          title: 'Profile Updated',
+          message: 'Your profile has been successfully updated',
+          duration: 3000
+        });
+      } else {
+        // Fallback to mock service
+        const mockResult = await userAuthService.updateUser(currentUser.id, updates);
+        if (mockResult) {
+          setOriginalData(profileData);
+          setIsEditing(false);
+          addNotification({
+            type: 'success',
+            title: 'Profile Updated',
+            message: 'Your profile has been updated (saved locally)',
+            duration: 3000
+          });
+        } else {
+          throw new Error('Failed to update profile');
+        }
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      addNotification({
+        type: 'error',
+        title: 'Save Error',
+        message: 'Failed to save profile changes',
+        duration: 5000
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  const handleCancel = () => {
+    setProfileData(originalData);
+    setIsEditing(false);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-soft-white flex items-center justify-center">
+        <div className="text-center">
+          <Icon name="spinner" className="animate-spin text-global-teal text-4xl mb-4" />
+          <p className="text-lg text-gray-700">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-soft-white">
+      <NotificationSystem
+        notifications={notifications}
+        onDismiss={removeNotification}
+      />
+      
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -144,13 +268,31 @@ export default function ProfilePage() {
                 </div>
                 
                 {isEditing && (
-                  <button
-                    type="button"
-                    onClick={handleSave}
-                    className="bg-global-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
-                  >
-                    Save Changes
-                  </button>
+                  <div className="flex space-x-4">
+                    <button
+                      type="button"
+                      onClick={handleSave}
+                      disabled={isSaving}
+                      className="bg-global-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 flex items-center"
+                    >
+                      {isSaving ? (
+                        <>
+                          <Icon name="spinner" className="animate-spin mr-2" />
+                          Saving...
+                        </>
+                      ) : (
+                        'Save Changes'
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      disabled={isSaving}
+                      className="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-400 transition-colors disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 )}
               </form>
             </div>

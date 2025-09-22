@@ -6,6 +6,7 @@ import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 import { assetCreationService, AssetCreationRequest } from '@/lib/assetCreationService';
 import { assetService, Asset } from '@/lib/assetService';
+import { assetIntegration } from '@/lib/integration/assetIntegration';
 import { userAuthService } from '@/lib/userAuthService';
 
 export default function AdminAssetsPage() {
@@ -19,6 +20,8 @@ export default function AdminAssetsPage() {
   const [reviewStatus, setReviewStatus] = useState<'approved' | 'rejected' | 'requires_changes'>('approved');
   const [requiredChanges, setRequiredChanges] = useState('');
   const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'all'>('pending');
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
+  const [showAssetModal, setShowAssetModal] = useState(false);
   const { notifications, addNotification, removeNotification } = useNotifications();
 
   useEffect(() => {
@@ -71,6 +74,24 @@ export default function AdminAssetsPage() {
     setReviewStatus('approved');
     setRequiredChanges('');
     setShowReviewModal(true);
+  };
+
+  const handleViewAsset = (asset: Asset) => {
+    setSelectedAsset(asset);
+    setShowAssetModal(true);
+  };
+
+  const handleApproveAsset = (asset: Asset) => {
+    // Update asset status to active
+    const updatedAsset = { ...asset, status: 'active' as const };
+    setAssets(prev => prev.map(a => a.id === asset.id ? updatedAsset : a));
+    
+    addNotification({
+      type: 'success',
+      title: 'Asset Approved',
+      message: `${asset.name} has been approved and is now active.`,
+      duration: 5000
+    });
   };
 
   const handleSubmitReview = async () => {
@@ -406,11 +427,17 @@ export default function AdminAssetsPage() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex space-x-2">
-                              <button className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition-colors">
+                              <button 
+                                onClick={() => handleViewAsset(asset)}
+                                className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition-colors"
+                              >
                                 View
                               </button>
                               {asset.status === 'pending' && (
-                                <button className="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition-colors">
+                                <button 
+                                  onClick={() => handleApproveAsset(asset)}
+                                  className="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition-colors"
+                                >
                                   Approve
                                 </button>
                               )}
@@ -433,6 +460,120 @@ export default function AdminAssetsPage() {
             )}
           </div>
         </section>
+
+        {/* Asset Detail Modal */}
+        {showAssetModal && selectedAsset && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold text-gray-900">Asset Details</h2>
+                  <button
+                    onClick={() => setShowAssetModal(false)}
+                    className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <Icon name="x-mark" className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 overflow-y-auto max-h-[60vh]">
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-lg flex items-center justify-center">
+                      <Icon name="building" className="text-white text-2xl" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-semibold text-charcoal">{selectedAsset.name}</h3>
+                      <p className="text-gray-600">{selectedAsset.route}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-3">Basic Information</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Type:</span>
+                          <span className="font-medium">{selectedAsset.type}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Status:</span>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(selectedAsset.status)}`}>
+                            {selectedAsset.status.charAt(0).toUpperCase() + selectedAsset.status.slice(1)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Created:</span>
+                          <span className="font-medium">{formatDate(selectedAsset.createdAt || new Date().toISOString())}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-3">Financial Details</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Value:</span>
+                          <span className="font-medium">{formatCurrency(parseFloat(selectedAsset.value) || 0)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">APR:</span>
+                          <span className="font-medium text-green-600">{selectedAsset.apr}%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Risk Level:</span>
+                          <span className="font-medium">{selectedAsset.risk}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-3">Description</h4>
+                    <p className="text-gray-600 text-sm">{selectedAsset.description}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-3">Additional Details</h4>
+                    <div className="grid md:grid-cols-2 gap-4 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Cargo Type:</span>
+                        <span className="font-medium">{selectedAsset.cargo}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Last Updated:</span>
+                        <span className="font-medium">{formatDate(selectedAsset.updatedAt || selectedAsset.createdAt || new Date().toISOString())}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-gray-200 bg-gray-50">
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setShowAssetModal(false)}
+                    className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                  >
+                    Close
+                  </button>
+                  {selectedAsset.status === 'pending' && (
+                    <button
+                      onClick={() => {
+                        handleApproveAsset(selectedAsset);
+                        setShowAssetModal(false);
+                      }}
+                      className="flex-1 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                    >
+                      Approve Asset
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Review Modal */}
         {showReviewModal && selectedRequest && (

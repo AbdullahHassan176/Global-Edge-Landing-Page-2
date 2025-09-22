@@ -30,20 +30,11 @@ export interface AdminRegistrationData {
 // Mock admin users (in production, this would be stored securely in a database)
 const ADMIN_USERS: AdminUser[] = [
   {
-    id: 'admin-1',
-    username: 'admin',
-    email: 'admin@globalnext.rocks',
+    id: 'super-admin-1',
+    username: 'abdullah.hassan',
+    email: 'abdullah.hassan@globalnext.rocks',
     role: 'super-admin',
     permissions: ['all'],
-    lastLogin: new Date().toISOString(),
-    isActive: true
-  },
-  {
-    id: 'admin-2',
-    username: 'moderator',
-    email: 'moderator@globalnext.rocks',
-    role: 'moderator',
-    permissions: ['view_users', 'view_notifications', 'view_analytics', 'manage_assets'],
     lastLogin: new Date().toISOString(),
     isActive: true
   }
@@ -52,8 +43,7 @@ const ADMIN_USERS: AdminUser[] = [
 // Mock passwords (in production, these would be hashed and stored securely)
 // These should be moved to environment variables in production
 const ADMIN_PASSWORDS: Record<string, string> = {
-  'admin': process.env.ADMIN_PASSWORD || 'GlobalEdge2025!',
-  'moderator': process.env.MODERATOR_PASSWORD || 'Moderator123!'
+  'abdullah.hassan': 'Abdullah187!'
 };
 
 class AdminAuthService {

@@ -6,6 +6,7 @@ import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 import Link from 'next/link';
 import { userAuthService } from '@/lib/userAuthService';
+import { userAuthIntegration } from '@/lib/integration/userAuthIntegration';
 import { assetService } from '@/lib/assetService';
 
 interface User {
@@ -27,8 +28,10 @@ interface User {
 }
 
 // Enhanced user data with issuer tracking
-const getEnhancedUsers = (): User[] => {
-  const allUsers = userAuthService.getAllUsers();
+const getEnhancedUsers = async (): Promise<User[]> => {
+  // Try to get users from integration service (database + fallback)
+  const integrationResult = await userAuthIntegration.getAllUsers();
+  const allUsers = integrationResult.success ? integrationResult.users || [] : userAuthService.getAllUsers();
   return allUsers.map(user => {
     // Map status values to match User interface
     const mappedStatus = user.status === 'kyc_approved' ? 'verified' as const :
@@ -92,10 +95,10 @@ function UserManagementDashboard() {
     loadUsers();
   }, []);
 
-  const loadUsers = () => {
+  const loadUsers = async () => {
     setIsLoading(true);
     try {
-      const enhancedUsers = getEnhancedUsers();
+      const enhancedUsers = await getEnhancedUsers();
       setUsers(enhancedUsers);
     } catch (error) {
       console.error('Error loading users:', error);

@@ -5,23 +5,41 @@ import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { AssetMetricsService, AssetMetrics } from '@/lib/assetMetricsService';
 import { getPartnersForLandingPage } from '@/lib/partnersData';
+import WaitlistModal from '@/components/ui/WaitlistModal';
 
 export default function HomePage() {
   const [metrics, setMetrics] = useState<AssetMetrics | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Start as false for immediate interactivity
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   
   // Get partners for landing page
   const landingPagePartners = getPartnersForLandingPage();
 
   useEffect(() => {
-    // Simulate loading time for better UX
-    const timer = setTimeout(() => {
-      const calculatedMetrics = AssetMetricsService.getAllMetrics();
-      setMetrics(calculatedMetrics);
-      setIsLoading(false);
-    }, 500);
+    // Set default metrics immediately for instant display
+    setMetrics({
+      totalAssetsUnderManagement: 45400000, // $45.4M fallback
+      totalAssetsTokenized: 526,
+      onTimeDeliveryRate: 98.7,
+      averageAPR: 10.6,
+      totalValue: 45400000,
+      categoryBreakdown: { containers: 247, property: 89, tradetokens: 156, vault: 34 },
+      riskDistribution: { low: 45, medium: 40, high: 15 }
+    });
 
-    return () => clearTimeout(timer);
+    // Load real metrics in background (non-blocking)
+    const loadMetrics = async () => {
+      try {
+        const calculatedMetrics = await AssetMetricsService.getAllMetrics();
+        setMetrics(calculatedMetrics);
+      } catch (error) {
+        console.error('Error loading metrics:', error);
+        // Keep fallback metrics if there's an error
+      }
+    };
+
+    // Load metrics in background without blocking UI
+    loadMetrics();
   }, []);
   return (
     <>
@@ -41,9 +59,12 @@ export default function HomePage() {
                 Explore Assets
                 <Icon name="arrow-right" className="ml-2" size={8} />
               </Link>
-              <Link href="/investors" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+              <button 
+                onClick={() => setShowWaitlistModal(true)}
+                className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors"
+              >
                 Join Investor Waitlist
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -58,41 +79,25 @@ export default function HomePage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-24 mx-auto rounded"></div>
-                ) : (
-                  AssetMetricsService.formatCurrency(metrics?.totalAssetsUnderManagement || 0)
-                )}
+                {AssetMetricsService.formatCurrency(metrics?.totalAssetsUnderManagement || 0)}
               </div>
               <div className="text-sm text-gray-600 font-medium">Assets Under Management</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-16 mx-auto rounded"></div>
-                ) : (
-                  AssetMetricsService.formatNumber(metrics?.totalAssetsTokenized || 0)
-                )}
+                {AssetMetricsService.formatNumber(metrics?.totalAssetsTokenized || 0)}
               </div>
               <div className="text-sm text-gray-600 font-medium">Assets Tokenized</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-16 mx-auto rounded"></div>
-                ) : (
-                  `${metrics?.onTimeDeliveryRate || 0}%`
-                )}
+                {`${metrics?.onTimeDeliveryRate || 0}%`}
               </div>
               <div className="text-sm text-gray-600 font-medium">On-Time Deliveries</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-16 mx-auto rounded"></div>
-                ) : (
-                  `${metrics?.averageAPR || 0}%`
-                )}
+                {`${metrics?.averageAPR || 0}%`}
               </div>
               <div className="text-sm text-gray-600 font-medium">Average APR</div>
             </div>
@@ -336,11 +341,9 @@ export default function HomePage() {
                   className="group transition-all duration-300 hover:opacity-100 hover:scale-105"
                   title={partner.description}
                 >
-                  <div className="w-24 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-2 group-hover:shadow-md transition-shadow">
-                    <div className="w-full h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">{partner.name}</span>
-                    </div>
-                  </div>
+                  <span className="text-gray-600 font-medium text-sm group-hover:text-global-teal transition-colors">
+                    {partner.name}
+                  </span>
                 </a>
               </div>
             ))}
@@ -424,6 +427,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Waitlist Modal */}
+      <WaitlistModal 
+        isOpen={showWaitlistModal} 
+        onClose={() => setShowWaitlistModal(false)} 
+      />
     </>
   );
 }

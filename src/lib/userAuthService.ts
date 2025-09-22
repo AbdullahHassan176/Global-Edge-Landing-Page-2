@@ -95,13 +95,63 @@ export interface Notification {
 // Mock data for development
 const MOCK_USERS: User[] = [
   {
-    id: 'user-1',
-    email: 'issuer@example.com',
-    firstName: 'Ahmed',
-    lastName: 'Al-Rashid',
+    id: 'demo-admin-1',
+    email: 'admin@globalnext.rocks',
+    firstName: 'Demo',
+    lastName: 'Admin',
+    role: 'investor', // Using investor role for demo purposes
+    status: 'active',
+    phone: '+971501234567',
+    country: 'UAE',
+    kycStatus: 'approved',
+    investmentLimit: 1000000,
+    totalInvested: 0,
+    createdAt: '2024-01-15T10:00:00Z',
+    updatedAt: '2024-01-15T10:00:00Z',
+    lastLogin: '2024-01-20T14:30:00Z',
+    preferences: {
+      emailNotifications: true,
+      smsNotifications: true,
+      investmentAlerts: true,
+      marketingEmails: false,
+      language: 'en',
+      timezone: 'Asia/Dubai',
+      currency: 'USD'
+    }
+  },
+  {
+    id: 'demo-investor-1',
+    email: 'investor@globalnext.rocks',
+    firstName: 'Demo',
+    lastName: 'Investor',
+    role: 'investor',
+    status: 'active',
+    phone: '+971507654321',
+    country: 'UAE',
+    kycStatus: 'approved',
+    investmentLimit: 1000000,
+    totalInvested: 250000,
+    createdAt: '2024-01-10T09:00:00Z',
+    updatedAt: '2024-01-20T16:45:00Z',
+    lastLogin: '2024-01-20T16:45:00Z',
+    preferences: {
+      emailNotifications: true,
+      smsNotifications: false,
+      investmentAlerts: true,
+      marketingEmails: true,
+      language: 'en',
+      timezone: 'Asia/Dubai',
+      currency: 'USD'
+    }
+  },
+  {
+    id: 'demo-issuer-1',
+    email: 'issuer@globalnext.rocks',
+    firstName: 'Demo',
+    lastName: 'Issuer',
     role: 'issuer',
     status: 'active',
-    company: 'Dubai Real Estate Holdings',
+    company: 'Global Edge Demo Holdings',
     phone: '+971501234567',
     country: 'UAE',
     kycStatus: 'approved',
@@ -122,34 +172,9 @@ const MOCK_USERS: User[] = [
     branding: {
       primaryColor: '#1e40af',
       secondaryColor: '#3b82f6',
-      companyName: 'Dubai Real Estate Holdings',
-      supportEmail: 'support@dubaire.com',
+      companyName: 'Global Edge Demo Holdings',
+      supportEmail: 'support@globalnext.rocks',
       supportPhone: '+971501234567'
-    }
-  },
-  {
-    id: 'user-2',
-    email: 'investor@example.com',
-    firstName: 'Sarah',
-    lastName: 'Johnson',
-    role: 'investor',
-    status: 'active',
-    phone: '+971507654321',
-    country: 'UAE',
-    kycStatus: 'approved',
-    investmentLimit: 1000000,
-    totalInvested: 250000,
-    createdAt: '2024-01-10T09:00:00Z',
-    updatedAt: '2024-01-20T16:45:00Z',
-    lastLogin: '2024-01-20T16:45:00Z',
-    preferences: {
-      emailNotifications: true,
-      smsNotifications: false,
-      investmentAlerts: true,
-      marketingEmails: true,
-      language: 'en',
-      timezone: 'Asia/Dubai',
-      currency: 'USD'
     }
   }
 ];
@@ -157,7 +182,7 @@ const MOCK_USERS: User[] = [
 const MOCK_INVESTMENTS: Investment[] = [
   {
     id: 'inv-1',
-    userId: 'user-2',
+    userId: 'demo-investor-1',
     assetId: 'asset-1',
     amount: 50000,
     status: 'completed',
@@ -169,7 +194,7 @@ const MOCK_INVESTMENTS: Investment[] = [
   },
   {
     id: 'inv-2',
-    userId: 'user-2',
+    userId: 'demo-investor-1',
     assetId: 'asset-2',
     amount: 75000,
     status: 'pending',
@@ -183,7 +208,7 @@ const MOCK_INVESTMENTS: Investment[] = [
 const MOCK_NOTIFICATIONS: Notification[] = [
   {
     id: 'notif-1',
-    userId: 'user-2',
+    userId: 'demo-investor-1',
     type: 'investment_completed',
     title: 'Investment Completed',
     message: 'Your investment in Dubai Marina Office Tower has been successfully completed.',
@@ -194,7 +219,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
   },
   {
     id: 'notif-2',
-    userId: 'user-2',
+    userId: 'demo-investor-1',
     type: 'kyc_required',
     title: 'KYC Verification Required',
     message: 'Please complete your KYC verification to proceed with your investment.',
@@ -222,8 +247,9 @@ class UserAuthService {
 
       // Mock password validation - check against stored users or default passwords
       const validPasswords: Record<string, string> = {
-        'issuer@example.com': process.env.ISSUER_PASSWORD || 'Issuer123!',
-        'investor@example.com': process.env.INVESTOR_PASSWORD || 'Investor123!'
+        'admin@globalnext.rocks': 'DemoAdmin123!',
+        'investor@globalnext.rocks': 'DemoInvestor123!',
+        'issuer@globalnext.rocks': 'DemoIssuer123!'
       };
 
       // For newly registered users, use a default password or check if they have a stored password
@@ -231,6 +257,25 @@ class UserAuthService {
 
       if (expectedPassword !== password) {
         return { success: false, error: 'Invalid email or password' };
+      }
+
+      // Check user status
+      if (user.status === 'pending') {
+        return { 
+          success: false, 
+          error: 'Your account is pending admin approval. Please wait for approval or contact support if not approved within 48 hours.',
+          user: user,
+          requiresApproval: true
+        };
+      }
+
+      if (user.status === 'suspended') {
+        return { 
+          success: false, 
+          error: 'Your account has been suspended. Please contact support for assistance.',
+          user: user,
+          accountSuspended: true
+        };
       }
 
       // Create session

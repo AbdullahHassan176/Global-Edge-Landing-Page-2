@@ -123,7 +123,7 @@ export default function Icon({ name, className = '', size = 16 }: IconProps) {
   
   if (problematicIcons.includes(name)) {
     sizeClass = 'force-icon-small';
-    console.log(`Icon ${name} forced to 20px with CSS class force-icon-small`);
+    // console.log(`Icon ${name} forced to 20px with CSS class force-icon-small`);
   } else {
     // Ensure size is reasonable
     sizeClass = 'force-icon-medium';
@@ -149,10 +149,10 @@ export default function Icon({ name, className = '', size = 16 }: IconProps) {
   // Combine the cleaned className with the size class
   const finalClassName = `${sizeClass} ${cleanClassName}`.trim();
   
-  // Debug logging
-  if (problematicIcons.includes(name)) {
-    console.log(`Icon ${name} final className: "${finalClassName}"`);
-  }
+  // Debug logging (disabled for performance)
+  // if (problematicIcons.includes(name)) {
+  //   console.log(`Icon ${name} final className: "${finalClassName}"`);
+  // }
   
-  return <IconComponent className={finalClassName} size="xl" />;
+  return <IconComponent className={finalClassName} size="sm" />;
 }

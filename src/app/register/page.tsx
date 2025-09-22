@@ -28,6 +28,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   useEffect(() => {
     // Set role from URL parameter
@@ -39,6 +40,13 @@ export default function RegisterPage() {
         role
       }));
     }
+    
+    // Simulate page loading completion
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 500);
+    
+    return () => clearTimeout(timer);
   }, [searchParams]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -109,38 +117,35 @@ export default function RegisterPage() {
     setIsSubmitting(true);
 
     try {
-      const result = await userAuthService.register({
+      // Use direct service for faster registration
+      const user = await userAuthService.register({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        password: formData.password,
         role: formData.role,
-        company: formData.role === 'issuer' ? formData.company : undefined,
-        phone: formData.phone,
-        country: formData.country,
-        preferences: {
-          emailNotifications: true,
-          smsNotifications: false,
-          investmentAlerts: true,
-          marketingEmails: formData.agreeToMarketing,
-          language: 'en',
-          timezone: 'Asia/Dubai',
-          currency: 'USD'
-        }
+        country: formData.country
       });
 
-      if (result.success && result.user) {
+      if (user) {
         setIsSubmitted(true);
         
-        // Redirect to appropriate dashboard after a delay
-        setTimeout(() => {
-          if (result.user?.role === 'issuer') {
-            router.push('/issuer/dashboard');
-          } else {
-            router.push('/investor/dashboard');
-          }
-        }, 3000);
+        // Show approval notification instead of redirecting
+        // Users with pending status need admin approval
+        if (user.status === 'pending') {
+          // Don't redirect - show approval message
+        } else {
+          // Only redirect if user is already approved
+          setTimeout(() => {
+            if (user.role === 'issuer') {
+              router.push('/issuer/dashboard');
+            } else {
+              router.push('/investor/dashboard');
+            }
+          }, 2000);
+        }
       } else {
-        setErrors({ submit: result.error || 'Registration failed. Please try again.' });
+        setErrors({ submit: 'Registration failed. Please try again.' });
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -149,6 +154,17 @@ export default function RegisterPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (isPageLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-global-teal mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading registration form...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isSubmitted) {
     return (
@@ -166,15 +182,27 @@ export default function RegisterPage() {
             </div>
 
             <h1 className="text-4xl font-poppins font-bold mb-4">
-              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                Registration Successful!
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                Registration Submitted!
               </span>
             </h1>
             
             <p className="text-white/80 text-lg mb-8 leading-relaxed">
-              Welcome to Global Edge! Your account has been created successfully. 
-              You'll be redirected to your dashboard shortly.
+              Welcome to Global Edge! Your account has been created and is now pending admin approval. 
+              You'll receive an email notification once your account is approved.
             </p>
+
+            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-6 mb-8">
+              <div className="flex items-center mb-4">
+                <Icon name="clock" className="text-yellow-400 mr-3" />
+                <h3 className="text-yellow-400 font-semibold">Account Pending Approval</h3>
+              </div>
+              <div className="text-white/80 text-sm space-y-2">
+                <p>• Your account is currently under review</p>
+                <p>• You'll receive an email once approved</p>
+                <p>• Contact support if not approved within 48 hours</p>
+              </div>
+            </div>
 
             <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10">
               <h3 className="text-white font-semibold mb-4 flex items-center justify-center">
@@ -203,8 +231,27 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-400 mx-auto"></div>
-            <p className="text-white/50 text-sm mt-4">Redirecting to your dashboard...</p>
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 mb-8">
+              <div className="flex items-center mb-4">
+                <Icon name="envelope" className="text-blue-400 mr-3" />
+                <h3 className="text-blue-400 font-semibold">Need Help?</h3>
+              </div>
+              <div className="text-white/80 text-sm space-y-2">
+                <p>If your account is not approved within 48 hours, contact our support team:</p>
+                <div className="mt-3 space-y-1">
+                  <p><strong>Email:</strong> support@globalnext.rocks</p>
+                  <p><strong>Phone:</strong> +971 50 123 4567</p>
+                  <p><strong>Hours:</strong> 9 AM - 6 PM (UAE Time)</p>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => window.location.href = '/login'}
+              className="w-full bg-gradient-to-r from-global-teal to-global-green text-white py-4 px-8 rounded-2xl font-semibold text-lg hover:from-global-green hover:to-global-teal transition-all duration-300 transform hover:scale-105 shadow-2xl"
+            >
+              Go to Login Page
+            </button>
           </div>
         </div>
       </div>

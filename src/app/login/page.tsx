@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { oauthService } from '@/lib/oauthService';
 import { userAuthService } from '@/lib/userAuthService';
+import { userAuthIntegration } from '@/lib/integration/userAuthIntegration';
 import { loginStorageService } from '@/lib/loginStorageService';
 
 export default function LoginPage() {
@@ -38,7 +39,8 @@ export default function LoginPage() {
     setError('');
     
     try {
-      const result = await userAuthService.login(email, password);
+      // Use integration service with database fallback
+      const result = await userAuthIntegration.login(email, password);
       
       if (result.success && result.user) {
         // Save credentials if remember me is checked
@@ -60,7 +62,14 @@ export default function LoginPage() {
           router.push('/investor/dashboard');
         }
       } else {
-        setError(result.error || 'Login failed. Please try again.');
+        // Handle different error types
+        if (result.requiresApproval) {
+          setError(result.error || 'Your account is pending approval.');
+        } else if (result.accountSuspended) {
+          setError(result.error || 'Your account has been suspended.');
+        } else {
+          setError(result.error || 'Login failed. Please try again.');
+        }
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -239,8 +248,37 @@ export default function LoginPage() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-4">
-                <p className="text-red-400 text-sm">{error}</p>
+              <div className={`rounded-xl p-4 mb-4 ${
+                error.includes('pending admin approval') || error.includes('pending approval') 
+                  ? 'bg-yellow-500/20 border border-yellow-500/50' 
+                  : error.includes('suspended')
+                  ? 'bg-red-500/20 border border-red-500/50'
+                  : 'bg-red-500/20 border border-red-500/50'
+              }`}>
+                <div className="flex items-start">
+                  <Icon 
+                    name={error.includes('pending admin approval') || error.includes('pending approval') ? 'clock' : 'exclamation-triangle'} 
+                    className={`mr-3 mt-0.5 ${
+                      error.includes('pending admin approval') || error.includes('pending approval')
+                        ? 'text-yellow-400'
+                        : 'text-red-400'
+                    }`} 
+                  />
+                  <div className="flex-1">
+                    <p className={`text-sm ${
+                      error.includes('pending admin approval') || error.includes('pending approval')
+                        ? 'text-yellow-400'
+                        : 'text-red-400'
+                    }`}>
+                      {error}
+                    </p>
+                    {(error.includes('pending admin approval') || error.includes('pending approval')) && (
+                      <div className="mt-3 text-xs text-yellow-300">
+                        <p><strong>Need help?</strong> Contact support@globalnext.rocks or +971 50 123 4567</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
 
