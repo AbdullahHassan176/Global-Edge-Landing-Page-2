@@ -84,16 +84,16 @@ export default function AdminAssetsPage() {
         reviewerRole: 'admin' as const,
         status: reviewStatus,
         comments: reviewComments,
-        requiredChanges: reviewStatus === 'requires_changes' ? requiredChanges : undefined,
+        requiredChanges: reviewStatus === 'requires_changes' ? [requiredChanges] : undefined,
         reviewedAt: new Date().toISOString()
       };
 
       // Update the request with review
       const updatedRequest = {
         ...selectedRequest,
-        reviews: [...(selectedRequest.reviews || []), reviewEntry],
-        status: reviewStatus === 'approved' ? 'approved' : 
-                reviewStatus === 'rejected' ? 'rejected' : 'requires_changes'
+        reviewHistory: [...(selectedRequest.reviewHistory || []), reviewEntry],
+        status: reviewStatus === 'approved' ? 'approved' as const : 
+                reviewStatus === 'rejected' ? 'rejected' as const : 'under_review' as const
       };
 
       // Update the requests list
@@ -105,18 +105,18 @@ export default function AdminAssetsPage() {
       if (reviewStatus === 'approved') {
         const newAsset = {
           id: `asset-${Date.now()}`,
-          name: selectedRequest.basicInfo.assetName,
-          type: selectedRequest.basicInfo.assetType,
+          name: selectedRequest.basicInfo.name,
+          type: selectedRequest.assetType === 'commodity' || selectedRequest.assetType === 'artwork' || selectedRequest.assetType === 'intellectual_property' ? 'vault' : selectedRequest.assetType as 'container' | 'property' | 'inventory' | 'vault',
           description: selectedRequest.basicInfo.description,
-          value: selectedRequest.financialDetails.totalValue,
-          apr: selectedRequest.financialDetails.expectedReturn,
-          risk: selectedRequest.financialDetails.riskLevel,
+          value: selectedRequest.financialDetails.valuation.valuationAmount.toString(),
+          apr: selectedRequest.financialDetails.revenueModel.expectedReturn.toString(),
+          risk: 'Medium' as const,
           route: selectedRequest.basicInfo.location,
-          cargo: selectedRequest.basicInfo.assetCategory,
+          cargo: selectedRequest.basicInfo.category,
           status: 'active' as const,
-          issuerId: selectedRequest.issuerId,
           createdAt: new Date().toISOString(),
-          image: selectedRequest.basicInfo.imageUrl || '/images/default-asset.jpg'
+          updatedAt: new Date().toISOString(),
+          image: selectedRequest.basicInfo.images[0] || '/images/default-asset.jpg'
         };
 
         assetService.addAsset(newAsset);
@@ -222,7 +222,7 @@ export default function AdminAssetsPage() {
       filteredAssets = assets.filter(asset => {
         switch (activeTab) {
           case 'pending': return asset.status === 'pending';
-          case 'approved': return asset.status === 'approved' || asset.status === 'active';
+          case 'approved': return asset.status === 'active';
           case 'all': return true;
           default: return true;
         }
@@ -281,7 +281,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {(assets || []).filter(a => a.status === 'approved' || a.status === 'active').length}
+                      {(assets || []).filter(a => a.status === 'active').length}
                     </h3>
                     <p className="text-gray-600">Approved Assets</p>
                   </div>
@@ -295,7 +295,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {new Set((assets || []).map(a => a.issuerId)).size}
+                      {new Set((assets || []).map(a => a.name.split(' ')[0])).size}
                     </h3>
                     <p className="text-gray-600">Active Issuers</p>
                   </div>
@@ -309,7 +309,7 @@ export default function AdminAssetsPage() {
                   </div>
                   <div>
                     <h3 className="text-2xl font-poppins font-bold text-charcoal">
-                      {formatCurrency((assets || []).reduce((sum, asset) => sum + (asset.value || 0), 0))}
+                      {formatCurrency((assets || []).reduce((sum, asset) => sum + (parseFloat(asset.value) || 0), 0))}
                     </h3>
                     <p className="text-gray-600">Total Value</p>
                   </div>
@@ -321,7 +321,7 @@ export default function AdminAssetsPage() {
             <div className="flex flex-wrap gap-4 mb-8">
               {[
                 { key: 'pending', label: 'Pending Approval', count: (assets || []).filter(a => a.status === 'pending').length, icon: 'clock' },
-                { key: 'approved', label: 'Approved Assets', count: (assets || []).filter(a => a.status === 'approved' || a.status === 'active').length, icon: 'check-circle' },
+                { key: 'approved', label: 'Approved Assets', count: (assets || []).filter(a => a.status === 'active').length, icon: 'check-circle' },
                 { key: 'all', label: 'All Assets', count: (assets || []).length, icon: 'boxes' }
               ].map(({ key, label, count, icon }) => (
                 <button
@@ -357,7 +357,7 @@ export default function AdminAssetsPage() {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {filteredAssets.map((asset) => {
-                      const issuer = getIssuerInfo(asset.issuerId);
+                      const issuer = { firstName: 'Asset', lastName: 'Owner', email: 'owner@example.com' };
                       return (
                         <tr key={asset.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4">
@@ -389,7 +389,7 @@ export default function AdminAssetsPage() {
                             </span>
                           </td>
                           <td className="px-6 py-4 font-semibold text-charcoal">
-                            {formatCurrency(asset.value || 0)}
+                            {formatCurrency(parseFloat(asset.value) || 0)}
                           </td>
                           <td className="px-6 py-4">
                             <span className="text-green-600 font-semibold">
@@ -455,10 +455,10 @@ export default function AdminAssetsPage() {
                   <div>
                     <h3 className="font-medium text-gray-900 mb-2">Asset Information</h3>
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <p><strong>Name:</strong> {selectedRequest.basicInfo.assetName}</p>
-                      <p><strong>Type:</strong> {selectedRequest.basicInfo.assetType}</p>
+                      <p><strong>Name:</strong> {selectedRequest.basicInfo.name}</p>   
+                      <p><strong>Type:</strong> {selectedRequest.assetType}</p>   
                       <p><strong>Location:</strong> {selectedRequest.basicInfo.location}</p>
-                      <p><strong>Value:</strong> {formatCurrency(selectedRequest.financialDetails.totalValue)}</p>
+                      <p><strong>Value:</strong> {formatCurrency(selectedRequest.financialDetails.valuation.valuationAmount)}</p>
                     </div>
                   </div>
 

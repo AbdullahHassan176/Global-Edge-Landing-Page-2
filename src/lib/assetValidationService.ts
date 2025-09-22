@@ -726,7 +726,7 @@ class AssetValidationService {
     // Get required documents for this asset type and token standard
     const requiredDocs = this.getRequiredDocuments(assetType, tokenStandard);
     const uploadedDocs = documents.map(doc => doc.type);
-    const missingDocs = requiredDocs.filter(doc => !uploadedDocs.includes(doc));
+    const missingDocs = requiredDocs.filter(doc => !uploadedDocs.includes(doc as any));
 
     if (missingDocs.length > 0) {
       errors.push({

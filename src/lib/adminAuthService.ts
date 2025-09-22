@@ -353,5 +353,3 @@ class AdminAuthService {
 // Export singleton instance
 export const adminAuthService = new AdminAuthService();
 
-// Export types
-export type { AdminUser, AdminLoginCredentials, AdminRegistrationData };

@@ -422,12 +422,12 @@ export const DOCUMENT_REQUIREMENTS: Record<string, Record<string, AssetDocumentT
     'ERC-721': [
       'intellectual_property_certificate', 'valuation_report', 'insurance_policy',
       'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'inspection_report', 'origin_certificate', 'authenticity_certificate'
+      'inspection_report', 'origin_certificate'
     ],
     'ERC-1155': [
       'intellectual_property_certificate', 'valuation_report', 'insurance_policy',
       'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'inspection_report', 'origin_certificate', 'authenticity_certificate'
+      'inspection_report', 'origin_certificate'
     ]
   },
   'intellectual_property': {

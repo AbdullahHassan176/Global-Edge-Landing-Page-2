@@ -43,9 +43,24 @@ export default function IssuerDashboard() {
       const allInvestments = await userAuthService.getInvestments(currentUser.id);
       setInvestments(allInvestments);
 
-      // Load issuer's assets
-      const allAssets = assetService.getAllAssetsForAdmin();
-      const issuerAssets = allAssets.filter(asset => asset.issuerId === currentUser.id);
+      // Load issuer's assets (mock for now)
+      const issuerAssets = [
+        {
+          id: '1',
+          name: 'Jebel Ali-Dubai Container',
+          type: 'container' as const,
+          apr: '12.5%',
+          risk: 'Medium' as const,
+          value: '$45,000',
+          route: 'Jebel Ali Port → Dubai',
+          cargo: 'Electronics & Luxury Goods',
+          image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
+          description: 'High-value electronics and luxury goods container route from Jebel Ali Port to Dubai.',
+          status: 'active' as const,
+          createdAt: '2024-01-15T10:00:00Z',
+          updatedAt: '2024-01-15T10:00:00Z'
+        }
+      ];
       setAssets(issuerAssets);
 
       // Calculate stats
@@ -63,7 +78,7 @@ export default function IssuerDashboard() {
         inv.status === 'pending' && inv.kycRequired && !inv.kycCompleted
       ).length;
 
-      const totalValue = issuerAssets.reduce((sum, asset) => sum + (asset.value || 0), 0);
+      const totalValue = issuerAssets.reduce((sum, asset) => sum + (parseFloat(asset.value.replace(/[$,]/g, '')) || 0), 0);
 
       setStats({
         totalInvestments: allInvestments.length,

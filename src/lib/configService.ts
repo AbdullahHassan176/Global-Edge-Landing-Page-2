@@ -425,5 +425,3 @@ class ConfigService {
 // Export singleton instance
 export const configService = new ConfigService();
 
-// Export types for use in other files
-export type { AppConfig };

@@ -502,7 +502,7 @@ class UserAuthService {
   // Whitelabel methods
   async updateBranding(userId: string, branding: Partial<WhitelabelBranding>): Promise<boolean> {
     try {
-      const user = await this.updateUser(userId, { branding });
+      const user = await this.updateUser(userId, { branding: branding as WhitelabelBranding });
       return user !== null;
     } catch (error) {
       console.error('Update branding error:', error);
@@ -511,7 +511,7 @@ class UserAuthService {
   }
 
   // Storage methods
-  private getAllUsers(): User[] {
+  getAllUsers(): User[] {
     if (typeof window === 'undefined') return MOCK_USERS;
     
     // Get registered users from localStorage

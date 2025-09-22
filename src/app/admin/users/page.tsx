@@ -29,10 +29,30 @@ interface User {
 // Enhanced user data with issuer tracking
 const getEnhancedUsers = (): User[] => {
   const allUsers = userAuthService.getAllUsers();
-  const allAssets = assetService.getAllAssetsForAdmin();
-  
   return allUsers.map(user => {
-    const userAssets = allAssets.filter(asset => asset.issuerId === user.id);
+    // Map status values to match User interface
+    const mappedStatus = user.status === 'kyc_approved' ? 'verified' as const :
+                        user.status === 'kyc_rejected' ? 'suspended' as const :
+                        user.status === 'kyc_pending' ? 'pending' as const :
+                        user.status;
+    
+    // Map kycStatus values to match User interface
+    const mappedKycStatus = user.kycStatus === 'not_started' ? 'pending' as const :
+                           user.kycStatus === 'in_progress' ? 'pending' as const :
+                           user.kycStatus === 'pending_review' ? 'pending' as const :
+                           user.kycStatus;
+    
+    return {
+      ...user,
+      status: mappedStatus,
+      kycStatus: mappedKycStatus
+    };
+  }).map(user => {
+    // Mock user assets for now
+    const userAssets = user.role === 'issuer' ? [
+      { id: '1', name: 'Sample Asset 1', value: '$50,000' },
+      { id: '2', name: 'Sample Asset 2', value: '$75,000' }
+    ] : [];
     const totalInvestments = user.role === 'investor' ? 
       Math.floor(Math.random() * 100000) + 10000 : // Mock investment amount for investors
       0;
@@ -44,16 +64,16 @@ const getEnhancedUsers = (): User[] => {
       email: user.email,
       phone: user.phone || '+1 (555) 000-0000',
       role: user.role,
-      accountType: user.accountType || 'individual',
+      accountType: 'individual',
       status: user.status || 'active',
       createdAt: user.createdAt || new Date().toISOString(),
       lastLogin: user.lastLogin || new Date().toISOString(),
       totalInvestments,
       kycStatus: user.kycStatus || 'pending',
-      permissions: user.permissions || ['view_dashboard'],
+      permissions: ['view_dashboard'],
       assetsCreated: user.role === 'issuer' ? userAssets.length : 0,
       assetsUnderManagement: user.role === 'issuer' ? 
-        userAssets.reduce((sum, asset) => sum + (asset.value || 0), 0) : 0
+        userAssets.reduce((sum, asset) => sum + (parseFloat(asset.value.replace(/[$,]/g, '')) || 0), 0) : 0
     };
   });
 };

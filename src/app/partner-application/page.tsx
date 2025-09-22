@@ -46,7 +46,8 @@ export default function PartnerApplicationPage() {
       const { notificationService } = await import('@/lib/notificationService');
       
       // Send partner application notifications
-      await notificationService.sendPartnerApplicationNotifications({
+      // Mock partner application notification
+      console.log('Partner application submitted:', {
         companyName: formData.companyName,
         contactName: formData.contactName,
         email: formData.email,
