@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { AssetMetricsService, AssetMetrics } from '@/lib/assetMetricsService';
 import { getPartnersForLandingPage } from '@/lib/partnersData';
-import Image from 'next/image';
 
 export default function HomePage() {
   const [metrics, setMetrics] = useState<AssetMetrics | null>(null);
@@ -338,18 +337,9 @@ export default function HomePage() {
                   title={partner.description}
                 >
                   <div className="w-24 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center p-2 group-hover:shadow-md transition-shadow">
-                    <Image
-                      src={partner.logo}
-                      alt={`${partner.name} logo`}
-                      width={80}
-                      height={40}
-                      className="max-w-full max-h-full object-contain"
-                      onError={(e) => {
-                        // Hide the logo if it fails to load
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                      }}
-                    />
+                    <div className="w-full h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">{partner.name}</span>
+                    </div>
                   </div>
                 </a>
               </div>

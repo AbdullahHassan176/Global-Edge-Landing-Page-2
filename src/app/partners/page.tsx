@@ -5,7 +5,6 @@ import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
 import Link from 'next/link';
 import { partners, getPartnersByCategory } from '@/lib/partnersData';
-import Image from 'next/image';
 
 const partnerCategories = [
   {
@@ -117,18 +116,9 @@ export default function PartnersPage() {
                       >
                         <div className="flex flex-col items-center space-y-2">
                           <div className="w-12 h-8 flex items-center justify-center">
-                            <Image
-                              src={partner.logo}
-                              alt={`${partner.name} logo`}
-                              width={48}
-                              height={32}
-                              className="max-w-full max-h-full object-contain"
-                              onError={(e) => {
-                                // Hide the logo if it fails to load
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                              }}
-                            />
+                            <div className="w-full h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded flex items-center justify-center">
+                              <span className="text-white font-bold text-xs">{partner.name}</span>
+                            </div>
                           </div>
                           <span className="font-semibold text-charcoal text-sm group-hover:text-global-teal transition-colors">
                             {partner.name}
