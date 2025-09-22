@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { userAuthService } from '@/lib/userAuthService';
 
 export default function RegisterPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState<'issuer' | 'investor' | null>(null);
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -14,25 +18,28 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
     phone: '',
-    accountType: 'individual',
+    company: '',
+    country: 'UAE',
+    role: 'issuer' as 'issuer' | 'investor',
     agreeToTerms: false,
     agreeToMarketing: false
   });
 
-  useEffect(() => {
-    // Set account type from URL parameter
-    const type = searchParams.get('type');
-    if (type === 'business' || type === 'individual') {
-      setFormData(prev => ({
-        ...prev,
-        accountType: type
-      }));
-    }
-  }, [searchParams]);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    // Set role from URL parameter
+    const role = searchParams.get('role') as 'issuer' | 'investor';
+    if (role && (role === 'issuer' || role === 'investor')) {
+      setSelectedRole(role);
+      setFormData(prev => ({
+        ...prev,
+        role
+      }));
+    }
+  }, [searchParams]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({
@@ -63,7 +70,7 @@ export default function RegisterPage() {
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Email is invalid';
     }
 
     if (!formData.password) {
@@ -78,6 +85,10 @@ export default function RegisterPage() {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
+    }
+
+    if (formData.role === 'issuer' && !formData.company.trim()) {
+      newErrors.company = 'Company name is required for issuers';
     }
 
     if (!formData.agreeToTerms) {
@@ -96,282 +107,354 @@ export default function RegisterPage() {
     }
 
     setIsSubmitting(true);
-    
-    // Simulate registration process and send notifications
-    setTimeout(async () => {
-      // Import notification service dynamically to avoid SSR issues
-      const { notificationService } = await import('@/lib/notificationService');
-      
-      // Send account creation notifications
-      await notificationService.sendAccountCreatedNotifications({
+
+    try {
+      const result = await userAuthService.register({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        role: formData.role,
+        company: formData.role === 'issuer' ? formData.company : undefined,
         phone: formData.phone,
-        accountType: formData.accountType
+        country: formData.country,
+        preferences: {
+          emailNotifications: true,
+          smsNotifications: false,
+          investmentAlerts: true,
+          marketingEmails: formData.agreeToMarketing,
+          language: 'en',
+          timezone: 'Asia/Dubai',
+          currency: 'USD'
+        }
       });
-      
+
+      if (result.success && result.user) {
+        setIsSubmitted(true);
+        
+        // Redirect to appropriate dashboard after a delay
+        setTimeout(() => {
+          if (result.user?.role === 'issuer') {
+            router.push('/issuer/dashboard');
+          } else {
+            router.push('/investor/dashboard');
+          }
+        }, 3000);
+      } else {
+        setErrors({ submit: result.error || 'Registration failed. Please try again.' });
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setErrors({ submit: 'Registration failed. Please try again.' });
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 2000);
+    }
   };
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-soft-white flex items-center justify-center">
-        <div className="max-w-2xl mx-auto px-6 lg:px-8 text-center">
-          <div className="bg-white rounded-2xl p-12 shadow-lg">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon name="check-circle" className="text-green-600 text-3xl" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="relative z-10 max-w-md w-full mx-4">
+          <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 text-center">
+            <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl animate-pulse">
+              <Icon name="check-circle" className="text-white text-4xl" />
             </div>
-            <h1 className="text-3xl font-poppins font-bold text-charcoal mb-4">
-              Account Created Successfully!
+
+            <h1 className="text-4xl font-poppins font-bold mb-4">
+              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                Registration Successful!
+              </span>
             </h1>
-            <p className="text-gray-600 mb-8">
-              Welcome to Global Edge! Your account has been created. Please check your email for verification instructions.
+            
+            <p className="text-white/80 text-lg mb-8 leading-relaxed">
+              Welcome to Global Edge! Your account has been created successfully. 
+              You'll be redirected to your dashboard shortly.
             </p>
-            <div className="space-y-4">
-              <Link 
-                href="/dashboard" 
-                className="block bg-global-teal text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors"
-              >
-                Go to Dashboard
-              </Link>
-              <Link 
-                href="/get-started" 
-                className="block border-2 border-global-teal text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-global-teal hover:text-white transition-colors"
-              >
-                Back to Get Started
-              </Link>
+
+            <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10">
+              <h3 className="text-white font-semibold mb-4 flex items-center justify-center">
+                <Icon name="user" className="mr-2 text-green-400" />
+                Account Details
+              </h3>
+              <div className="space-y-2 text-sm text-white/70">
+                <div className="flex justify-between">
+                  <span>Name:</span>
+                  <span className="text-green-400 font-medium">{formData.firstName} {formData.lastName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Email:</span>
+                  <span className="text-green-400 font-medium">{formData.email}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Role:</span>
+                  <span className="text-green-400 font-medium capitalize">{formData.role}</span>
+                </div>
+                {formData.role === 'issuer' && (
+                  <div className="flex justify-between">
+                    <span>Company:</span>
+                    <span className="text-green-400 font-medium">{formData.company}</span>
+                  </div>
+                )}
+              </div>
             </div>
+
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-400 mx-auto"></div>
+            <p className="text-white/50 text-sm mt-4">Redirecting to your dashboard...</p>
           </div>
         </div>
       </div>
     );
   }
 
+  if (!selectedRole) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-global-teal mx-auto mb-4"></div>
+          <p className="text-white">Loading registration form...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Create Your Account
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden py-12">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-global-teal/20 to-edge-purple/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-edge-purple/20 to-global-teal/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="relative z-10 max-w-2xl w-full mx-4">
+        <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
+              <Icon name={selectedRole === 'issuer' ? 'building' : 'chart-line'} className="text-white text-2xl" />
+            </div>
+            <h1 className="text-3xl font-poppins font-bold text-white mb-2">
+              Create Your {selectedRole === 'issuer' ? 'Issuer' : 'Investor'} Account
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Join thousands of investors earning returns from tokenized real-world assets. Get started in minutes.
+            <p className="text-white/70">
+              Join Global Edge and start your {selectedRole === 'issuer' ? 'asset tokenization' : 'investment'} journey
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* Registration Form */}
-      <section className="py-20">
-        <div className="max-w-2xl mx-auto px-6 lg:px-8">
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h2 className="text-3xl font-poppins font-bold text-charcoal mb-8 text-center">
-              Registration Form
-            </h2>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Account Type */}
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Personal Information */}
+            <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">Account Type</label>
-                <div className="grid grid-cols-2 gap-4">
-                  <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                    formData.accountType === 'individual' 
-                      ? 'border-global-teal bg-teal-50' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}>
-                    <input
-                      type="radio"
-                      name="accountType"
-                      value="individual"
-                      checked={formData.accountType === 'individual'}
-                      onChange={(e) => handleInputChange('accountType', e.target.value)}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center">
-                      <Icon name="user" className="text-lg mr-3" />
-                      <div>
-                        <div className="font-semibold text-charcoal">Individual</div>
-                        <div className="text-sm text-gray-600">Personal account</div>
-                      </div>
-                    </div>
-                  </label>
-                  
-                  <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                    formData.accountType === 'business' 
-                      ? 'border-global-teal bg-teal-50' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}>
-                    <input
-                      type="radio"
-                      name="accountType"
-                      value="business"
-                      checked={formData.accountType === 'business'}
-                      onChange={(e) => handleInputChange('accountType', e.target.value)}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center">
-                      <Icon name="building" className="text-lg mr-3" />
-                      <div>
-                        <div className="font-semibold text-charcoal">Business</div>
-                        <div className="text-sm text-gray-600">Company account</div>
-                      </div>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              {/* Personal Information */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                  <input
-                    type="text"
-                    value={formData.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent ${
-                      errors.firstName ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter your first name"
-                  />
-                  {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                  <input
-                    type="text"
-                    value={formData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent ${
-                      errors.lastName ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter your last name"
-                  />
-                  {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
-                </div>
-              </div>
-
-              {/* Contact Information */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="your.email@example.com"
-                />
-                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent ${
-                    errors.phone ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="+1 (555) 123-4567"
-                />
-                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-              </div>
-
-              {/* Password */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
-                  <input
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent ${
-                      errors.password ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Create a strong password"
-                  />
-                  {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password *</label>
-                  <input
-                    type="password"
-                    value={formData.confirmPassword}
-                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent ${
-                      errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Confirm your password"
-                  />
-                  {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
-                </div>
-              </div>
-
-              {/* Terms and Conditions */}
-              <div className="space-y-4">
-                <label className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    checked={formData.agreeToTerms}
-                    onChange={(e) => handleInputChange('agreeToTerms', e.target.checked)}
-                    className="mt-1 text-global-teal focus:ring-global-teal"
-                  />
-                  <span className="text-sm text-gray-700">
-                    I agree to the <Link href="/terms" className="text-global-teal hover:underline">Terms and Conditions</Link> and <Link href="/privacy" className="text-global-teal hover:underline">Privacy Policy</Link> *
-                  </span>
+                <label className="block text-white/80 text-sm font-medium mb-2">
+                  First Name *
                 </label>
-                {errors.agreeToTerms && <p className="text-red-500 text-sm">{errors.agreeToTerms}</p>}
+                <input
+                  type="text"
+                  value={formData.firstName}
+                  onChange={(e) => handleInputChange('firstName', e.target.value)}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                  placeholder="Enter your first name"
+                />
+                {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
+              </div>
 
-                <label className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    checked={formData.agreeToMarketing}
-                    onChange={(e) => handleInputChange('agreeToMarketing', e.target.checked)}
-                    className="mt-1 text-global-teal focus:ring-global-teal"
-                  />
-                  <span className="text-sm text-gray-700">
-                    I would like to receive marketing communications and updates about new investment opportunities
-                  </span>
+              <div>
+                <label className="block text-white/80 text-sm font-medium mb-2">
+                  Last Name *
+                </label>
+                <input
+                  type="text"
+                  value={formData.lastName}
+                  onChange={(e) => handleInputChange('lastName', e.target.value)}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                  placeholder="Enter your last name"
+                />
+                {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
+              </div>
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-white/80 text-sm font-medium mb-2">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                placeholder="Enter your email address"
+              />
+              {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block text-white/80 text-sm font-medium mb-2">
+                Phone Number *
+              </label>
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                placeholder="+971 50 123 4567"
+              />
+              {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
+            </div>
+
+            {/* Company (for issuers) */}
+            {selectedRole === 'issuer' && (
+              <div>
+                <label className="block text-white/80 text-sm font-medium mb-2">
+                  Company Name *
+                </label>
+                <input
+                  type="text"
+                  value={formData.company}
+                  onChange={(e) => handleInputChange('company', e.target.value)}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                  placeholder="Enter your company name"
+                />
+                {errors.company && <p className="text-red-400 text-sm mt-1">{errors.company}</p>}
+              </div>
+            )}
+
+            {/* Country */}
+            <div>
+              <label className="block text-white/80 text-sm font-medium mb-2">
+                Country
+              </label>
+              <select
+                value={formData.country}
+                onChange={(e) => handleInputChange('country', e.target.value)}
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+              >
+                <option value="UAE">United Arab Emirates</option>
+                <option value="SA">Saudi Arabia</option>
+                <option value="KW">Kuwait</option>
+                <option value="QA">Qatar</option>
+                <option value="BH">Bahrain</option>
+                <option value="OM">Oman</option>
+                <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+              </select>
+            </div>
+
+            {/* Password */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-white/80 text-sm font-medium mb-2">
+                  Password *
+                </label>
+                <input
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                  placeholder="Create a password"
+                />
+                {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+              </div>
+
+              <div>
+                <label className="block text-white/80 text-sm font-medium mb-2">
+                  Confirm Password *
+                </label>
+                <input
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                  placeholder="Confirm your password"
+                />
+                {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
+              </div>
+            </div>
+
+            {/* Terms and Marketing */}
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="agreeToTerms"
+                  checked={formData.agreeToTerms}
+                  onChange={(e) => handleInputChange('agreeToTerms', e.target.checked)}
+                  className="mt-1 mr-3 h-4 w-4 text-global-teal focus:ring-global-teal border-white/20 rounded bg-white/10"
+                />
+                <label htmlFor="agreeToTerms" className="text-white/80 text-sm">
+                  I agree to the{' '}
+                  <Link href="/terms" className="text-global-teal hover:text-edge-purple">
+                    Terms and Conditions
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="/privacy" className="text-global-teal hover:text-edge-purple">
+                    Privacy Policy
+                  </Link>
+                  *
                 </label>
               </div>
+              {errors.agreeToTerms && <p className="text-red-400 text-sm">{errors.agreeToTerms}</p>}
 
-              {/* Submit Button */}
-              <div className="text-center pt-6">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-global-teal text-white px-12 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <div className="flex items-center">
-                      <Icon name="clock" className="animate-spin mr-2" />
-                      Creating Account...
-                    </div>
-                  ) : (
-                    'Create Account'
-                  )}
-                </button>
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="agreeToMarketing"
+                  checked={formData.agreeToMarketing}
+                  onChange={(e) => handleInputChange('agreeToMarketing', e.target.checked)}
+                  className="mt-1 mr-3 h-4 w-4 text-global-teal focus:ring-global-teal border-white/20 rounded bg-white/10"
+                />
+                <label htmlFor="agreeToMarketing" className="text-white/80 text-sm">
+                  I would like to receive marketing communications and updates
+                </label>
               </div>
-            </form>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-to-r from-global-teal to-edge-purple text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-global-teal/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  <Icon name="arrow-right" className="mr-2 group-hover:translate-x-1 transition-transform" />
+                  Create {selectedRole === 'issuer' ? 'Issuer' : 'Investor'} Account
+                </>
+              )}
+            </button>
+
+            {/* Error Message */}
+            {errors.submit && (
+              <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-4">
+                <p className="text-red-400 text-sm">{errors.submit}</p>
+              </div>
+            )}
 
             {/* Login Link */}
-            <div className="text-center mt-8 pt-6 border-t border-gray-200">
-              <p className="text-gray-600">
-                Already have an account? <Link href="/login" className="text-global-teal hover:underline font-semibold">Sign in here</Link>
+            <div className="text-center pt-6 border-t border-white/10">
+              <p className="text-white/70 text-sm">
+                Already have an account?{' '}
+                <Link href="/login" className="text-global-teal hover:text-edge-purple transition-colors">
+                  Sign in here
+                </Link>
               </p>
             </div>
-          </div>
+          </form>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

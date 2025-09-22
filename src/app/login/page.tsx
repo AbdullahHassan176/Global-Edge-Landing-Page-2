@@ -2,27 +2,45 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { oauthService } from '@/lib/oauthService';
+import { userAuthService } from '@/lib/userAuthService';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<'github' | 'linkedin' | null>(null);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // Simulate login process
-    setTimeout(() => {
+    try {
+      const result = await userAuthService.login(email, password);
+      
+      if (result.success && result.user) {
+        // Redirect to appropriate dashboard based on user role
+        if (result.user.role === 'issuer') {
+          router.push('/issuer/dashboard');
+        } else {
+          router.push('/investor/dashboard');
+        }
+      } else {
+        setError(result.error || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Login failed. Please try again.');
+    } finally {
       setIsLoading(false);
-      // Redirect to dashboard after successful login
-      window.location.href = '/dashboard';
-    }, 1000);
+    }
   };
 
   const handleGitHubLogin = async () => {
@@ -176,6 +194,13 @@ export default function LoginPage() {
               </div>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-4">
+                <p className="text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
             <div className="pt-2">
               <button
                 type="submit"
@@ -245,7 +270,7 @@ export default function LoginPage() {
         <div className="mt-8 text-center">
           <p className="text-white/80 text-sm">
             Don't have an account?{' '}
-            <Link href="/register" className="font-semibold text-white hover:text-global-teal transition-colors">
+            <Link href="/register/role" className="font-semibold text-white hover:text-global-teal transition-colors">
               Create one here
             </Link>
           </p>
