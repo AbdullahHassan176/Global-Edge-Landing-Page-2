@@ -9,8 +9,8 @@ const { CosmosClient } = require('@azure/cosmos');
 
 // Configuration
 const config = {
-  endpoint: process.env.COSMOS_DB_ENDPOINT || 'https://globaledge-landingpage-nosql-db.documents.azure.com:443/',
-  key: process.env.COSMOS_DB_KEY || 'bZ3gumd7AJUEET4dTreXOZLCevdrPKPQUYYYp66rZegaWydPOvJNawrFcc8WKirzbVDvxGC9v5SPACDbuydmfQ==',
+  endpoint: process.env.COSMOS_DB_ENDPOINT || 'https://your-cosmos-account.documents.azure.com:443/',
+  key: process.env.COSMOS_DB_KEY || 'YOUR_COSMOS_DB_ACCOUNT_KEY',
   databaseId: process.env.COSMOS_DB_DATABASE_ID || 'GlobalEdgeDatabase'
 };
 
