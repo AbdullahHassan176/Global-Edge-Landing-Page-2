@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { oauthService } from '@/lib/oauthService';
 import { userAuthService } from '@/lib/userAuthService';
+import { loginStorageService } from '@/lib/loginStorageService';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,6 +18,20 @@ export default function LoginPage() {
   const [oauthLoading, setOauthLoading] = useState<'github' | 'linkedin' | null>(null);
   const [error, setError] = useState('');
 
+  // Load saved credentials on component mount
+  useEffect(() => {
+    const savedCredentials = loginStorageService.getAutoFillData('user');
+    if (savedCredentials) {
+      if (savedCredentials.email) {
+        setEmail(savedCredentials.email);
+      }
+      if (savedCredentials.username) {
+        setEmail(savedCredentials.username); // Use username as email for login
+      }
+      setRememberMe(true);
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -26,6 +41,18 @@ export default function LoginPage() {
       const result = await userAuthService.login(email, password);
       
       if (result.success && result.user) {
+        // Save credentials if remember me is checked
+        if (rememberMe) {
+          loginStorageService.saveCredentials({
+            email: email,
+            rememberMe: true,
+            loginType: 'user'
+          });
+        } else {
+          // Clear saved credentials if remember me is unchecked
+          loginStorageService.clearSavedCredentials();
+        }
+
         // Redirect to appropriate dashboard based on user role
         if (result.user.role === 'issuer') {
           router.push('/issuer/dashboard');
@@ -187,7 +214,19 @@ export default function LoginPage() {
                 </label>
               </div>
 
-              <div className="text-sm">
+              <div className="text-sm space-x-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    loginStorageService.clearSavedCredentials();
+                    setEmail('');
+                    setPassword('');
+                    setRememberMe(false);
+                  }}
+                  className="font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  Clear saved login
+                </button>
                 <Link href="/forgot-password" className="font-semibold text-global-teal hover:text-edge-purple transition-colors">
                   Forgot password?
                 </Link>

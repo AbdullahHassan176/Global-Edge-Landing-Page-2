@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { adminAuthService, AdminLoginCredentials } from '@/lib/adminAuthService';
+import { loginStorageService } from '@/lib/loginStorageService';
 
 export default function AdminLoginPage() {
   const [credentials, setCredentials] = useState<AdminLoginCredentials>({
@@ -14,6 +15,7 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
 
   // Redirect if already authenticated
@@ -22,6 +24,20 @@ export default function AdminLoginPage() {
       router.push('/admin');
     }
   }, [router]);
+
+  // Load saved credentials on component mount
+  useEffect(() => {
+    const savedCredentials = loginStorageService.getAutoFillData('admin');
+    if (savedCredentials) {
+      if (savedCredentials.username) {
+        setCredentials(prev => ({
+          ...prev,
+          username: savedCredentials.username || ''
+        }));
+      }
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +48,18 @@ export default function AdminLoginPage() {
       const result = await adminAuthService.login(credentials);
       
       if (result.success) {
+        // Save credentials if remember me is checked
+        if (rememberMe) {
+          loginStorageService.saveCredentials({
+            username: credentials.username,
+            rememberMe: true,
+            loginType: 'admin'
+          });
+        } else {
+          // Clear saved credentials if remember me is unchecked
+          loginStorageService.clearSavedCredentials();
+        }
+
         // Redirect to admin dashboard
         router.push('/admin');
       } else {
@@ -155,6 +183,34 @@ export default function AdminLoginPage() {
                   />
                 </button>
               </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 text-slate-600 focus:ring-slate-500 border-gray-300 rounded transition-colors"
+                />
+                <label htmlFor="remember-me" className="ml-2 block text-sm font-medium text-gray-700">
+                  Remember me
+                </label>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  loginStorageService.clearSavedCredentials();
+                  setCredentials({ username: '', password: '' });
+                  setRememberMe(false);
+                }}
+                className="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                Clear saved login
+              </button>
             </div>
 
             <div className="pt-2">
