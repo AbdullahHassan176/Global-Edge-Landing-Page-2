@@ -55,7 +55,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h3>Investment Details:</h3>
             <ul>
               <li><strong>Asset:</strong> {{assetName}}</li>
-              <li><strong>Investment Amount:</strong> ${{amount}}</li>
+              <li><strong>Investment Amount:</strong> ${{investmentAmount}}</li>
               <li><strong>Application ID:</strong> {{investmentId}}</li>
               <li><strong>Submitted:</strong> {{submittedDate}}</li>
             </ul>
@@ -89,7 +89,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       
       Investment Details:
       - Asset: {{assetName}}
-      - Investment Amount: ${{amount}}
+      - Investment Amount: ${{investmentAmount}}
       - Application ID: {{investmentId}}
       - Submitted: {{submittedDate}}
       
@@ -141,7 +141,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
               <strong>Action Required:</strong> To proceed with your investment, you must complete your Know Your Customer (KYC) verification.
             </div>
             
-            <p>Your investment application for <strong>{{assetName}}</strong> (Amount: ${{amount}}) cannot be processed until your identity is verified.</p>
+            <p>Your investment application for <strong>{{assetName}}</strong> (Amount: ${{investmentAmount}}) cannot be processed until your identity is verified.</p>
             
             <h3>Required Documents:</h3>
             <ul>
@@ -174,7 +174,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       
       ACTION REQUIRED: To proceed with your investment, you must complete your Know Your Customer (KYC) verification.
       
-      Your investment application for {{assetName}} (Amount: ${{amount}}) cannot be processed until your identity is verified.
+      Your investment application for {{assetName}} (Amount: ${{investmentAmount}}) cannot be processed until your identity is verified.
       
       Required Documents:
       - Valid passport or national ID
@@ -306,7 +306,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h3>Investment Details:</h3>
             <ul>
               <li><strong>Asset:</strong> {{assetName}}</li>
-              <li><strong>Investment Amount:</strong> ${{amount}}</li>
+              <li><strong>Investment Amount:</strong> ${{investmentAmount}}</li>
               <li><strong>Investment ID:</strong> {{investmentId}}</li>
               <li><strong>Approved Date:</strong> {{approvedDate}}</li>
             </ul>
@@ -339,7 +339,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       
       Investment Details:
       - Asset: {{assetName}}
-      - Investment Amount: ${{amount}}
+      - Investment Amount: ${{investmentAmount}}
       - Investment ID: {{investmentId}}
       - Approved Date: {{approvedDate}}
       
@@ -396,7 +396,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h3>Investment Summary:</h3>
             <ul>
               <li><strong>Asset:</strong> {{assetName}}</li>
-              <li><strong>Investment Amount:</strong> ${{amount}}</li>
+              <li><strong>Investment Amount:</strong> ${{investmentAmount}}</li>
               <li><strong>Tokens Received:</strong> {{tokensReceived}}</li>
               <li><strong>Expected Annual Return:</strong> {{expectedReturn}}%</li>
               <li><strong>Completion Date:</strong> {{completionDate}}</li>
@@ -429,7 +429,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       
       Investment Summary:
       - Asset: {{assetName}}
-      - Investment Amount: ${{amount}}
+      - Investment Amount: ${{investmentAmount}}
       - Tokens Received: {{tokensReceived}}
       - Expected Annual Return: {{expectedReturn}}%
       - Completion Date: {{completionDate}}
@@ -569,6 +569,142 @@ class NotificationService {
    */
   getAllEmailTemplates(): EmailTemplate[] {
     return Object.values(EMAIL_TEMPLATES);
+  }
+
+  /**
+   * Get admin notifications (mock data for development)
+   */
+  getAdminNotifications() {
+    return [
+      {
+        id: '1',
+        type: 'account_created',
+        title: 'New User Registration',
+        description: 'John Doe registered as an investor',
+        userEmail: 'john.doe@example.com',
+        timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+        status: 'new',
+        data: { userId: '123', role: 'investor' },
+        priority: 'medium'
+      },
+      {
+        id: '2',
+        type: 'partner_application',
+        title: 'Partner Application Received',
+        description: 'Acme Corp submitted a partnership application',
+        userEmail: 'contact@acmecorp.com',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+        status: 'reviewed',
+        data: { companyName: 'Acme Corp', type: 'logistics' },
+        priority: 'high'
+      }
+    ];
+  }
+
+  /**
+   * Get email notifications (mock data for development)
+   */
+  getEmailNotifications() {
+    return [
+      {
+        id: '1',
+        type: 'investment_created',
+        to: 'investor@example.com',
+        subject: 'Your Investment Application Has Been Submitted - Global Edge',
+        template: 'investment_created',
+        data: {
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'investor@example.com',
+          assetName: 'Dubai Marina Office Tower',
+          investmentAmount: '50000',
+          investmentId: 'INV-2024-001',
+          submittedDate: new Date().toLocaleDateString(),
+          dashboardUrl: 'https://example.com/dashboard'
+        },
+        status: 'sent',
+        timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+        retryCount: 0
+      },
+      {
+        id: '2',
+        type: 'kyc_required',
+        to: 'newuser@example.com',
+        subject: 'KYC Verification Required - Global Edge',
+        template: 'kyc_required',
+        data: {
+          firstName: 'Jane',
+          lastName: 'Smith',
+          email: 'newuser@example.com',
+          assetName: 'Jebel Ali Container',
+          investmentAmount: '25000',
+          kycUrl: 'https://example.com/kyc'
+        },
+        status: 'pending',
+        timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+        retryCount: 1
+      }
+    ];
+  }
+
+  /**
+   * Get webhook notifications (mock data for development)
+   */
+  getWebhookNotifications() {
+    return [
+      {
+        id: '1',
+        type: 'account_created',
+        endpoint: 'https://webhook.example.com/user-created',
+        payload: {
+          userId: '123',
+          email: 'john.doe@example.com',
+          role: 'investor',
+          timestamp: new Date().toISOString()
+        },
+        status: 'sent',
+        timestamp: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
+        retryCount: 0
+      },
+      {
+        id: '2',
+        type: 'partner_application',
+        endpoint: 'https://webhook.example.com/partner-application',
+        payload: {
+          companyName: 'Acme Corp',
+          type: 'logistics',
+          email: 'contact@acmecorp.com',
+          timestamp: new Date().toISOString()
+        },
+        status: 'failed',
+        timestamp: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
+        retryCount: 3
+      }
+    ];
+  }
+
+  /**
+   * Get notification statistics (mock data for development)
+   */
+  getNotificationStats() {
+    return {
+      total: 150,
+      today: 12,
+      pending: 8,
+      failed: 2,
+      emailsSent: 98,
+      webhooksDelivered: 45,
+      averageDeliveryTime: '2.3s'
+    };
+  }
+
+  /**
+   * Update admin notification status (mock implementation)
+   */
+  updateAdminNotificationStatus(id: string, status: 'reviewed' | 'processed') {
+    // In a real implementation, this would update the notification in the database
+    console.log(`Updated notification ${id} status to ${status}`);
+    return true;
   }
 }
 
