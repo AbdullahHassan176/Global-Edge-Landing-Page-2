@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
+import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 import Link from 'next/link';
+import { userAuthService } from '@/lib/userAuthService';
+import { assetService } from '@/lib/assetService';
 
 interface User {
   id: string;
@@ -11,6 +14,7 @@ interface User {
   lastName: string;
   email: string;
   phone: string;
+  role: 'issuer' | 'investor';
   accountType: 'individual' | 'business';
   status: 'active' | 'pending' | 'suspended' | 'verified';
   createdAt: string;
@@ -18,77 +22,78 @@ interface User {
   totalInvestments: number;
   kycStatus: 'pending' | 'approved' | 'rejected';
   permissions: string[];
+  assetsCreated?: number;
+  assetsUnderManagement?: number;
 }
 
-// Mock user data
-const mockUsers: User[] = [
-  {
-    id: '1',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
-    accountType: 'individual',
-    status: 'active',
-    createdAt: '2024-12-01T10:30:00Z',
-    lastLogin: '2024-12-15T14:22:00Z',
-    totalInvestments: 25000,
-    kycStatus: 'approved',
-    permissions: ['invest', 'withdraw', 'view_reports']
-  },
-  {
-    id: '2',
-    firstName: 'Jane',
-    lastName: 'Smith',
-    email: 'jane.smith@company.com',
-    phone: '+1 (555) 987-6543',
-    accountType: 'business',
-    status: 'pending',
-    createdAt: '2024-12-10T09:15:00Z',
-    lastLogin: '2024-12-14T16:45:00Z',
-    totalInvestments: 0,
-    kycStatus: 'pending',
-    permissions: ['view_dashboard']
-  },
-  {
-    id: '3',
-    firstName: 'Mike',
-    lastName: 'Johnson',
-    email: 'mike.j@enterprise.com',
-    phone: '+1 (555) 456-7890',
-    accountType: 'business',
-    status: 'verified',
-    createdAt: '2024-11-20T14:20:00Z',
-    lastLogin: '2024-12-15T11:30:00Z',
-    totalInvestments: 150000,
-    kycStatus: 'approved',
-    permissions: ['invest', 'withdraw', 'view_reports', 'api_access', 'priority_support']
-  },
-  {
-    id: '4',
-    firstName: 'Sarah',
-    lastName: 'Wilson',
-    email: 'sarah.wilson@email.com',
-    phone: '+1 (555) 321-0987',
-    accountType: 'individual',
-    status: 'suspended',
-    createdAt: '2024-12-05T08:45:00Z',
-    lastLogin: '2024-12-12T13:15:00Z',
-    totalInvestments: 5000,
-    kycStatus: 'rejected',
-    permissions: ['view_dashboard']
-  }
-];
+// Enhanced user data with issuer tracking
+const getEnhancedUsers = (): User[] => {
+  const allUsers = userAuthService.getAllUsers();
+  const allAssets = assetService.getAllAssetsForAdmin();
+  
+  return allUsers.map(user => {
+    const userAssets = allAssets.filter(asset => asset.issuerId === user.id);
+    const totalInvestments = user.role === 'investor' ? 
+      Math.floor(Math.random() * 100000) + 10000 : // Mock investment amount for investors
+      0;
+    
+    return {
+      id: user.id,
+      firstName: user.firstName || 'Unknown',
+      lastName: user.lastName || 'User',
+      email: user.email,
+      phone: user.phone || '+1 (555) 000-0000',
+      role: user.role,
+      accountType: user.accountType || 'individual',
+      status: user.status || 'active',
+      createdAt: user.createdAt || new Date().toISOString(),
+      lastLogin: user.lastLogin || new Date().toISOString(),
+      totalInvestments,
+      kycStatus: user.kycStatus || 'pending',
+      permissions: user.permissions || ['view_dashboard'],
+      assetsCreated: user.role === 'issuer' ? userAssets.length : 0,
+      assetsUnderManagement: user.role === 'issuer' ? 
+        userAssets.reduce((sum, asset) => sum + (asset.value || 0), 0) : 0
+    };
+  });
+};
 
 function UserManagementDashboard() {
-  const [users, setUsers] = useState<User[]>(mockUsers);
-  const [filter, setFilter] = useState<'all' | 'active' | 'pending' | 'suspended' | 'verified'>('all');
+  const [users, setUsers] = useState<User[]>([]);
+  const [filter, setFilter] = useState<'all' | 'active' | 'pending' | 'suspended' | 'verified' | 'issuer' | 'investor'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { notifications, addNotification, removeNotification } = useNotifications();
+
+  // Load users on component mount
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = () => {
+    setIsLoading(true);
+    try {
+      const enhancedUsers = getEnhancedUsers();
+      setUsers(enhancedUsers);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      addNotification({
+        type: 'error',
+        title: 'Loading Error',
+        message: 'Failed to load users. Please refresh the page.',
+        duration: 5000
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredUsers = users.filter(user => {
-    const matchesFilter = filter === 'all' || user.status === filter;
+    const matchesFilter = filter === 'all' || 
+                         user.status === filter || 
+                         user.role === filter;
     const matchesSearch = user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -137,8 +142,25 @@ function UserManagementDashboard() {
     });
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-soft-white flex items-center justify-center">
+        <div className="text-center">
+          <Icon name="spinner" className="animate-spin text-global-teal text-4xl mb-4" />
+          <p className="text-lg text-gray-700">Loading users...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-soft-white">
+      {/* Notification System */}
+      <NotificationSystem
+        notifications={notifications}
+        onRemove={removeNotification}
+      />
+
       {/* Header */}
       <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -227,21 +249,24 @@ function UserManagementDashboard() {
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
               <div className="flex flex-wrap gap-4">
                 {[
-                  { key: 'all', label: 'All Users', count: users.length },
-                  { key: 'active', label: 'Active', count: users.filter(u => u.status === 'active').length },
-                  { key: 'pending', label: 'Pending', count: users.filter(u => u.status === 'pending').length },
-                  { key: 'suspended', label: 'Suspended', count: users.filter(u => u.status === 'suspended').length },
-                  { key: 'verified', label: 'Verified', count: users.filter(u => u.status === 'verified').length }
-                ].map(({ key, label, count }) => (
+                  { key: 'all', label: 'All Users', count: users.length, icon: 'users' },
+                  { key: 'issuer', label: 'Issuers', count: users.filter(u => u.role === 'issuer').length, icon: 'building' },
+                  { key: 'investor', label: 'Investors', count: users.filter(u => u.role === 'investor').length, icon: 'chart-line' },
+                  { key: 'active', label: 'Active', count: users.filter(u => u.status === 'active').length, icon: 'check-circle' },
+                  { key: 'pending', label: 'Pending', count: users.filter(u => u.status === 'pending').length, icon: 'clock' },
+                  { key: 'suspended', label: 'Suspended', count: users.filter(u => u.status === 'suspended').length, icon: 'x-circle' },
+                  { key: 'verified', label: 'Verified', count: users.filter(u => u.status === 'verified').length, icon: 'shield-check' }
+                ].map(({ key, label, count, icon }) => (
                   <button
                     key={key}
                     onClick={() => setFilter(key as any)}
-                    className={`px-4 py-2 rounded-full font-medium transition-colors ${
+                    className={`flex items-center px-4 py-2 rounded-full font-medium transition-colors ${
                       filter === key
                         ? 'bg-global-teal text-white'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
+                    <Icon name={icon} className="mr-2" />
                     {label} ({count})
                   </button>
                 ))}
@@ -267,10 +292,11 @@ function UserManagementDashboard() {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">User</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Role</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Account Type</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Status</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">KYC Status</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Investments</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Assets/Investments</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Last Login</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Actions</th>
                   </tr>
@@ -295,6 +321,15 @@ function UserManagementDashboard() {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          user.role === 'issuer' 
+                            ? 'bg-orange-100 text-orange-800' 
+                            : 'bg-green-100 text-green-800'
+                        }`}>
+                          {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                           user.accountType === 'business' 
                             ? 'bg-purple-100 text-purple-800' 
                             : 'bg-blue-100 text-blue-800'
@@ -312,8 +347,23 @@ function UserManagementDashboard() {
                           {user.kycStatus.charAt(0).toUpperCase() + user.kycStatus.slice(1)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 font-semibold text-charcoal">
-                        {formatCurrency(user.totalInvestments)}
+                      <td className="px-6 py-4">
+                        <div className="space-y-1">
+                          {user.role === 'issuer' ? (
+                            <>
+                              <div className="font-semibold text-charcoal">
+                                {user.assetsCreated || 0} Assets
+                              </div>
+                              <div className="text-sm text-gray-600">
+                                {formatCurrency(user.assetsUnderManagement || 0)} AUM
+                              </div>
+                            </>
+                          ) : (
+                            <div className="font-semibold text-charcoal">
+                              {formatCurrency(user.totalInvestments)}
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">
                         {formatDate(user.lastLogin)}

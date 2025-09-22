@@ -3,19 +3,26 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 import { userAuthService, User, Investment } from '@/lib/userAuthService';
+import { assetService, Asset } from '@/lib/assetService';
 
 export default function IssuerDashboard() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [investments, setInvestments] = useState<Investment[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalInvestments: 0,
     totalRaised: 0,
     activeInvestors: 0,
-    pendingKyc: 0
+    pendingKyc: 0,
+    assetsCreated: 0,
+    assetsUnderManagement: 0,
+    totalValue: 0
   });
+  const { notifications, addNotification, removeNotification } = useNotifications();
 
   useEffect(() => {
     loadDashboardData();
@@ -36,6 +43,11 @@ export default function IssuerDashboard() {
       const allInvestments = await userAuthService.getInvestments(currentUser.id);
       setInvestments(allInvestments);
 
+      // Load issuer's assets
+      const allAssets = assetService.getAllAssetsForAdmin();
+      const issuerAssets = allAssets.filter(asset => asset.issuerId === currentUser.id);
+      setAssets(issuerAssets);
+
       // Calculate stats
       const totalRaised = allInvestments
         .filter(inv => inv.status === 'completed')
@@ -51,11 +63,16 @@ export default function IssuerDashboard() {
         inv.status === 'pending' && inv.kycRequired && !inv.kycCompleted
       ).length;
 
+      const totalValue = issuerAssets.reduce((sum, asset) => sum + (asset.value || 0), 0);
+
       setStats({
         totalInvestments: allInvestments.length,
         totalRaised,
         activeInvestors,
-        pendingKyc
+        pendingKyc,
+        assetsCreated: issuerAssets.length,
+        assetsUnderManagement: totalValue,
+        totalValue
       });
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -86,7 +103,13 @@ export default function IssuerDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-soft-white">
+      {/* Notification System */}
+      <NotificationSystem
+        notifications={notifications}
+        onRemove={removeNotification}
+      />
+
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
@@ -110,7 +133,7 @@ export default function IssuerDashboard() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -155,6 +178,30 @@ export default function IssuerDashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Pending KYC</p>
                 <p className="text-2xl font-bold text-gray-900">{stats.pendingKyc}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                <Icon name="building" className="text-indigo-600 text-xl" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Assets Created</p>
+                <p className="text-2xl font-bold text-gray-900">{stats.assetsCreated}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
+                <Icon name="chart-bar" className="text-teal-600 text-xl" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Assets Under Management</p>
+                <p className="text-2xl font-bold text-gray-900">${stats.assetsUnderManagement.toLocaleString()}</p>
               </div>
             </div>
           </div>

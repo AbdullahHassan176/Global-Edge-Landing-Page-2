@@ -199,7 +199,8 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* Remember Me and Actions */}
+            <div className="space-y-4">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -214,7 +215,7 @@ export default function LoginPage() {
                 </label>
               </div>
 
-              <div className="text-sm space-x-3">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
                 <button
                   type="button"
                   onClick={() => {
@@ -223,11 +224,14 @@ export default function LoginPage() {
                     setPassword('');
                     setRememberMe(false);
                   }}
-                  className="font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+                  className="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors text-left"
                 >
                   Clear saved login
                 </button>
-                <Link href="/forgot-password" className="font-semibold text-global-teal hover:text-edge-purple transition-colors">
+                <Link 
+                  href="/forgot-password" 
+                  className="text-sm font-semibold text-global-teal hover:text-edge-purple transition-colors"
+                >
                   Forgot password?
                 </Link>
               </div>
