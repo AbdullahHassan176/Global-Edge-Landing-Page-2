@@ -164,7 +164,7 @@ export default function WaitlistManagementPage() {
       <div className="min-h-screen bg-soft-white">
         <NotificationSystem
           notifications={notifications}
-          onDismiss={removeNotification}
+          onRemove={removeNotification}
         />
 
         <header className="bg-white shadow-sm p-6">
