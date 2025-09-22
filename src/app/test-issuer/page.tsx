@@ -12,6 +12,12 @@ export default function TestIssuerPage() {
   const createTestIssuer = async () => {
     setLoading(true);
     try {
+      // Check if we're in the browser
+      if (typeof window === 'undefined') {
+        console.error('localStorage not available on server side');
+        return;
+      }
+
       // Create a test issuer user
       const testIssuer = {
         id: 'test-issuer-1',

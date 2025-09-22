@@ -13,6 +13,11 @@ export default function TestAuthPage() {
   }, []);
 
   const loadData = () => {
+    // Check if we're in the browser
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     // Get all users (this will include registered users)
     const allUsers = (userAuthService as any).getAllUsers();
     setUsers(allUsers);
