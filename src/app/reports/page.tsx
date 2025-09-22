@@ -100,20 +100,29 @@ export default function ReportsPage() {
                   <span className="font-semibold">14.2%</span>
                 </div>
               </div>
-              <button 
-                onClick={() => handleDownload('Portfolio Summary')}
-                disabled={downloading === 'Portfolio Summary'}
-                className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {downloading === 'Portfolio Summary' ? (
-                  <div className="flex items-center justify-center">
-                    <Icon name="clock" className="animate-spin mr-2" />
-                    Downloading...
-                  </div>
-                ) : (
-                  'Download PDF'
-                )}
-              </button>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleDownload('Portfolio Summary', 'PDF')}
+                  disabled={downloading === 'Portfolio Summary'}
+                  className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {downloading === 'Portfolio Summary' ? (
+                    <div className="flex items-center justify-center">
+                      <Icon name="clock" className="animate-spin mr-2" />
+                      Downloading...
+                    </div>
+                  ) : (
+                    'Download PDF'
+                  )}
+                </button>
+                <button 
+                  onClick={() => handleDownload('Portfolio Summary', 'CSV')}
+                  disabled={downloading === 'Portfolio Summary'}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Download CSV
+                </button>
+              </div>
             </div>
 
             {/* Asset Performance Report */}
@@ -137,20 +146,29 @@ export default function ReportsPage() {
                   <span className="font-semibold">4</span>
                 </div>
               </div>
-              <button 
-                onClick={() => handleDownload('Asset Performance')}
-                disabled={downloading === 'Asset Performance'}
-                className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {downloading === 'Asset Performance' ? (
-                  <div className="flex items-center justify-center">
-                    <Icon name="clock" className="animate-spin mr-2" />
-                    Downloading...
-                  </div>
-                ) : (
-                  'Download PDF'
-                )}
-              </button>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleDownload('Asset Performance', 'PDF')}
+                  disabled={downloading === 'Asset Performance'}
+                  className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {downloading === 'Asset Performance' ? (
+                    <div className="flex items-center justify-center">
+                      <Icon name="clock" className="animate-spin mr-2" />
+                      Downloading...
+                    </div>
+                  ) : (
+                    'Download PDF'
+                  )}
+                </button>
+                <button 
+                  onClick={() => handleDownload('Asset Performance', 'CSV')}
+                  disabled={downloading === 'Asset Performance'}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Download CSV
+                </button>
+              </div>
             </div>
 
             {/* Tax Report */}
@@ -174,20 +192,29 @@ export default function ReportsPage() {
                   <span className="font-semibold text-blue-600">Ready</span>
                 </div>
               </div>
-              <button 
-                onClick={() => handleDownload('Tax Report')}
-                disabled={downloading === 'Tax Report'}
-                className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {downloading === 'Tax Report' ? (
-                  <div className="flex items-center justify-center">
-                    <Icon name="clock" className="animate-spin mr-2" />
-                    Downloading...
-                  </div>
-                ) : (
-                  'Download PDF'
-                )}
-              </button>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleDownload('Tax Report', 'PDF')}
+                  disabled={downloading === 'Tax Report'}
+                  className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {downloading === 'Tax Report' ? (
+                    <div className="flex items-center justify-center">
+                      <Icon name="clock" className="animate-spin mr-2" />
+                      Downloading...
+                    </div>
+                  ) : (
+                    'Download PDF'
+                  )}
+                </button>
+                <button 
+                  onClick={() => handleDownload('Tax Report', 'CSV')}
+                  disabled={downloading === 'Tax Report'}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Download CSV
+                </button>
+              </div>
             </div>
 
             {/* Transaction History */}
@@ -211,20 +238,29 @@ export default function ReportsPage() {
                   <span className="font-semibold">CSV/PDF</span>
                 </div>
               </div>
-              <button 
-                onClick={() => handleDownload('Transaction History', 'CSV')}
-                disabled={downloading === 'Transaction History'}
-                className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {downloading === 'Transaction History' ? (
-                  <div className="flex items-center justify-center">
-                    <Icon name="clock" className="animate-spin mr-2" />
-                    Downloading...
-                  </div>
-                ) : (
-                  'Download CSV'
-                )}
-              </button>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleDownload('Transaction History', 'PDF')}
+                  disabled={downloading === 'Transaction History'}
+                  className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {downloading === 'Transaction History' ? (
+                    <div className="flex items-center justify-center">
+                      <Icon name="clock" className="animate-spin mr-2" />
+                      Downloading...
+                    </div>
+                  ) : (
+                    'Download PDF'
+                  )}
+                </button>
+                <button 
+                  onClick={() => handleDownload('Transaction History', 'CSV')}
+                  disabled={downloading === 'Transaction History'}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Download CSV
+                </button>
+              </div>
             </div>
 
             {/* Risk Analysis */}
@@ -248,43 +284,44 @@ export default function ReportsPage() {
                   <span className="font-semibold">Dec 15, 2024</span>
                 </div>
               </div>
-              <button 
-                onClick={() => handleDownload('Risk Analysis')}
-                disabled={downloading === 'Risk Analysis'}
-                className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {downloading === 'Risk Analysis' ? (
-                  <div className="flex items-center justify-center">
-                    <Icon name="clock" className="animate-spin mr-2" />
-                    Downloading...
-                  </div>
-                ) : (
-                  'Download PDF'
-                )}
-              </button>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleDownload('Risk Analysis', 'PDF')}
+                  disabled={downloading === 'Risk Analysis'}
+                  className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {downloading === 'Risk Analysis' ? (
+                    <div className="flex items-center justify-center">
+                      <Icon name="clock" className="animate-spin mr-2" />
+                      Downloading...
+                    </div>
+                  ) : (
+                    'Download PDF'
+                  )}
+                </button>
+                <button 
+                  onClick={() => handleDownload('Risk Analysis', 'CSV')}
+                  disabled={downloading === 'Risk Analysis'}
+                  className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Download CSV
+                </button>
+              </div>
             </div>
 
             {/* Custom Report */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-dashed border-gray-300">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                <Icon name="cog" className="text-gray-600 text-sm"  />
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-dashed border-global-teal">
+              <div className="w-12 h-12 bg-global-teal/10 rounded-lg flex items-center justify-center mb-4">
+                <Icon name="cog" className="text-global-teal text-sm"  />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Custom Report</h3>
-              <p className="text-gray-600 mb-4">Create a personalized report with your specific requirements</p>
-              <button 
-                onClick={() => handleDownload('Custom Report')}
-                disabled={downloading === 'Custom Report'}
-                className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-lg font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-2">Custom Report Builder</h3>
+              <p className="text-gray-600 mb-4">Create a personalized report with your specific requirements and preferences</p>
+              <Link 
+                href="/reports/custom"
+                className="w-full bg-global-teal text-white py-2 px-4 rounded-lg font-semibold hover:bg-opacity-90 transition-colors inline-block text-center"
               >
-                {downloading === 'Custom Report' ? (
-                  <div className="flex items-center justify-center">
-                    <Icon name="clock" className="animate-spin mr-2" />
-                    Creating...
-                  </div>
-                ) : (
-                  'Create Report'
-                )}
-              </button>
+                Build Custom Report
+              </Link>
             </div>
           </div>
 
