@@ -15,7 +15,7 @@ interface User {
   lastName: string;
   email: string;
   phone: string;
-  role: 'issuer' | 'investor';
+  role: 'issuer' | 'investor' | 'admin' | 'moderator';
   accountType: 'individual' | 'business';
   status: 'active' | 'pending' | 'suspended' | 'verified';
   createdAt: string;
