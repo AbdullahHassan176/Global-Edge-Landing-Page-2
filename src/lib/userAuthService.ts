@@ -222,12 +222,12 @@ class UserAuthService {
 
       // Mock password validation - check against stored users or default passwords
       const validPasswords: Record<string, string> = {
-        'issuer@example.com': 'Issuer123!',
-        'investor@example.com': 'Investor123!'
+        'issuer@example.com': process.env.ISSUER_PASSWORD || 'Issuer123!',
+        'investor@example.com': process.env.INVESTOR_PASSWORD || 'Investor123!'
       };
 
       // For newly registered users, use a default password or check if they have a stored password
-      const expectedPassword = validPasswords[email] || 'Password123!'; // Default password for new users
+      const expectedPassword = validPasswords[email] || process.env.DEFAULT_USER_PASSWORD || 'Password123!'; // Default password for new users
 
       if (expectedPassword !== password) {
         return { success: false, error: 'Invalid email or password' };

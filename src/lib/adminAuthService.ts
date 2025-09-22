@@ -50,9 +50,10 @@ const ADMIN_USERS: AdminUser[] = [
 ];
 
 // Mock passwords (in production, these would be hashed and stored securely)
+// These should be moved to environment variables in production
 const ADMIN_PASSWORDS: Record<string, string> = {
-  'admin': 'GlobalEdge2025!',
-  'moderator': 'Moderator123!'
+  'admin': process.env.ADMIN_PASSWORD || 'GlobalEdge2025!',
+  'moderator': process.env.MODERATOR_PASSWORD || 'Moderator123!'
 };
 
 class AdminAuthService {

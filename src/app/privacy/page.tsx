@@ -1,7 +1,12 @@
 
 import Link from 'next/link';
+import { configService } from '@/lib/configService';
 
 export default function PrivacyPage() {
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
+  const businessConfig = configService.getBusinessConfig();
+  
   return (
     <>
       {/* COMPONENT: Privacy Hero */}
@@ -186,10 +191,10 @@ export default function PrivacyPage() {
                           </p>
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
-                                  <strong>Global Edge Privacy Team</strong><br />
-                                  Email: privacy@globaledge.com<br />
-                                  Phone: +1 (555) 123-4567<br />
-                                  Address: 123 Financial District, New York, NY 10004
+                                  <strong>{businessConfig.companyName} Privacy Team</strong><br />
+                                  Email: {contactConfig.privacy.email}<br />
+                                  Phone: {contactConfig.privacy.phone}<br />
+                                  Address: {contactConfig.privacy.address}
                               </p>
                           </div>
                       </div>

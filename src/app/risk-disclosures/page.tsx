@@ -1,8 +1,12 @@
 
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { configService } from '@/lib/configService';
 
 export default function RiskDisclosuresPage() {
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
+  
   return (
     <>
       {/* COMPONENT: Risk Disclosures Hero */}
@@ -316,16 +320,16 @@ export default function RiskDisclosuresPage() {
                       <div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Risk Management Team</h3>
                           <p className="text-gray-700">
-                              Email: risk@globaledge.com<br />
-                              Phone: +1 (555) 123-4567<br />
+                              Email: {contactConfig.support.email}<br />
+                              Phone: {contactConfig.support.phone}<br />
                               Available: Monday-Friday, 9 AM - 6 PM EST
                           </p>
                       </div>
                       <div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">General Support</h3>
                           <p className="text-gray-700">
-                              Email: info@globalnext.rocks<br />
-                              Phone: +1 (555) 123-4568<br />
+                              Email: {contactConfig.support.email}<br />
+                              Phone: {contactConfig.support.phone}<br />
                               Available: 24/7 for urgent matters
                           </p>
                       </div>

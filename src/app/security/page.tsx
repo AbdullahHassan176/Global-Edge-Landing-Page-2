@@ -1,8 +1,12 @@
 
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { configService } from '@/lib/configService';
 
 export default function SecurityPage() {
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
+  
   return (
     <>
       {/* COMPONENT: Security Hero */}
@@ -269,7 +273,7 @@ export default function SecurityPage() {
                   <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
                       Start Investing Today
                   </button>
-                  <a href="mailto:info@globalnext.rocks?subject=Security Inquiry" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                  <a href={`mailto:${contactConfig.support.email}?subject=Security Inquiry`} className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
                       Contact Security Team
                   </a>
               </div>

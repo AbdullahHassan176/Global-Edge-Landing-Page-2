@@ -3,10 +3,15 @@
 import { useState } from 'react';
 import Logo from '../ui/Logo';
 import Icon from '../ui/Icon';
+import { configService } from '@/lib/configService';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  
+  // Get configuration
+  const siteConfig = configService.getSiteConfig();
+  const businessConfig = configService.getBusinessConfig();
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +35,7 @@ export default function Footer() {
               <Logo size="md" variant="white" />
             </div>
             <p className="text-gray-400 mb-6">
-              Tokenizing trade, containers & real estate for the next generation of investors.
+              {siteConfig.description}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -94,7 +99,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">© 2025 Global Edge. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">© {new Date().getFullYear()} {businessConfig.companyName}. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">Terms & Conditions</a>
             <a href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>

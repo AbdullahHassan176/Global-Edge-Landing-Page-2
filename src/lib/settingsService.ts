@@ -303,9 +303,9 @@ class SettingsService {
         lastSync: new Date().toISOString(),
         description: 'Primary email delivery service',
         configuration: {
-          apiKey: '',
-          fromEmail: 'noreply@globaledge.com',
-          fromName: 'Global Edge'
+          apiKey: process.env.EMAIL_API_KEY || '',
+          fromEmail: process.env.EMAIL_FROM_EMAIL || 'noreply@globaledge.com',
+          fromName: process.env.EMAIL_FROM_NAME || 'Global Edge'
         },
         healthCheck: {
           status: 'healthy',
@@ -321,9 +321,9 @@ class SettingsService {
         lastSync: new Date().toISOString(),
         description: 'Payment processing integration',
         configuration: {
-          publishableKey: '',
-          secretKey: '',
-          webhookSecret: ''
+          publishableKey: process.env.NEXT_PUBLIC_PAYMENT_PUBLISHABLE_KEY || '',
+          secretKey: process.env.PAYMENT_SECRET_KEY || '',
+          webhookSecret: process.env.PAYMENT_WEBHOOK_SECRET || ''
         },
         healthCheck: {
           status: 'healthy',
@@ -339,9 +339,9 @@ class SettingsService {
         lastSync: new Date().toISOString(),
         description: 'Admin notifications to Slack',
         configuration: {
-          webhookUrl: '',
-          channel: '#admin-alerts',
-          username: 'Global Edge Bot'
+          webhookUrl: process.env.SLACK_WEBHOOK_URL || '',
+          channel: process.env.SLACK_CHANNEL || '#admin-alerts',
+          username: process.env.SLACK_USERNAME || 'Global Edge Bot'
         },
         healthCheck: {
           status: 'healthy',

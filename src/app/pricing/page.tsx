@@ -4,10 +4,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { configService } from '@/lib/configService';
 
 export default function PricingPage() {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
+  
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
 
   const handleUpgradeToPro = () => {
     setShowUpgradeModal(true);
@@ -331,14 +335,14 @@ export default function PricingPage() {
               <div className="space-y-3">
                 <div className="flex items-center">
                   <Icon name="envelope" className="text-global-teal mr-3" />
-                  <a href="mailto:info@globalnext.rocks?subject=Sales Inquiry" className="text-global-teal hover:text-edge-purple">
-                    info@globalnext.rocks
+                  <a href={`mailto:${contactConfig.sales.email}?subject=Sales Inquiry`} className="text-global-teal hover:text-edge-purple">
+                    {contactConfig.sales.email}
                   </a>
                 </div>
                 <div className="flex items-center">
                   <Icon name="phone" className="text-global-teal mr-3" />
-                  <a href="tel:+1-555-123-4567" className="text-global-teal hover:text-edge-purple">
-                    +1 (555) 123-4567
+                  <a href={`tel:${contactConfig.sales.phone.replace(/\s/g, '')}`} className="text-global-teal hover:text-edge-purple">
+                    {contactConfig.sales.phone}
                   </a>
                 </div>
               </div>

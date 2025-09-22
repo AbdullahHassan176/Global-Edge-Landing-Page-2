@@ -4,9 +4,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { configService } from '@/lib/configService';
 
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState('general');
+  
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
 
   const scrollToSection = (category: string) => {
     setActiveCategory(category);
@@ -250,7 +254,7 @@ export default function FAQPage() {
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Email Support</h3>
                       <p className="text-sm text-gray-600 mb-4">Get help via email within 24 hours</p>
-                      <a href="mailto:info@globalnext.rocks" className="text-global-teal hover:text-edge-purple font-medium">info@globalnext.rocks</a>
+                      <a href={`mailto:${contactConfig.support.email}`} className="text-global-teal hover:text-edge-purple font-medium">{contactConfig.support.email}</a>
                   </div>
 
                   <div className="bg-white rounded-2xl p-6 shadow-lg">
@@ -268,7 +272,7 @@ export default function FAQPage() {
                       </div>
                       <h3 className="font-poppins font-semibold text-charcoal mb-2">Phone Support</h3>
                       <p className="text-sm text-gray-600 mb-4">Call us for urgent matters</p>
-                      <a href="tel:+1-555-123-4567" className="text-global-teal hover:text-edge-purple font-medium">+1 (555) 123-4567</a>
+                      <a href={`tel:${contactConfig.support.phone.replace(/\s/g, '')}`} className="text-global-teal hover:text-edge-purple font-medium">{contactConfig.support.phone}</a>
                   </div>
               </div>
 

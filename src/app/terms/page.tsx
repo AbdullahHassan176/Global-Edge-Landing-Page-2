@@ -1,7 +1,12 @@
 
 import Link from 'next/link';
+import { configService } from '@/lib/configService';
 
 export default function TermsPage() {
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
+  const businessConfig = configService.getBusinessConfig();
+  
   return (
     <>
       {/* COMPONENT: Terms Hero */}
@@ -168,10 +173,10 @@ export default function TermsPage() {
                           </p>
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
-                                  <strong>Global Edge</strong><br />
-                                  Email: legal@globaledge.com<br />
-                                  Phone: +1 (555) 123-4567<br />
-                                  Address: 123 Financial District, New York, NY 10004
+                                  <strong>{businessConfig.companyName}</strong><br />
+                                  Email: {contactConfig.legal.email}<br />
+                                  Phone: {contactConfig.legal.phone}<br />
+                                  Address: {contactConfig.legal.address}
                               </p>
                           </div>
                       </div>

@@ -1,7 +1,12 @@
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
+import { configService } from '@/lib/configService';
 
 export default function CookiesPage() {
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
+  const businessConfig = configService.getBusinessConfig();
+  
   return (
     <>
       {/* COMPONENT: Cookies Hero */}
@@ -182,10 +187,10 @@ export default function CookiesPage() {
                           </p>
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
-                                  <strong>Global Edge Privacy Team</strong><br />
-                                  Email: abdullah.hassan@globalnext.rocks / mohammed.sidat@globalnext.rocks<br />
-                                  Phone: +971 (50) 940 4961<br />
-                                  Address: P20, S13, Al Warsan, Dubai, UAE
+                                  <strong>{businessConfig.companyName} Privacy Team</strong><br />
+                                  Email: {contactConfig.privacy.email}<br />
+                                  Phone: {contactConfig.privacy.phone}<br />
+                                  Address: {contactConfig.privacy.address}
                               </p>
                           </div>
                       </div>

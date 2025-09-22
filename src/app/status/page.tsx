@@ -4,10 +4,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { configService } from '@/lib/configService';
 
 export default function StatusPage() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isSubscribed, setIsSubscribed] = useState(false);
+  
+  // Get configuration
+  const contactConfig = configService.getContactConfig();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -375,16 +379,16 @@ export default function StatusPage() {
                       <div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Technical Support</h3>
                           <p className="text-gray-700">
-                              Email: info@globalnext.rocks<br />
-                              Phone: +1 (555) 123-4567<br />
+                              Email: {contactConfig.technical.email}<br />
+                              Phone: {contactConfig.technical.phone}<br />
                               Available: 24/7
                           </p>
                       </div>
                       <div>
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Status Updates</h3>
                           <p className="text-gray-700">
-                              Twitter: @GlobalEdgeStatus<br />
-                              Email: status@globaledge.com<br />
+                              Twitter: {contactConfig.technical.twitter}<br />
+                              Email: {contactConfig.technical.email}<br />
                               Updates: Real-time
                           </p>
                       </div>

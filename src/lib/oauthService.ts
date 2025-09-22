@@ -16,13 +16,13 @@ export interface OAuthConfig {
 class OAuthService {
   private githubConfig: OAuthConfig = {
     clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'your-github-client-id',
-    redirectUri: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/auth/github/callback`,
+    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/github/callback`,
     scope: 'user:email'
   };
 
   private linkedinConfig: OAuthConfig = {
     clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || 'your-linkedin-client-id',
-    redirectUri: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/auth/linkedin/callback`,
+    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
 
