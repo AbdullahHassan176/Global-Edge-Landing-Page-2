@@ -8,6 +8,12 @@ const nextConfig = {
         port: '',
         pathname: '/uxpilot-auth.appspot.com/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   eslint: {
