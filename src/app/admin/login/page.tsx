@@ -201,6 +201,15 @@ export default function AdminLoginPage() {
             </Link>
           </p>
           <p className="text-white/60 text-xs mt-2">
+            Don&apos;t have an admin account?{' '}
+            <Link
+              href="/admin/register"
+              className="text-global-teal hover:text-global-teal-light font-medium transition-colors"
+            >
+              Register here
+            </Link>
+          </p>
+          <p className="text-white/60 text-xs mt-2">
             © 2025 Global Edge. All rights reserved.
           </p>
         </div>

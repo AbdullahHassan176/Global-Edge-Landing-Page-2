@@ -18,6 +18,15 @@ export interface AdminLoginCredentials {
   password: string;
 }
 
+export interface AdminRegistrationData {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: 'admin' | 'moderator';
+  requestedPermissions?: string[];
+}
+
 // Mock admin users (in production, this would be stored securely in a database)
 const ADMIN_USERS: AdminUser[] = [
   {
@@ -48,15 +57,67 @@ const ADMIN_PASSWORDS: Record<string, string> = {
 
 class AdminAuthService {
   private readonly SESSION_KEY = 'admin_session';
+  private readonly STORAGE_KEY = 'admin_users';
   private readonly SESSION_TIMEOUT = 8 * 60 * 60 * 1000; // 8 hours
+
+  /**
+   * Register a new admin user
+   */
+  async register(registrationData: AdminRegistrationData): Promise<{ success: boolean; user?: AdminUser; error?: string }> {
+    try {
+      // Validate input
+      if (registrationData.password !== registrationData.confirmPassword) {
+        return { success: false, error: 'Passwords do not match' };
+      }
+
+      if (registrationData.password.length < 8) {
+        return { success: false, error: 'Password must be at least 8 characters long' };
+      }
+
+      // Get all admin users (including registered ones)
+      const allUsers = this.getAllAdminUsers();
+
+      // Check if username already exists
+      if (allUsers.find(user => user.username === registrationData.username)) {
+        return { success: false, error: 'Username already exists' };
+      }
+
+      // Check if email already exists
+      if (allUsers.find(user => user.email === registrationData.email)) {
+        return { success: false, error: 'Email already exists' };
+      }
+
+      // Create new admin user
+      const newAdminUser: AdminUser = {
+        id: `admin-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        username: registrationData.username,
+        email: registrationData.email,
+        role: registrationData.role,
+        permissions: this.getDefaultPermissions(registrationData.role),
+        lastLogin: new Date().toISOString(),
+        isActive: true
+      };
+
+      // Save to localStorage
+      this.saveAdminUser(newAdminUser, registrationData.password);
+
+      return { success: true, user: newAdminUser };
+    } catch (error) {
+      console.error('Admin registration error:', error);
+      return { success: false, error: 'Registration failed. Please try again.' };
+    }
+  }
 
   /**
    * Authenticate admin user with username and password
    */
   async login(credentials: AdminLoginCredentials): Promise<{ success: boolean; user?: AdminUser; error?: string }> {
     try {
+      // Get all admin users (including registered ones)
+      const allUsers = this.getAllAdminUsers();
+      
       // Find admin user
-      const adminUser = ADMIN_USERS.find(user => 
+      const adminUser = allUsers.find(user => 
         user.username === credentials.username && user.isActive
       );
 
@@ -64,14 +125,15 @@ class AdminAuthService {
         return { success: false, error: 'Invalid username or password' };
       }
 
-      // Check password
-      const correctPassword = ADMIN_PASSWORDS[credentials.username];
+      // Check password (check both hardcoded and stored passwords)
+      const correctPassword = this.getAdminPassword(credentials.username);
       if (credentials.password !== correctPassword) {
         return { success: false, error: 'Invalid username or password' };
       }
 
       // Update last login
       adminUser.lastLogin = new Date().toISOString();
+      this.saveAdminUser(adminUser, correctPassword);
 
       // Create session
       const session = {
@@ -198,10 +260,97 @@ class AdminAuthService {
       return `${minutes}m`;
     }
   }
+
+  /**
+   * Get all admin users (hardcoded + registered)
+   */
+  private getAllAdminUsers(): AdminUser[] {
+    if (typeof window === 'undefined') return ADMIN_USERS;
+    
+    // Get registered users from localStorage
+    const registeredUsers = localStorage.getItem(this.STORAGE_KEY);
+    const additionalUsers = registeredUsers ? JSON.parse(registeredUsers) : [];
+    
+    // Combine hardcoded users with registered users, avoiding duplicates
+    const allUsers = [...ADMIN_USERS];
+    additionalUsers.forEach((user: AdminUser) => {
+      if (!allUsers.find(u => u.id === user.id)) {
+        allUsers.push(user);
+      }
+    });
+    
+    return allUsers;
+  }
+
+  /**
+   * Get admin password (from hardcoded or stored)
+   */
+  private getAdminPassword(username: string): string | null {
+    // Check hardcoded passwords first
+    if (ADMIN_PASSWORDS[username]) {
+      return ADMIN_PASSWORDS[username];
+    }
+
+    // Check stored passwords
+    if (typeof window !== 'undefined') {
+      const storedPasswords = localStorage.getItem('admin_passwords');
+      if (storedPasswords) {
+        const passwords = JSON.parse(storedPasswords);
+        return passwords[username] || null;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Save admin user and password
+   */
+  private saveAdminUser(user: AdminUser, password: string): void {
+    if (typeof window === 'undefined') return;
+
+    // Save user data
+    const storedUsers = localStorage.getItem(this.STORAGE_KEY);
+    const users = storedUsers ? JSON.parse(storedUsers) : [];
+    
+    const existingIndex = users.findIndex((u: AdminUser) => u.id === user.id);
+    if (existingIndex >= 0) {
+      users[existingIndex] = user;
+    } else {
+      users.push(user);
+    }
+    
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(users));
+
+    // Save password
+    const storedPasswords = localStorage.getItem('admin_passwords');
+    const passwords = storedPasswords ? JSON.parse(storedPasswords) : {};
+    passwords[user.username] = password;
+    localStorage.setItem('admin_passwords', JSON.stringify(passwords));
+  }
+
+  /**
+   * Get default permissions for role
+   */
+  private getDefaultPermissions(role: string): string[] {
+    switch (role) {
+      case 'admin':
+        return [
+          'view_users', 'view_notifications', 'view_analytics', 
+          'view_content', 'view_security', 'view_settings', 'manage_assets'
+        ];
+      case 'moderator':
+        return [
+          'view_users', 'view_notifications', 'view_analytics', 'manage_assets'
+        ];
+      default:
+        return ['view_notifications'];
+    }
+  }
 }
 
 // Export singleton instance
 export const adminAuthService = new AdminAuthService();
 
 // Export types
-export type { AdminUser, AdminLoginCredentials };
+export type { AdminUser, AdminLoginCredentials, AdminRegistrationData };
