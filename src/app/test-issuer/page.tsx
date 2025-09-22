@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { userAuthService } from '@/lib/userAuthService';
 
+// Force dynamic rendering to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 export default function TestIssuerPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);

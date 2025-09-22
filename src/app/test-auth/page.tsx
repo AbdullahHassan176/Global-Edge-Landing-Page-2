@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { userAuthService } from '@/lib/userAuthService';
 
+// Force dynamic rendering to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 export default function TestAuthPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);

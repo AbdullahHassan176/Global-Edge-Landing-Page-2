@@ -8,7 +8,7 @@ import {
   EyeIcon, LinkIcon, DocumentIcon, HeartIcon, BugAntIcon, RocketLaunchIcon, ClipboardDocumentListIcon, BuildingStorefrontIcon, ListBulletIcon,
   ExclamationTriangleIcon, Squares2X2Icon, CheckIcon, XMarkIcon, CalendarIcon, TruckIcon as TruckIcon2,
   DocumentCheckIcon, CodeBracketIcon, RocketLaunchIcon as RocketIcon, ClipboardDocumentListIcon as ClipboardListIcon, UserGroupIcon,
-  MapPinIcon, ArrowPathIcon, ArrowDownIcon, ArrowUpIcon, ArrowLeftIcon
+  MapPinIcon, ArrowPathIcon, ArrowDownIcon, ArrowUpIcon, ArrowLeftIcon, CreditCardIcon, EnvelopeIcon, ChatBubbleLeftRightIcon, ServerIcon, RssIcon, UserPlusIcon
 } from '@heroicons/react/24/outline';
 
 interface IconProps {
@@ -97,6 +97,16 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   'id-card': UserIcon, // ID card icon
   'home': BuildingOfficeIcon, // Home icon
   'university': BuildingOfficeIcon, // University icon
+  'code': CodeBracketIcon, // Code icon
+  'shield-check': ShieldCheckIcon, // Shield check icon
+  'credit-card': CreditCardIcon, // Credit card icon
+  'cube': CubeIcon, // Cube icon
+  'envelope': EnvelopeIcon, // Envelope icon
+  'chat-alt-2': ChatBubbleLeftRightIcon, // Chat icon
+  'server': ServerIcon, // Server icon
+  'rss': RssIcon, // RSS icon
+  'user-plus': UserPlusIcon, // User plus icon
+  'rocket-launch': RocketLaunchIcon, // Rocket launch icon
 };
 
 export default function Icon({ name, className = '', size = 16 }: IconProps) {
