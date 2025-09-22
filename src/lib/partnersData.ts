@@ -20,7 +20,7 @@ export const partners: Partner[] = [
   {
     id: 'maersk',
     name: 'Maersk',
-    logo: 'https://logos-world.net/wp-content/uploads/2021/02/Maersk-Logo.png',
+    logo: 'https://via.placeholder.com/120x60/2563eb/ffffff?text=Maersk',
     website: 'https://www.maersk.com',
     category: 'logistics',
     description: 'Global container shipping and logistics',
@@ -29,7 +29,7 @@ export const partners: Partner[] = [
   {
     id: 'msc',
     name: 'MSC',
-    logo: 'https://logos-world.net/wp-content/uploads/2021/02/MSC-Logo.png',
+    logo: 'https://via.placeholder.com/120x60/059669/ffffff?text=MSC',
     website: 'https://www.msc.com',
     category: 'logistics',
     description: 'Mediterranean Shipping Company',
@@ -38,7 +38,7 @@ export const partners: Partner[] = [
   {
     id: 'cma-cgm',
     name: 'CMA CGM',
-    logo: 'https://logos-world.net/wp-content/uploads/2021/02/CMA-CGM-Logo.png',
+    logo: 'https://via.placeholder.com/120x60/7c3aed/ffffff?text=CMA+CGM',
     website: 'https://www.cma-cgm.com',
     category: 'logistics',
     description: 'French container transportation and shipping',
@@ -47,7 +47,7 @@ export const partners: Partner[] = [
   {
     id: 'cosco',
     name: 'COSCO',
-    logo: 'https://logos-world.net/wp-content/uploads/2021/02/COSCO-Logo.png',
+    logo: 'https://via.placeholder.com/120x60/dc2626/ffffff?text=COSCO',
     website: 'https://www.coscoshipping.com',
     category: 'logistics',
     description: 'China Ocean Shipping Company',
@@ -56,7 +56,7 @@ export const partners: Partner[] = [
   {
     id: 'hapag-lloyd',
     name: 'Hapag-Lloyd',
-    logo: 'https://logos-world.net/wp-content/uploads/2021/02/Hapag-Lloyd-Logo.png',
+    logo: 'https://via.placeholder.com/120x60/ea580c/ffffff?text=Hapag-Lloyd',
     website: 'https://www.hapag-lloyd.com',
     category: 'logistics',
     description: 'German international shipping and container transportation',
@@ -65,7 +65,7 @@ export const partners: Partner[] = [
   {
     id: 'one',
     name: 'ONE',
-    logo: 'https://logos-world.net/wp-content/uploads/2021/02/ONE-Logo.png',
+    logo: 'https://via.placeholder.com/120x60/0891b2/ffffff?text=ONE',
     website: 'https://www.one-line.com',
     category: 'logistics',
     description: 'Ocean Network Express',

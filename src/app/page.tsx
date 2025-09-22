@@ -345,13 +345,9 @@ export default function HomePage() {
                       height={40}
                       className="max-w-full max-h-full object-contain"
                       onError={(e) => {
-                        // Fallback to text if image fails to load
+                        // Hide the logo if it fails to load
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent) {
-                          parent.innerHTML = `<span class="text-xs font-semibold text-gray-500">${partner.name}</span>`;
-                        }
                       }}
                     />
                   </div>
