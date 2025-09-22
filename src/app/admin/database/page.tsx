@@ -70,6 +70,7 @@ export default function DatabasePage() {
       { name: 'Get Investments', url: '/api/investments' }
     ];
 
+    // Initialize results array with proper TypeScript typing
     const results: Array<{query: string, success: boolean, data?: any, error?: string}> = [];
     for (const query of queries) {
       try {
