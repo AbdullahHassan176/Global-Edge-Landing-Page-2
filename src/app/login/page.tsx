@@ -63,10 +63,10 @@ export default function LoginPage() {
         }
       } else {
         // Handle different error types
-        if (result.requiresApproval) {
-          setError(result.error || 'Your account is pending approval.');
-        } else if (result.accountSuspended) {
-          setError(result.error || 'Your account has been suspended.');
+        if (result.user?.status === 'pending') {
+          setError('Your account is pending approval.');
+        } else if (result.user?.status === 'suspended') {
+          setError('Your account has been suspended.');
         } else {
           setError(result.error || 'Login failed. Please try again.');
         }
