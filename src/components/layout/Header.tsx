@@ -18,18 +18,28 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
   const pathname = usePathname();
   const notificationRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
+  const adminRef = useRef<HTMLDivElement>(null);
 
   const handleNotificationClick = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
     setIsUserMenuOpen(false);
+    setIsAdminMenuOpen(false);
   };
 
   const handleUserClick = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
     setIsNotificationsOpen(false);
+    setIsAdminMenuOpen(false);
+  };
+
+  const handleAdminClick = () => {
+    setIsAdminMenuOpen(!isAdminMenuOpen);
+    setIsNotificationsOpen(false);
+    setIsUserMenuOpen(false);
   };
 
   // Close dropdowns when clicking outside
@@ -40,6 +50,9 @@ export default function Header() {
       }
       if (userRef.current && !userRef.current.contains(event.target as Node)) {
         setIsUserMenuOpen(false);
+      }
+      if (adminRef.current && !adminRef.current.contains(event.target as Node)) {
+        setIsAdminMenuOpen(false);
       }
     };
 
@@ -115,6 +128,70 @@ export default function Header() {
               )}
             </div>
 
+            {/* Admin Menu */}
+            <div className="relative" ref={adminRef}>
+              <button 
+                onClick={handleAdminClick}
+                className="hidden md:block text-gray-600 hover:text-charcoal transition-colors"
+                title="Admin Access"
+              >
+                <Icon name="cog" className="text-lg" size={12} />
+              </button>
+              
+              {/* Admin menu dropdown */}
+              {isAdminMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="py-1">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Admin Access</p>
+                    </div>
+                    <Link 
+                      href="/admin/login" 
+                      className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="shield-halved" size={4} className="mr-3 text-global-teal" />
+                      <div>
+                        <div className="font-medium">Admin Portal</div>
+                        <div className="text-xs text-gray-500">Sign in to admin dashboard</div>
+                      </div>
+                    </Link>
+                    <Link 
+                      href="/admin" 
+                      className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="chart-line" size={4} className="mr-3 text-global-teal" />
+                      <div>
+                        <div className="font-medium">Dashboard</div>
+                        <div className="text-xs text-gray-500">View admin dashboard</div>
+                      </div>
+                    </Link>
+                    <div className="border-t border-gray-100"></div>
+                    <Link 
+                      href="/admin/assets" 
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="boxes" size={4} className="mr-3 text-gray-500" />
+                      Asset Management
+                    </Link>
+                    <Link 
+                      href="/admin/notifications" 
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="bell" size={4} className="mr-3 text-gray-500" />
+                      Notifications
+                    </Link>
+                    <Link 
+                      href="/admin/users" 
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="users" size={4} className="mr-3 text-gray-500" />
+                      User Management
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="relative" ref={userRef}>
               <button 
                 onClick={handleUserClick}
@@ -178,6 +255,29 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
+              
+              {/* Mobile Admin Section */}
+              <div className="border-t border-gray-200 pt-4 mt-4">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Admin Access</p>
+                <div className="flex flex-col space-y-3">
+                  <Link
+                    href="/admin/login"
+                    className="flex items-center text-global-teal hover:text-edge-purple transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Icon name="shield-halved" size={4} className="mr-2" />
+                    Admin Portal
+                  </Link>
+                  <Link
+                    href="/admin"
+                    className="flex items-center text-charcoal hover:text-global-teal transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Icon name="chart-line" size={4} className="mr-2" />
+                    Admin Dashboard
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         )}
