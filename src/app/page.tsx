@@ -1,9 +1,24 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import { AssetMetricsService, AssetMetrics } from '@/lib/assetMetricsService';
 
 export default function HomePage() {
+  const [metrics, setMetrics] = useState<AssetMetrics | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for better UX
+    const timer = setTimeout(() => {
+      const calculatedMetrics = AssetMetricsService.getAllMetrics();
+      setMetrics(calculatedMetrics);
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       {/* Hero Section */}
@@ -38,19 +53,43 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">$2.4B</div>
+              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-24 mx-auto rounded"></div>
+                ) : (
+                  AssetMetricsService.formatCurrency(metrics?.totalAssetsUnderManagement || 0)
+                )}
+              </div>
               <div className="text-sm text-gray-600 font-medium">Assets Under Management</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">1,247</div>
+              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-16 mx-auto rounded"></div>
+                ) : (
+                  AssetMetricsService.formatNumber(metrics?.totalAssetsTokenized || 0)
+                )}
+              </div>
               <div className="text-sm text-gray-600 font-medium">Assets Tokenized</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">98.7%</div>
+              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-16 mx-auto rounded"></div>
+                ) : (
+                  `${metrics?.onTimeDeliveryRate || 0}%`
+                )}
+              </div>
               <div className="text-sm text-gray-600 font-medium">On-Time Deliveries</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">12.4%</div>
+              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-16 mx-auto rounded"></div>
+                ) : (
+                  `${metrics?.averageAPR || 0}%`
+                )}
+              </div>
               <div className="text-sm text-gray-600 font-medium">Average APR</div>
             </div>
           </div>
@@ -118,7 +157,16 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Containers</h3>
               <p className="text-gray-600 mb-4">Shipping containers with GPS tracking and verified cargo</p>
-              <div className="text-sm text-global-teal font-semibold">Avg. 8-15% APR</div>
+              <div className="space-y-2">
+                <div className="text-sm text-global-teal font-semibold">Avg. 8-15% APR</div>
+                <div className="text-xs text-gray-500">
+                  {isLoading ? (
+                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
+                  ) : (
+                    `${metrics?.categoryBreakdown.containers || 0} assets available`
+                  )}
+                </div>
+              </div>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
@@ -126,7 +174,16 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Property</h3>
               <p className="text-gray-600 mb-4">Commercial and residential real estate with rental income</p>
-              <div className="text-sm text-global-teal font-semibold">Avg. 6-12% APR</div>
+              <div className="space-y-2">
+                <div className="text-sm text-global-teal font-semibold">Avg. 6-12% APR</div>
+                <div className="text-xs text-gray-500">
+                  {isLoading ? (
+                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
+                  ) : (
+                    `${metrics?.categoryBreakdown.property || 0} assets available`
+                  )}
+                </div>
+              </div>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
@@ -134,7 +191,16 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">TradeTokens</h3>
               <p className="text-gray-600 mb-4">Commodity inventory with verified supply chain data</p>
-              <div className="text-sm text-global-teal font-semibold">Avg. 10-18% APR</div>
+              <div className="space-y-2">
+                <div className="text-sm text-global-teal font-semibold">Avg. 10-18% APR</div>
+                <div className="text-xs text-gray-500">
+                  {isLoading ? (
+                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
+                  ) : (
+                    `${metrics?.categoryBreakdown.tradetokens || 0} assets available`
+                  )}
+                </div>
+              </div>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
@@ -142,14 +208,83 @@ export default function HomePage() {
               </div>
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Vault</h3>
               <p className="text-gray-600 mb-4">Precious metals and secure storage with insurance coverage</p>
-              <div className="text-sm text-global-teal font-semibold">Avg. 4-8% APR</div>
+              <div className="space-y-2">
+                <div className="text-sm text-global-teal font-semibold">Avg. 4-8% APR</div>
+                <div className="text-xs text-gray-500">
+                  {isLoading ? (
+                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
+                  ) : (
+                    `${metrics?.categoryBreakdown.vault || 0} assets available`
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Security & Compliance */}
+      {/* Live Asset Data */}
       <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Live Asset Performance</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Real-time data from our tokenized asset portfolio</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-global-teal">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-poppins font-semibold text-charcoal">Portfolio Value</h3>
+                <Icon name="chart-line-up" className="text-green-600" size={12} />
+              </div>
+              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+                ) : (
+                  AssetMetricsService.formatCurrency(metrics?.totalValue || 0)
+                )}
+              </div>
+              <div className="text-sm text-gray-600">Total assets under management</div>
+            </div>
+            <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-edge-purple">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-poppins font-semibold text-charcoal">Active Assets</h3>
+                <Icon name="layer-group" className="text-purple-600" size={12} />
+              </div>
+              <div className="text-3xl font-poppins font-bold text-edge-purple mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-16 rounded"></div>
+                ) : (
+                  AssetMetricsService.formatNumber(metrics?.totalAssetsTokenized || 0)
+                )}
+              </div>
+              <div className="text-sm text-gray-600">Assets currently tokenized</div>
+            </div>
+            <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-green-500">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-poppins font-semibold text-charcoal">Average Return</h3>
+                <Icon name="trophy" className="text-green-600" size={12} />
+              </div>
+              <div className="text-3xl font-poppins font-bold text-green-600 mb-2">
+                {isLoading ? (
+                  <div className="animate-pulse bg-gray-200 h-8 w-16 rounded"></div>
+                ) : (
+                  `${metrics?.averageAPR || 0}%`
+                )}
+              </div>
+              <div className="text-sm text-gray-600">Annual percentage return</div>
+            </div>
+          </div>
+          <div className="text-center">
+            <Link href="/assets" className="bg-global-teal text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors inline-flex items-center">
+              View All Assets
+              <Icon name="arrow-right" className="ml-2" size={8} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Security & Compliance */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Security & Compliance</h2>
