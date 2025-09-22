@@ -1,14 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import Icon from '@/components/ui/Icon';
 
 export default function AssetsPage() {
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState('containers');
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState<any>(null);
   const [showAssetModal, setShowAssetModal] = useState(false);
+
+  // Handle URL query parameters for category selection
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category && ['containers', 'property', 'tradetokens', 'vault', 'all'].includes(category)) {
+      setActiveCategory(category);
+    }
+  }, [searchParams]);
 
   // Handler functions
   const handleViewAsset = (asset: any) => {
@@ -475,10 +486,12 @@ export default function AssetsPage() {
             {categoryData.assets.map((asset, index) => (
               <div key={asset.id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
                 <div className="relative">
-                  <img 
+                  <Image 
                     className="w-full h-48 object-cover" 
                     src="https://storage.googleapis.com/uxpilot-auth.appspot.com/737a82cfea-8505609552f3f2bb8533.png" 
-                    alt={`${asset.name} asset`} 
+                    alt={`${asset.name} asset`}
+                    width={400}
+                    height={192}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">ACTIVE</span>

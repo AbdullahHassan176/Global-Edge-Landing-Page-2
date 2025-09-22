@@ -104,41 +104,41 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to start investing in tokenized real-world assets</p>
           </div>
           <div className="grid md:grid-cols-5 gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+            <Link href="/register" className="text-center group cursor-pointer">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="user-check" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Verify Identity</h3>
+              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Verify Identity</h3>
               <p className="text-sm text-gray-600">Complete KYC/KYB verification to access tokenized assets</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+            </Link>
+            <Link href="/assets" className="text-center group cursor-pointer">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="search" className="text-white text-lg" size={8} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Browse Assets</h3>
+              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Browse Assets</h3>
               <p className="text-sm text-gray-600">Explore containers, real estate, and trade inventory tokens</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+            </Link>
+            <Link href="/reports" className="text-center group cursor-pointer">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="chart-line" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Review Performance</h3>
+              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Review Performance</h3>
               <p className="text-sm text-gray-600">Analyze yields, risk profiles, and asset provenance</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+            </Link>
+            <Link href="/get-started" className="text-center group cursor-pointer">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="coins" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Invest</h3>
+              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Invest</h3>
               <p className="text-sm text-gray-600">Purchase fractional ownership through blockchain tokens</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4">
+            </Link>
+            <Link href="/dashboard" className="text-center group cursor-pointer">
+              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="trophy" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2">Earn Returns</h3>
+              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Earn Returns</h3>
               <p className="text-sm text-gray-600">Receive payouts as assets generate revenue</p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -151,11 +151,11 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">Diversify across multiple real-world asset classes</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+            <Link href="/assets?category=containers" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
                 <Icon name="ship" className="text-blue-600 text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Containers</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Containers</h3>
               <p className="text-gray-600 mb-4">Shipping containers with GPS tracking and verified cargo</p>
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 8-15% APR</div>
@@ -167,12 +167,12 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+            </Link>
+            <Link href="/assets?category=property" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
                 <Icon name="building" className="text-green-600 text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Property</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Property</h3>
               <p className="text-gray-600 mb-4">Commercial and residential real estate with rental income</p>
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 6-12% APR</div>
@@ -184,12 +184,12 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+            </Link>
+            <Link href="/assets?category=tradetokens" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors">
                 <Icon name="boxes-stacked" className="text-purple-600 text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">TradeTokens</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">TradeTokens</h3>
               <p className="text-gray-600 mb-4">Commodity inventory with verified supply chain data</p>
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 10-18% APR</div>
@@ -201,12 +201,12 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+            </Link>
+            <Link href="/assets?category=vault" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
                 <Icon name="vault" className="text-orange-600 text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Vault</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Vault</h3>
               <p className="text-gray-600 mb-4">Precious metals and secure storage with insurance coverage</p>
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 4-8% APR</div>
@@ -218,7 +218,7 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -291,27 +291,27 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">Built with institutional-grade security and regulatory compliance</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+            <Link href="/security" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="shield-halved" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">KYC/KYB Verification</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">KYC/KYB Verification</h3>
               <p className="text-gray-600">Comprehensive identity verification for all participants using industry-leading providers</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+            </Link>
+            <Link href="/security" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="lock" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Secure Custody</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Secure Custody</h3>
               <p className="text-gray-600">Multi-signature wallets and cold storage with institutional-grade security protocols</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6">
+            </Link>
+            <Link href="/security" className="text-center group cursor-pointer">
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Icon name="certificate" className="text-white text-lg" size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Oracle Attestations</h3>
+              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Oracle Attestations</h3>
               <p className="text-gray-600">Third-party verification of asset condition, location, and performance metrics</p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
