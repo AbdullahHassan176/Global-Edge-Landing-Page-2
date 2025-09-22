@@ -34,9 +34,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: {
-        applications: result.applications,
+        applications: 'applications' in result ? result.applications : [],
         source: useDatabase ? 'database' : 'mock',
-        count: result.applications?.length || 0,
+        count: 'applications' in result ? result.applications?.length || 0 : 0,
         filters: { userId }
       }
     });
