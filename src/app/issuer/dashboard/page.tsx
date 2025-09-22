@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User, Investment } from '@/lib/userAuthService';
 
 export default function IssuerDashboard() {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -162,7 +164,10 @@ export default function IssuerDashboard() {
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <button 
+              onClick={() => router.push('/issuer/assets/create')}
+              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <div className="w-10 h-10 bg-global-teal/10 rounded-lg flex items-center justify-center mr-3">
                 <Icon name="plus" className="text-global-teal text-lg" />
               </div>
@@ -172,7 +177,10 @@ export default function IssuerDashboard() {
               </div>
             </button>
 
-            <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <button 
+              onClick={() => router.push('/issuer/investors')}
+              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <div className="w-10 h-10 bg-edge-purple/10 rounded-lg flex items-center justify-center mr-3">
                 <Icon name="users" className="text-edge-purple text-lg" />
               </div>
@@ -182,7 +190,10 @@ export default function IssuerDashboard() {
               </div>
             </button>
 
-            <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <button 
+              onClick={() => router.push('/issuer/branding')}
+              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mr-3">
                 <Icon name="cog" className="text-blue-500 text-lg" />
               </div>

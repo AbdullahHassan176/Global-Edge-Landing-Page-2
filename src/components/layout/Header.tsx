@@ -187,6 +187,13 @@ export default function Header() {
                       <Icon name="users" size={4} className="mr-3 text-gray-500" />
                       User Management
                     </Link>
+                    <Link 
+                      href="/test-issuer" 
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="user-plus" size={4} className="mr-3 text-gray-500" />
+                      Test Issuer Access
+                    </Link>
                   </div>
                 </div>
               )}
@@ -275,6 +282,14 @@ export default function Header() {
                   >
                     <Icon name="chart-line" size={4} className="mr-2" />
                     Admin Dashboard
+                  </Link>
+                  <Link
+                    href="/test-issuer"
+                    className="flex items-center text-charcoal hover:text-global-teal transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Icon name="user-plus" size={4} className="mr-2" />
+                    Test Issuer Access
                   </Link>
                 </div>
               </div>
