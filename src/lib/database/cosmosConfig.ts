@@ -118,4 +118,19 @@ export const serverlessContainerCommands = [
 // Serverless database creation command
 export const serverlessDatabaseCommand = `az cosmosdb sql database create --account-name your-cosmos-account --name GlobalEdgeDatabase`;
 
+// Container configurations for easy access
+export const containerConfigs = [
+  { id: 'users', partitionKey: '/id' },
+  { id: 'assets', partitionKey: '/id' },
+  { id: 'investments', partitionKey: '/userId' },
+  { id: 'kyc-applications', partitionKey: '/userId' },
+  { id: 'notifications', partitionKey: '/userId' },
+  { id: 'admin-logs', partitionKey: '/timestamp' },
+  { id: 'asset-requests', partitionKey: '/issuerId' },
+  { id: 'issuer-branding', partitionKey: '/issuerId' },
+  { id: 'system-settings', partitionKey: '/category' },
+  { id: 'audit-logs', partitionKey: '/timestamp' },
+  { id: 'waitlist-submissions', partitionKey: '/id' }
+];
+
 export default cosmosConfig;
