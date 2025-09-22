@@ -71,7 +71,7 @@ export default function DatabasePage() {
     ];
 
     // Initialize results array with proper TypeScript typing
-    const results: Array<{query: string, success: boolean, data?: any, error?: string}> = [];
+    const results: Array<{query: string, success: boolean, data?: any, error?: string, count?: number}> = [];
     for (const query of queries) {
       try {
         const response = await fetch(query.url);
