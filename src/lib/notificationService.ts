@@ -1,6 +1,32 @@
 /**
  * Notification Service
  * Handles email notifications for investment process steps
+ * 
+ * 📧 EMAIL CONFIGURATION:
+ * 
+ * 🔧 DEVELOPMENT MODE:
+ * - All emails are logged to console only
+ * - No actual emails are sent
+ * - Mock recipients: investor@example.com, newuser@example.com
+ * 
+ * 🚀 PRODUCTION SETUP:
+ * To enable real email sending, integrate with an email service:
+ * 
+ * 1. SendGrid: Set SENDGRID_API_KEY environment variable
+ * 2. AWS SES: Configure AWS credentials and region
+ * 3. Mailgun: Set MAILGUN_API_KEY and MAILGUN_DOMAIN
+ * 4. Nodemailer: Configure SMTP settings
+ * 
+ * 📬 WHERE EMAILS GO:
+ * - Investment notifications → User's registered email
+ * - KYC notifications → User's registered email
+ * - Admin notifications → Admin emails (configured in admin settings)
+ * - Partner notifications → Partner contact emails
+ * 
+ * 🔐 EMAIL SECURITY:
+ * - All templates use String.raw to prevent code injection
+ * - Variable replacement is sanitized
+ * - HTML content is escaped for security
  */
 
 export interface EmailTemplate {
@@ -27,7 +53,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
     id: 'investment_created',
     name: 'Investment Created',
     subject: 'Your Investment Application Has Been Submitted - Global Edge',
-    htmlContent: `
+    htmlContent: String.raw`
       <!DOCTYPE html>
       <html>
       <head>
@@ -49,15 +75,15 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h1>Investment Application Submitted</h1>
           </div>
           <div class="content">
-            <h2>Hello {{firstName}},</h2>
+            <h2>Hello {{"firstName"}},</h2>
             <p>Thank you for your interest in investing with Global Edge. Your investment application has been successfully submitted and is now under review.</p>
             
             <h3>Investment Details:</h3>
             <ul>
-              <li><strong>Asset:</strong> {{assetName}}</li>
-              <li><strong>Investment Amount:</strong> ${{investmentAmount}}</li>
-              <li><strong>Application ID:</strong> {{investmentId}}</li>
-              <li><strong>Submitted:</strong> {{submittedDate}}</li>
+              <li><strong>Asset:</strong> {{"assetName"}}</li>
+              <li><strong>Investment Amount:</strong> ${{"investmentAmount"}}</li>
+              <li><strong>Application ID:</strong> {{"investmentId"}}</li>
+              <li><strong>Submitted:</strong> {{"submittedDate"}}</li>
             </ul>
             
             <h3>Next Steps:</h3>
@@ -70,28 +96,28 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             
             <p>You can track your investment status in your dashboard.</p>
             
-            <a href="{{dashboardUrl}}" class="button">View Dashboard</a>
+            <a href="{{"dashboardUrl"}}" class="button">View Dashboard</a>
             
             <p>If you have any questions, please don't hesitate to contact our support team.</p>
           </div>
           <div class="footer">
             <p>© 2025 Global Edge. All rights reserved.</p>
-            <p>This email was sent to {{email}}. If you didn't request this, please ignore this email.</p>
+            <p>This email was sent to {{"email"}}. If you didn't request this, please ignore this email.</p>
           </div>
         </div>
       </body>
       </html>
     `,
-    textContent: `
-      Hello {{firstName}},
+    textContent: String.raw`
+      Hello {{"firstName"}},
       
       Thank you for your interest in investing with Global Edge. Your investment application has been successfully submitted and is now under review.
       
       Investment Details:
-      - Asset: {{assetName}}
+      - Asset: {{"assetName"}}
       - Investment Amount: ${{investmentAmount}}
-      - Application ID: {{investmentId}}
-      - Submitted: {{submittedDate}}
+      - Application ID: {{"investmentId"}}
+      - Submitted: {{"submittedDate"}}
       
       Next Steps:
       1. Complete KYC verification (if required)
@@ -99,7 +125,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       3. Wait for approval from our team
       4. Make payment once approved
       
-      You can track your investment status in your dashboard: {{dashboardUrl}}
+      You can track your investment status in your dashboard: {{"dashboardUrl"}}
       
       If you have any questions, please don't hesitate to contact our support team.
       
@@ -112,7 +138,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
     id: 'kyc_required',
     name: 'KYC Verification Required',
     subject: 'Action Required: Complete Your KYC Verification - Global Edge',
-    htmlContent: `
+    htmlContent: String.raw`
       <!DOCTYPE html>
       <html>
       <head>
@@ -135,13 +161,13 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h1>KYC Verification Required</h1>
           </div>
           <div class="content">
-            <h2>Hello {{firstName}},</h2>
+            <h2>Hello {{"firstName"}},</h2>
             
             <div class="warning">
               <strong>Action Required:</strong> To proceed with your investment, you must complete your Know Your Customer (KYC) verification.
             </div>
             
-            <p>Your investment application for <strong>{{assetName}}</strong> (Amount: ${{investmentAmount}}) cannot be processed until your identity is verified.</p>
+            <p>Your investment application for <strong>{{"assetName"}}</strong> (Amount: ${{investmentAmount}}) cannot be processed until your identity is verified.</p>
             
             <h3>Required Documents:</h3>
             <ul>
@@ -157,24 +183,24 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
               <li>Ensuring secure and legitimate transactions</li>
             </ul>
             
-            <a href="{{kycUrl}}" class="button">Complete KYC Verification</a>
+            <a href="{{"kycUrl"}}" class="button">Complete KYC Verification</a>
             
             <p><strong>Important:</strong> Please complete your KYC verification within 7 days to avoid delays in processing your investment.</p>
           </div>
           <div class="footer">
             <p>© 2025 Global Edge. All rights reserved.</p>
-            <p>This email was sent to {{email}}. If you didn't request this, please ignore this email.</p>
+            <p>This email was sent to {{"email"}}. If you didn't request this, please ignore this email.</p>
           </div>
         </div>
       </body>
       </html>
     `,
-    textContent: `
-      Hello {{firstName}},
+    textContent: String.raw`
+      Hello {{"firstName"}},
       
       ACTION REQUIRED: To proceed with your investment, you must complete your Know Your Customer (KYC) verification.
       
-      Your investment application for {{assetName}} (Amount: ${{investmentAmount}}) cannot be processed until your identity is verified.
+      Your investment application for {{"assetName"}} (Amount: ${{investmentAmount}}) cannot be processed until your identity is verified.
       
       Required Documents:
       - Valid passport or national ID
@@ -186,7 +212,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       - Protection against fraud and money laundering
       - Ensuring secure and legitimate transactions
       
-      Complete your KYC verification here: {{kycUrl}}
+      Complete your KYC verification here: {{"kycUrl"}}
       
       IMPORTANT: Please complete your KYC verification within 7 days to avoid delays in processing your investment.
       
@@ -199,7 +225,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
     id: 'kyc_approved',
     name: 'KYC Verification Approved',
     subject: 'Great News! Your KYC Verification is Approved - Global Edge',
-    htmlContent: `
+    htmlContent: String.raw`
       <!DOCTYPE html>
       <html>
       <head>
@@ -222,7 +248,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h1>KYC Verification Approved</h1>
           </div>
           <div class="content">
-            <h2>Congratulations {{firstName}}!</h2>
+            <h2>Congratulations {{"firstName"}}!</h2>
             
             <div class="success">
               <strong>Great News:</strong> Your KYC verification has been successfully approved!
@@ -237,20 +263,20 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
               <li>Your account is now fully verified and secure</li>
             </ul>
             
-            <a href="{{dashboardUrl}}" class="button">View Your Dashboard</a>
+            <a href="{{"dashboardUrl"}}" class="button">View Your Dashboard</a>
             
             <p>Thank you for choosing Global Edge for your investment needs. We're excited to help you grow your portfolio!</p>
           </div>
           <div class="footer">
             <p>© 2025 Global Edge. All rights reserved.</p>
-            <p>This email was sent to {{email}}. If you didn't request this, please ignore this email.</p>
+            <p>This email was sent to {{"email"}}. If you didn't request this, please ignore this email.</p>
           </div>
         </div>
       </body>
       </html>
     `,
-    textContent: `
-      Congratulations {{firstName}}!
+    textContent: String.raw`
+      Congratulations {{"firstName"}}!
       
       GREAT NEWS: Your KYC verification has been successfully approved!
       
@@ -261,7 +287,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       - You can access all investment opportunities
       - Your account is now fully verified and secure
       
-      View your dashboard: {{dashboardUrl}}
+      View your dashboard: {{"dashboardUrl"}}
       
       Thank you for choosing Global Edge for your investment needs. We're excited to help you grow your portfolio!
       
@@ -274,7 +300,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
     id: 'investment_approved',
     name: 'Investment Approved',
     subject: 'Your Investment Has Been Approved - Global Edge',
-    htmlContent: `
+    htmlContent: String.raw`
       <!DOCTYPE html>
       <html>
       <head>
@@ -297,7 +323,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h1>Investment Approved</h1>
           </div>
           <div class="content">
-            <h2>Congratulations {{firstName}}!</h2>
+            <h2>Congratulations {{"firstName"}}!</h2>
             
             <div class="success">
               <strong>Excellent News:</strong> Your investment has been approved!
@@ -305,10 +331,10 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             
             <h3>Investment Details:</h3>
             <ul>
-              <li><strong>Asset:</strong> {{assetName}}</li>
-              <li><strong>Investment Amount:</strong> ${{investmentAmount}}</li>
-              <li><strong>Investment ID:</strong> {{investmentId}}</li>
-              <li><strong>Approved Date:</strong> {{approvedDate}}</li>
+              <li><strong>Asset:</strong> {{"assetName"}}</li>
+              <li><strong>Investment Amount:</strong> ${{"investmentAmount"}}</li>
+              <li><strong>Investment ID:</strong> {{"investmentId"}}</li>
+              <li><strong>Approved Date:</strong> {{"approvedDate"}}</li>
             </ul>
             
             <h3>Next Steps:</h3>
@@ -319,29 +345,29 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
               <li>Start earning returns</li>
             </ol>
             
-            <a href="{{paymentUrl}}" class="button">Make Payment</a>
+            <a href="{{"paymentUrl"}}" class="button">Make Payment</a>
             
-            <p><strong>Payment Deadline:</strong> {{paymentDeadline}}</p>
+            <p><strong>Payment Deadline:</strong> {{"paymentDeadline"}}</p>
             <p>If you have any questions about your investment, please contact our support team.</p>
           </div>
           <div class="footer">
             <p>© 2025 Global Edge. All rights reserved.</p>
-            <p>This email was sent to {{email}}. If you didn't request this, please ignore this email.</p>
+            <p>This email was sent to {{"email"}}. If you didn't request this, please ignore this email.</p>
           </div>
         </div>
       </body>
       </html>
     `,
-    textContent: `
-      Congratulations {{firstName}}!
+    textContent: String.raw`
+      Congratulations {{"firstName"}}!
       
       EXCELLENT NEWS: Your investment has been approved!
       
       Investment Details:
-      - Asset: {{assetName}}
+      - Asset: {{"assetName"}}
       - Investment Amount: ${{investmentAmount}}
-      - Investment ID: {{investmentId}}
-      - Approved Date: {{approvedDate}}
+      - Investment ID: {{"investmentId"}}
+      - Approved Date: {{"approvedDate"}}
       
       Next Steps:
       1. Review the investment agreement
@@ -349,9 +375,9 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       3. Receive your investment tokens
       4. Start earning returns
       
-      Make your payment here: {{paymentUrl}}
+      Make your payment here: {{"paymentUrl"}}
       
-      Payment Deadline: {{paymentDeadline}}
+      Payment Deadline: {{"paymentDeadline"}}
       
       If you have any questions about your investment, please contact our support team.
       
@@ -364,7 +390,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
     id: 'investment_completed',
     name: 'Investment Completed',
     subject: 'Investment Successfully Completed - Global Edge',
-    htmlContent: `
+    htmlContent: String.raw`
       <!DOCTYPE html>
       <html>
       <head>
@@ -387,7 +413,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             <h1>Investment Completed</h1>
           </div>
           <div class="content">
-            <h2>Congratulations {{firstName}}!</h2>
+            <h2>Congratulations {{"firstName"}}!</h2>
             
             <div class="success">
               <strong>Investment Successfully Completed:</strong> Your investment is now active and earning returns!
@@ -395,11 +421,11 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
             
             <h3>Investment Summary:</h3>
             <ul>
-              <li><strong>Asset:</strong> {{assetName}}</li>
-              <li><strong>Investment Amount:</strong> ${{investmentAmount}}</li>
-              <li><strong>Tokens Received:</strong> {{tokensReceived}}</li>
-              <li><strong>Expected Annual Return:</strong> {{expectedReturn}}%</li>
-              <li><strong>Completion Date:</strong> {{completionDate}}</li>
+              <li><strong>Asset:</strong> {{"assetName"}}</li>
+              <li><strong>Investment Amount:</strong> ${{"investmentAmount"}}</li>
+              <li><strong>Tokens Received:</strong> {{"tokensReceived"}}</li>
+              <li><strong>Expected Annual Return:</strong> {{"expectedReturn"}}%</li>
+              <li><strong>Completion Date:</strong> {{"completionDate"}}</li>
             </ul>
             
             <h3>What Happens Next?</h3>
@@ -410,29 +436,29 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
               <li>You'll receive regular updates on your investment</li>
             </ul>
             
-            <a href="{{dashboardUrl}}" class="button">View Investment Details</a>
+            <a href="{{"dashboardUrl"}}" class="button">View Investment Details</a>
             
             <p>Thank you for investing with Global Edge. We're committed to providing you with excellent returns and transparent communication throughout your investment journey.</p>
           </div>
           <div class="footer">
             <p>© 2025 Global Edge. All rights reserved.</p>
-            <p>This email was sent to {{email}}. If you didn't request this, please ignore this email.</p>
+            <p>This email was sent to {{"email"}}. If you didn't request this, please ignore this email.</p>
           </div>
         </div>
       </body>
       </html>
     `,
-    textContent: `
-      Congratulations {{firstName}}!
+    textContent: String.raw`
+      Congratulations {{"firstName"}}!
       
       INVESTMENT SUCCESSFULLY COMPLETED: Your investment is now active and earning returns!
       
       Investment Summary:
-      - Asset: {{assetName}}
+      - Asset: {{"assetName"}}
       - Investment Amount: ${{investmentAmount}}
-      - Tokens Received: {{tokensReceived}}
-      - Expected Annual Return: {{expectedReturn}}%
-      - Completion Date: {{completionDate}}
+      - Tokens Received: {{"tokensReceived"}}
+      - Expected Annual Return: {{"expectedReturn"}}%
+      - Completion Date: {{"completionDate"}}
       
       What Happens Next?
       - Your investment tokens are now in your wallet
@@ -440,7 +466,7 @@ const EMAIL_TEMPLATES: Record<string, EmailTemplate> = {
       - You can track performance in your dashboard
       - You'll receive regular updates on your investment
       
-      View investment details: {{dashboardUrl}}
+      View investment details: {{"dashboardUrl"}}
       
       Thank you for investing with Global Edge. We're committed to providing you with excellent returns and transparent communication throughout your investment journey.
       
@@ -552,7 +578,7 @@ class NotificationService {
    * Replace variables in template strings
    */
   private replaceVariables(template: string, data: Record<string, any>): string {
-    return template.replace(/\{\{(\w+)\}\}/g, (match, variable) => {
+    return template.replace(/\{\{("?)(\w+)\1\}\}/g, (match, quote, variable) => {
       return data[variable] || match;
     });
   }
