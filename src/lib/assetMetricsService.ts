@@ -35,23 +35,23 @@ const mockAssets: AssetData[] = [
   // Containers (247 total)
   {
     id: '1',
-    name: 'Shanghai-Los Angeles Container',
+    name: 'Jebel Ali-Dubai Container',
     type: 'container',
     apr: '12.5%',
     risk: 'Medium',
     value: '$45,000',
-    route: 'Shanghai → Los Angeles',
-    cargo: 'Electronics & Textiles'
+    route: 'Jebel Ali Port → Dubai',
+    cargo: 'Electronics & Luxury Goods'
   },
   {
     id: '2',
-    name: 'Hamburg-New York Container',
+    name: 'Abu Dhabi-Rotterdam Container',
     type: 'container',
     apr: '11.8%',
     risk: 'Medium',
     value: '$38,000',
-    route: 'Hamburg → New York',
-    cargo: 'Automotive Parts'
+    route: 'Abu Dhabi → Rotterdam',
+    cargo: 'Petrochemicals & Oil Products'
   },
   {
     id: '9',
@@ -66,22 +66,22 @@ const mockAssets: AssetData[] = [
   // Properties (89 total)
   {
     id: '3',
-    name: 'Miami Office Building',
+    name: 'Dubai Marina Office Tower',
     type: 'property',
     apr: '8.2%',
     risk: 'Low',
     value: '$350,000',
-    route: 'Miami, FL',
+    route: 'Dubai Marina, UAE',
     cargo: 'Commercial Real Estate'
   },
   {
     id: '4',
-    name: 'Austin Residential Complex',
+    name: 'Abu Dhabi Corniche Residential',
     type: 'property',
     apr: '9.5%',
     risk: 'Low',
     value: '$280,000',
-    route: 'Austin, TX',
+    route: 'Abu Dhabi Corniche, UAE',
     cargo: 'Residential Real Estate'
   },
   {
@@ -97,23 +97,23 @@ const mockAssets: AssetData[] = [
   // TradeTokens/Inventory (156 total)
   {
     id: '5',
-    name: 'Electronics Inventory',
+    name: 'Dubai Gold Souk Inventory',
     type: 'inventory',
     apr: '15.1%',
     risk: 'High',
     value: '$25,000',
-    route: 'Global Distribution',
-    cargo: 'Consumer Electronics'
+    route: 'Dubai Gold Souk, UAE',
+    cargo: 'Gold & Precious Metals'
   },
   {
     id: '6',
-    name: 'Textile Inventory',
+    name: 'Sharjah Textile Market',
     type: 'inventory',
     apr: '13.2%',
     risk: 'Medium',
     value: '$18,000',
-    route: 'Asia-Pacific',
-    cargo: 'Fashion & Apparel'
+    route: 'Sharjah, UAE',
+    cargo: 'Traditional Textiles & Fabrics'
   },
   {
     id: '11',
@@ -128,23 +128,23 @@ const mockAssets: AssetData[] = [
   // Vault (34 total)
   {
     id: '7',
-    name: 'Gold Vault Storage',
+    name: 'Dubai International Vault',
     type: 'vault',
     apr: '6.8%',
     risk: 'Low',
     value: '$20,000',
-    route: 'Switzerland',
-    cargo: 'Precious Metals'
+    route: 'Dubai International Financial Centre',
+    cargo: 'Gold & Precious Metals'
   },
   {
     id: '8',
-    name: 'Diamond Vault Storage',
+    name: 'Abu Dhabi Diamond Vault',
     type: 'vault',
     apr: '7.5%',
     risk: 'Low',
     value: '$15,000',
-    route: 'Antwerp, Belgium',
-    cargo: 'Precious Stones'
+    route: 'Abu Dhabi Global Market',
+    cargo: 'Diamonds & Precious Stones'
   },
   {
     id: '12',

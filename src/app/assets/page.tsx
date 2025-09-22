@@ -45,23 +45,25 @@ export default function AssetsPage() {
           assets: [
             {
               id: '1',
-              name: 'Shanghai-Los Angeles Container',
+              name: 'Jebel Ali-Dubai Container',
               type: 'container',
               apr: '12.5%',
               risk: 'Medium',
               value: '$45,000',
-              route: 'Shanghai → Los Angeles',
-              cargo: 'Electronics & Textiles'
+              route: 'Jebel Ali Port → Dubai',
+              cargo: 'Electronics & Luxury Goods',
+              image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '2',
-              name: 'Hamburg-New York Container',
+              name: 'Abu Dhabi-Rotterdam Container',
               type: 'container',
               apr: '11.8%',
               risk: 'Medium',
               value: '$38,000',
-              route: 'Hamburg → New York',
-              cargo: 'Automotive Parts'
+              route: 'Abu Dhabi → Rotterdam',
+              cargo: 'Petrochemicals & Oil Products',
+              image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=192&fit=crop&crop=center'
             }
           ]
         };
@@ -75,23 +77,25 @@ export default function AssetsPage() {
           assets: [
             {
               id: '3',
-              name: 'Miami Office Building',
+              name: 'Dubai Marina Office Tower',
               type: 'property',
               apr: '8.2%',
               risk: 'Low',
               value: '$350,000',
-              route: 'Miami, FL',
-              cargo: 'Commercial Real Estate'
+              route: 'Dubai Marina, UAE',
+              cargo: 'Commercial Real Estate',
+              image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '4',
-              name: 'Austin Residential Complex',
+              name: 'Abu Dhabi Corniche Residential',
               type: 'property',
               apr: '9.5%',
               risk: 'Low',
               value: '$280,000',
-              route: 'Austin, TX',
-              cargo: 'Residential Real Estate'
+              route: 'Abu Dhabi Corniche, UAE',
+              cargo: 'Residential Real Estate',
+              image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=192&fit=crop&crop=center'
             }
           ]
         };
@@ -105,23 +109,25 @@ export default function AssetsPage() {
           assets: [
             {
               id: '5',
-              name: 'Electronics Inventory',
+              name: 'Dubai Gold Souk Inventory',
               type: 'inventory',
               apr: '15.1%',
               risk: 'High',
               value: '$25,000',
-              route: 'Global Distribution',
-              cargo: 'Consumer Electronics'
+              route: 'Dubai Gold Souk, UAE',
+              cargo: 'Gold & Precious Metals',
+              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '6',
-              name: 'Textile Inventory',
+              name: 'Sharjah Textile Market',
               type: 'inventory',
               apr: '13.2%',
               risk: 'Medium',
               value: '$18,000',
-              route: 'Asia-Pacific',
-              cargo: 'Fashion & Apparel'
+              route: 'Sharjah, UAE',
+              cargo: 'Traditional Textiles & Fabrics',
+              image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=192&fit=crop&crop=center'
             }
           ]
         };
@@ -135,23 +141,25 @@ export default function AssetsPage() {
           assets: [
             {
               id: '7',
-              name: 'Gold Vault Storage',
+              name: 'Dubai International Vault',
               type: 'vault',
               apr: '6.8%',
               risk: 'Low',
               value: '$20,000',
-              route: 'Switzerland',
-              cargo: 'Precious Metals'
+              route: 'Dubai International Financial Centre',
+              cargo: 'Gold & Precious Metals',
+              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '8',
-              name: 'Diamond Vault Storage',
+              name: 'Abu Dhabi Diamond Vault',
               type: 'vault',
               apr: '7.5%',
               risk: 'Low',
               value: '$15,000',
-              route: 'Antwerp, Belgium',
-              cargo: 'Precious Stones'
+              route: 'Abu Dhabi Global Market',
+              cargo: 'Diamonds & Precious Stones',
+              image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=192&fit=crop&crop=center'
             }
           ]
         };
@@ -165,123 +173,135 @@ export default function AssetsPage() {
           assets: [
             {
               id: '1',
-              name: 'Shanghai-Los Angeles Container',
+              name: 'Jebel Ali-Dubai Container',
               type: 'container',
               apr: '12.5%',
               risk: 'Medium',
               value: '$45,000',
-              route: 'Shanghai → Los Angeles',
-              cargo: 'Electronics & Textiles'
+              route: 'Jebel Ali Port → Dubai',
+              cargo: 'Electronics & Luxury Goods',
+              image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '2',
-              name: 'Hamburg-New York Container',
+              name: 'Abu Dhabi-Rotterdam Container',
               type: 'container',
               apr: '11.8%',
               risk: 'Medium',
               value: '$38,000',
-              route: 'Hamburg → New York',
-              cargo: 'Automotive Parts'
+              route: 'Abu Dhabi → Rotterdam',
+              cargo: 'Petrochemicals & Oil Products',
+              image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '3',
-              name: 'Miami Office Building',
+              name: 'Dubai Marina Office Tower',
               type: 'property',
               apr: '8.2%',
               risk: 'Low',
               value: '$350,000',
-              route: 'Miami, FL',
-              cargo: 'Commercial Real Estate'
+              route: 'Dubai Marina, UAE',
+              cargo: 'Commercial Real Estate',
+              image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '4',
-              name: 'Austin Residential Complex',
+              name: 'Abu Dhabi Corniche Residential',
               type: 'property',
               apr: '9.5%',
               risk: 'Low',
               value: '$280,000',
-              route: 'Austin, TX',
-              cargo: 'Residential Real Estate'
+              route: 'Abu Dhabi Corniche, UAE',
+              cargo: 'Residential Real Estate',
+              image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '5',
-              name: 'Electronics Inventory',
+              name: 'Dubai Gold Souk Inventory',
               type: 'inventory',
               apr: '15.1%',
               risk: 'High',
               value: '$25,000',
-              route: 'Global Distribution',
-              cargo: 'Consumer Electronics'
+              route: 'Dubai Gold Souk, UAE',
+              cargo: 'Gold & Precious Metals',
+              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '6',
-              name: 'Textile Inventory',
+              name: 'Sharjah Textile Market',
               type: 'inventory',
               apr: '13.2%',
               risk: 'Medium',
               value: '$18,000',
-              route: 'Asia-Pacific',
-              cargo: 'Fashion & Apparel'
+              route: 'Sharjah, UAE',
+              cargo: 'Traditional Textiles & Fabrics',
+              image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '7',
-              name: 'Gold Vault Storage',
+              name: 'Dubai International Vault',
               type: 'vault',
               apr: '6.8%',
               risk: 'Low',
               value: '$20,000',
-              route: 'Switzerland',
-              cargo: 'Precious Metals'
+              route: 'Dubai International Financial Centre',
+              cargo: 'Gold & Precious Metals',
+              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '8',
-              name: 'Diamond Vault Storage',
+              name: 'Abu Dhabi Diamond Vault',
               type: 'vault',
               apr: '7.5%',
               risk: 'Low',
               value: '$15,000',
-              route: 'Antwerp, Belgium',
-              cargo: 'Precious Stones'
+              route: 'Abu Dhabi Global Market',
+              cargo: 'Diamonds & Precious Stones',
+              image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '9',
-              name: 'Singapore-Rotterdam Container',
+              name: 'Fujairah Port Container',
               type: 'container',
               apr: '13.8%',
               risk: 'Medium',
               value: '$42,000',
-              route: 'Singapore → Rotterdam',
-              cargo: 'Industrial Machinery'
+              route: 'Fujairah Port → Singapore',
+              cargo: 'Oil & Gas Equipment',
+              image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '10',
-              name: 'Seattle Warehouse Complex',
+              name: 'Dubai Industrial City Warehouse',
               type: 'property',
               apr: '7.8%',
               risk: 'Low',
               value: '$420,000',
-              route: 'Seattle, WA',
-              cargo: 'Industrial Real Estate'
+              route: 'Dubai Industrial City, UAE',
+              cargo: 'Industrial Real Estate',
+              image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '11',
-              name: 'Agricultural Commodities',
+              name: 'Al Ain Date Palm Inventory',
               type: 'inventory',
               apr: '14.5%',
               risk: 'High',
               value: '$32,000',
-              route: 'Midwest Distribution',
-              cargo: 'Grain & Soybeans'
+              route: 'Al Ain, UAE',
+              cargo: 'Premium Dates & Agricultural Products',
+              image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=192&fit=crop&crop=center'
             },
             {
               id: '12',
-              name: 'Silver Vault Storage',
+              name: 'Dubai Multi Commodities Centre',
               type: 'vault',
               apr: '6.2%',
               risk: 'Low',
               value: '$12,000',
-              route: 'London, UK',
-              cargo: 'Precious Metals'
+              route: 'Dubai Multi Commodities Centre',
+              cargo: 'Silver & Base Metals',
+              image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=192&fit=crop&crop=center'
             }
           ]
         };
@@ -488,7 +508,7 @@ export default function AssetsPage() {
                 <div className="relative">
                   <Image 
                     className="w-full h-48 object-cover" 
-                    src="https://storage.googleapis.com/uxpilot-auth.appspot.com/737a82cfea-8505609552f3f2bb8533.png" 
+                    src={asset.image || "https://storage.googleapis.com/uxpilot-auth.appspot.com/737a82cfea-8505609552f3f2bb8533.png"} 
                     alt={`${asset.name} asset`}
                     width={400}
                     height={192}
