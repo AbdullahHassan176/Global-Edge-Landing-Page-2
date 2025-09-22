@@ -70,7 +70,7 @@ export default function DatabasePage() {
       { name: 'Get Investments', url: '/api/investments' }
     ];
 
-    const results = [];
+    const results: Array<{query: string, success: boolean, data?: any, error?: string}> = [];
     for (const query of queries) {
       try {
         const response = await fetch(query.url);
