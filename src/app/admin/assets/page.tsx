@@ -12,6 +12,7 @@ export default function AdminAssetsPage() {
   const [requests, setRequests] = useState<AssetCreationRequest[]>([]);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<AssetCreationRequest | null>(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewComments, setReviewComments] = useState('');
@@ -36,6 +37,7 @@ export default function AdminAssetsPage() {
       
       setRequests(Array.isArray(allRequests) ? allRequests : []);
       setAssets(Array.isArray(allAssets) ? allAssets : []);
+      setInitialized(true);
     } catch (error) {
       console.error('Error loading requests:', error);
       addNotification({
@@ -47,6 +49,7 @@ export default function AdminAssetsPage() {
       // Set empty arrays on error
       setRequests([]);
       setAssets([]);
+      setInitialized(true);
     } finally {
       setLoading(false);
     }
@@ -60,6 +63,7 @@ export default function AdminAssetsPage() {
   // Debug logging
   console.log('Assets state:', assets, 'Type:', typeof assets, 'Is Array:', Array.isArray(assets));
   console.log('Loading state:', loading);
+  console.log('Initialized state:', initialized);
 
   const handleReview = (request: AssetCreationRequest) => {
     setSelectedRequest(request);
@@ -176,7 +180,7 @@ export default function AdminAssetsPage() {
     });
   };
 
-  if (loading) {
+  if (loading || !initialized) {
     return (
       <AdminAuthGuard requiredPermissions={['manage_assets', 'approve_assets']}>
         <div className="min-h-screen bg-soft-white flex items-center justify-center">
@@ -211,15 +215,23 @@ export default function AdminAssetsPage() {
     );
   }
 
-  // Calculate filtered assets safely
-  const filteredAssets = (Array.isArray(assets) ? assets : []).filter(asset => {
-    switch (activeTab) {
-      case 'pending': return asset.status === 'pending';
-      case 'approved': return asset.status === 'approved' || asset.status === 'active';
-      case 'all': return true;
-      default: return true;
+  // Calculate filtered assets safely - only after initialization
+  let filteredAssets: Asset[] = [];
+  if (initialized && Array.isArray(assets)) {
+    try {
+      filteredAssets = assets.filter(asset => {
+        switch (activeTab) {
+          case 'pending': return asset.status === 'pending';
+          case 'approved': return asset.status === 'approved' || asset.status === 'active';
+          case 'all': return true;
+          default: return true;
+        }
+      });
+    } catch (error) {
+      console.error('Error filtering assets:', error);
+      filteredAssets = [];
     }
-  });
+  }
 
   return (
     <AdminAuthGuard requiredPermissions={['manage_assets', 'approve_assets']}>
