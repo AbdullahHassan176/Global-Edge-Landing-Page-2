@@ -212,20 +212,24 @@ class UserAuthService {
   // Authentication methods
   async login(email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
-      // Mock authentication - in production, this would validate against your backend
-      const user = MOCK_USERS.find(u => u.email === email);
+      // Get all users (including newly registered ones)
+      const allUsers = this.getAllUsers();
+      const user = allUsers.find(u => u.email === email);
       
       if (!user) {
         return { success: false, error: 'Invalid email or password' };
       }
 
-      // Mock password validation
+      // Mock password validation - check against stored users or default passwords
       const validPasswords: Record<string, string> = {
         'issuer@example.com': 'Issuer123!',
         'investor@example.com': 'Investor123!'
       };
 
-      if (validPasswords[email] !== password) {
+      // For newly registered users, use a default password or check if they have a stored password
+      const expectedPassword = validPasswords[email] || 'Password123!'; // Default password for new users
+
+      if (expectedPassword !== password) {
         return { success: false, error: 'Invalid email or password' };
       }
 
@@ -284,8 +288,14 @@ class UserAuthService {
         }
       };
 
+      // Add to mock users for immediate access
       MOCK_USERS.push(newUser);
-      this.saveUsers();
+      
+      // Also save to localStorage for persistence
+      const storedUsers = localStorage.getItem('registered_users');
+      const existingUsers = storedUsers ? JSON.parse(storedUsers) : [];
+      existingUsers.push(newUser);
+      localStorage.setItem('registered_users', JSON.stringify(existingUsers));
 
       return { success: true, user: newUser };
     } catch (error) {
@@ -323,7 +333,11 @@ class UserAuthService {
     if (!userData) return null;
 
     try {
-      return JSON.parse(userData);
+      const user = JSON.parse(userData);
+      // Verify user still exists in our system
+      const allUsers = this.getAllUsers();
+      const currentUser = allUsers.find(u => u.id === user.id);
+      return currentUser || null;
     } catch {
       return null;
     }
@@ -497,6 +511,24 @@ class UserAuthService {
   }
 
   // Storage methods
+  private getAllUsers(): User[] {
+    if (typeof window === 'undefined') return MOCK_USERS;
+    
+    // Get registered users from localStorage
+    const registeredUsers = localStorage.getItem('registered_users');
+    const additionalUsers = registeredUsers ? JSON.parse(registeredUsers) : [];
+    
+    // Combine mock users with registered users, avoiding duplicates
+    const allUsers = [...MOCK_USERS];
+    additionalUsers.forEach((user: User) => {
+      if (!allUsers.find(u => u.id === user.id)) {
+        allUsers.push(user);
+      }
+    });
+    
+    return allUsers;
+  }
+
   private saveUsers(): void {
     if (typeof window !== 'undefined') {
       localStorage.setItem('mock_users', JSON.stringify(MOCK_USERS));
