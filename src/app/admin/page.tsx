@@ -130,6 +130,26 @@ function AdminDashboard() {
               </div>
             </Link>
 
+            {/* Asset Management */}
+            <Link 
+              href="/admin/assets"
+              className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <Icon name="boxes" className="text-white text-2xl" />
+              </div>
+              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Asset Management</h3>
+              <p className="text-gray-600 text-center mb-6">
+                Control, upload, and edit details of all assets available on the portal.
+              </p>
+              <div className="text-center">
+                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
+                  Manage Assets
+                  <Icon name="arrow-right" className="ml-2" />
+                </span>
+              </div>
+            </Link>
+
             {/* Settings */}
             <Link 
               href="/admin/settings"

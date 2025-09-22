@@ -34,7 +34,7 @@ const ADMIN_USERS: AdminUser[] = [
     username: 'moderator',
     email: 'moderator@globalnext.rocks',
     role: 'moderator',
-    permissions: ['view_users', 'view_notifications', 'view_analytics'],
+    permissions: ['view_users', 'view_notifications', 'view_analytics', 'manage_assets'],
     lastLogin: new Date().toISOString(),
     isActive: true
   }

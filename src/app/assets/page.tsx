@@ -4,14 +4,22 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Icon from '@/components/ui/Icon';
+import { assetService, Asset } from '@/lib/assetService';
 
 export default function AssetsPage() {
   const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState('containers');
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedAsset, setSelectedAsset] = useState<any>(null);
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [showAssetModal, setShowAssetModal] = useState(false);
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load assets on component mount
+  useEffect(() => {
+    loadAssets();
+  }, []);
 
   // Handle URL query parameters for category selection
   useEffect(() => {
@@ -20,6 +28,18 @@ export default function AssetsPage() {
       setActiveCategory(category);
     }
   }, [searchParams]);
+
+  const loadAssets = async () => {
+    setLoading(true);
+    try {
+      const allAssets = await assetService.getAssets();
+      setAssets(allAssets);
+    } catch (error) {
+      console.error('Error loading assets:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Handler functions
   const handleViewAsset = (asset: any) => {
@@ -34,290 +54,41 @@ export default function AssetsPage() {
 
   // Get category-specific data
   const getCategoryData = () => {
-    switch (activeCategory) {
-      case 'containers':
-        return {
-          title: 'Container Assets',
-          description: '247 shipping containers available for investment',
-          count: 247,
-          icon: 'ship',
-          color: 'blue',
-          assets: [
-            {
-              id: '1',
-              name: 'Jebel Ali-Dubai Container',
-              type: 'container',
-              apr: '12.5%',
-              risk: 'Medium',
-              value: '$45,000',
-              route: 'Jebel Ali Port → Dubai',
-              cargo: 'Electronics & Luxury Goods',
-              image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '2',
-              name: 'Abu Dhabi-Rotterdam Container',
-              type: 'container',
-              apr: '11.8%',
-              risk: 'Medium',
-              value: '$38,000',
-              route: 'Abu Dhabi → Rotterdam',
-              cargo: 'Petrochemicals & Oil Products',
-              image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=192&fit=crop&crop=center'
-            }
-          ]
-        };
-      case 'property':
-        return {
-          title: 'Property Assets',
-          description: '89 real estate properties available for investment',
-          count: 89,
-          icon: 'building',
-          color: 'green',
-          assets: [
-            {
-              id: '3',
-              name: 'Dubai Marina Office Tower',
-              type: 'property',
-              apr: '8.2%',
-              risk: 'Low',
-              value: '$350,000',
-              route: 'Dubai Marina, UAE',
-              cargo: 'Commercial Real Estate',
-              image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '4',
-              name: 'Abu Dhabi Corniche Residential',
-              type: 'property',
-              apr: '9.5%',
-              risk: 'Low',
-              value: '$280,000',
-              route: 'Abu Dhabi Corniche, UAE',
-              cargo: 'Residential Real Estate',
-              image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=192&fit=crop&crop=center'
-            }
-          ]
-        };
-      case 'tradetokens':
-        return {
-          title: 'TradeToken Assets',
-          description: '156 trade inventory tokens available for investment',
-          count: 156,
-          icon: 'boxes',
-          color: 'purple',
-          assets: [
-            {
-              id: '5',
-              name: 'Dubai Gold Souk Inventory',
-              type: 'inventory',
-              apr: '15.1%',
-              risk: 'High',
-              value: '$25,000',
-              route: 'Dubai Gold Souk, UAE',
-              cargo: 'Gold & Precious Metals',
-              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '6',
-              name: 'Sharjah Textile Market',
-              type: 'inventory',
-              apr: '13.2%',
-              risk: 'Medium',
-              value: '$18,000',
-              route: 'Sharjah, UAE',
-              cargo: 'Traditional Textiles & Fabrics',
-              image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=192&fit=crop&crop=center'
-            }
-          ]
-        };
-      case 'vault':
-        return {
-          title: 'Vault Assets',
-          description: '34 secure vault storage assets available for investment',
-          count: 34,
-          icon: 'vault',
-          color: 'orange',
-          assets: [
-            {
-              id: '7',
-              name: 'Dubai International Vault',
-              type: 'vault',
-              apr: '6.8%',
-              risk: 'Low',
-              value: '$20,000',
-              route: 'Dubai International Financial Centre',
-              cargo: 'Gold & Precious Metals',
-              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '8',
-              name: 'Abu Dhabi Diamond Vault',
-              type: 'vault',
-              apr: '7.5%',
-              risk: 'Low',
-              value: '$15,000',
-              route: 'Abu Dhabi Global Market',
-              cargo: 'Diamonds & Precious Stones',
-              image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=192&fit=crop&crop=center'
-            }
-          ]
-        };
-      case 'all':
-        return {
-          title: 'All Assets',
-          description: '526 total assets available for investment',
-          count: 526,
-          icon: 'layer-group',
-          color: 'gray',
-          assets: [
-            {
-              id: '1',
-              name: 'Jebel Ali-Dubai Container',
-              type: 'container',
-              apr: '12.5%',
-              risk: 'Medium',
-              value: '$45,000',
-              route: 'Jebel Ali Port → Dubai',
-              cargo: 'Electronics & Luxury Goods',
-              image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '2',
-              name: 'Abu Dhabi-Rotterdam Container',
-              type: 'container',
-              apr: '11.8%',
-              risk: 'Medium',
-              value: '$38,000',
-              route: 'Abu Dhabi → Rotterdam',
-              cargo: 'Petrochemicals & Oil Products',
-              image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '3',
-              name: 'Dubai Marina Office Tower',
-              type: 'property',
-              apr: '8.2%',
-              risk: 'Low',
-              value: '$350,000',
-              route: 'Dubai Marina, UAE',
-              cargo: 'Commercial Real Estate',
-              image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '4',
-              name: 'Abu Dhabi Corniche Residential',
-              type: 'property',
-              apr: '9.5%',
-              risk: 'Low',
-              value: '$280,000',
-              route: 'Abu Dhabi Corniche, UAE',
-              cargo: 'Residential Real Estate',
-              image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '5',
-              name: 'Dubai Gold Souk Inventory',
-              type: 'inventory',
-              apr: '15.1%',
-              risk: 'High',
-              value: '$25,000',
-              route: 'Dubai Gold Souk, UAE',
-              cargo: 'Gold & Precious Metals',
-              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '6',
-              name: 'Sharjah Textile Market',
-              type: 'inventory',
-              apr: '13.2%',
-              risk: 'Medium',
-              value: '$18,000',
-              route: 'Sharjah, UAE',
-              cargo: 'Traditional Textiles & Fabrics',
-              image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '7',
-              name: 'Dubai International Vault',
-              type: 'vault',
-              apr: '6.8%',
-              risk: 'Low',
-              value: '$20,000',
-              route: 'Dubai International Financial Centre',
-              cargo: 'Gold & Precious Metals',
-              image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '8',
-              name: 'Abu Dhabi Diamond Vault',
-              type: 'vault',
-              apr: '7.5%',
-              risk: 'Low',
-              value: '$15,000',
-              route: 'Abu Dhabi Global Market',
-              cargo: 'Diamonds & Precious Stones',
-              image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '9',
-              name: 'Fujairah Port Container',
-              type: 'container',
-              apr: '13.8%',
-              risk: 'Medium',
-              value: '$42,000',
-              route: 'Fujairah Port → Singapore',
-              cargo: 'Oil & Gas Equipment',
-              image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '10',
-              name: 'Dubai Industrial City Warehouse',
-              type: 'property',
-              apr: '7.8%',
-              risk: 'Low',
-              value: '$420,000',
-              route: 'Dubai Industrial City, UAE',
-              cargo: 'Industrial Real Estate',
-              image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '11',
-              name: 'Al Ain Date Palm Inventory',
-              type: 'inventory',
-              apr: '14.5%',
-              risk: 'High',
-              value: '$32,000',
-              route: 'Al Ain, UAE',
-              cargo: 'Premium Dates & Agricultural Products',
-              image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=192&fit=crop&crop=center'
-            },
-            {
-              id: '12',
-              name: 'Dubai Multi Commodities Centre',
-              type: 'vault',
-              apr: '6.2%',
-              risk: 'Low',
-              value: '$12,000',
-              route: 'Dubai Multi Commodities Centre',
-              cargo: 'Silver & Base Metals',
-              image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=192&fit=crop&crop=center'
-            }
-          ]
-        };
-      default:
-        return {
-          title: 'Container Assets',
-          description: '247 shipping containers available for investment',
-          count: 247,
-          icon: 'ship',
-          color: 'blue',
-          assets: []
-        };
-    }
+    const categoryAssets = assets.filter(asset => {
+      if (activeCategory === 'all') return true;
+      if (activeCategory === 'tradetokens') return asset.type === 'inventory';
+      return asset.type === activeCategory;
+    });
+
+    const categoryMap = {
+      containers: { title: 'Container Assets', description: 'Shipping containers available for investment', icon: 'ship', color: 'blue' },
+      property: { title: 'Property Assets', description: 'Real estate properties available for investment', icon: 'building', color: 'green' },
+      tradetokens: { title: 'TradeToken Assets', description: 'Trade inventory tokens available for investment', icon: 'boxes', color: 'purple' },
+      vault: { title: 'Vault Assets', description: 'Secure vault storage assets available for investment', icon: 'vault', color: 'orange' },
+      all: { title: 'All Assets', description: 'All assets available for investment', icon: 'layer-group', color: 'gray' }
+    };
+
+    const categoryInfo = categoryMap[activeCategory as keyof typeof categoryMap] || categoryMap.containers;
+
+    return {
+      ...categoryInfo,
+      count: categoryAssets.length,
+      assets: categoryAssets
+    };
   };
 
   const categoryData = getCategoryData();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-global-teal mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading assets...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
