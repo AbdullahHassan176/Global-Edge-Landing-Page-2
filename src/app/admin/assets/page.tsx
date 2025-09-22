@@ -21,15 +21,21 @@ export default function AdminAssetsPage() {
   const { notifications, addNotification, removeNotification } = useNotifications();
 
   useEffect(() => {
+    console.log('AdminAssetsPage mounted, loading requests...');
     loadRequests();
   }, []);
 
   const loadRequests = async () => {
     try {
+      setLoading(true);
       const allRequests = assetCreationService.getAllAssetRequests();
       const allAssets = await assetService.getAllAssetsForAdmin();
-      setRequests(allRequests);
-      setAssets(allAssets);
+      
+      console.log('Loaded requests:', allRequests);
+      console.log('Loaded assets:', allAssets, 'Type:', typeof allAssets, 'Is Array:', Array.isArray(allAssets));
+      
+      setRequests(Array.isArray(allRequests) ? allRequests : []);
+      setAssets(Array.isArray(allAssets) ? allAssets : []);
     } catch (error) {
       console.error('Error loading requests:', error);
       addNotification({
@@ -38,6 +44,9 @@ export default function AdminAssetsPage() {
         message: 'Failed to load asset data. Please refresh the page.',
         duration: 5000
       });
+      // Set empty arrays on error
+      setRequests([]);
+      setAssets([]);
     } finally {
       setLoading(false);
     }
@@ -48,7 +57,12 @@ export default function AdminAssetsPage() {
     return allUsers.find(user => user.id === issuerId);
   };
 
-  const filteredAssets = (assets || []).filter(asset => {
+  // Debug logging
+  console.log('Assets state:', assets, 'Type:', typeof assets, 'Is Array:', Array.isArray(assets));
+  console.log('Loading state:', loading);
+  
+  // Only filter if we have assets and not loading
+  const filteredAssets = loading ? [] : (Array.isArray(assets) ? assets : []).filter(asset => {
     switch (activeTab) {
       case 'pending': return asset.status === 'pending';
       case 'approved': return asset.status === 'approved' || asset.status === 'active';
