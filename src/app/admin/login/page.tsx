@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-600 via-red-700 to-red-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="w-full h-full" style={{
@@ -67,14 +67,14 @@ export default function AdminLoginPage() {
       </div>
       
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-white rounded-full opacity-10 animate-pulse"></div>
-      <div className="absolute top-40 right-20 w-16 h-16 bg-white rounded-full opacity-10 animate-pulse delay-1000"></div>
-      <div className="absolute bottom-20 left-20 w-12 h-12 bg-white rounded-full opacity-10 animate-pulse delay-2000"></div>
+      <div className="absolute top-20 left-10 w-20 h-20 bg-slate-400 rounded-full opacity-10 animate-pulse"></div>
+      <div className="absolute top-40 right-20 w-16 h-16 bg-slate-300 rounded-full opacity-10 animate-pulse delay-1000"></div>
+      <div className="absolute bottom-20 left-20 w-12 h-12 bg-slate-500 rounded-full opacity-10 animate-pulse delay-2000"></div>
       
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <div className="flex justify-center mb-8">
           <Link href="/" className="flex items-center bg-white/90 backdrop-blur-sm px-6 py-3 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center mr-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-slate-600 to-slate-800 rounded-full flex items-center justify-center mr-3">
               <Icon name="shield-halved" className="text-white text-xl" />
             </div>
             <span className="text-2xl font-poppins font-bold text-gray-800">Global Edge</span>
@@ -119,7 +119,7 @@ export default function AdminLoginPage() {
                   required
                   value={credentials.username}
                   onChange={handleInputChange('username')}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 sm:text-sm"
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition-all duration-200 sm:text-sm"
                   placeholder="Enter admin username"
                 />
               </div>
@@ -141,7 +141,7 @@ export default function AdminLoginPage() {
                   required
                   value={credentials.password}
                   onChange={handleInputChange('password')}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 sm:text-sm"
+                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition-all duration-200 sm:text-sm"
                   placeholder="Enter admin password"
                 />
                 <button
@@ -161,7 +161,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02]"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-slate-600 to-slate-800 hover:from-slate-700 hover:to-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02]"
               >
                 {isLoading ? (
                   <div className="flex items-center">
@@ -196,7 +196,7 @@ export default function AdminLoginPage() {
         <div className="mt-8 text-center">
           <p className="text-white/80 text-sm">
             Need help?{' '}
-            <Link href="/contact" className="font-semibold text-white hover:text-yellow-300 transition-colors">
+            <Link href="/contact" className="font-semibold text-white hover:text-slate-300 transition-colors">
               Contact Support
             </Link>
           </p>

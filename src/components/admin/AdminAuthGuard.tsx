@@ -111,8 +111,8 @@ export default function AdminAuthGuard({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Icon name="lock-closed" className="text-red-600 text-2xl" />
+          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Icon name="lock-closed" className="text-slate-600 text-2xl" />
           </div>
           <h2 className="text-2xl font-poppins font-bold text-gray-800 mb-4">
             Access Required
@@ -122,7 +122,7 @@ export default function AdminAuthGuard({
           </p>
           <button
             onClick={handleLoginRedirect}
-            className="w-full bg-gradient-to-r from-global-teal to-edge-purple text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transition-opacity"
+            className="w-full bg-gradient-to-r from-slate-600 to-slate-800 text-white py-3 px-6 rounded-xl font-semibold hover:opacity-90 transition-opacity"
           >
             Go to Admin Login
           </button>
@@ -135,8 +135,8 @@ export default function AdminAuthGuard({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
-          <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Icon name="exclamation-triangle" className="text-yellow-600 text-2xl" />
+            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Icon name="exclamation-triangle" className="text-slate-600 text-2xl" />
           </div>
           <h2 className="text-2xl font-poppins font-bold text-gray-800 mb-4">
             Insufficient Permissions
@@ -180,7 +180,7 @@ export default function AdminAuthGuard({
       <div className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-slate-600 to-slate-800 rounded-full flex items-center justify-center">
               <Icon name="shield-halved" className="text-white text-lg" />
             </div>
             <div>
@@ -206,7 +206,7 @@ export default function AdminAuthGuard({
             )}
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors"
+              className="flex items-center space-x-2 text-gray-600 hover:text-slate-600 transition-colors"
             >
               <Icon name="logout" className="h-5 w-5" />
               <span className="text-sm font-medium">Logout</span>
