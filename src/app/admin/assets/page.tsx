@@ -60,16 +60,6 @@ export default function AdminAssetsPage() {
   // Debug logging
   console.log('Assets state:', assets, 'Type:', typeof assets, 'Is Array:', Array.isArray(assets));
   console.log('Loading state:', loading);
-  
-  // Only filter if we have assets and not loading
-  const filteredAssets = loading ? [] : (Array.isArray(assets) ? assets : []).filter(asset => {
-    switch (activeTab) {
-      case 'pending': return asset.status === 'pending';
-      case 'approved': return asset.status === 'approved' || asset.status === 'active';
-      case 'all': return true;
-      default: return true;
-    }
-  });
 
   const handleReview = (request: AssetCreationRequest) => {
     setSelectedRequest(request);
@@ -198,6 +188,38 @@ export default function AdminAssetsPage() {
       </AdminAuthGuard>
     );
   }
+
+  // Additional safety check - don't render if assets is not an array
+  if (!Array.isArray(assets)) {
+    console.error('Assets is not an array:', assets);
+    return (
+      <AdminAuthGuard requiredPermissions={['manage_assets', 'approve_assets']}>
+        <div className="min-h-screen bg-soft-white flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-red-500 text-6xl mb-4">⚠️</div>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Data Loading Error</h2>
+            <p className="text-gray-600 mb-4">Assets data is not in the expected format.</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="bg-global-teal text-white px-6 py-2 rounded-lg hover:bg-opacity-90"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      </AdminAuthGuard>
+    );
+  }
+
+  // Calculate filtered assets safely
+  const filteredAssets = (Array.isArray(assets) ? assets : []).filter(asset => {
+    switch (activeTab) {
+      case 'pending': return asset.status === 'pending';
+      case 'approved': return asset.status === 'approved' || asset.status === 'active';
+      case 'all': return true;
+      default: return true;
+    }
+  });
 
   return (
     <AdminAuthGuard requiredPermissions={['manage_assets', 'approve_assets']}>
