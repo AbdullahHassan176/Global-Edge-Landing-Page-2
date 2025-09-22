@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { notificationService } from '@/lib/notificationService';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 
 interface AdminNotification {
   id: string;
@@ -38,7 +39,7 @@ interface WebhookNotification {
   retryCount: number;
 }
 
-export default function NotificationsPage() {
+function NotificationsDashboard() {
   const [notifications, setNotifications] = useState<AdminNotification[]>([]);
   const [emailNotifications, setEmailNotifications] = useState<EmailNotification[]>([]);
   const [webhookNotifications, setWebhookNotifications] = useState<WebhookNotification[]>([]);
@@ -467,5 +468,13 @@ export default function NotificationsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function NotificationsPage() {
+  return (
+    <AdminAuthGuard requiredPermissions={['view_notifications']}>
+      <NotificationsDashboard />
+    </AdminAuthGuard>
   );
 }

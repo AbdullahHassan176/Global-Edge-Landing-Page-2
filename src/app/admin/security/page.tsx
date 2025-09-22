@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import Link from 'next/link';
 
 interface SecurityEvent {
@@ -133,7 +134,7 @@ const mockSystemHealth: SystemHealth = {
   sslExpiry: '2025-06-15T00:00:00Z'
 };
 
-export default function SecurityCenterPage() {
+function SecurityCenterDashboard() {
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>(mockSecurityEvents);
   const [accessLogs, setAccessLogs] = useState<AccessLog[]>(mockAccessLogs);
   const [systemHealth, setSystemHealth] = useState<SystemHealth>(mockSystemHealth);
@@ -669,5 +670,13 @@ export default function SecurityCenterPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SecurityCenterPage() {
+  return (
+    <AdminAuthGuard requiredPermissions={['view_security']}>
+      <SecurityCenterDashboard />
+    </AdminAuthGuard>
   );
 }

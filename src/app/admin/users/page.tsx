@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import Link from 'next/link';
 
 interface User {
@@ -79,7 +80,7 @@ const mockUsers: User[] = [
   }
 ];
 
-export default function UserManagementPage() {
+function UserManagementDashboard() {
   const [users, setUsers] = useState<User[]>(mockUsers);
   const [filter, setFilter] = useState<'all' | 'active' | 'pending' | 'suspended' | 'verified'>('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -444,5 +445,13 @@ export default function UserManagementPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function UserManagementPage() {
+  return (
+    <AdminAuthGuard requiredPermissions={['view_users']}>
+      <UserManagementDashboard />
+    </AdminAuthGuard>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import Link from 'next/link';
 
 interface AnalyticsData {
@@ -60,7 +61,7 @@ const mockAnalytics: AnalyticsData = {
   ]
 };
 
-export default function AnalyticsPage() {
+function AnalyticsDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData>(mockAnalytics);
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d');
   const [loading, setLoading] = useState(false);
@@ -325,5 +326,13 @@ export default function AnalyticsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function AnalyticsPage() {
+  return (
+    <AdminAuthGuard requiredPermissions={['view_analytics']}>
+      <AnalyticsDashboard />
+    </AdminAuthGuard>
   );
 }

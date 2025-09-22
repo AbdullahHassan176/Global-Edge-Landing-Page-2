@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import Link from 'next/link';
 
 interface ContentItem {
@@ -98,7 +99,7 @@ const mockAssets: Asset[] = [
   }
 ];
 
-export default function ContentManagementPage() {
+function ContentManagementDashboard() {
   const [content, setContent] = useState<ContentItem[]>(mockContent);
   const [assets, setAssets] = useState<Asset[]>(mockAssets);
   const [activeTab, setActiveTab] = useState<'content' | 'assets' | 'media'>('content');
@@ -657,5 +658,13 @@ export default function ContentManagementPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ContentManagementPage() {
+  return (
+    <AdminAuthGuard requiredPermissions={['view_content']}>
+      <ContentManagementDashboard />
+    </AdminAuthGuard>
   );
 }

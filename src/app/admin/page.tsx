@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 
-export default function AdminPage() {
+function AdminDashboard() {
   return (
     <div className="min-h-screen bg-soft-white">
       {/* Header */}
@@ -217,5 +218,13 @@ export default function AdminPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <AdminAuthGuard>
+      <AdminDashboard />
+    </AdminAuthGuard>
   );
 }

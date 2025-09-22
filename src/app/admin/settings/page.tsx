@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import Link from 'next/link';
 
 interface SystemSetting {
@@ -143,7 +144,7 @@ const mockIntegrations: Integration[] = [
   }
 ];
 
-export default function SettingsPage() {
+function SettingsDashboard() {
   const [settings, setSettings] = useState<SystemSetting[]>(mockSettings);
   const [integrations, setIntegrations] = useState<Integration[]>(mockIntegrations);
   const [activeTab, setActiveTab] = useState<'general' | 'email' | 'security' | 'api' | 'integrations'>('general');
@@ -448,5 +449,13 @@ export default function SettingsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <AdminAuthGuard requiredPermissions={['view_settings']}>
+      <SettingsDashboard />
+    </AdminAuthGuard>
   );
 }
