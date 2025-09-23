@@ -859,7 +859,7 @@ export class DatabaseService {
       {
         id: 'notif-001',
         userId: userId,
-        type: 'investment',
+        type: 'investment_update',
         title: 'Investment Approved',
         message: 'Your investment of $5,000 in Jebel Ali-Dubai Container has been approved and is now active.',
         status: 'unread',
@@ -925,7 +925,7 @@ export class DatabaseService {
       {
         id: 'notif-005',
         userId: userId,
-        type: 'investment',
+        type: 'investment_update',
         title: 'Investment Returns Available',
         message: 'Your investment in Dubai Property Token has generated returns of $1,125. Funds are now available.',
         status: 'unread',
