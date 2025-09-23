@@ -22,6 +22,11 @@ export interface User {
   lastLogin?: string;
   preferences?: UserPreferences;
   branding?: WhitelabelBranding;
+  // Additional properties to match database interface
+  accountType?: 'individual' | 'corporate';
+  permissions?: string[];
+  twoFactorEnabled?: boolean;
+  emailVerified?: boolean;
 }
 
 export interface KycDocument {
@@ -63,6 +68,7 @@ export interface Investment {
   assetId: string;
   amount: number;
   tokens: number;
+  type: 'container' | 'property' | 'inventory' | 'vault';
   status: 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled';
   kycRequired: boolean;
   kycCompleted: boolean;
@@ -187,6 +193,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     userId: 'demo-investor-1',
     assetId: 'asset-1',
     amount: 50000,
+    tokens: 50,
+    type: 'container',
     status: 'completed',
     kycRequired: true,
     kycCompleted: true,
@@ -199,6 +207,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     userId: 'demo-investor-1',
     assetId: 'asset-2',
     amount: 75000,
+    tokens: 75,
+    type: 'property',
     status: 'pending',
     kycRequired: true,
     kycCompleted: false,
@@ -381,8 +391,7 @@ class UserAuthService {
         return { 
           success: false, 
           error: 'Your account is pending admin approval. Please wait for approval or contact support if not approved within 48 hours.',
-          user: user,
-          requiresApproval: true
+          user: user
         };
       }
 
@@ -390,8 +399,7 @@ class UserAuthService {
         return { 
           success: false, 
           error: 'Your account has been suspended. Please contact support for assistance.',
-          user: user,
-          accountSuspended: true
+          user: user
         };
       }
 
@@ -566,6 +574,22 @@ class UserAuthService {
 
   async getInvestments(userId: string): Promise<Investment[]> {
     return MOCK_INVESTMENTS.filter(inv => inv.userId === userId);
+  },
+
+  async getUserById(id: string): Promise<User | undefined> {
+    // In a real app, this would query the database
+    // For now, return mock data
+    return MOCK_USERS.find(user => user.id === id);
+  },
+
+  async updateUser(userId: string, updates: Partial<User>): Promise<User> {
+    // In a real app, this would update the database
+    // For now, return the updated user
+    const user = MOCK_USERS.find(u => u.id === userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return { ...user, ...updates };
   }
 
   async updateInvestmentStatus(investmentId: string, status: Investment['status'], reason?: string): Promise<boolean> {
