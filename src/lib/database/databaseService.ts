@@ -444,7 +444,7 @@ export class DatabaseService {
   async createKYCApplication(kyc: Omit<KYCApplication, 'id' | 'submittedAt'>): Promise<ApiResponse<KYCApplication>> {
     try {
       await this.initialize();
-      const container = cosmosClient.getContainer('kyc');
+      const container = cosmosClient.getContainer('kyc-applications');
       
       const newKYC: KYCApplication = {
         ...kyc,
@@ -462,7 +462,7 @@ export class DatabaseService {
   async getKYCByUserId(userId: string): Promise<ApiResponse<KYCApplication>> {
     try {
       await this.initialize();
-      const container = cosmosClient.getContainer('kyc');
+      const container = cosmosClient.getContainer('kyc-applications');
       const { resources } = await container.items
         .query({
           query: 'SELECT * FROM c WHERE c.userId = @userId',
@@ -483,7 +483,7 @@ export class DatabaseService {
   async updateKYCApplication(id: string, updates: Partial<KYCApplication>): Promise<ApiResponse<KYCApplication>> {
     try {
       await this.initialize();
-      const container = cosmosClient.getContainer('kyc');
+      const container = cosmosClient.getContainer('kyc-applications');
       
       const { resource: existingKYC } = await container.item(id, id).read();
       if (!existingKYC) {
