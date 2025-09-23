@@ -612,7 +612,6 @@ export class DatabaseService {
       const updatedNotification = {
         ...existingNotification,
         read: true,
-        readAt: new Date().toISOString(),
       };
 
       const { resource } = await container.item(id, id).replace(updatedNotification);
@@ -620,7 +619,7 @@ export class DatabaseService {
     } catch (error) {
       // For development, simulate successful notification read
       console.log('Database not available, simulating notification read');
-      return { success: true, data: { id, read: true, readAt: new Date().toISOString() } as any };
+      return { success: true, data: { id, read: true } as any };
     }
   }
 
@@ -897,7 +896,6 @@ export class DatabaseService {
         read: true,
         priority: 'medium',
         createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-        readAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
         data: { assetId: '2', assetName: 'Abu Dhabi-Rotterdam Container' },
         actionUrl: '/assets/2',
         actionText: 'View Asset',
@@ -914,7 +912,6 @@ export class DatabaseService {
         read: true,
         priority: 'low',
         createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-        readAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
         data: { updateType: 'feature' },
         actionUrl: '/dashboard',
         actionText: 'View Dashboard',
