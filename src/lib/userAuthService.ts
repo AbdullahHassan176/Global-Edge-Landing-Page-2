@@ -259,9 +259,21 @@ class UserAuthService {
       
       localStorage.setItem(`reset_token_${resetToken}`, JSON.stringify(resetData));
       
-      // In production, send email with reset link
-      console.log(`Password reset token for ${email}: ${resetToken}`);
-      console.log(`Reset link: ${window.location.origin}/reset-password?token=${resetToken}`);
+      // Send password reset email
+      try {
+        const { emailService } = await import('@/lib/services/emailService');
+        const emailResult = await emailService.sendPasswordResetEmail(user.email, resetToken);
+        
+        if (!emailResult.success) {
+          console.error('Failed to send password reset email:', emailResult.error);
+          // Still return success for security (don't reveal email sending issues)
+        }
+      } catch (emailError) {
+        console.error('Email service error:', emailError);
+        // Fallback to console log for development
+        console.log(`Password reset token for ${email}: ${resetToken}`);
+        console.log(`Reset link: ${window.location.origin}/reset-password?token=${resetToken}`);
+      }
       
       return { success: true };
     } catch (error) {
