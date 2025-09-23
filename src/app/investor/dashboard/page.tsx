@@ -54,7 +54,7 @@ function InvestmentItem({ investment }: { investment: Investment }) {
         </div>
         <div>
           <p className="font-medium text-gray-900">{assetName}</p>
-          <p className="text-sm text-gray-600">${investment.amount.toLocaleString()} • {investment.tokens} tokens</p>
+          <p className="text-sm text-gray-600">${investment.amount.toLocaleString()}</p>
         </div>
       </div>
       <div className="flex items-center space-x-4">
