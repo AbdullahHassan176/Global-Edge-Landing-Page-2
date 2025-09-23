@@ -875,7 +875,7 @@ export class DatabaseService {
       {
         id: 'notif-002',
         userId: userId,
-        type: 'kyc',
+        type: 'kyc_required',
         title: 'KYC Verification Required',
         message: 'Please complete your KYC verification to continue investing in tokenized assets.',
         read: false,
