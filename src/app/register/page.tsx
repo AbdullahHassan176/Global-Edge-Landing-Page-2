@@ -126,17 +126,17 @@ export default function RegisterPage() {
         country: formData.country
       });
 
-      if (user) {
+      if (user.success && user.user) {
         setIsSubmitted(true);
         
         // Show approval notification instead of redirecting
         // Users with pending status need admin approval
-        if (user?.status === 'pending') {
+        if (user.user.status === 'pending') {
           // Don't redirect - show approval message
         } else {
           // Only redirect if user is already approved
           setTimeout(() => {
-            if (user?.role === 'issuer') {
+            if (user.user?.role === 'issuer') {
               router.push('/issuer/dashboard');
             } else {
               router.push('/investor/dashboard');
