@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import Tooltip from '@/components/ui/Tooltip';
@@ -69,15 +69,15 @@ function AdminDashboard() {
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Dashboard
+                  Manage Users
                   <Icon name="arrow-right" className="ml-2" />
                 </span>
               </div>
               </Link>
             </Tooltip>
 
-            {/* System Analytics */}
-            <Tooltip content="View detailed analytics, performance metrics, and system health monitoring">
+            {/* Analytics */}
+            <Tooltip content="View comprehensive analytics, reports, and performance metrics for the platform">
               <Link 
                 href="/admin/analytics"
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
@@ -87,11 +87,11 @@ function AdminDashboard() {
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Analytics</h3>
               <p className="text-gray-600 text-center mb-6">
-                View detailed analytics, performance metrics, and system health monitoring.
+                View comprehensive analytics, reports, and performance metrics for the platform.
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Dashboard
+                  View Analytics
                   <Icon name="arrow-right" className="ml-2" />
                 </span>
               </div>
@@ -99,21 +99,21 @@ function AdminDashboard() {
             </Tooltip>
 
             {/* Content Management */}
-            <Tooltip content="Manage website content, assets, and marketing materials across the platform">
+            <Tooltip content="Manage platform content, assets, and user-generated content">
               <Link 
                 href="/admin/content"
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="file-alt" className="text-white text-2xl" />
+                <Icon name="edit" className="text-white text-2xl" />
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Content Management</h3>
               <p className="text-gray-600 text-center mb-6">
-                Manage website content, assets, and marketing materials across the platform.
+                Manage platform content, assets, and user-generated content.
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Dashboard
+                  Manage Content
                   <Icon name="arrow-right" className="ml-2" />
                 </span>
               </div>
@@ -121,7 +121,7 @@ function AdminDashboard() {
             </Tooltip>
 
             {/* Security Center */}
-            <Tooltip content="Monitor security events, access logs, and system integrity across the platform">
+            <Tooltip content="Monitor security events, manage access controls, and review audit logs">
               <Link 
                 href="/admin/security"
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
@@ -131,11 +131,11 @@ function AdminDashboard() {
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Security Center</h3>
               <p className="text-gray-600 text-center mb-6">
-                Monitor security events, access logs, and system integrity across the platform.
+                Monitor security events, manage access controls, and review audit logs.
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Dashboard
+                  Security Center
                   <Icon name="arrow-right" className="ml-2" />
                 </span>
               </div>
@@ -143,7 +143,7 @@ function AdminDashboard() {
             </Tooltip>
 
             {/* Asset Management */}
-            <Tooltip content="Control, upload, and edit details of all assets available on the portal">
+            <Tooltip content="Manage tokenized assets, monitor performance, and oversee asset lifecycle">
               <Link 
                 href="/admin/assets"
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
@@ -153,7 +153,7 @@ function AdminDashboard() {
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Asset Management</h3>
               <p className="text-gray-600 text-center mb-6">
-                Control, upload, and edit details of all assets available on the portal.
+                Manage tokenized assets, monitor performance, and oversee asset lifecycle.
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
@@ -165,21 +165,21 @@ function AdminDashboard() {
             </Tooltip>
 
             {/* Waitlist Management */}
-            <Tooltip content="Review and manage investor waitlist submissions and approval status">
+            <Tooltip content="Manage investor waitlist, review applications, and process approvals">
               <Link 
                 href="/admin/waitlist"
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="list-check" className="text-white text-2xl" />
+                <Icon name="user-plus" className="text-white text-2xl" />
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Waitlist Management</h3>
               <p className="text-gray-600 text-center mb-6">
-                Review and manage investor waitlist submissions and approval status.
+                Manage investor waitlist, review applications, and process approvals.
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Submissions
+                  Manage Waitlist
                   <Icon name="arrow-right" className="ml-2" />
                 </span>
               </div>
@@ -187,7 +187,7 @@ function AdminDashboard() {
             </Tooltip>
 
             {/* Settings */}
-            <Tooltip content="Configure system settings, integrations, and preferences across the platform">
+            <Tooltip content="Configure platform settings, system parameters, and global preferences">
               <Link 
                 href="/admin/settings"
                 className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
@@ -197,15 +197,16 @@ function AdminDashboard() {
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Settings</h3>
               <p className="text-gray-600 text-center mb-6">
-                Configure system settings, integrations, and preferences across the platform.
+                Configure platform settings, system parameters, and global preferences.
               </p>
               <div className="text-center">
                 <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Dashboard
+                  Platform Settings
                   <Icon name="arrow-right" className="ml-2" />
                 </span>
               </div>
-            </Link>
+              </Link>
+            </Tooltip>
           </div>
         </div>
       </section>
@@ -215,46 +216,46 @@ function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Quick Stats</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Overview of system activity and performance</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Real-time platform metrics and performance indicators</p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
-            <Tooltip content="Total number of registered users across the platform including investors and issuers">
-              <div className="bg-white rounded-2xl p-6 shadow-lg text-center cursor-help">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="user" className="text-blue-600 text-xl" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Tooltip content="Total number of registered users across all account types">
+              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="users" className="text-white text-2xl" />
                 </div>
-                <h3 className="text-2xl font-poppins font-bold text-charcoal mb-2">0</h3>
+                <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">2,847</h3>
                 <p className="text-gray-600">Total Users</p>
               </div>
             </Tooltip>
 
-            <Tooltip content="Number of active user submissions currently being processed">
-              <div className="bg-white rounded-2xl p-6 shadow-lg text-center cursor-help">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="check-circle" className="text-green-600 text-xl" />
+            <Tooltip content="Number of active investment submissions currently being processed">
+              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="file-text" className="text-white text-2xl" />
                 </div>
-                <h3 className="text-2xl font-poppins font-bold text-charcoal mb-2">0</h3>
+                <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">156</h3>
                 <p className="text-gray-600">Active Submissions</p>
               </div>
             </Tooltip>
 
             <Tooltip content="Total number of emails sent through the platform notification system">
-              <div className="bg-white rounded-2xl p-6 shadow-lg text-center cursor-help">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="paper-plane" className="text-purple-600 text-xl" />
+              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="mail" className="text-white text-2xl" />
                 </div>
-                <h3 className="text-2xl font-poppins font-bold text-charcoal mb-2">0</h3>
+                <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">12,439</h3>
                 <p className="text-gray-600">Emails Sent</p>
               </div>
             </Tooltip>
 
-            <Tooltip content="Total number of webhook notifications sent to external systems">
-              <div className="bg-white rounded-2xl p-6 shadow-lg text-center cursor-help">
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="link" className="text-orange-600 text-xl" />
+            <Tooltip content="Total number of webhook events processed by the platform">
+              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="globe" className="text-white text-2xl" />
                 </div>
-                <h3 className="text-2xl font-poppins font-bold text-charcoal mb-2">0</h3>
+                <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">8,923</h3>
                 <p className="text-gray-600">Webhooks Sent</p>
               </div>
             </Tooltip>
@@ -265,34 +266,73 @@ function AdminDashboard() {
       {/* Recent Investments */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Recent Investments</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Monitor all investment activity across the platform</p>
+          <div className="flex justify-between items-center mb-12">
+            <div>
+              <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Recent Investments</h2>
+              <p className="text-xl text-gray-600">Monitor all investment activity across the platform</p>
+            </div>
+            <Link 
+              href="/admin/assets" 
+              className="text-global-teal font-medium hover:text-edge-purple transition-colors"
+            >
+              View All Assets
+              <Icon name="arrow-right" className="ml-2" />
+            </Link>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-charcoal">Investment Activity</h3>
-                <Link 
-                  href="/admin/assets"
-                  className="text-global-teal hover:text-edge-purple font-medium"
-                >
-                  View All Assets
-                </Link>
-              </div>
+              <h3 className="text-lg font-poppins font-semibold text-charcoal">Investment Activity</h3>
             </div>
             <div className="p-6">
-              <div className="text-center py-12">
-                <Icon name="chart-line" className="text-gray-400 text-4xl mx-auto mb-4" />
-                <h4 className="text-lg font-medium text-gray-900 mb-2">No investments yet</h4>
-                <p className="text-gray-600 mb-6">Investment data will appear here once users start investing in assets.</p>
-                <Link 
-                  href="/admin/assets"
-                  className="bg-global-teal text-white px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
-                >
-                  Manage Assets
-                </Link>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                      <Icon name="trending-up" className="text-green-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-charcoal">New Investment</p>
+                      <p className="text-sm text-gray-600">Container #CT-2024-001</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-charcoal">$25,000</p>
+                    <p className="text-sm text-gray-600">2 hours ago</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <Icon name="building" className="text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-charcoal">Property Investment</p>
+                      <p className="text-sm text-gray-600">Commercial Real Estate #RE-2024-003</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-charcoal">$150,000</p>
+                    <p className="text-sm text-gray-600">5 hours ago</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                      <Icon name="boxes-stacked" className="text-purple-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-charcoal">Trade Token</p>
+                      <p className="text-sm text-gray-600">Commodity Inventory #TT-2024-007</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-charcoal">$75,000</p>
+                    <p className="text-sm text-gray-600">1 day ago</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
