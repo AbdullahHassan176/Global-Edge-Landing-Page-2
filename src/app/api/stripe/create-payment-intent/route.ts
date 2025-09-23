@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Stripe from 'stripe';
 import { API_KEYS } from '@/lib/config/apiKeys';
 
 export async function POST(request: NextRequest) {
@@ -14,7 +15,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Create payment intent with Stripe
-    const stripe = require('stripe')(API_KEYS.STRIPE.SECRET_KEY);
+    const stripe = new Stripe(API_KEYS.STRIPE.SECRET_KEY, {
+      apiVersion: '2023-10-16',
+    });
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents

@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
       pageSize: searchParams.get('pageSize') ? parseInt(searchParams.get('pageSize')!) : undefined,
       sortBy: searchParams.get('sortBy') || undefined,
       sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') || undefined,
-      investorId: searchParams.get('investorId') || undefined,
+      userId: searchParams.get('investorId') || undefined,
       assetId: searchParams.get('assetId') || undefined,
       status: searchParams.get('status') as any || undefined,
       dateFrom: searchParams.get('dateFrom') || undefined,
