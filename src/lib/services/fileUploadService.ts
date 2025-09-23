@@ -43,21 +43,41 @@ class FileUploadService {
         return { success: false, error: validation.error };
       }
 
+      // Check if Azure is configured
+      if (!this.connectionString || !this.accountName) {
+        return { success: false, error: 'Azure Blob Storage not configured' };
+      }
+
       // Generate unique filename
       const timestamp = Date.now();
       const randomString = Math.random().toString(36).substring(2, 15);
       const fileExtension = options.file.name.split('.').pop();
       const fileName = `${options.folder || 'uploads'}/${timestamp}-${randomString}.${fileExtension}`;
 
-      // For now, return a mock URL since Azure credentials need to be configured
-      // In production, this would upload to Azure Blob Storage
-      const mockUrl = `https://${this.accountName}.blob.core.windows.net/${this.containerName}/${fileName}`;
+      // Upload to Azure Blob Storage
+      const response = await fetch('/api/azure/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fileName,
+          fileType: options.file.type,
+          containerName: this.containerName,
+        }),
+      });
 
-      return {
-        success: true,
-        url: mockUrl,
-        fileName: options.file.name,
-      };
+      if (response.ok) {
+        const data = await response.json();
+        return {
+          success: true,
+          url: data.url,
+          fileName: options.file.name,
+        };
+      } else {
+        const error = await response.json();
+        return { success: false, error: error.message || 'Upload failed' };
+      }
 
     } catch (error) {
       return {
