@@ -238,7 +238,7 @@ export class EmailIntegration {
                 <div class="investment-details">
                   <h3>Investment Details</h3>
                   <p><strong>Asset:</strong> {{assetName}}</p>
-                  <p><strong>Amount:</strong> ${{amount}}</p>
+                  <p><strong>Amount:</strong> $\{amount\}</p>
                   <p><strong>Investment ID:</strong> {{investmentId}}</p>
                   <p><strong>Date:</strong> {{date}}</p>
                 </div>
@@ -264,7 +264,7 @@ export class EmailIntegration {
           
           Investment Details:
           - Asset: {{assetName}}
-          - Amount: ${{amount}}
+          - Amount: $\{amount\}
           - Investment ID: {{investmentId}}
           - Date: {{date}}
           
@@ -450,7 +450,7 @@ export class EmailIntegration {
    */
   private getDefaultProvider(): string {
     // Return the first enabled provider
-    for (const [name, provider] of this.providers) {
+    for (const [name, provider] of Array.from(this.providers.entries())) {
       if (provider.enabled) {
         return name;
       }

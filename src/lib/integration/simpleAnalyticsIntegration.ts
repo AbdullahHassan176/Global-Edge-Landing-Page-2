@@ -18,9 +18,9 @@ export class SimpleAnalyticsIntegration {
     try {
       // Use mock data
       const mockUsers = userAuthService.getAllUsers();
-      const mockAssets = assetService.getAssets();
-      const mockInvestments = userAuthService.getInvestments();
-      const mockMetrics = AssetMetricsService.getMetrics();
+      const mockAssets = await assetService.getAssets();
+      const mockInvestments = userAuthService.getAllInvestments();
+      const mockMetrics = AssetMetricsService.getAllMetrics();
 
       const analyticsData = {
         userAnalytics: {
@@ -28,7 +28,7 @@ export class SimpleAnalyticsIntegration {
           byRole: {
             investors: mockUsers.filter(u => u.role === 'investor').length,
             issuers: mockUsers.filter(u => u.role === 'issuer').length,
-            admins: mockUsers.filter(u => u.role === 'admin').length
+            admins: 0 // No admin role in userAuthService
           },
           byStatus: {
             active: mockUsers.filter(u => u.status === 'active').length,

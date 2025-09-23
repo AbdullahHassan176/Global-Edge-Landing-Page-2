@@ -6,8 +6,7 @@
  */
 
 import { workingDatabaseService } from '@/lib/database/workingDatabaseService';
-import { userAuthService } from '@/lib/userAuthService';
-import { User } from '@/lib/database/models';
+import { userAuthService, User } from '@/lib/userAuthService';
 
 export class UserAuthIntegration {
   private useDatabase = true; // Toggle between database and mock data
@@ -30,13 +29,10 @@ export class UserAuthIntegration {
       }
 
       // Handle special error cases (pending approval, suspended account)
-      if (mockResult.requiresApproval || mockResult.accountSuspended) {
+      if (!mockResult.success) {
         return {
           success: false,
-          error: mockResult.error,
-          requiresApproval: mockResult.requiresApproval,
-          accountSuspended: mockResult.accountSuspended,
-          user: mockResult.user
+          error: mockResult.error
         };
       }
 
@@ -103,17 +99,9 @@ export class UserAuthIntegration {
    */
   async getUserById(id: string): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
-      if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getUserById(id);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, user: dbResult.data };
-        }
-      }
-
-      // Fallback to mock service
-      const mockResult = await userAuthService.getUserById(id);
-      if (mockResult.success) {
-        return { success: true, user: mockResult.user };
+      const mockUser = await userAuthService.getUserById(id);
+      if (mockUser) {
+        return { success: true, user: mockUser };
       }
 
       return { success: false, error: 'User not found' };
@@ -128,14 +116,6 @@ export class UserAuthIntegration {
    */
   async getAllUsers(): Promise<{ success: boolean; users?: User[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getUsers({ pageSize: 100 });
-        if (dbResult.success && dbResult.data) {
-          return { success: true, users: dbResult.data.items };
-        }
-      }
-
-      // Fallback to mock service
       const mockUsers = userAuthService.getAllUsers();
       return { success: true, users: mockUsers };
     } catch (error) {
@@ -186,21 +166,7 @@ export class UserAuthIntegration {
    */
   async updateUser(userId: string, updates: Partial<User>): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
-      // Try database first if enabled
-      if (this.useDatabase) {
-        try {
-          const dbResult = await workingDatabaseService.updateUser(userId, updates);
-          if (dbResult.success && dbResult.data) {
-            // Also update in mock service for consistency
-            await userAuthService.updateUser(userId, updates);
-            return { success: true, user: dbResult.data };
-          }
-        } catch (dbError) {
-          console.log('Database update failed, using mock service:', dbError);
-        }
-      }
-
-      // Fallback to mock service
+      // Use mock service
       const mockResult = await userAuthService.updateUser(userId, updates);
       if (mockResult) {
         // Background sync to database (non-blocking)

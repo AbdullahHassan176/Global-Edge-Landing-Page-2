@@ -6,8 +6,7 @@
  */
 
 import { workingDatabaseService } from '@/lib/database/workingDatabaseService';
-import { userAuthService } from '@/lib/userAuthService';
-import { Investment } from '@/lib/database/models';
+import { userAuthService, Investment } from '@/lib/userAuthService';
 
 export class InvestmentIntegration {
   private useDatabase = true; // Toggle between database and mock data
@@ -26,7 +25,7 @@ export class InvestmentIntegration {
       }
 
       // Fallback to mock service
-      const mockInvestments = userAuthService.getInvestments();
+      const mockInvestments = userAuthService.getAllInvestments();
       return { success: true, investments: mockInvestments };
     } catch (error) {
       console.error('Get investments error:', error);
@@ -42,13 +41,13 @@ export class InvestmentIntegration {
       if (this.useDatabase) {
         const dbResult = await workingDatabaseService.getInvestments();
         if (dbResult.success && dbResult.data) {
-          const userInvestments = dbResult.data.items.filter(inv => inv.investorId === userId);
+          const userInvestments = dbResult.data.items.filter(inv => inv.userId === userId);
           return { success: true, investments: userInvestments };
         }
       }
 
       // Fallback to mock service
-      const mockInvestments = userAuthService.getInvestments().filter(inv => inv.userId === userId);
+      const mockInvestments = userAuthService.getAllInvestments().filter(inv => inv.userId === userId);
       return { success: true, investments: mockInvestments };
     } catch (error) {
       console.error('Get investments by user error:', error);
@@ -70,7 +69,7 @@ export class InvestmentIntegration {
       }
 
       // Fallback to mock service
-      const mockInvestments = userAuthService.getInvestments().filter(inv => inv.assetId === assetId);
+      const mockInvestments = userAuthService.getAllInvestments().filter(inv => inv.assetId === assetId);
       return { success: true, investments: mockInvestments };
     } catch (error) {
       console.error('Get investments by asset error:', error);
@@ -81,26 +80,10 @@ export class InvestmentIntegration {
   /**
    * Create investment with database integration
    */
-  async createInvestment(investmentData: Omit<Investment, 'id' | 'investmentDate'>): Promise<{ success: boolean; investment?: Investment; error?: string }> {
+  async createInvestment(investmentData: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>): Promise<{ success: boolean; investment?: Investment; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Create investment in database
-        const dbResult = await workingDatabaseService.createInvestment({
-          ...investmentData,
-          investmentDate: new Date().toISOString()
-        });
-        if (dbResult.success && dbResult.data) {
-          return { success: true, investment: dbResult.data };
-        }
-      }
-
-      // Fallback to mock service
-      const mockInvestment = {
-        ...investmentData,
-        id: `inv-${Date.now()}`,
-        investmentDate: new Date().toISOString()
-      };
-      return { success: true, investment: mockInvestment };
+      const investment = await userAuthService.createInvestment(investmentData);
+      return { success: true, investment };
     } catch (error) {
       console.error('Create investment error:', error);
       return { success: false, error: 'Failed to create investment' };
@@ -110,24 +93,14 @@ export class InvestmentIntegration {
   /**
    * Update investment status with database integration
    */
-  async updateInvestmentStatus(id: string, status: 'pending' | 'completed' | 'cancelled' | 'refunded'): Promise<{ success: boolean; investment?: Investment; error?: string }> {
+  async updateInvestmentStatus(id: string, status: 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled'): Promise<{ success: boolean; investment?: Investment; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Update investment in database
-        const dbResult = await workingDatabaseService.updateInvestment(id, { status });
-        if (dbResult.success && dbResult.data) {
-          return { success: true, investment: dbResult.data };
-        }
-      }
-
-      // Fallback to mock service
-      const mockInvestments = userAuthService.getInvestments();
+      const mockInvestments = userAuthService.getAllInvestments();
       const investment = mockInvestments.find(inv => inv.id === id);
       if (investment) {
         investment.status = status;
         return { success: true, investment };
       }
-
       return { success: false, error: 'Investment not found' };
     } catch (error) {
       console.error('Update investment error:', error);

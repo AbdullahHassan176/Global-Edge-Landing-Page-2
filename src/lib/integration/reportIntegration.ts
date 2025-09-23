@@ -46,7 +46,12 @@ export class ReportIntegration {
       }
 
       // Generate report using the existing report generator
-      const report = await reportGenerator.generateSystemReport(data);
+      const reportData = {
+        title: 'System Report',
+        generatedAt: new Date().toISOString(),
+        data: [data]
+      };
+      const report = ReportGenerator.generatePDF(reportData);
       
       return { success: true, report };
     } catch (error) {
@@ -69,7 +74,12 @@ export class ReportIntegration {
         users = userAuthService.getAllUsers();
       }
 
-      const report = await reportGenerator.generateUserReport(users);
+      const reportData = {
+        title: 'User Report',
+        generatedAt: new Date().toISOString(),
+        data: [users]
+      };
+      const report = ReportGenerator.generatePDF(reportData);
       
       return { success: true, report };
     } catch (error) {
@@ -92,13 +102,18 @@ export class ReportIntegration {
         ]);
 
         assets = assetsResult.success ? assetsResult.data?.items || [] : assetService.getAssets();
-        investments = investmentsResult.success ? investmentsResult.data?.items || [] : userAuthService.getInvestments();
+        investments = investmentsResult.success ? investmentsResult.data?.items || [] : userAuthService.getAllInvestments();
       } else {
         assets = assetService.getAssets();
-        investments = userAuthService.getInvestments();
+        investments = userAuthService.getAllInvestments();
       }
 
-      const report = await reportGenerator.generateAssetReport(assets, investments);
+      const reportData = {
+        title: 'Asset Report',
+        generatedAt: new Date().toISOString(),
+        data: [assets, investments]
+      };
+      const report = ReportGenerator.generatePDF(reportData);
       
       return { success: true, report };
     } catch (error) {
@@ -120,14 +135,19 @@ export class ReportIntegration {
           workingDatabaseService.getUsers()
         ]);
 
-        investments = investmentsResult.success ? investmentsResult.data?.items || [] : userAuthService.getInvestments();
+        investments = investmentsResult.success ? investmentsResult.data?.items || [] : userAuthService.getAllInvestments();
         users = usersResult.success ? usersResult.data?.items || [] : userAuthService.getAllUsers();
       } else {
-        investments = userAuthService.getInvestments();
+        investments = userAuthService.getAllInvestments();
         users = userAuthService.getAllUsers();
       }
 
-      const report = await reportGenerator.generateInvestmentReport(investments, users);
+      const reportData = {
+        title: 'Investment Report',
+        generatedAt: new Date().toISOString(),
+        data: [investments, users]
+      };
+      const report = ReportGenerator.generatePDF(reportData);
       
       return { success: true, report };
     } catch (error) {
@@ -170,7 +190,12 @@ export class ReportIntegration {
       const filteredData = this.applyFilters(data, filters);
 
       // Generate custom report
-      const report = await reportGenerator.generateCustomReport(reportType, filteredData, filters);
+      const reportData = {
+        title: `Custom ${reportType} Report`,
+        generatedAt: new Date().toISOString(),
+        data: [filteredData, filters]
+      };
+      const report = ReportGenerator.generatePDF(reportData);
       
       return { success: true, report };
     } catch (error) {
@@ -191,7 +216,7 @@ export class ReportIntegration {
       }
 
       // Export to PDF using the existing report generator
-      const pdfUrl = await reportGenerator.exportToPDF(reportResult.report, reportType);
+      const pdfUrl = reportResult.report; // The report is already a PDF string
       
       return { success: true, pdfUrl };
     } catch (error) {
@@ -212,7 +237,7 @@ export class ReportIntegration {
       }
 
       // Export to CSV using the existing report generator
-      const csvUrl = await reportGenerator.exportToCSV(reportResult.report, reportType);
+      const csvUrl = reportResult.report; // The report is already a string
       
       return { success: true, csvUrl };
     } catch (error) {
@@ -228,7 +253,7 @@ export class ReportIntegration {
     return {
       users: userAuthService.getAllUsers(),
       assets: assetService.getAssets(),
-      investments: userAuthService.getInvestments()
+      investments: userAuthService.getAllInvestments()
     };
   }
 

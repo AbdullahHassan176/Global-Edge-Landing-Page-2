@@ -30,17 +30,7 @@ export class ContentIntegration {
    */
   async getContentItems(): Promise<{ success: boolean; items?: ContentItem[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try database first - using users container with type field
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          // Filter content items from users container
-          const contentItems = dbResult.data.items.filter(item => item.type === 'content_item');
-          return { success: true, items: contentItems as any };
-        }
-      }
-
-      // Fallback to mock service
+      // Use mock service for now (database integration needs proper content container)
       const mockItems = this.getMockContentItems();
       return { success: true, items: mockItems };
     } catch (error) {
@@ -54,20 +44,12 @@ export class ContentIntegration {
    */
   async getContentItem(id: string): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
-      if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          const contentItem = dbResult.data.items.find(
-            item => item.type === 'content_item' && item.id === id
-          );
-          return { success: true, item: contentItem as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockItems = this.getMockContentItems();
       const item = mockItems.find(item => item.id === id);
-      return { success: true, item };
+      if (item) {
+        return { success: true, item };
+      }
+      return { success: false, error: 'Content item not found' };
     } catch (error) {
       console.error('Get content item error:', error);
       return { success: false, error: 'Failed to get content item' };
@@ -79,23 +61,6 @@ export class ContentIntegration {
    */
   async createContentItem(itemData: Omit<ContentItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Create content item in database using users container
-        const contentItem = {
-          ...itemData,
-          id: `content-${Date.now()}`,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          type: 'content_item' // Mark as content item type
-        };
-
-        const dbResult = await workingDatabaseService.createUser(contentItem as any);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, item: dbResult.data as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockItem = {
         ...itemData,
         id: `content-${Date.now()}`,
@@ -114,27 +79,12 @@ export class ContentIntegration {
    */
   async updateContentItem(id: string, updates: Partial<ContentItem>): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Update content item in database
-        const updateData = {
-          ...updates,
-          updatedAt: new Date().toISOString()
-        };
-
-        const dbResult = await workingDatabaseService.updateUser(id, updateData as any);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, item: dbResult.data as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockItems = this.getMockContentItems();
       const item = mockItems.find(item => item.id === id);
       if (item) {
         Object.assign(item, updates, { updatedAt: new Date().toISOString() });
         return { success: true, item };
       }
-
       return { success: false, error: 'Content item not found' };
     } catch (error) {
       console.error('Update content item error:', error);
@@ -147,13 +97,7 @@ export class ContentIntegration {
    */
   async deleteContentItem(id: string): Promise<{ success: boolean; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Delete content item from database
-        await workingDatabaseService.deleteUser(id);
-        return { success: true };
-      }
-
-      // Fallback to mock service (just return success)
+      // Mock service (just return success)
       return { success: true };
     } catch (error) {
       console.error('Delete content item error:', error);

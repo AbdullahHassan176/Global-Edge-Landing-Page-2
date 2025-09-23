@@ -6,9 +6,8 @@
  */
 
 import { workingDatabaseService } from '@/lib/database/workingDatabaseService';
-import { userAuthService } from '@/lib/userAuthService';
-import { assetService } from '@/lib/assetService';
-import { Asset, User, Investment } from '@/lib/database/models';
+import { userAuthService, User, Investment } from '@/lib/userAuthService';
+import { assetService, Asset } from '@/lib/assetService';
 
 export interface SearchResult {
   id: string;
@@ -185,30 +184,18 @@ export class SearchIntegration {
 
       // Search users
       if (!filters.type || filters.type === 'user' || filters.type === 'all') {
-        const usersResult = await workingDatabaseService.getUsers();
-        if (usersResult.success && usersResult.data) {
-          const userResults = this.searchUsersInData(
-            usersResult.data.items, 
-            query, 
-            filters
-          );
-          results.push(...userResults);
-          total += userResults.length;
-        }
+        const mockUsers = userAuthService.getAllUsers();
+        const userResults = this.searchUsersInData(mockUsers, query, filters);
+        results.push(...userResults);
+        total += userResults.length;
       }
 
       // Search investments
       if (!filters.type || filters.type === 'investment' || filters.type === 'all') {
-        const investmentsResult = await workingDatabaseService.getInvestments();
-        if (investmentsResult.success && investmentsResult.data) {
-          const investmentResults = this.searchInvestmentsInData(
-            investmentsResult.data.items, 
-            query, 
-            filters
-          );
-          results.push(...investmentResults);
-          total += investmentResults.length;
-        }
+        const mockInvestments = userAuthService.getAllInvestments();
+        const investmentResults = this.searchInvestmentsInData(mockInvestments, query, filters);
+        results.push(...investmentResults);
+        total += investmentResults.length;
       }
 
       // Sort and paginate results
@@ -234,7 +221,7 @@ export class SearchIntegration {
 
       // Search mock assets
       if (!filters.type || filters.type === 'asset' || filters.type === 'all') {
-        const mockAssets = assetService.getAssets();
+        const mockAssets = await assetService.getAssets();
         const assetResults = this.searchAssetsInData(mockAssets, query, filters);
         results.push(...assetResults);
       }
@@ -248,7 +235,7 @@ export class SearchIntegration {
 
       // Search mock investments
       if (!filters.type || filters.type === 'investment' || filters.type === 'all') {
-        const mockInvestments = userAuthService.getInvestments();
+        const mockInvestments = userAuthService.getAllInvestments();
         const investmentResults = this.searchInvestmentsInData(mockInvestments, query, filters);
         results.push(...investmentResults);
       }
@@ -314,7 +301,6 @@ export class SearchIntegration {
           risk: asset.risk,
           route: asset.route,
           cargo: asset.cargo,
-          issuerId: asset.issuerId
         },
         relevanceScore: this.calculateRelevanceScore(asset.name, query),
         category: asset.type,
@@ -419,7 +405,6 @@ export class SearchIntegration {
           type: investment.type,
           assetId: investment.assetId,
           userId: investment.userId,
-          expectedReturn: investment.expectedReturn
         },
         relevanceScore: this.calculateRelevanceScore(investment.assetId || '', query),
         category: investment.type,

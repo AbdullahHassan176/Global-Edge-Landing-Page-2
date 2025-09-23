@@ -103,7 +103,7 @@ export class RealtimeIntegration {
         return { success: false, error: 'Connection not found' };
       }
 
-      connection.subscriptions = [...new Set([...connection.subscriptions, ...eventTypes])];
+      connection.subscriptions = Array.from(new Set([...connection.subscriptions, ...eventTypes]));
       console.log(`Connection ${connectionId} subscribed to: ${eventTypes.join(', ')}`);
 
       return { success: true };
@@ -140,9 +140,9 @@ export class RealtimeIntegration {
     try {
       let sentTo = 0;
 
-      for (const [connectionId, connection] of this.connections) {
+      for (const [connectionId, connection] of Array.from(this.connections.entries())) {
         if (this.shouldSendToConnection(connection, event)) {
-          this.sendToConnection(connection, event);
+          this.sendToConnectionInternal(connection, event);
           sentTo++;
         }
       }
@@ -162,9 +162,9 @@ export class RealtimeIntegration {
     try {
       let sentTo = 0;
 
-      for (const [connectionId, connection] of this.connections) {
+      for (const [connectionId, connection] of Array.from(this.connections.entries())) {
         if (connection.userId === userId && this.shouldSendToConnection(connection, event)) {
-          this.sendToConnection(connection, event);
+          this.sendToConnectionInternal(connection, event);
           sentTo++;
         }
       }
@@ -188,7 +188,7 @@ export class RealtimeIntegration {
       }
 
       if (this.shouldSendToConnection(connection, event)) {
-        this.sendToConnection(connection, event);
+        this.sendToConnectionInternal(connection, event);
         return { success: true };
       }
 
@@ -239,7 +239,7 @@ export class RealtimeIntegration {
   /**
    * Send event to connection
    */
-  private sendToConnection(connection: RealtimeConnection, event: RealtimeEvent): void {
+  private sendToConnectionInternal(connection: RealtimeConnection, event: RealtimeEvent): void {
     try {
       if (this.useWebSocket && connection.socket) {
         // Send via WebSocket
@@ -297,7 +297,7 @@ export class RealtimeIntegration {
     const now = new Date();
     const staleThreshold = 60000; // 1 minute
 
-    for (const [connectionId, connection] of this.connections) {
+    for (const [connectionId, connection] of Array.from(this.connections.entries())) {
       const lastPing = new Date(connection.lastPing);
       const timeSinceLastPing = now.getTime() - lastPing.getTime();
 
@@ -314,7 +314,7 @@ export class RealtimeIntegration {
   private getSubscriptionStats(): Record<string, number> {
     const stats: Record<string, number> = {};
 
-    for (const connection of this.connections.values()) {
+    for (const connection of Array.from(this.connections.values())) {
       for (const subscription of connection.subscriptions) {
         stats[subscription] = (stats[subscription] || 0) + 1;
       }
@@ -332,7 +332,7 @@ export class RealtimeIntegration {
     const now = new Date();
     let totalTime = 0;
 
-    for (const connection of this.connections.values()) {
+    for (const connection of Array.from(this.connections.values())) {
       const connectedAt = new Date(connection.connectedAt);
       totalTime += now.getTime() - connectedAt.getTime();
     }

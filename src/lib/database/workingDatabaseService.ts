@@ -240,7 +240,6 @@ export class WorkingDatabaseService {
       const newInvestment = {
         ...investment,
         id: this.generateId(),
-        type: 'investment', // Mark as investment type
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };

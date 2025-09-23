@@ -51,18 +51,18 @@ export class AnalyticsIntegration {
           console.log('Analytics: Database unavailable, falling back to mock data');
           // Fallback to mock data
           users = userAuthService.getAllUsers();
-          assets = assetService.getAssets();
-          investments = userAuthService.getInvestments();
+          assets = await assetService.getAssets();
+          investments = userAuthService.getAllInvestments();
         }
       } else {
         // Use mock data
         users = userAuthService.getAllUsers();
-        assets = assetService.getAssets();
-        investments = userAuthService.getInvestments();
+        assets = await assetService.getAssets();
+        investments = userAuthService.getAllInvestments();
       }
 
       // Get metrics (always from mock for now as it's calculated data)
-      const mockMetrics = AssetMetricsService.getMetrics();
+      const mockMetrics = AssetMetricsService.getAllMetrics();
 
       const analyticsData = {
         ...this.calculateAnalytics(users, assets, investments),

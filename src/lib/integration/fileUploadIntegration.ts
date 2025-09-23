@@ -119,7 +119,7 @@ export class FileUploadIntegration {
           category: category as any,
           entityId,
           entityType,
-          tags: [category, entityType].filter(Boolean)
+          tags: [category, entityType].filter(Boolean) as string[]
         },
         status: 'uploaded'
       };
@@ -172,7 +172,7 @@ export class FileUploadIntegration {
           category: category as any,
           entityId,
           entityType,
-          tags: [category, entityType].filter(Boolean)
+          tags: [category, entityType].filter(Boolean) as string[]
         },
         status: 'uploaded'
       };

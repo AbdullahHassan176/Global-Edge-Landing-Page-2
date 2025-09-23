@@ -576,21 +576,16 @@ class UserAuthService {
     return MOCK_INVESTMENTS.filter(inv => inv.userId === userId);
   }
 
+  getAllInvestments(): Investment[] {
+    return MOCK_INVESTMENTS;
+  }
+
   async getUserById(id: string): Promise<User | undefined> {
     // In a real app, this would query the database
     // For now, return mock data
     return MOCK_USERS.find(user => user.id === id);
   }
 
-  async updateUser(userId: string, updates: Partial<User>): Promise<User> {
-    // In a real app, this would update the database
-    // For now, return the updated user
-    const user = MOCK_USERS.find(u => u.id === userId);
-    if (!user) {
-      throw new Error('User not found');
-    }
-    return { ...user, ...updates };
-  }
 
   async updateInvestmentStatus(investmentId: string, status: Investment['status'], reason?: string): Promise<boolean> {
     try {

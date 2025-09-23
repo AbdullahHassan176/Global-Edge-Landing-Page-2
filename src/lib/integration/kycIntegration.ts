@@ -17,17 +17,7 @@ export class KYCIntegration {
    */
   async getKycApplications(): Promise<{ success: boolean; applications?: KYCApplication[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try database first - using users container with type field
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          // Filter KYC applications from users container
-          const kycApplications = dbResult.data.items.filter(item => item.type === 'kyc_application');
-          return { success: true, applications: kycApplications as any };
-        }
-      }
-
-      // Fallback to mock service
+      // Use mock service for now (database integration needs proper KYC container)
       const mockApplications = this.getMockKycApplications();
       return { success: true, applications: mockApplications };
     } catch (error) {
@@ -41,20 +31,12 @@ export class KYCIntegration {
    */
   async getKycApplicationByUserId(userId: string): Promise<{ success: boolean; application?: KYCApplication; error?: string }> {
     try {
-      if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          const kycApplication = dbResult.data.items.find(
-            item => item.type === 'kyc_application' && item.userId === userId
-          );
-          return { success: true, application: kycApplication as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockApplications = this.getMockKycApplications();
       const application = mockApplications.find(app => app.userId === userId);
-      return { success: true, application };
+      if (application) {
+        return { success: true, application };
+      }
+      return { success: false, error: 'KYC application not found' };
     } catch (error) {
       console.error('Get KYC application by user error:', error);
       return { success: false, error: 'Failed to get KYC application' };
@@ -66,22 +48,6 @@ export class KYCIntegration {
    */
   async createKycApplication(applicationData: Omit<KYCApplication, 'id' | 'submittedAt'>): Promise<{ success: boolean; application?: KYCApplication; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Create KYC application in database using users container
-        const application = {
-          ...applicationData,
-          id: `kyc-${Date.now()}`,
-          submittedAt: new Date().toISOString(),
-          type: 'kyc_application' // Mark as KYC application type
-        };
-
-        const dbResult = await workingDatabaseService.createUser(application as any);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, application: dbResult.data as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockApplication = {
         ...applicationData,
         id: `kyc-${Date.now()}`,
@@ -99,34 +65,17 @@ export class KYCIntegration {
    */
   async updateKycApplicationStatus(id: string, status: 'pending' | 'approved' | 'rejected', reviewerId?: string, rejectionReason?: string): Promise<{ success: boolean; application?: KYCApplication; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Update KYC application in database
-        const updateData: any = { status };
-        if (reviewerId) updateData.reviewerId = reviewerId;
-        if (rejectionReason) updateData.rejectionReason = rejectionReason;
-        if (status === 'approved' || status === 'rejected') {
-          updateData.reviewedAt = new Date().toISOString();
-        }
-
-        const dbResult = await workingDatabaseService.updateUser(id, updateData);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, application: dbResult.data as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockApplications = this.getMockKycApplications();
       const application = mockApplications.find(app => app.id === id);
       if (application) {
         application.status = status;
-        if (reviewerId) application.reviewerId = reviewerId;
+        if (reviewerId) application.reviewedBy = reviewerId;
         if (rejectionReason) application.rejectionReason = rejectionReason;
         if (status === 'approved' || status === 'rejected') {
           application.reviewedAt = new Date().toISOString();
         }
         return { success: true, application };
       }
-
       return { success: false, error: 'KYC application not found' };
     } catch (error) {
       console.error('Update KYC application error:', error);
@@ -188,55 +137,105 @@ export class KYCIntegration {
         status: 'approved',
         submittedAt: '2024-01-15T10:00:00Z',
         reviewedAt: '2024-01-16T14:30:00Z',
-        reviewerId: 'admin-1',
-        documents: [
+        reviewedBy: 'admin-1',
+        identityDocuments: [
           {
             type: 'passport',
-            url: '/documents/passport-1.pdf',
-            uploadedAt: '2024-01-15T10:05:00Z',
-            status: 'approved'
-          },
-          {
-            type: 'utility_bill',
-            url: '/documents/utility-1.pdf',
-            uploadedAt: '2024-01-15T10:10:00Z',
-            status: 'approved'
+            number: 'P123456789',
+            country: 'US',
+            expiryDate: '2029-01-15',
+            documentUrl: '/documents/passport-1.pdf',
+            verified: true,
           }
         ],
-        personalDetails: {
-          fullName: 'Alice Johnson',
+        addressDocuments: [
+          {
+            type: 'utility_bill',
+            documentUrl: '/documents/utility-1.pdf',
+            issueDate: '2024-01-01',
+            verified: true
+          }
+        ],
+        personalInfo: {
+          firstName: 'Alice',
+          lastName: 'Johnson',
           dateOfBirth: '1990-05-15',
           nationality: 'US',
-          address: '123 Main St, New York, NY 10001'
+          occupation: 'Software Engineer',
+          employer: 'Tech Corp',
+          annualIncome: 120000,
+          sourceOfFunds: 'Employment'
         },
-        financialDetails: {
-          incomeSource: 'Employment',
-          estimatedNetWorth: '$100,000 - $500,000'
-        }
+        financialInfo: {
+          bankName: 'Chase Bank',
+          accountNumber: '1234567890',
+          routingNumber: '021000021',
+          bankCountry: 'US',
+          investmentExperience: 'intermediate',
+          riskTolerance: 'moderate'
+        },
+        riskScore: 75,
+        riskFactors: ['High income', 'Stable employment'],
+        complianceChecks: [
+          {
+            checkType: 'identity_verification',
+            status: 'passed',
+            details: 'Identity documents verified successfully',
+            checkedAt: '2024-01-16T10:00:00Z'
+          }
+        ]
       },
       {
         id: 'kyc-2',
         userId: 'user-2',
         status: 'pending',
         submittedAt: '2024-01-20T09:15:00Z',
-        documents: [
+        identityDocuments: [
           {
-            type: 'id_card',
-            url: '/documents/id-2.pdf',
-            uploadedAt: '2024-01-20T09:20:00Z',
-            status: 'pending'
+            type: 'national_id',
+            number: 'N123456789',
+            country: 'CA',
+            expiryDate: '2029-12-10',
+            documentUrl: '/documents/id-2.pdf',
+            verified: false
           }
         ],
-        personalDetails: {
-          fullName: 'Bob Smith',
+        addressDocuments: [
+          {
+            type: 'bank_statement',
+            documentUrl: '/documents/statement-2.pdf',
+            issueDate: '2024-01-15',
+            verified: false
+          }
+        ],
+        personalInfo: {
+          firstName: 'Bob',
+          lastName: 'Smith',
           dateOfBirth: '1985-12-10',
           nationality: 'CA',
-          address: '456 Oak Ave, Toronto, ON M5V 3A8'
+          occupation: 'Business Owner',
+          employer: 'Smith Enterprises',
+          annualIncome: 200000,
+          sourceOfFunds: 'Business'
         },
-        financialDetails: {
-          incomeSource: 'Business',
-          estimatedNetWorth: '$500,000 - $1,000,000'
-        }
+        financialInfo: {
+          bankName: 'Royal Bank of Canada',
+          accountNumber: '9876543210',
+          routingNumber: '000300002',
+          bankCountry: 'CA',
+          investmentExperience: 'advanced',
+          riskTolerance: 'aggressive'
+        },
+        riskScore: 85,
+        riskFactors: ['High net worth', 'Business ownership'],
+        complianceChecks: [
+          {
+            checkType: 'identity_verification',
+            status: 'pending',
+            details: 'Identity documents under review',
+            checkedAt: '2024-01-20T09:20:00Z'
+          }
+        ]
       }
     ];
   }

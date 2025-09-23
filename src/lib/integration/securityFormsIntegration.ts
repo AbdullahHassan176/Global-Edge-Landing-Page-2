@@ -69,19 +69,7 @@ export class SecurityFormsIntegration {
    */
   async getSecurityForms(): Promise<{ success: boolean; forms?: SecurityForm[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try database first
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          // Filter security forms from users container
-          const securityForms = dbResult.data.items
-            .filter(item => item.type === 'security_form')
-            .map(item => this.mapToSecurityForm(item));
-          return { success: true, forms: securityForms };
-        }
-      }
-
-      // Fallback to mock data
+      // Use mock service for now (database integration needs proper security forms container)
       const mockForms = this.getMockSecurityForms();
       return { success: true, forms: mockForms };
     } catch (error) {
@@ -118,23 +106,6 @@ export class SecurityFormsIntegration {
         submittedAt: new Date().toISOString()
       };
 
-      if (this.useDatabase) {
-        // Try to save to database
-        try {
-          const dbResult = await workingDatabaseService.createUser({
-            id: newForm.id,
-            type: 'security_form',
-            ...newForm
-          } as any);
-          
-          if (dbResult.success) {
-            return { success: true, form: newForm };
-          }
-        } catch (dbError) {
-          console.log('Database save failed, using mock storage');
-        }
-      }
-
       // For now, just return success (in real implementation, store in database)
       return { success: true, form: newForm };
     } catch (error) {
@@ -167,19 +138,7 @@ export class SecurityFormsIntegration {
    */
   async getWaitlistApplications(): Promise<{ success: boolean; applications?: WaitlistApplication[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try database first
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          // Filter waitlist applications from users container
-          const waitlistApps = dbResult.data.items
-            .filter(item => item.type === 'waitlist_application')
-            .map(item => this.mapToWaitlistApplication(item));
-          return { success: true, applications: waitlistApps };
-        }
-      }
-
-      // Fallback to mock data
+      // Use mock service for now (database integration needs proper waitlist container)
       const mockApplications = this.getMockWaitlistApplications();
       return { success: true, applications: mockApplications };
     } catch (error) {
@@ -198,23 +157,6 @@ export class SecurityFormsIntegration {
         id: `waitlist_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         submittedAt: new Date().toISOString()
       };
-
-      if (this.useDatabase) {
-        // Try to save to database
-        try {
-          const dbResult = await workingDatabaseService.createUser({
-            id: newApplication.id,
-            type: 'waitlist_application',
-            ...newApplication
-          } as any);
-          
-          if (dbResult.success) {
-            return { success: true, application: newApplication };
-          }
-        } catch (dbError) {
-          console.log('Database save failed, using mock storage');
-        }
-      }
 
       // For now, just return success
       return { success: true, application: newApplication };
@@ -248,19 +190,7 @@ export class SecurityFormsIntegration {
    */
   async getUserInfo(): Promise<{ success: boolean; users?: UserInfo[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try database first
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          // Filter regular users from users container
-          const users = dbResult.data.items
-            .filter(item => item.type === 'user' || !item.type)
-            .map(item => this.mapToUserInfo(item));
-          return { success: true, users };
-        }
-      }
-
-      // Fallback to mock data
+      // Use mock service for now (database integration needs proper user info container)
       const mockUsers = userAuthService.getAllUsers();
       const userInfo = mockUsers.map(user => this.mapToUserInfo(user));
       return { success: true, users: userInfo };

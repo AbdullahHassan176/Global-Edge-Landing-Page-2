@@ -17,17 +17,7 @@ export class NotificationIntegration {
    */
   async getNotifications(): Promise<{ success: boolean; notifications?: Notification[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try database first - using users container with type field
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          // Filter notifications from users container
-          const notifications = dbResult.data.items.filter(item => item.type === 'notification');
-          return { success: true, notifications: notifications as any };
-        }
-      }
-
-      // Fallback to mock service
+      // Use mock service for now (database integration needs proper notification container)
       const mockNotifications = notificationService.getAdminNotifications();
       return { success: true, notifications: mockNotifications as any };
     } catch (error) {
@@ -41,19 +31,8 @@ export class NotificationIntegration {
    */
   async getNotificationsByUserId(userId: string): Promise<{ success: boolean; notifications?: Notification[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          const userNotifications = dbResult.data.items.filter(
-            item => item.type === 'notification' && item.userId === userId
-          );
-          return { success: true, notifications: userNotifications as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockNotifications = notificationService.getAdminNotifications().filter(
-        notif => notif.userId === userId
+        notif => notif.data.userId === userId
       );
       return { success: true, notifications: mockNotifications as any };
     } catch (error) {
@@ -67,22 +46,6 @@ export class NotificationIntegration {
    */
   async createNotification(notificationData: Omit<Notification, 'id' | 'createdAt'>): Promise<{ success: boolean; notification?: Notification; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Create notification in database using users container
-        const notification = {
-          ...notificationData,
-          id: `notif-${Date.now()}`,
-          createdAt: new Date().toISOString(),
-          type: 'notification' // Mark as notification type
-        };
-
-        const dbResult = await workingDatabaseService.createUser(notification as any);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, notification: dbResult.data as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockNotification = {
         ...notificationData,
         id: `notif-${Date.now()}`,
@@ -100,22 +63,12 @@ export class NotificationIntegration {
    */
   async updateNotificationStatus(id: string, status: 'unread' | 'read' | 'sent' | 'failed' | 'processed' | 'reviewed'): Promise<{ success: boolean; notification?: Notification; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Update notification in database
-        const dbResult = await workingDatabaseService.updateUser(id, { status } as any);
-        if (dbResult.success && dbResult.data) {
-          return { success: true, notification: dbResult.data as any };
-        }
-      }
-
-      // Fallback to mock service
       const mockNotifications = notificationService.getAdminNotifications();
       const notification = mockNotifications.find(notif => notif.id === id);
       if (notification) {
         notification.status = status as any;
         return { success: true, notification: notification as any };
       }
-
       return { success: false, error: 'Notification not found' };
     } catch (error) {
       console.error('Update notification error:', error);
@@ -128,18 +81,6 @@ export class NotificationIntegration {
    */
   async getEmailNotifications(): Promise<{ success: boolean; notifications?: any[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try to get email notifications from database
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          const emailNotifications = dbResult.data.items.filter(
-            item => item.type === 'email_notification'
-          );
-          return { success: true, notifications: emailNotifications };
-        }
-      }
-
-      // Fallback to mock service
       const mockEmailNotifications = notificationService.getEmailNotifications();
       return { success: true, notifications: mockEmailNotifications };
     } catch (error) {
@@ -153,18 +94,6 @@ export class NotificationIntegration {
    */
   async getWebhookNotifications(): Promise<{ success: boolean; notifications?: any[]; error?: string }> {
     try {
-      if (this.useDatabase) {
-        // Try to get webhook notifications from database
-        const dbResult = await workingDatabaseService.getUsers();
-        if (dbResult.success && dbResult.data) {
-          const webhookNotifications = dbResult.data.items.filter(
-            item => item.type === 'webhook_notification'
-          );
-          return { success: true, notifications: webhookNotifications };
-        }
-      }
-
-      // Fallback to mock service
       const mockWebhookNotifications = notificationService.getWebhookNotifications();
       return { success: true, notifications: mockWebhookNotifications };
     } catch (error) {
@@ -186,15 +115,16 @@ export class NotificationIntegration {
       const notifications = result.notifications;
       const stats = {
         total: notifications.length,
-        unread: notifications.filter(notif => notif.status === 'unread').length,
-        read: notifications.filter(notif => notif.status === 'read').length,
-        sent: notifications.filter(notif => notif.status === 'sent').length,
-        failed: notifications.filter(notif => notif.status === 'failed').length,
+        unread: notifications.filter(notif => !notif.read).length,
+        read: notifications.filter(notif => notif.read).length,
         byType: {
-          system: notifications.filter(notif => notif.type === 'system').length,
-          email: notifications.filter(notif => notif.type === 'email').length,
-          webhook: notifications.filter(notif => notif.type === 'webhook').length,
-          admin: notifications.filter(notif => notif.type === 'admin').length
+          investment_update: notifications.filter(notif => notif.type === 'investment_update').length,
+          kyc_required: notifications.filter(notif => notif.type === 'kyc_required').length,
+          kyc_approved: notifications.filter(notif => notif.type === 'kyc_approved').length,
+          kyc_rejected: notifications.filter(notif => notif.type === 'kyc_rejected').length,
+          payment_required: notifications.filter(notif => notif.type === 'payment_required').length,
+          investment_completed: notifications.filter(notif => notif.type === 'investment_completed').length,
+          system_alert: notifications.filter(notif => notif.type === 'system_alert').length
         }
       };
 
