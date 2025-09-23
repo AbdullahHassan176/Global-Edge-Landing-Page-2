@@ -70,6 +70,7 @@ export async function POST(request: NextRequest) {
       assetId: body.assetId,
       amount: body.amount,
       tokens: body.tokens,
+      type: body.type || 'container',
       status: body.status || 'pending',
       investmentType: body.investmentType || 'primary',
       paymentMethod: body.paymentMethod || 'bank_transfer',
