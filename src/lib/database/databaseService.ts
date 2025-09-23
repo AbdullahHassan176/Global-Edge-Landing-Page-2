@@ -611,7 +611,7 @@ export class DatabaseService {
 
       const updatedNotification = {
         ...existingNotification,
-        status: 'read',
+        read: true,
         readAt: new Date().toISOString(),
       };
 
@@ -620,7 +620,7 @@ export class DatabaseService {
     } catch (error) {
       // For development, simulate successful notification read
       console.log('Database not available, simulating notification read');
-      return { success: true, data: { id, status: 'read', readAt: new Date().toISOString() } as any };
+      return { success: true, data: { id, read: true, readAt: new Date().toISOString() } as any };
     }
   }
 
@@ -891,10 +891,10 @@ export class DatabaseService {
       {
         id: 'notif-003',
         userId: userId,
-        type: 'asset',
+        type: 'system_alert',
         title: 'New Asset Available',
         message: 'A new container asset "Abu Dhabi-Rotterdam Route" is now available for investment.',
-        status: 'read',
+        read: true,
         priority: 'medium',
         createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
         readAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
@@ -911,7 +911,7 @@ export class DatabaseService {
         type: 'system',
         title: 'Platform Update',
         message: 'New features have been added to your dashboard. Check out the enhanced investment tracking.',
-        status: 'read',
+        read: true,
         priority: 'low',
         createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
         readAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
