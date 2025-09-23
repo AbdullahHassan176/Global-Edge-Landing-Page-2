@@ -123,7 +123,7 @@ export interface LogisticsInfo {
 export interface DocumentReference {
   id: string;
   name: string;
-  type: string;
+  type: 'investment_agreement' | 'kyc_document' | 'proof_of_funds' | 'tax_document';
   url: string;
   uploadedAt: string;
   verified: boolean;
