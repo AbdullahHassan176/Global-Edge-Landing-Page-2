@@ -381,9 +381,9 @@ export class DatabaseService {
       const conditions: string[] = [];
 
       // Apply filters
-      if (options.investorId) {
-        conditions.push('c.investorId = @investorId');
-        parameters.push({ name: '@investorId', value: options.investorId });
+      if (options.userId) {
+        conditions.push('c.userId = @userId');
+        parameters.push({ name: '@userId', value: options.userId });
       }
       if (options.assetId) {
         conditions.push('c.assetId = @assetId');
@@ -642,7 +642,7 @@ export class DatabaseService {
     const sampleInvestments: Investment[] = [
       {
         id: 'inv-001',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '1',
         amount: 5000,
         tokens: 100,
@@ -671,7 +671,7 @@ export class DatabaseService {
       },
       {
         id: 'inv-002',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '2',
         amount: 10000,
         tokens: 200,
@@ -696,7 +696,7 @@ export class DatabaseService {
       },
       {
         id: 'inv-003',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '3',
         amount: 7500,
         tokens: 150,
@@ -725,7 +725,7 @@ export class DatabaseService {
       },
       {
         id: 'inv-004',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '1',
         amount: 3000,
         tokens: 60,
@@ -754,7 +754,7 @@ export class DatabaseService {
       },
       {
         id: 'inv-005',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '4',
         amount: 15000,
         tokens: 300,
@@ -780,7 +780,7 @@ export class DatabaseService {
       },
       {
         id: 'inv-006',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '1',
         amount: 8000,
         tokens: 160,
@@ -809,7 +809,7 @@ export class DatabaseService {
       },
       {
         id: 'inv-007',
-        investorId: 'demo-investor-1',
+        userId: 'demo-investor-1',
         assetId: '2',
         amount: 12000,
         tokens: 240,
@@ -837,8 +837,8 @@ export class DatabaseService {
     // Apply filters to sample data
     let filteredInvestments = sampleInvestments;
 
-    if (options.investorId) {
-      filteredInvestments = filteredInvestments.filter(inv => inv.investorId === options.investorId);
+    if (options.userId) {
+      filteredInvestments = filteredInvestments.filter(inv => inv.userId === options.userId);
     }
     if (options.assetId) {
       filteredInvestments = filteredInvestments.filter(inv => inv.assetId === options.assetId);

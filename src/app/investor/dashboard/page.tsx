@@ -113,7 +113,7 @@ export default function InvestorDashboard() {
       let userInvestments: Investment[] = [];
       try {
         const dbResponse = await databaseService.getInvestments({ 
-          investorId: currentUser.id,
+          userId: currentUser.id,
           sortBy: 'createdAt',
           sortOrder: 'desc'
         });

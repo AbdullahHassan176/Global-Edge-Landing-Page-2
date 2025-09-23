@@ -144,7 +144,7 @@ export interface PerformanceMetrics {
 
 export interface Investment {
   id: string;
-  investorId: string;
+  userId: string;
   assetId: string;
   amount: number;
   tokens: number;
@@ -455,7 +455,7 @@ export interface AssetQueryOptions extends QueryOptions {
 }
 
 export interface InvestmentQueryOptions extends QueryOptions {
-  investorId?: string;
+  userId?: string;
   assetId?: string;
   status?: InvestmentStatus;
   dateFrom?: string;
