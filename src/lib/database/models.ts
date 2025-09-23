@@ -149,6 +149,7 @@ export interface Investment {
   assetId: string;
   amount: number;
   tokens: number;
+  type: 'container' | 'property' | 'inventory' | 'vault';
   status: 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled';
   createdAt: string;
   updatedAt: string;
