@@ -262,16 +262,15 @@ export interface ComplianceCheck {
 export interface Notification {
   id: string;
   userId: string;
-  type: 'investment' | 'kyc' | 'asset' | 'system' | 'admin';
+  type: 'investment_update' | 'kyc_required' | 'kyc_approved' | 'kyc_rejected' | 'payment_required' | 'investment_completed' | 'system_alert';
   title: string;
   message: string;
-  status: 'unread' | 'read' | 'archived';
+  read: boolean;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   createdAt: string;
-  readAt?: string;
+  actionUrl?: string;
   // Additional data
   data?: Record<string, any>;
-  actionUrl?: string;
   actionText?: string;
   // Email/SMS tracking
   emailSent: boolean;
