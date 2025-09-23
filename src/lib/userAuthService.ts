@@ -62,6 +62,7 @@ export interface Investment {
   userId: string;
   assetId: string;
   amount: number;
+  tokens: number;
   status: 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled';
   kycRequired: boolean;
   kycCompleted: boolean;
