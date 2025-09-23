@@ -127,6 +127,7 @@ export interface DocumentReference {
   url: string;
   uploadedAt: string;
   verified: boolean;
+  status: 'pending' | 'approved' | 'rejected';
 }
 
 export interface PerformanceMetrics {
