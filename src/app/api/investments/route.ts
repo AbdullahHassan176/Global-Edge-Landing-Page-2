@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     // Create investment
     const investmentData: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'> = {
-      investorId: body.investorId,
+      userId: body.investorId,
       assetId: body.assetId,
       amount: body.amount,
       tokens: body.tokens,
