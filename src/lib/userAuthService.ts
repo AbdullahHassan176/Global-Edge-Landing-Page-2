@@ -69,6 +69,7 @@ export interface Investment {
   updatedAt: string;
   completedAt?: string;
   rejectionReason?: string;
+  actualReturn?: number;
   documents?: InvestmentDocument[];
 }
 
