@@ -61,9 +61,13 @@ export default function StripePaymentForm({
 
       // In a real implementation, you would integrate with Stripe Elements here
       // For now, we'll simulate a successful payment
-      setTimeout(() => {
-        onSuccess(result.paymentIntent.id);
-      }, 2000);
+      if (result.paymentIntent) {
+        setTimeout(() => {
+          onSuccess(result.paymentIntent.id);
+        }, 2000);
+      } else {
+        onError('Payment intent not created');
+      }
 
     } catch (error) {
       onError(error instanceof Error ? error.message : 'Payment failed');
