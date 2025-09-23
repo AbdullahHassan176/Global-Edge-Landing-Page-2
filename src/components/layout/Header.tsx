@@ -67,7 +67,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-8">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
               <Logo size="md" />
             </Link>
             <div className="hidden md:flex space-x-8">
@@ -165,35 +165,6 @@ export default function Header() {
                         <div className="text-xs text-gray-500">View admin dashboard</div>
                       </div>
                     </Link>
-                    <div className="border-t border-gray-100"></div>
-                    <Link 
-                      href="/admin/assets" 
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      <Icon name="boxes" size={4} className="mr-3 text-gray-500" />
-                      Asset Management
-                    </Link>
-                    <Link 
-                      href="/admin/notifications" 
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      <Icon name="bell" size={4} className="mr-3 text-gray-500" />
-                      Notifications
-                    </Link>
-                    <Link 
-                      href="/admin/users" 
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      <Icon name="users" size={4} className="mr-3 text-gray-500" />
-                      User Management
-                    </Link>
-                    <Link 
-                      href="/test-issuer" 
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                      <Icon name="user-plus" size={4} className="mr-3 text-gray-500" />
-                      Test Issuer Access
-                    </Link>
                   </div>
                 </div>
               )}
@@ -289,7 +260,7 @@ export default function Header() {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Icon name="user-plus" size={4} className="mr-2" />
-                    Test Issuer Access
+                    Demo Access
                   </Link>
                 </div>
               </div>

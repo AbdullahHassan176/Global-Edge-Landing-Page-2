@@ -77,8 +77,8 @@ export default function AdminAssetsPage() {
   };
 
   const handleViewAsset = (asset: Asset) => {
-    setSelectedAsset(asset);
-    setShowAssetModal(true);
+    // Navigate to the enhanced asset details page
+    window.location.href = `/assets/${asset.id}`;
   };
 
   const handleApproveAsset = (asset: Asset) => {

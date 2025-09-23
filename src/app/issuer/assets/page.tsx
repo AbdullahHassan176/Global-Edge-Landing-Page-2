@@ -298,6 +298,12 @@ export default function IssuerAssetsPage() {
 
                     <div className="flex space-x-2">
                       <button
+                        onClick={() => window.location.href = `/assets/${asset.id}`}
+                        className="flex-1 bg-global-teal text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-opacity-90 transition-colors"
+                      >
+                        View Details
+                      </button>
+                      <button
                         onClick={() => openEditModal(asset)}
                         className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                       >

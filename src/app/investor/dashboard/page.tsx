@@ -1,10 +1,87 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import Tooltip from '@/components/ui/Tooltip';
 import { userAuthService, User, Investment, Notification } from '@/lib/userAuthService';
+import { databaseService } from '@/lib/database/databaseService';
+import { assetService } from '@/lib/assetService';
+
+// Investment Item Component
+function InvestmentItem({ investment }: { investment: Investment }) {
+  const [assetName, setAssetName] = useState('Loading...');
+  const [assetType, setAssetType] = useState('asset');
+
+  useEffect(() => {
+    const loadAssetDetails = async () => {
+      try {
+        const assetResponse = await databaseService.getAssetById(investment.assetId);
+        if (assetResponse.success && assetResponse.data) {
+          setAssetName(assetResponse.data.name);
+          setAssetType(assetResponse.data.type);
+        } else {
+          // Fallback to local asset service
+          const localAsset = await assetService.getAssetById(investment.assetId);
+          if (localAsset) {
+            setAssetName(localAsset.name);
+            setAssetType(localAsset.type);
+          } else {
+            setAssetName('Unknown Asset');
+          }
+        }
+      } catch (error) {
+        console.log('Could not load asset details for investment:', investment.id);
+        setAssetName('Unknown Asset');
+      }
+    };
+
+    loadAssetDetails();
+  }, [investment.assetId]);
+
+  const handleViewInvestment = (investmentId: string) => {
+    // Navigate to investment details or asset details
+    window.location.href = `/assets/${investment.assetId}`;
+  };
+
+  return (
+    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+      <div className="flex items-center">
+        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+          <Icon name={assetType === 'container' ? 'ship' : 
+                    assetType === 'property' ? 'home' : 
+                    assetType === 'inventory' ? 'cube' : 'vault'} className="text-gray-600" />
+        </div>
+        <div>
+          <p className="font-medium text-gray-900">{assetName}</p>
+          <p className="text-sm text-gray-600">${investment.amount.toLocaleString()} • {investment.tokens} tokens</p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-4">
+        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+          investment.status === 'completed' ? 'bg-green-100 text-green-800' :
+          investment.status === 'approved' ? 'bg-blue-100 text-blue-800' :
+          investment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+          investment.status === 'rejected' ? 'bg-red-100 text-red-800' :
+          'bg-gray-100 text-gray-800'
+        }`}>
+          {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
+        </span>
+        <Tooltip content="View detailed information about this investment including asset details and transaction history">
+          <button 
+            onClick={() => handleViewInvestment(investment.id)}
+            className="text-global-teal hover:text-edge-purple text-sm font-medium"
+          >
+            View
+          </button>
+        </Tooltip>
+      </div>
+    </div>
+  );
+}
 
 export default function InvestorDashboard() {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -22,6 +99,7 @@ export default function InvestorDashboard() {
 
   const loadDashboardData = async () => {
     try {
+      setLoading(true);
       const currentUser = userAuthService.getCurrentUser();
       if (!currentUser || currentUser.role !== 'investor') {
         // Redirect to login or role selection
@@ -31,29 +109,57 @@ export default function InvestorDashboard() {
 
       setUser(currentUser);
       
-      // Load investments
-      const userInvestments = await userAuthService.getInvestments(currentUser.id);
+      // Load investments from database
+      let userInvestments: Investment[] = [];
+      try {
+        const dbResponse = await databaseService.getInvestments({ 
+          investorId: currentUser.id,
+          sortBy: 'createdAt',
+          sortOrder: 'desc'
+        });
+        if (dbResponse.success && dbResponse.data) {
+          userInvestments = dbResponse.data.items;
+        }
+      } catch (dbError) {
+        console.log('Database not available, using local data');
+        // Fallback to local data
+        userInvestments = await userAuthService.getInvestments(currentUser.id);
+      }
+
       setInvestments(userInvestments);
 
-      // Load notifications
-      const userNotifications = await userAuthService.getNotifications(currentUser.id);
+      // Load notifications from database
+      let userNotifications: Notification[] = [];
+      try {
+        const notificationsResponse = await databaseService.getNotificationsByUserId(currentUser.id);
+        if (notificationsResponse.success && notificationsResponse.data) {
+          userNotifications = notificationsResponse.data;
+        }
+      } catch (dbError) {
+        console.log('Database not available, using local notifications');
+        // Fallback to local data
+        userNotifications = await userAuthService.getNotifications(currentUser.id);
+      }
+
       setNotifications(userNotifications);
 
-      // Calculate stats
+      // Calculate dynamic stats from real data
       const totalInvested = userInvestments
-        .filter(inv => inv.status === 'completed')
+        .filter(inv => inv.status === 'approved' || inv.status === 'completed')
         .reduce((sum, inv) => sum + inv.amount, 0);
       
       const activeInvestments = userInvestments.filter(inv => 
-        inv.status === 'pending' || inv.status === 'approved'
+        inv.status === 'approved' || inv.status === 'pending'
       ).length;
 
       const completedInvestments = userInvestments.filter(inv => 
         inv.status === 'completed'
       ).length;
 
-      // Mock returns calculation (in production, this would come from your backend)
-      const totalReturns = totalInvested * 0.12; // 12% average return
+      // Calculate real returns from actual investment data
+      const totalReturns = userInvestments
+        .filter(inv => inv.status === 'completed' && inv.actualReturn)
+        .reduce((sum, inv) => sum + (inv.actualReturn || 0), 0);
 
       setStats({
         totalInvested,
@@ -69,12 +175,43 @@ export default function InvestorDashboard() {
   };
 
   const handleMarkNotificationAsRead = async (notificationId: string) => {
-    await userAuthService.markNotificationAsRead(notificationId);
-    setNotifications(prev => 
-      prev.map(notif => 
-        notif.id === notificationId ? { ...notif, read: true } : notif
-      )
-    );
+    try {
+      const response = await databaseService.markNotificationAsRead(notificationId);
+      if (response.success) {
+        setNotifications(prev => 
+          prev.map(notif => 
+            notif.id === notificationId 
+              ? { ...notif, status: 'read' as const, readAt: new Date().toISOString() }
+              : notif
+          )
+        );
+      }
+    } catch (error) {
+      // Fallback to local service
+      await userAuthService.markNotificationAsRead(notificationId);
+      setNotifications(prev => 
+        prev.map(notif => 
+          notif.id === notificationId ? { ...notif, read: true } : notif
+        )
+      );
+    }
+  };
+
+  const handleBrowseAssets = () => {
+    router.push('/assets');
+  };
+
+  const handleViewReports = () => {
+    router.push('/reports');
+  };
+
+  const handleAccountSettings = () => {
+    router.push('/settings');
+  };
+
+  const handleViewInvestment = (investmentId: string) => {
+    // Navigate to investment details page
+    router.push(`/investments/${investmentId}`);
   };
 
   if (loading) {
@@ -98,7 +235,6 @@ export default function InvestorDashboard() {
     );
   }
 
-  const unreadNotifications = notifications.filter(notif => !notif.read);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -111,18 +247,6 @@ export default function InvestorDashboard() {
               <p className="text-gray-600 mt-1">Welcome back, {user.firstName}!</p>
             </div>
             <div className="flex items-center space-x-4">
-              {/* Notifications */}
-              <div className="relative">
-                <button className="relative p-2 text-gray-600 hover:text-gray-900">
-                  <Icon name="bell" className="text-xl" />
-                  {unreadNotifications.length > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {unreadNotifications.length}
-                    </span>
-                  )}
-                </button>
-              </div>
-              
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-800">{user.firstName} {user.lastName}</p>
                 <p className="text-xs text-gray-500">{user.email}</p>
@@ -156,88 +280,111 @@ export default function InvestorDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <Icon name="chart-line" className="text-green-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Invested</p>
-                <p className="text-2xl font-bold text-gray-900">${stats.totalInvested.toLocaleString()}</p>
+          <Tooltip content="Total amount you have invested across all completed investment transactions">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <Icon name="chart-line" className="text-green-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Total Invested</p>
+                  <p className="text-2xl font-bold text-gray-900">${stats.totalInvested.toLocaleString()}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Icon name="trending-up" className="text-blue-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Returns</p>
-                <p className="text-2xl font-bold text-gray-900">${stats.totalReturns.toLocaleString()}</p>
+          <Tooltip content="Total returns generated from your investments based on asset performance and dividends">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Icon name="trending-up" className="text-blue-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Total Returns</p>
+                  <p className="text-2xl font-bold text-gray-900">${stats.totalReturns.toLocaleString()}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Icon name="clock" className="text-purple-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Active Investments</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.activeInvestments}</p>
+          <Tooltip content="Number of investments currently pending approval or in progress">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <Icon name="clock" className="text-purple-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Active Investments</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.activeInvestments}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Icon name="check-circle" className="text-orange-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Completed</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.completedInvestments}</p>
+          <Tooltip content="Number of investments that have been successfully completed and are generating returns">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <Icon name="check-circle" className="text-orange-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Completed</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.completedInvestments}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
         </div>
 
         {/* Quick Actions */}
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-              <div className="w-10 h-10 bg-global-teal/10 rounded-lg flex items-center justify-center mr-3">
-                <Icon name="search" className="text-global-teal text-lg" />
-              </div>
-              <div className="text-left">
-                <p className="font-medium text-gray-900">Browse Assets</p>
-                <p className="text-sm text-gray-600">Explore investment opportunities</p>
-              </div>
-            </button>
+            <Tooltip content="Browse and discover available tokenized assets to invest in">
+              <button 
+                onClick={handleBrowseAssets}
+                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full"
+              >
+                <div className="w-10 h-10 bg-global-teal/10 rounded-lg flex items-center justify-center mr-3">
+                  <Icon name="search" className="text-global-teal text-lg" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-gray-900">Browse Assets</p>
+                  <p className="text-sm text-gray-600">Explore investment opportunities</p>
+                </div>
+              </button>
+            </Tooltip>
 
-            <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-              <div className="w-10 h-10 bg-edge-purple/10 rounded-lg flex items-center justify-center mr-3">
-                <Icon name="document-text" className="text-edge-purple text-lg" />
-              </div>
-              <div className="text-left">
-                <p className="font-medium text-gray-900">View Reports</p>
-                <p className="text-sm text-gray-600">Check your investment reports</p>
-              </div>
-            </button>
+            <Tooltip content="View detailed reports and analytics for your investment portfolio">
+              <button 
+                onClick={handleViewReports}
+                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full"
+              >
+                <div className="w-10 h-10 bg-edge-purple/10 rounded-lg flex items-center justify-center mr-3">
+                  <Icon name="document-text" className="text-edge-purple text-lg" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-gray-900">View Reports</p>
+                  <p className="text-sm text-gray-600">Check your investment reports</p>
+                </div>
+              </button>
+            </Tooltip>
 
-            <button className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-              <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mr-3">
-                <Icon name="cog" className="text-blue-500 text-lg" />
-              </div>
-              <div className="text-left">
-                <p className="font-medium text-gray-900">Account Settings</p>
-                <p className="text-sm text-gray-600">Manage your preferences</p>
-              </div>
-            </button>
+            <Tooltip content="Manage your account settings, preferences, and personal information">
+              <button 
+                onClick={handleAccountSettings}
+                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full"
+              >
+                <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mr-3">
+                  <Icon name="cog" className="text-blue-500 text-lg" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-gray-900">Account Settings</p>
+                  <p className="text-sm text-gray-600">Manage your preferences</p>
+                </div>
+              </button>
+            </Tooltip>
           </div>
         </div>
 
@@ -245,7 +392,9 @@ export default function InvestorDashboard() {
           {/* Recent Investments */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">Recent Investments</h2>
+              <Tooltip content="Your latest investment transactions showing status and amounts">
+                <h2 className="text-xl font-semibold text-gray-900 cursor-help">Recent Investments</h2>
+              </Tooltip>
             </div>
             <div className="p-6">
               {investments.length === 0 ? (
@@ -253,37 +402,17 @@ export default function InvestorDashboard() {
                   <Icon name="inbox" className="text-gray-400 text-3xl mx-auto mb-3" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No investments yet</h3>
                   <p className="text-gray-600 mb-4">Start your investment journey by exploring available assets.</p>
-                  <button className="bg-global-teal text-white px-4 py-2 rounded-lg font-medium hover:bg-global-teal-dark transition-colors">
+                  <button 
+                    onClick={handleBrowseAssets}
+                    className="bg-global-teal text-white px-4 py-2 rounded-lg font-medium hover:bg-global-teal-dark transition-colors"
+                  >
                     Browse Assets
                   </button>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {investments.slice(0, 3).map((investment) => (
-                    <div key={investment.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                          <Icon name="document-text" className="text-gray-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">Investment #{investment.id.slice(-6)}</p>
-                          <p className="text-sm text-gray-600">${investment.amount.toLocaleString()}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          investment.status === 'completed' ? 'bg-green-100 text-green-800' :
-                          investment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          investment.status === 'rejected' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
-                        </span>
-                        <button className="text-global-teal hover:text-edge-purple text-sm font-medium">
-                          View
-                        </button>
-                      </div>
-                    </div>
+                    <InvestmentItem key={investment.id} investment={investment} />
                   ))}
                 </div>
               )}
@@ -293,7 +422,9 @@ export default function InvestorDashboard() {
           {/* Notifications */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">Recent Notifications</h2>
+              <Tooltip content="Latest notifications about your investments, account updates, and platform announcements">
+                <h2 className="text-xl font-semibold text-gray-900 cursor-help">Recent Notifications</h2>
+              </Tooltip>
             </div>
             <div className="p-6">
               {notifications.length === 0 ? (

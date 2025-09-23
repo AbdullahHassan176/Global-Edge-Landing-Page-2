@@ -3,9 +3,78 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import Tooltip from '@/components/ui/Tooltip';
 import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
 import { userAuthService, User, Investment } from '@/lib/userAuthService';
 import { assetService, Asset } from '@/lib/assetService';
+import { databaseService } from '@/lib/database/databaseService';
+
+// Investment Item Component
+function InvestmentItem({ investment }: { investment: Investment }) {
+  const [assetName, setAssetName] = useState('Loading...');
+  const [assetType, setAssetType] = useState('asset');
+
+  useEffect(() => {
+    const loadAssetDetails = async () => {
+      try {
+        const assetResponse = await databaseService.getAssetById(investment.assetId);
+        if (assetResponse.success && assetResponse.data) {
+          setAssetName(assetResponse.data.name);
+          setAssetType(assetResponse.data.type);
+        } else {
+          // Fallback to local asset service
+          const localAsset = await assetService.getAssetById(investment.assetId);
+          if (localAsset) {
+            setAssetName(localAsset.name);
+            setAssetType(localAsset.type);
+          } else {
+            setAssetName('Unknown Asset');
+          }
+        }
+      } catch (error) {
+        console.log('Could not load asset details for investment:', investment.id);
+        setAssetName('Unknown Asset');
+      }
+    };
+
+    loadAssetDetails();
+  }, [investment.assetId]);
+
+  return (
+    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+      <div className="flex items-center">
+        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+          <Icon name={assetType === 'container' ? 'ship' : 
+                    assetType === 'property' ? 'home' : 
+                    assetType === 'inventory' ? 'cube' : 'vault'} className="text-gray-600" />
+        </div>
+        <div>
+          <p className="font-medium text-gray-900">{assetName}</p>
+          <p className="text-sm text-gray-600">${investment.amount.toLocaleString()} • {investment.tokens} tokens</p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-4">
+        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+          investment.status === 'completed' ? 'bg-green-100 text-green-800' :
+          investment.status === 'approved' ? 'bg-blue-100 text-blue-800' :
+          investment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+          investment.status === 'rejected' ? 'bg-red-100 text-red-800' :
+          'bg-gray-100 text-gray-800'
+        }`}>
+          {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
+        </span>
+        <Tooltip content="View detailed information about this investment including investor details and transaction history">
+          <button 
+            onClick={() => window.location.href = `/assets/${investment.assetId}`}
+            className="text-global-teal hover:text-edge-purple text-sm font-medium"
+          >
+            View Details
+          </button>
+        </Tooltip>
+      </div>
+    </div>
+  );
+}
 
 export default function IssuerDashboard() {
   const router = useRouter();
@@ -39,28 +108,50 @@ export default function IssuerDashboard() {
 
       setUser(currentUser);
       
-      // Load investments for this issuer's assets
-      const allInvestments = await userAuthService.getInvestments(currentUser.id);
+      // Load investments from database for this issuer's assets
+      let allInvestments: Investment[] = [];
+      try {
+        const dbResponse = await databaseService.getInvestments({ 
+          sortBy: 'createdAt',
+          sortOrder: 'desc'
+        });
+        if (dbResponse.success && dbResponse.data) {
+          // Filter investments for this issuer's assets
+          const issuerAssets = await databaseService.getAssets({ 
+            issuerId: currentUser.id 
+          });
+          if (issuerAssets.success && issuerAssets.data) {
+            const assetIds = issuerAssets.data.items.map(asset => asset.id);
+            allInvestments = dbResponse.data.items.filter(inv => 
+              assetIds.includes(inv.assetId)
+            );
+          }
+        }
+      } catch (dbError) {
+        console.log('Database not available, using local data');
+        // Fallback to local data
+        allInvestments = await userAuthService.getInvestments(currentUser.id);
+      }
+
       setInvestments(allInvestments);
 
-      // Load issuer's assets (mock for now)
-      const issuerAssets = [
-        {
-          id: '1',
-          name: 'Jebel Ali-Dubai Container',
-          type: 'container' as const,
-          apr: '12.5%',
-          risk: 'Medium' as const,
-          value: '$45,000',
-          route: 'Jebel Ali Port → Dubai',
-          cargo: 'Electronics & Luxury Goods',
-          image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
-          description: 'High-value electronics and luxury goods container route from Jebel Ali Port to Dubai.',
-          status: 'active' as const,
-          createdAt: '2024-01-15T10:00:00Z',
-          updatedAt: '2024-01-15T10:00:00Z'
+      // Load issuer's assets from database
+      let issuerAssets: Asset[] = [];
+      try {
+        const assetsResponse = await databaseService.getAssets({ 
+          issuerId: currentUser.id,
+          sortBy: 'createdAt',
+          sortOrder: 'desc'
+        });
+        if (assetsResponse.success && assetsResponse.data) {
+          issuerAssets = assetsResponse.data.items;
         }
-      ];
+      } catch (dbError) {
+        console.log('Database not available, using local assets');
+        // Fallback to local assets
+        issuerAssets = await assetService.getAssets();
+      }
+
       setAssets(issuerAssets);
 
       // Calculate stats
@@ -149,128 +240,148 @@ export default function IssuerDashboard() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Icon name="chart-line" className="text-blue-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Raised</p>
-                <p className="text-2xl font-bold text-gray-900">${stats.totalRaised.toLocaleString()}</p>
+          <Tooltip content="Total amount raised from completed investments across all your assets">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Icon name="chart-line" className="text-blue-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Total Raised</p>
+                  <p className="text-2xl font-bold text-gray-900">${stats.totalRaised.toLocaleString()}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <Icon name="users" className="text-green-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Active Investors</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.activeInvestors}</p>
+          <Tooltip content="Number of unique investors who have made completed or pending investments in your assets">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <Icon name="users" className="text-green-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Active Investors</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.activeInvestors}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Icon name="document-text" className="text-purple-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Investments</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalInvestments}</p>
+          <Tooltip content="Total number of investment transactions across all your assets, including completed, pending, and rejected">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <Icon name="document-text" className="text-purple-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Total Investments</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.totalInvestments}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Icon name="clock" className="text-orange-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Pending KYC</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.pendingKyc}</p>
+          <Tooltip content="Number of investment applications waiting for KYC verification before they can be processed">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <Icon name="clock" className="text-orange-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Pending KYC</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.pendingKyc}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                <Icon name="building" className="text-indigo-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Assets Created</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.assetsCreated}</p>
+          <Tooltip content="Total number of assets you have created and tokenized on the platform">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                  <Icon name="building" className="text-indigo-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Assets Created</p>
+                  <p className="text-2xl font-bold text-gray-900">{stats.assetsCreated}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
-                <Icon name="chart-bar" className="text-teal-600 text-xl" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Assets Under Management</p>
-                <p className="text-2xl font-bold text-gray-900">${stats.assetsUnderManagement.toLocaleString()}</p>
+          <Tooltip content="Total value of all your assets currently being managed on the platform">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 cursor-help">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
+                  <Icon name="chart-bar" className="text-teal-600 text-xl" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">Assets Under Management</p>
+                  <p className="text-2xl font-bold text-gray-900">${stats.assetsUnderManagement.toLocaleString()}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Tooltip>
         </div>
 
         {/* Quick Actions */}
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button 
-              onClick={() => router.push('/issuer/assets/create')}
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <div className="w-10 h-10 bg-global-teal/10 rounded-lg flex items-center justify-center mr-3">
-                <Icon name="plus" className="text-global-teal text-lg" />
-              </div>
-              <div className="text-left">
-                <p className="font-medium text-gray-900">Create New Asset</p>
-                <p className="text-sm text-gray-600">Tokenize a new asset</p>
-              </div>
-            </button>
+            <Tooltip content="Create and tokenize a new asset to attract investors and raise capital">
+              <button 
+                onClick={() => router.push('/issuer/assets/create')}
+                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full"
+              >
+                <div className="w-10 h-10 bg-global-teal/10 rounded-lg flex items-center justify-center mr-3">
+                  <Icon name="plus" className="text-global-teal text-lg" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-gray-900">Create New Asset</p>
+                  <p className="text-sm text-gray-600">Tokenize a new asset</p>
+                </div>
+              </button>
+            </Tooltip>
 
-            <button 
-              onClick={() => router.push('/issuer/investors')}
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <div className="w-10 h-10 bg-edge-purple/10 rounded-lg flex items-center justify-center mr-3">
-                <Icon name="users" className="text-edge-purple text-lg" />
-              </div>
-              <div className="text-left">
-                <p className="font-medium text-gray-900">Manage Investors</p>
-                <p className="text-sm text-gray-600">View and manage investors</p>
-              </div>
-            </button>
+            <Tooltip content="View and manage all investors who have invested in your assets, including their KYC status and investment history">
+              <button 
+                onClick={() => router.push('/issuer/investors')}
+                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full"
+              >
+                <div className="w-10 h-10 bg-edge-purple/10 rounded-lg flex items-center justify-center mr-3">
+                  <Icon name="users" className="text-edge-purple text-lg" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-gray-900">Manage Investors</p>
+                  <p className="text-sm text-gray-600">View and manage investors</p>
+                </div>
+              </button>
+            </Tooltip>
 
-            <button 
-              onClick={() => router.push('/issuer/branding')}
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mr-3">
-                <Icon name="cog" className="text-blue-500 text-lg" />
-              </div>
-              <div className="text-left">
-                <p className="font-medium text-gray-900">Branding Settings</p>
-                <p className="text-sm text-gray-600">Customize your portal</p>
-              </div>
-            </button>
+            <Tooltip content="Customize your issuer portal with your company branding, colors, and contact information">
+              <button 
+                onClick={() => router.push('/issuer/branding')}
+                className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors w-full"
+              >
+                <div className="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mr-3">
+                  <Icon name="cog" className="text-blue-500 text-lg" />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-gray-900">Branding Settings</p>
+                  <p className="text-sm text-gray-600">Customize your portal</p>
+                </div>
+              </button>
+            </Tooltip>
           </div>
         </div>
 
         {/* Recent Investments */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">Recent Investments</h2>
+            <Tooltip content="Latest investment transactions in your assets, showing status and amounts">
+              <h2 className="text-xl font-semibold text-gray-900 cursor-help">Recent Investments</h2>
+            </Tooltip>
           </div>
           <div className="p-6">
             {investments.length === 0 ? (
@@ -282,30 +393,7 @@ export default function IssuerDashboard() {
             ) : (
               <div className="space-y-4">
                 {investments.slice(0, 5).map((investment) => (
-                  <div key={investment.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                        <Icon name="document-text" className="text-gray-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">Investment #{investment.id.slice(-6)}</p>
-                        <p className="text-sm text-gray-600">${investment.amount.toLocaleString()}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        investment.status === 'completed' ? 'bg-green-100 text-green-800' :
-                        investment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                        investment.status === 'rejected' ? 'bg-red-100 text-red-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
-                      </span>
-                      <button className="text-global-teal hover:text-edge-purple text-sm font-medium">
-                        View Details
-                      </button>
-                    </div>
-                  </div>
+                  <InvestmentItem key={investment.id} investment={investment} />
                 ))}
               </div>
             )}

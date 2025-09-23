@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from './Icon';
 
 interface WaitlistModalProps {
@@ -37,6 +37,22 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Handle keyboard events
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        if (isOpen) {
+          handleClose();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -98,8 +114,14 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      onClick={handleClose}
+    >
+      <div 
+        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="bg-gradient-to-r from-global-teal to-global-green p-6 rounded-t-2xl">
           <div className="flex justify-between items-center">
@@ -110,6 +132,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               <p className="text-white/90 mt-1">
                 Get early access to exclusive investment opportunities
               </p>
+              <p className="text-white/70 text-xs mt-2">Press Esc to close</p>
             </div>
             <button
               onClick={handleClose}

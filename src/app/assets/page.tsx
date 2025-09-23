@@ -73,8 +73,8 @@ export default function AssetsPage() {
 
   // Handler functions
   const handleViewAsset = (asset: any) => {
-    setSelectedAsset(asset);
-    setShowAssetModal(true);
+    // Navigate to the enhanced asset details page
+    window.location.href = `/assets/${asset.id}`;
   };
 
   const handleEditAsset = (asset: any) => {

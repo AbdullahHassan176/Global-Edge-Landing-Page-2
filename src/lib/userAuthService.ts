@@ -234,6 +234,108 @@ class UserAuthService {
   private readonly SESSION_KEY = 'user_session';
   private readonly STORAGE_KEY = 'user_data';
 
+  // Password reset methods
+  async requestPasswordReset(email: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      // Get all users (including newly registered ones)
+      const allUsers = this.getAllUsers();
+      const user = allUsers.find(u => u.email === email);
+      
+      if (!user) {
+        // For security, don't reveal if email exists or not
+        return { success: true };
+      }
+
+      // Generate reset token (in production, this would be a secure random token)
+      const resetToken = this.generateResetToken();
+      
+      // Store reset token with expiration (in production, store in database)
+      const resetData = {
+        token: resetToken,
+        email: user.email,
+        expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour
+        used: false
+      };
+      
+      localStorage.setItem(`reset_token_${resetToken}`, JSON.stringify(resetData));
+      
+      // In production, send email with reset link
+      console.log(`Password reset token for ${email}: ${resetToken}`);
+      console.log(`Reset link: ${window.location.origin}/reset-password?token=${resetToken}`);
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Password reset request error:', error);
+      return { success: false, error: 'Failed to process password reset request' };
+    }
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      // Get reset token data
+      const resetData = localStorage.getItem(`reset_token_${token}`);
+      if (!resetData) {
+        return { success: false, error: 'Invalid or expired reset token' };
+      }
+
+      const tokenData = JSON.parse(resetData);
+      
+      // Check if token is expired
+      if (new Date() > new Date(tokenData.expiresAt)) {
+        localStorage.removeItem(`reset_token_${token}`);
+        return { success: false, error: 'Reset token has expired' };
+      }
+
+      // Check if token is already used
+      if (tokenData.used) {
+        return { success: false, error: 'Reset token has already been used' };
+      }
+
+      // Get user and update password
+      const allUsers = this.getAllUsers();
+      const user = allUsers.find(u => u.email === tokenData.email);
+      
+      if (!user) {
+        return { success: false, error: 'User not found' };
+      }
+
+      // Update user with new password (in production, hash the password)
+      user.updatedAt = new Date().toISOString();
+      
+      // Store the new password in localStorage for demo purposes
+      // In production, you would hash and store the password securely in a database
+      const storedPasswords = localStorage.getItem('user_passwords');
+      const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
+        'admin@globalnext.rocks': 'DemoAdmin123!',
+        'investor@globalnext.rocks': 'DemoInvestor123!',
+        'issuer@globalnext.rocks': 'DemoIssuer123!'
+      };
+      
+      // Update the password for this user
+      validPasswords[user.email] = newPassword;
+      
+      // Save updated passwords
+      localStorage.setItem('user_passwords', JSON.stringify(validPasswords));
+      
+      // Store updated user
+      this.saveUser(user);
+      
+      // Mark token as used
+      tokenData.used = true;
+      localStorage.setItem(`reset_token_${token}`, JSON.stringify(tokenData));
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Password reset error:', error);
+      return { success: false, error: 'Failed to reset password' };
+    }
+  }
+
+  private generateResetToken(): string {
+    // In production, use a cryptographically secure random token
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  }
+
   // Authentication methods
   async login(email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
@@ -245,8 +347,9 @@ class UserAuthService {
         return { success: false, error: 'Invalid email or password' };
       }
 
-      // Mock password validation - check against stored users or default passwords
-      const validPasswords: Record<string, string> = {
+      // Get stored passwords from localStorage
+      const storedPasswords = localStorage.getItem('user_passwords');
+      const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
         'admin@globalnext.rocks': 'DemoAdmin123!',
         'investor@globalnext.rocks': 'DemoInvestor123!',
         'issuer@globalnext.rocks': 'DemoIssuer123!'
