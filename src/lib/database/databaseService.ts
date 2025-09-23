@@ -906,7 +906,7 @@ export class DatabaseService {
       {
         id: 'notif-004',
         userId: userId,
-        type: 'system',
+        type: 'system_alert',
         title: 'Platform Update',
         message: 'New features have been added to your dashboard. Check out the enhanced investment tracking.',
         read: true,
