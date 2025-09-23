@@ -69,7 +69,7 @@ export interface Asset {
   value: string; // Monetary value as string
   apr: string; // Annual percentage rate as string
   risk: 'Low' | 'Medium' | 'High';
-  route?: string; // For container assets
+  route: string; // For container assets
   cargo?: string; // For container assets
   status: 'active' | 'inactive' | 'pending';
   image: string;
