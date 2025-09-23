@@ -131,12 +131,12 @@ export default function RegisterPage() {
         
         // Show approval notification instead of redirecting
         // Users with pending status need admin approval
-        if (user.status === 'pending') {
+        if (user?.status === 'pending') {
           // Don't redirect - show approval message
         } else {
           // Only redirect if user is already approved
           setTimeout(() => {
-            if (user.role === 'issuer') {
+            if (user?.role === 'issuer') {
               router.push('/issuer/dashboard');
             } else {
               router.push('/investor/dashboard');
