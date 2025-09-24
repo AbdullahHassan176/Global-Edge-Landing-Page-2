@@ -274,7 +274,7 @@ export default function LoginPage() {
                     </p>
                     {(error.includes('pending admin approval') || error.includes('pending approval')) && (
                       <div className="mt-3 text-xs text-yellow-300">
-                        <p><strong>Need help?</strong> Contact support@globalnext.rocks or +971 50 123 4567</p>
+                        <p><strong>Need help?</strong> Contact info@theglobaledge.io or +971 50 123 4567</p>
                       </div>
                     )}
                   </div>

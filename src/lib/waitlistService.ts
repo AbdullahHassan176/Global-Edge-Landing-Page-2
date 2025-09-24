@@ -1,6 +1,7 @@
 // Waitlist service for managing waitlist submissions
-// This provides a simple in-memory storage for development
-// In production, this would connect to your database
+// This service now connects to the database for persistent storage
+
+import { workingDatabaseService } from './database/workingDatabaseService';
 
 interface WaitlistSubmission {
   id: string;
@@ -53,23 +54,68 @@ class WaitlistService {
   }
 
   // Add a new waitlist submission
-  addSubmission(submissionData: Omit<WaitlistSubmission, 'id' | 'status'>): WaitlistSubmission {
-    const submission: WaitlistSubmission = {
-      ...submissionData,
-      id: `waitlist-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      status: 'new'
-    };
+  async addSubmission(submissionData: Omit<WaitlistSubmission, 'id' | 'status'>): Promise<WaitlistSubmission> {
+    try {
+      // Try to save to database first
+      const dbResult = await workingDatabaseService.createWaitlistSubmission({
+        ...submissionData,
+        status: 'new'
+      });
 
-    this.submissions.unshift(submission); // Add to beginning
-    this.saveToStorage();
-    
-    console.log('✅ Waitlist submission added:', submission);
-    return submission;
+      if (dbResult.success && dbResult.data) {
+        console.log('✅ Waitlist submission saved to database:', dbResult.data);
+        return dbResult.data;
+      } else {
+        console.warn('⚠️ Database save failed, falling back to localStorage:', dbResult.error);
+        
+        // Fallback to localStorage
+        const submission: WaitlistSubmission = {
+          ...submissionData,
+          id: `waitlist-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          status: 'new'
+        };
+
+        this.submissions.unshift(submission);
+        this.saveToStorage();
+        
+        console.log('✅ Waitlist submission added to localStorage:', submission);
+        return submission;
+      }
+    } catch (error) {
+      console.error('❌ Error saving waitlist submission:', error);
+      
+      // Fallback to localStorage
+      const submission: WaitlistSubmission = {
+        ...submissionData,
+        id: `waitlist-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        status: 'new'
+      };
+
+      this.submissions.unshift(submission);
+      this.saveToStorage();
+      
+      console.log('✅ Waitlist submission added to localStorage (fallback):', submission);
+      return submission;
+    }
   }
 
   // Get all submissions
-  getAllSubmissions(): WaitlistSubmission[] {
-    return [...this.submissions]; // Return a copy
+  async getAllSubmissions(): Promise<WaitlistSubmission[]> {
+    try {
+      // Try to get from database first
+      const dbResult = await workingDatabaseService.getWaitlistSubmissions();
+      
+      if (dbResult.success && dbResult.data) {
+        console.log('✅ Waitlist submissions loaded from database');
+        return dbResult.data;
+      } else {
+        console.warn('⚠️ Database load failed, using localStorage:', dbResult.error);
+        return [...this.submissions]; // Return a copy from localStorage
+      }
+    } catch (error) {
+      console.error('❌ Error loading waitlist submissions:', error);
+      return [...this.submissions]; // Return a copy from localStorage
+    }
   }
 
   // Get submissions by status

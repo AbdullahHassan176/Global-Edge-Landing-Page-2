@@ -104,7 +104,7 @@ export interface Notification {
 const MOCK_USERS: User[] = [
   {
     id: 'demo-admin-1',
-    email: 'admin@globalnext.rocks',
+    email: 'info@theglobaledge.io',
     firstName: 'Demo',
     lastName: 'Admin',
     role: 'investor', // Using investor role for demo purposes
@@ -129,7 +129,7 @@ const MOCK_USERS: User[] = [
   },
   {
     id: 'demo-investor-1',
-    email: 'investor@globalnext.rocks',
+    email: 'investor@theglobaledge.io',
     firstName: 'Demo',
     lastName: 'Investor',
     role: 'investor',
@@ -154,7 +154,7 @@ const MOCK_USERS: User[] = [
   },
   {
     id: 'demo-issuer-1',
-    email: 'issuer@globalnext.rocks',
+    email: 'issuer@theglobaledge.io',
     firstName: 'Demo',
     lastName: 'Issuer',
     role: 'issuer',
@@ -181,7 +181,7 @@ const MOCK_USERS: User[] = [
       primaryColor: '#1e40af',
       secondaryColor: '#3b82f6',
       companyName: 'Global Edge Demo Holdings',
-      supportEmail: 'support@globalnext.rocks',
+      supportEmail: 'info@theglobaledge.io',
       supportPhone: '+971501234567'
     }
   }
@@ -330,9 +330,9 @@ class UserAuthService {
       // In production, you would hash and store the password securely in a database
       const storedPasswords = localStorage.getItem('user_passwords');
       const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
-        'admin@globalnext.rocks': 'DemoAdmin123!',
-        'investor@globalnext.rocks': 'DemoInvestor123!',
-        'issuer@globalnext.rocks': 'DemoIssuer123!'
+        'info@theglobaledge.io': 'DemoAdmin123!',
+        'investor@theglobaledge.io': 'DemoInvestor123!',
+        'issuer@theglobaledge.io': 'DemoIssuer123!'
       };
       
       // Update the password for this user
@@ -374,9 +374,9 @@ class UserAuthService {
       // Get stored passwords from localStorage
       const storedPasswords = localStorage.getItem('user_passwords');
       const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
-        'admin@globalnext.rocks': 'DemoAdmin123!',
-        'investor@globalnext.rocks': 'DemoInvestor123!',
-        'issuer@globalnext.rocks': 'DemoIssuer123!'
+        'info@theglobaledge.io': 'DemoAdmin123!',
+        'investor@theglobaledge.io': 'DemoInvestor123!',
+        'issuer@theglobaledge.io': 'DemoIssuer123!'
       };
 
       // For newly registered users, use a default password or check if they have a stored password

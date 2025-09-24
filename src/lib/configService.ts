@@ -189,26 +189,26 @@ class ConfigService {
 
       contact: {
         support: {
-          email: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'info@globalnext.rocks',
+          email: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'info@theglobaledge.io',
           phone: process.env.NEXT_PUBLIC_SUPPORT_PHONE || '+1 (555) 123-4567',
           address: process.env.NEXT_PUBLIC_SUPPORT_ADDRESS || 'P20, S13, Al Warsan, Dubai, UAE'
         },
         sales: {
-          email: process.env.NEXT_PUBLIC_SALES_EMAIL || 'info@globalnext.rocks',
+          email: process.env.NEXT_PUBLIC_SALES_EMAIL || 'info@theglobaledge.io',
           phone: process.env.NEXT_PUBLIC_SALES_PHONE || '+1 (555) 123-4567'
         },
         legal: {
-          email: process.env.NEXT_PUBLIC_LEGAL_EMAIL || 'legal@globaledge.com',
+          email: process.env.NEXT_PUBLIC_LEGAL_EMAIL || 'security@theglobaledge.io',
           phone: process.env.NEXT_PUBLIC_LEGAL_PHONE || '+1 (555) 123-4567',
           address: process.env.NEXT_PUBLIC_LEGAL_ADDRESS || '123 Financial District, New York, NY 10004'
         },
         privacy: {
-          email: process.env.NEXT_PUBLIC_PRIVACY_EMAIL || 'privacy@globaledge.com',
+          email: process.env.NEXT_PUBLIC_PRIVACY_EMAIL || 'security@theglobaledge.io',
           phone: process.env.NEXT_PUBLIC_PRIVACY_PHONE || '+1 (555) 123-4567',
           address: process.env.NEXT_PUBLIC_PRIVACY_ADDRESS || '123 Financial District, New York, NY 10004'
         },
         technical: {
-          email: process.env.NEXT_PUBLIC_TECH_EMAIL || 'info@globalnext.rocks',
+          email: process.env.NEXT_PUBLIC_TECH_EMAIL || 'info@theglobaledge.io',
           phone: process.env.NEXT_PUBLIC_TECH_PHONE || '+1 (555) 123-4567',
           twitter: process.env.NEXT_PUBLIC_TECH_TWITTER || '@GlobalEdgeStatus'
         }
@@ -255,7 +255,7 @@ class ConfigService {
         email: {
           provider: (process.env.EMAIL_PROVIDER as any) || 'sendgrid',
           apiKey: process.env.EMAIL_API_KEY || '',
-          fromEmail: process.env.EMAIL_FROM_EMAIL || 'noreply@globaledge.com',
+          fromEmail: process.env.EMAIL_FROM_EMAIL || 'noreply@theglobaledge.io',
           fromName: process.env.EMAIL_FROM_NAME || 'Global Edge'
         },
         payment: {

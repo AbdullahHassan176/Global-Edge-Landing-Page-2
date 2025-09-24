@@ -238,7 +238,7 @@ export default function RegisterPage() {
               <div className="text-white/80 text-sm space-y-2">
                 <p>If your account is not approved within 48 hours, contact our support team:</p>
                 <div className="mt-3 space-y-1">
-                  <p><strong>Email:</strong> support@globalnext.rocks</p>
+                  <p><strong>Email:</strong> info@theglobaledge.io</p>
                   <p><strong>Phone:</strong> +971 50 123 4567</p>
                   <p><strong>Hours:</strong> 9 AM - 6 PM (UAE Time)</p>
                 </div>

@@ -27,6 +27,7 @@ export default function WaitlistManagementPage() {
       
       if (data.success) {
         setSubmissions(data.submissions || []);
+        console.log('✅ Loaded submissions from database:', data.submissions?.length || 0);
       } else {
         console.error('Failed to load submissions:', data.error);
         // Fallback to empty array

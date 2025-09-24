@@ -29,7 +29,7 @@ export default function TestPortalPage() {
     
     try {
       // Automatically log in as demo issuer
-      const loginResult = await userAuthService.login('issuer@globalnext.rocks', 'DemoIssuer123!');
+      const loginResult = await userAuthService.login('issuer@theglobaledge.io', 'DemoIssuer123!');
       
       if (loginResult.success) {
         router.push('/issuer/dashboard');
@@ -49,7 +49,7 @@ export default function TestPortalPage() {
     
     try {
       // Automatically log in as demo investor
-      const loginResult = await userAuthService.login('investor@globalnext.rocks', 'DemoInvestor123!');
+      const loginResult = await userAuthService.login('investor@theglobaledge.io', 'DemoInvestor123!');
       
       if (loginResult.success) {
         router.push('/investor/dashboard');
@@ -233,13 +233,13 @@ export default function TestPortalPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h4 className="font-medium text-white mb-2">Issuer Account</h4>
-                <p className="text-white/70 mb-1">Email: issuer@globalnext.rocks</p>
+                <p className="text-white/70 mb-1">Email: issuer@theglobaledge.io</p>
                 <p className="text-white/70 mb-1">Password: DemoIssuer123!</p>
                 <p className="text-white/70">Company: Global Edge Demo Holdings</p>
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">Investor Account</h4>
-                <p className="text-white/70 mb-1">Email: investor@globalnext.rocks</p>
+                <p className="text-white/70 mb-1">Email: investor@theglobaledge.io</p>
                 <p className="text-white/70 mb-1">Password: DemoInvestor123!</p>
                 <p className="text-white/70">Status: KYC Approved</p>
               </div>

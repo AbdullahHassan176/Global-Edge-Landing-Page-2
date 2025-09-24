@@ -187,7 +187,7 @@ class SettingsService {
         category: 'Email',
         name: 'From Address',
         description: 'Default sender email address',
-        value: 'noreply@globaledge.com',
+        value: 'noreply@theglobaledge.io',
         type: 'string',
         validation: {
           pattern: '^[^@]+@[^@]+\\.[^@]+$',
@@ -304,7 +304,7 @@ class SettingsService {
         description: 'Primary email delivery service',
         configuration: {
           apiKey: process.env.EMAIL_API_KEY || '',
-          fromEmail: process.env.EMAIL_FROM_EMAIL || 'noreply@globaledge.com',
+          fromEmail: process.env.EMAIL_FROM_EMAIL || 'noreply@theglobaledge.io',
           fromName: process.env.EMAIL_FROM_NAME || 'Global Edge'
         },
         healthCheck: {

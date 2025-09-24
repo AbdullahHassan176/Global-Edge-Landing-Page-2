@@ -313,7 +313,7 @@ export default function KYCPage() {
               </p>
               <div className="space-y-2">
                 <p className="text-blue-800 text-sm">
-                  <strong>Email:</strong> support@globalnext.rocks
+                  <strong>Email:</strong> info@theglobaledge.io
                 </p>
                 <p className="text-blue-800 text-sm">
                   <strong>Phone:</strong> +971 50 123 4567

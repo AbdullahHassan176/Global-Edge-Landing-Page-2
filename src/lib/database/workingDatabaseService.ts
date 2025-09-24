@@ -285,6 +285,64 @@ export class WorkingDatabaseService {
   }
 
   // ============================================================================
+  // WAITLIST OPERATIONS (Using existing 'users' container)
+  // ============================================================================
+
+  async createWaitlistSubmission(submission: any): Promise<ApiResponse<any>> {
+    try {
+      await this.initialize();
+      const container = cosmosClient.getContainer('users');
+      
+      const waitlistSubmission = {
+        ...submission,
+        id: this.generateId(),
+        type: 'waitlist_submission',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      const { resource } = await container.items.create(waitlistSubmission);
+      return { success: true, data: resource };
+    } catch (error) {
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
+  }
+
+  async getWaitlistSubmissions(): Promise<ApiResponse<any[]>> {
+    try {
+      await this.initialize();
+      const container = cosmosClient.getContainer('users');
+      
+      const query = 'SELECT * FROM c WHERE c.type = "waitlist_submission" ORDER BY c.createdAt DESC';
+      const { resources } = await container.items.query(query).fetchAll();
+      
+      return { success: true, data: resources };
+    } catch (error) {
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
+  }
+
+  async updateWaitlistSubmissionStatus(id: string, status: string): Promise<ApiResponse<any>> {
+    try {
+      await this.initialize();
+      const container = cosmosClient.getContainer('users');
+      
+      const { resource: submission } = await container.item(id).read();
+      if (!submission) {
+        return { success: false, error: 'Waitlist submission not found' };
+      }
+
+      submission.status = status;
+      submission.updatedAt = new Date().toISOString();
+
+      const { resource } = await container.items.upsert(submission);
+      return { success: true, data: resource };
+    } catch (error) {
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
+  }
+
+  // ============================================================================
   // UTILITY METHODS
   // ============================================================================
 

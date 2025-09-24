@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { waitlistService, WaitlistSubmission } from '@/lib/waitlistService';
+import { emailIntegration } from '@/lib/integration/emailIntegration';
 
 interface WaitlistSubmissionRequest {
   firstName: string;
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest) {
     };
 
     // 1. Save to waitlist service
-    const savedSubmission = waitlistService.addSubmission(submissionData);
+    const savedSubmission = await waitlistService.addSubmission(submissionData);
 
     // 2. Log the submission for debugging
     console.log('✅ New waitlist submission saved:', savedSubmission);
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const submissions = waitlistService.getAllSubmissions();
+    const submissions = await waitlistService.getAllSubmissions();
     const stats = waitlistService.getStats();
     
     return NextResponse.json({
@@ -103,48 +104,88 @@ export async function GET() {
 
 // Email notification functions
 async function sendAdminNotification(submission: any) {
-  // For now, we'll log the admin notification
-  // In production, you would send an email to your admin team
-  console.log('📧 ADMIN NOTIFICATION - New Waitlist Submission:');
-  console.log('=====================================');
-  console.log(`👤 Name: ${submission.firstName} ${submission.lastName}`);
-  console.log(`📧 Email: ${submission.email}`);
-  console.log(`📞 Phone: ${submission.phone}`);
-  console.log(`🏢 Company: ${submission.company || 'Not provided'}`);
-  console.log(`💰 Investor Type: ${submission.investorType}`);
-  console.log(`💵 Investment Amount: ${submission.investmentAmount}`);
-  console.log(`🎯 Token Interest: ${submission.tokenInterest}`);
-  console.log(`📢 Heard From: ${submission.heardFrom}`);
-  console.log(`💬 Message: ${submission.message || 'No additional message'}`);
-  console.log(`🕐 Submitted: ${submission.submittedAt}`);
-  console.log(`🌐 IP: ${submission.ip}`);
-  console.log('=====================================');
-  
-  // TODO: Implement actual email sending
-  // Example: await sendEmail({
-  //   to: 'admin@globalnext.rocks',
-  //   subject: 'New Investor Waitlist Submission',
-  //   template: 'admin-waitlist-notification',
-  //   data: submission
-  // });
+  try {
+    // Initialize email integration
+    await emailIntegration.initialize();
+    
+    // Send admin notification email
+    const result = await emailIntegration.sendCustomEmail(
+      'info@theglobaledge.io',
+      `New Investor Waitlist Submission - ${submission.firstName} ${submission.lastName}`,
+      `
+New waitlist submission received:
+
+👤 Name: ${submission.firstName} ${submission.lastName}
+📧 Email: ${submission.email}
+📞 Phone: ${submission.phone}
+🏢 Company: ${submission.company || 'Not provided'}
+💰 Investor Type: ${submission.investorType}
+💵 Investment Amount: ${submission.investmentAmount}
+🎯 Token Interest: ${submission.tokenInterest}
+📢 Heard From: ${submission.heardFrom}
+💬 Message: ${submission.message || 'No additional message'}
+🕐 Submitted: ${submission.submittedAt}
+🌐 IP: ${submission.ip}
+
+Please review and follow up with the investor.
+      `,
+      {
+        priority: 'high',
+        isHtml: false
+      }
+    );
+    
+    if (result.success) {
+      console.log('✅ Admin notification email sent successfully');
+    } else {
+      console.error('❌ Failed to send admin notification email:', result.error);
+    }
+  } catch (error) {
+    console.error('❌ Admin notification error:', error);
+  }
 }
 
 async function sendUserConfirmation(submission: any) {
-  // For now, we'll log the user confirmation
-  // In production, you would send a confirmation email to the user
-  console.log('📧 USER CONFIRMATION - Waitlist Submission Received:');
-  console.log('=====================================');
-  console.log(`👤 To: ${submission.firstName} ${submission.lastName} (${submission.email})`);
-  console.log(`📧 Subject: Welcome to Global Edge Investor Waitlist`);
-  console.log(`💬 Message: Thank you for your interest in Global Edge investment opportunities.`);
-  console.log(`🕐 Sent: ${new Date().toISOString()}`);
-  console.log('=====================================');
-  
-  // TODO: Implement actual email sending
-  // Example: await sendEmail({
-  //   to: submission.email,
-  //   subject: 'Welcome to Global Edge Investor Waitlist',
-  //   template: 'user-waitlist-confirmation',
-  //   data: submission
-  // });
+  try {
+    // Initialize email integration
+    await emailIntegration.initialize();
+    
+    // Send user confirmation email
+    const result = await emailIntegration.sendCustomEmail(
+      submission.email,
+      'Welcome to Global Edge Investor Waitlist',
+      `
+Hello ${submission.firstName},
+
+Thank you for your interest in Global Edge investment opportunities!
+
+We have received your waitlist submission and will be in touch soon with exclusive investment opportunities tailored to your interests.
+
+Your submission details:
+- Name: ${submission.firstName} ${submission.lastName}
+- Investor Type: ${submission.investorType}
+- Investment Amount: ${submission.investmentAmount}
+- Token Interest: ${submission.tokenInterest}
+
+We'll review your application and contact you within 48 hours with next steps.
+
+If you have any questions, please don't hesitate to contact us at info@theglobaledge.io.
+
+Best regards,
+The Global Edge Team
+      `,
+      {
+        priority: 'normal',
+        isHtml: false
+      }
+    );
+    
+    if (result.success) {
+      console.log('✅ User confirmation email sent successfully');
+    } else {
+      console.error('❌ Failed to send user confirmation email:', result.error);
+    }
+  } catch (error) {
+    console.error('❌ User confirmation error:', error);
+  }
 }

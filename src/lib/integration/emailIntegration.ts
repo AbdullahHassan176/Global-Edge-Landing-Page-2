@@ -82,7 +82,7 @@ export class EmailIntegration {
         enabled: true,
         config: {
           apiKey: process.env.SENDGRID_API_KEY,
-          fromEmail: process.env.SENDGRID_FROM_EMAIL || 'noreply@globaledge.com'
+          fromEmail: process.env.SENDGRID_FROM_EMAIL || 'noreply@theglobaledge.io'
         }
       });
     }
@@ -95,7 +95,7 @@ export class EmailIntegration {
         config: {
           apiKey: process.env.MAILGUN_API_KEY,
           domain: process.env.MAILGUN_DOMAIN,
-          fromEmail: process.env.MAILGUN_FROM_EMAIL || 'noreply@globaledge.com'
+          fromEmail: process.env.MAILGUN_FROM_EMAIL || 'noreply@theglobaledge.io'
         }
       });
     }
@@ -109,7 +109,7 @@ export class EmailIntegration {
           accessKeyId: process.env.AWS_ACCESS_KEY_ID,
           secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
           region: process.env.AWS_SES_REGION || 'us-east-1',
-          fromEmail: process.env.AWS_SES_FROM_EMAIL || 'noreply@globaledge.com'
+          fromEmail: process.env.AWS_SES_FROM_EMAIL || 'noreply@theglobaledge.io'
         }
       });
     }
@@ -125,7 +125,7 @@ export class EmailIntegration {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS,
           secure: process.env.SMTP_SECURE === 'true',
-          fromEmail: process.env.SMTP_FROM_EMAIL || 'noreply@globaledge.com'
+          fromEmail: process.env.SMTP_FROM_EMAIL || 'noreply@theglobaledge.io'
         }
       });
     }

@@ -526,7 +526,7 @@ export default function HowItWorksPage() {
                   Cancel
                 </button>
                 <a
-                  href="mailto:info@globalnext.rocks?subject=Asset Listing Inquiry"
+                  href="mailto:info@theglobaledge.io?subject=Asset Listing Inquiry"
                   className="flex-1 bg-global-teal text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors text-center"
                 >
                   Contact Us
