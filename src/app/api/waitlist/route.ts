@@ -108,12 +108,13 @@ async function sendAdminNotification(submission: any) {
     // Initialize email integration
     await emailIntegration.initialize();
     
-    // Send admin notification email
+    // Send admin notification email to both admins
+    const adminEmails = ['abdullah.hassan@globalnext.rocks', 'mohammed.sidat@globalnext.rocks'];
     const result = await emailIntegration.sendCustomEmail(
-      'info@theglobaledge.io',
+      adminEmails,
       `New Investor Waitlist Submission - ${submission.firstName} ${submission.lastName}`,
       `
-New waitlist submission received:
+ADMIN NOTIFICATION - New Waitlist Submission
 
 👤 Name: ${submission.firstName} ${submission.lastName}
 📧 Email: ${submission.email}
@@ -127,7 +128,10 @@ New waitlist submission received:
 🕐 Submitted: ${submission.submittedAt}
 🌐 IP: ${submission.ip}
 
-Please review and follow up with the investor.
+ACTION REQUIRED: Please review and follow up with the investor.
+Contact them at: ${submission.email}
+
+This is an admin-only notification.
       `,
       {
         priority: 'high',
@@ -137,6 +141,27 @@ Please review and follow up with the investor.
     
     if (result.success) {
       console.log('✅ Admin notification email sent successfully');
+      
+      // Also send a copy to info@theglobaledge.io for record keeping
+      await emailIntegration.sendCustomEmail(
+        'info@theglobaledge.io',
+        `Waitlist Submission Record - ${submission.firstName} ${submission.lastName}`,
+        `
+Waitlist submission received and admin notified:
+
+👤 Name: ${submission.firstName} ${submission.lastName}
+📧 Email: ${submission.email}
+💰 Investment Amount: ${submission.investmentAmount}
+🎯 Token Interest: ${submission.tokenInterest}
+🕐 Submitted: ${submission.submittedAt}
+
+Admin team has been notified for follow-up.
+        `,
+        {
+          priority: 'normal',
+          isHtml: false
+        }
+      );
     } else {
       console.error('❌ Failed to send admin notification email:', result.error);
     }

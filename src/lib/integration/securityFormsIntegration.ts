@@ -7,6 +7,7 @@
 
 import { workingDatabaseService } from '@/lib/database/workingDatabaseService';
 import { userAuthService } from '@/lib/userAuthService';
+import { emailIntegration } from './emailIntegration';
 
 export interface SecurityForm {
   id: string;
@@ -105,6 +106,9 @@ export class SecurityFormsIntegration {
         id: `form_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         submittedAt: new Date().toISOString()
       };
+
+      // Send security notification
+      await this.sendSecurityNotification(newForm);
 
       // For now, just return success (in real implementation, store in database)
       return { success: true, form: newForm };
@@ -400,6 +404,47 @@ export class SecurityFormsIntegration {
         notes: 'Real estate company'
       }
     ];
+  }
+
+  /**
+   * Send security notification to security@theglobaledge.io
+   */
+  private async sendSecurityNotification(form: SecurityForm): Promise<void> {
+    try {
+      await emailIntegration.initialize();
+      
+      const result = await emailIntegration.sendCustomEmail(
+        'security@theglobaledge.io',
+        `Security Form Submitted - ${form.type.toUpperCase()}`,
+        `
+SECURITY NOTIFICATION - New Security Form Submitted
+
+Form Type: ${form.type.toUpperCase()}
+Form ID: ${form.id}
+User ID: ${form.userId}
+Status: ${form.status}
+Priority: ${form.priority}
+Submitted: ${form.submittedAt}
+
+This is a security-related notification that requires attention.
+Please review the form in the admin dashboard.
+
+This is an automated security notification.
+        `,
+        {
+          priority: form.priority === 'urgent' ? 'high' : 'normal',
+          isHtml: false
+        }
+      );
+      
+      if (result.success) {
+        console.log('✅ Security notification sent successfully');
+      } else {
+        console.error('❌ Failed to send security notification:', result.error);
+      }
+    } catch (error) {
+      console.error('❌ Security notification error:', error);
+    }
   }
 }
 
