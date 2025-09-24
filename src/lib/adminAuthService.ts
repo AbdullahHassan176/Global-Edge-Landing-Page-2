@@ -37,13 +37,26 @@ const ADMIN_USERS: AdminUser[] = [
     permissions: ['all'],
     lastLogin: new Date().toISOString(),
     isActive: true
+  },
+  {
+    id: 'admin-1',
+    username: 'mohammed.sidat',
+    email: 'mohammed.sidat@globalnext.rocks',
+    role: 'admin',
+    permissions: [
+      'view_users', 'view_notifications', 'view_analytics', 
+      'view_content', 'view_security', 'view_settings', 'manage_assets'
+    ],
+    lastLogin: new Date().toISOString(),
+    isActive: true
   }
 ];
 
 // Mock passwords (in production, these would be hashed and stored securely)
 // These should be moved to environment variables in production
 const ADMIN_PASSWORDS: Record<string, string> = {
-  'abdullah.hassan': 'Abdullah187!'
+  'abdullah.hassan': 'Abdullah187!',
+  'mohammed.sidat': 'Mohammed187!'
 };
 
 class AdminAuthService {

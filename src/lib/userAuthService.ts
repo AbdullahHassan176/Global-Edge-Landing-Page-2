@@ -104,7 +104,7 @@ export interface Notification {
 const MOCK_USERS: User[] = [
   {
     id: 'demo-admin-1',
-    email: 'info@theglobaledge.io',
+    email: 'abdullah.hassan@globalnext.rocks',
     firstName: 'Demo',
     lastName: 'Admin',
     role: 'investor', // Using investor role for demo purposes
@@ -330,7 +330,7 @@ class UserAuthService {
       // In production, you would hash and store the password securely in a database
       const storedPasswords = localStorage.getItem('user_passwords');
       const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
-        'info@theglobaledge.io': 'DemoAdmin123!',
+        'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
         'investor@theglobaledge.io': 'DemoInvestor123!',
         'issuer@theglobaledge.io': 'DemoIssuer123!'
       };
@@ -374,7 +374,7 @@ class UserAuthService {
       // Get stored passwords from localStorage
       const storedPasswords = localStorage.getItem('user_passwords');
       const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
-        'info@theglobaledge.io': 'DemoAdmin123!',
+        'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
         'investor@theglobaledge.io': 'DemoInvestor123!',
         'issuer@theglobaledge.io': 'DemoIssuer123!'
       };
