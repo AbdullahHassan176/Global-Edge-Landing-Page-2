@@ -1,46 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
-import { AssetMetricsService, AssetMetrics } from '@/lib/assetMetricsService';
 import { getPartnersForLandingPage } from '@/lib/partnersData';
 import WaitlistModal from '@/components/ui/WaitlistModal';
 
 export default function HomePage() {
-  const [metrics, setMetrics] = useState<AssetMetrics | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Start as false for immediate interactivity
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   
   // Get partners for landing page
   const landingPagePartners = getPartnersForLandingPage();
 
-  useEffect(() => {
-    // Set default metrics immediately for instant display
-    setMetrics({
-      totalAssetsUnderManagement: 45400000, // $45.4M fallback
-      totalAssetsTokenized: 526,
-      onTimeDeliveryRate: 98.7,
-      averageAPR: 10.6,
-      totalValue: 45400000,
-      categoryBreakdown: { containers: 247, property: 89, tradetokens: 156, vault: 34 },
-      riskDistribution: { low: 45, medium: 40, high: 15 }
-    });
-
-    // Load real metrics in background (non-blocking)
-    const loadMetrics = async () => {
-      try {
-        const calculatedMetrics = await AssetMetricsService.getAllMetrics();
-        setMetrics(calculatedMetrics);
-      } catch (error) {
-        console.error('Error loading metrics:', error);
-        // Keep fallback metrics if there's an error
-      }
-    };
-
-    // Load metrics in background without blocking UI
-    loadMetrics();
-  }, []);
   return (
     <>
       {/* Hero Section */}
@@ -79,25 +50,25 @@ export default function HomePage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {AssetMetricsService.formatCurrency(metrics?.totalAssetsUnderManagement || 0)}
+                $45.4M
               </div>
               <div className="text-sm text-gray-600 font-medium">Assets Under Management</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {AssetMetricsService.formatNumber(metrics?.totalAssetsTokenized || 0)}
+                526
               </div>
               <div className="text-sm text-gray-600 font-medium">Assets Tokenized</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {`${metrics?.onTimeDeliveryRate || 0}%`}
+                98.7%
               </div>
               <div className="text-sm text-gray-600 font-medium">On-Time Deliveries</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {`${metrics?.averageAPR || 0}%`}
+                10.6%
               </div>
               <div className="text-sm text-gray-600 font-medium">Average APR</div>
             </div>
@@ -169,11 +140,7 @@ export default function HomePage() {
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 8-15% APR</div>
                 <div className="text-xs text-gray-500">
-                  {isLoading ? (
-                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
-                  ) : (
-                    `${metrics?.categoryBreakdown.containers || 0} assets available`
-                  )}
+                  247 assets available
                 </div>
               </div>
             </Link>
@@ -186,11 +153,7 @@ export default function HomePage() {
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 6-12% APR</div>
                 <div className="text-xs text-gray-500">
-                  {isLoading ? (
-                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
-                  ) : (
-                    `${metrics?.categoryBreakdown.property || 0} assets available`
-                  )}
+                  89 assets available
                 </div>
               </div>
             </Link>
@@ -203,11 +166,7 @@ export default function HomePage() {
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 10-18% APR</div>
                 <div className="text-xs text-gray-500">
-                  {isLoading ? (
-                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
-                  ) : (
-                    `${metrics?.categoryBreakdown.tradetokens || 0} assets available`
-                  )}
+                  156 assets available
                 </div>
               </div>
             </Link>
@@ -220,11 +179,7 @@ export default function HomePage() {
               <div className="space-y-2">
                 <div className="text-sm text-global-teal font-semibold">Avg. 4-8% APR</div>
                 <div className="text-xs text-gray-500">
-                  {isLoading ? (
-                    <div className="animate-pulse bg-gray-200 h-4 w-16 rounded"></div>
-                  ) : (
-                    `${metrics?.categoryBreakdown.vault || 0} assets available`
-                  )}
+                  34 assets available
                 </div>
               </div>
             </Link>
@@ -236,8 +191,8 @@ export default function HomePage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Live Asset Performance</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Real-time data from our tokenized asset portfolio</p>
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Asset Performance</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Key metrics from our tokenized asset portfolio</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-global-teal">
@@ -246,11 +201,7 @@ export default function HomePage() {
                 <Icon name="chart-line-up" className="text-green-600" size={12} />
               </div>
               <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
-                ) : (
-                  AssetMetricsService.formatCurrency(metrics?.totalValue || 0)
-                )}
+                $45.4M
               </div>
               <div className="text-sm text-gray-600">Total assets under management</div>
             </div>
@@ -260,11 +211,7 @@ export default function HomePage() {
                 <Icon name="layer-group" className="text-purple-600" size={12} />
               </div>
               <div className="text-3xl font-poppins font-bold text-edge-purple mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-16 rounded"></div>
-                ) : (
-                  AssetMetricsService.formatNumber(metrics?.totalAssetsTokenized || 0)
-                )}
+                526
               </div>
               <div className="text-sm text-gray-600">Assets currently tokenized</div>
             </div>
@@ -274,11 +221,7 @@ export default function HomePage() {
                 <Icon name="trophy" className="text-green-600" size={12} />
               </div>
               <div className="text-3xl font-poppins font-bold text-green-600 mb-2">
-                {isLoading ? (
-                  <div className="animate-pulse bg-gray-200 h-8 w-16 rounded"></div>
-                ) : (
-                  `${metrics?.averageAPR || 0}%`
-                )}
+                10.6%
               </div>
               <div className="text-sm text-gray-600">Annual percentage return</div>
             </div>

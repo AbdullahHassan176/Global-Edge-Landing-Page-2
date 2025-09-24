@@ -165,6 +165,16 @@ export default function Header() {
                         <div className="text-xs text-gray-500">View admin dashboard</div>
                       </div>
                     </Link>
+                    <Link 
+                      href="/test-portal" 
+                      className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    >
+                      <Icon name="flask" size={4} className="mr-3 text-edge-purple" />
+                      <div>
+                        <div className="font-medium">Test Portal</div>
+                        <div className="text-xs text-gray-500">Demo access for testing</div>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -255,12 +265,12 @@ export default function Header() {
                     Admin Dashboard
                   </Link>
                   <Link
-                    href="/test-issuer"
+                    href="/test-portal"
                     className="flex items-center text-charcoal hover:text-global-teal transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Icon name="user-plus" size={4} className="mr-2" />
-                    Demo Access
+                    <Icon name="flask" size={4} className="mr-2" />
+                    Test Portal
                   </Link>
                 </div>
               </div>

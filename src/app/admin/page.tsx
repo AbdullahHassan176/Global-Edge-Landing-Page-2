@@ -36,7 +36,7 @@ function AdminDashboard() {
             <Tooltip content="Monitor all user submissions, email notifications, and webhook activity in real-time">
               <Link 
                 href="/admin/notifications"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="bell" className="text-white text-2xl" />
@@ -58,7 +58,7 @@ function AdminDashboard() {
             <Tooltip content="Manage user accounts, permissions, and access controls across the platform">
               <Link 
                 href="/admin/users"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="users" className="text-white text-2xl" />
@@ -80,7 +80,7 @@ function AdminDashboard() {
             <Tooltip content="View comprehensive analytics, reports, and performance metrics for the platform">
               <Link 
                 href="/admin/analytics"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="chart-line" className="text-white text-2xl" />
@@ -102,7 +102,7 @@ function AdminDashboard() {
             <Tooltip content="Manage platform content, assets, and user-generated content">
               <Link 
                 href="/admin/content"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="edit" className="text-white text-2xl" />
@@ -124,7 +124,7 @@ function AdminDashboard() {
             <Tooltip content="Monitor security events, manage access controls, and review audit logs">
               <Link 
                 href="/admin/security"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="shield-halved" className="text-white text-2xl" />
@@ -146,7 +146,7 @@ function AdminDashboard() {
             <Tooltip content="Manage tokenized assets, monitor performance, and oversee asset lifecycle">
               <Link 
                 href="/admin/assets"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="boxes" className="text-white text-2xl" />
@@ -168,7 +168,7 @@ function AdminDashboard() {
             <Tooltip content="Manage investor waitlist, review applications, and process approvals">
               <Link 
                 href="/admin/waitlist"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="user-plus" className="text-white text-2xl" />
@@ -190,7 +190,7 @@ function AdminDashboard() {
             <Tooltip content="Configure platform settings, system parameters, and global preferences">
               <Link 
                 href="/admin/settings"
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
+                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
               >
               <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                 <Icon name="cog" className="text-white text-2xl" />
@@ -221,7 +221,7 @@ function AdminDashboard() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Tooltip content="Total number of registered users across all account types">
-              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+              <div className="p-8 shadow-lg text-center cursor-help">
                 <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon name="users" className="text-white text-2xl" />
                 </div>
@@ -231,7 +231,7 @@ function AdminDashboard() {
             </Tooltip>
 
             <Tooltip content="Number of active investment submissions currently being processed">
-              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+              <div className="p-8 shadow-lg text-center cursor-help">
                 <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon name="file-text" className="text-white text-2xl" />
                 </div>
@@ -241,7 +241,7 @@ function AdminDashboard() {
             </Tooltip>
 
             <Tooltip content="Total number of emails sent through the platform notification system">
-              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+              <div className="p-8 shadow-lg text-center cursor-help">
                 <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon name="mail" className="text-white text-2xl" />
                 </div>
@@ -251,7 +251,7 @@ function AdminDashboard() {
             </Tooltip>
 
             <Tooltip content="Total number of webhook events processed by the platform">
-              <div className="bg-white rounded-2xl p-8 shadow-lg text-center cursor-help">
+              <div className="p-8 shadow-lg text-center cursor-help">
                 <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon name="globe" className="text-white text-2xl" />
                 </div>
