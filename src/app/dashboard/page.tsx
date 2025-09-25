@@ -23,13 +23,25 @@ export default function DashboardPage() {
     const userData = localStorage.getItem('user');
     const provider = localStorage.getItem('authProvider');
 
+    console.log('Dashboard: Checking user data...', { userData, provider });
+
     if (!userData) {
+      console.log('Dashboard: No user data found, redirecting to login');
       router.push('/login');
       return;
     }
 
-    setUser(JSON.parse(userData));
-    setAuthProvider(provider);
+    try {
+      const parsedUser = JSON.parse(userData);
+      console.log('Dashboard: User data loaded successfully', parsedUser);
+      setUser(parsedUser);
+      setAuthProvider(provider);
+    } catch (error) {
+      console.error('Dashboard: Error parsing user data', error);
+      localStorage.removeItem('user');
+      localStorage.removeItem('authProvider');
+      router.push('/login');
+    }
   }, [router]);
 
   const handleLogout = () => {

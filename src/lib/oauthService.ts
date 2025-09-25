@@ -50,6 +50,13 @@ class OAuthService {
   // Handle demo GitHub authentication
   private async handleDemoGitHubAuth() {
     try {
+      // Show a demo authentication modal instead of immediately redirecting
+      const confirmed = confirm('Demo GitHub Authentication\n\nThis is a demo environment. Click OK to continue with a demo GitHub account, or Cancel to use email/password login instead.');
+      
+      if (!confirmed) {
+        return; // User cancelled, stay on login page
+      }
+
       const user = await this.mockGitHubAuth();
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('authProvider', 'github');
@@ -85,6 +92,13 @@ class OAuthService {
   // Handle demo LinkedIn authentication
   private async handleDemoLinkedInAuth() {
     try {
+      // Show a demo authentication modal instead of immediately redirecting
+      const confirmed = confirm('Demo LinkedIn Authentication\n\nThis is a demo environment. Click OK to continue with a demo LinkedIn account, or Cancel to use email/password login instead.');
+      
+      if (!confirmed) {
+        return; // User cancelled, stay on login page
+      }
+
       const user = await this.mockLinkedInAuth();
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('authProvider', 'linkedin');
@@ -166,11 +180,11 @@ class OAuthService {
   // Mock authentication for development
   async mockGitHubAuth(): Promise<OAuthUser> {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     return {
       id: '12345',
-      email: 'user@example.com',
+      email: 'john.doe@github-demo.com',
       name: 'John Doe',
       avatar: 'https://avatars.githubusercontent.com/u/12345?v=4',
       provider: 'github'
@@ -179,11 +193,11 @@ class OAuthService {
 
   async mockLinkedInAuth(): Promise<OAuthUser> {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     return {
       id: '67890',
-      email: 'user@example.com',
+      email: 'jane.smith@linkedin-demo.com',
       name: 'Jane Smith',
       avatar: 'https://media.licdn.com/dms/image/C4D03AQHxK8Y2X8Y2Y2/profile-displayphoto-shrink_400_400/0/1234567890',
       provider: 'linkedin'

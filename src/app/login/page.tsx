@@ -331,16 +331,6 @@ export default function LoginPage() {
               </button>
             </div>
 
-            {/* OAuth Notice */}
-            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <div className="flex items-start">
-                <Icon name="info-circle" className="text-blue-600 text-sm mr-2 mt-0.5" />
-                <div className="text-xs text-blue-800">
-                  <p className="font-semibold mb-1">OAuth Login Notice</p>
-                  <p>OAuth providers (GitHub, LinkedIn) will work in demo mode. For production OAuth setup, contact support to configure proper client IDs.</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         
