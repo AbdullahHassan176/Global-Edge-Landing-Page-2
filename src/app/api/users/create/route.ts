@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { emailIntegration } from '@/lib/integration/emailIntegration';
+import { userAuthService } from '@/lib/userAuthService';
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,6 +10,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'User data and email are required' },
         { status: 400 }
+      );
+    }
+
+    // Store the user in the authentication system with password
+    try {
+      const registerResult = await userAuthService.register({
+        email: user.email,
+        password: tempPassword,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        country: user.country || 'US',
+        role: user.role || 'investor'
+      });
+
+      if (!registerResult.success) {
+        console.error('Failed to register user in auth system:', registerResult.error);
+        return NextResponse.json(
+          { error: 'Failed to create user authentication' },
+          { status: 500 }
+        );
+      }
+
+      console.log(`User ${user.email} registered successfully in auth system`);
+    } catch (authError) {
+      console.error('Error registering user in auth system:', authError);
+      return NextResponse.json(
+        { error: 'Failed to create user authentication' },
+        { status: 500 }
       );
     }
 
@@ -81,6 +110,58 @@ export async function POST(request: NextRequest) {
           console.log(`Welcome email sent successfully to ${user.email}`);
         } else {
           console.error('Failed to send welcome email:', emailResult.error);
+        }
+
+        // Send admin notification about new user creation
+        try {
+          const adminNotificationContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #0d9488;">
+                <h2 style="color: #1f2937; margin: 0 0 15px 0;">New User Created</h2>
+                <p style="color: #4b5563; margin: 0 0 10px 0;">A new user has been created in the Global Edge platform:</p>
+                
+                <div style="background: white; padding: 15px; border-radius: 6px; margin: 15px 0;">
+                  <p style="margin: 5px 0; color: #374151;"><strong>Name:</strong> ${user.firstName} ${user.lastName}</p>
+                  <p style="margin: 5px 0; color: #374151;"><strong>Email:</strong> ${user.email}</p>
+                  <p style="margin: 5px 0; color: #374151;"><strong>Role:</strong> ${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
+                  <p style="margin: 5px 0; color: #374151;"><strong>Account Type:</strong> ${user.accountType.charAt(0).toUpperCase() + user.accountType.slice(1)}</p>
+                  <p style="margin: 5px 0; color: #374151;"><strong>Status:</strong> ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}</p>
+                  <p style="margin: 5px 0; color: #374151;"><strong>Created:</strong> ${new Date().toLocaleString()}</p>
+                </div>
+
+                <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 15px; border-radius: 6px; margin: 15px 0;">
+                  <p style="color: #92400e; margin: 0; font-size: 14px;">
+                    <strong>Action Required:</strong> Please review and approve this user account in the admin dashboard.
+                  </p>
+                </div>
+
+                <div style="text-align: center; margin: 20px 0;">
+                  <a href="https://theglobaledge.io/admin/users" 
+                     style="background: #0d9488; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+                    Review User in Admin Dashboard
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+
+          const adminResult = await emailIntegration.sendCustomEmail(
+            'info@theglobaledge.io',
+            `New User Created - ${user.firstName} ${user.lastName}`,
+            adminNotificationContent,
+            {
+              isHtml: true,
+              priority: 'high'
+            }
+          );
+
+          if (adminResult.success) {
+            console.log('Admin notification sent successfully');
+          } else {
+            console.error('Failed to send admin notification:', adminResult.error);
+          }
+        } catch (adminError) {
+          console.error('Error sending admin notification:', adminError);
         }
 
       } catch (emailError) {
