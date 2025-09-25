@@ -29,6 +29,11 @@ export default function SettingsPage() {
   const handleViewLoginActivity = () => {
     setShowLoginActivity(true);
   };
+
+  const handleSavePreferences = () => {
+    // Here you would typically make an API call to save user preferences
+    alert('Preferences saved successfully!');
+  };
   return (
     <div className="min-h-screen bg-soft-white">
       {/* Hero Section */}
@@ -267,7 +272,10 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 
-                <button className="bg-global-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors">
+                <button 
+                  onClick={handleSavePreferences}
+                  className="bg-global-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
+                >
                   Save Preferences
                 </button>
               </div>

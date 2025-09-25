@@ -74,15 +74,64 @@ function SettingsDashboard() {
     }
   };
 
-  const saveSettings = () => {
-    // Settings are already saved when updated, just clear the changes flag
-    setHasChanges(false);
-    addNotification({
-      type: 'success',
-      title: 'Settings Saved',
-      message: 'All settings have been saved successfully.',
-      duration: 3000
-    });
+  const saveSettings = async () => {
+    try {
+      // Save all settings to localStorage through settingsService
+      const allSettings = settingsService.getSettings();
+      let hasErrors = false;
+      let savedCount = 0;
+
+      // Update each setting through the service to ensure proper persistence
+      for (const setting of allSettings) {
+        const success = settingsService.updateSetting(
+          setting.id, 
+          setting.value, 
+          'admin'
+        );
+        if (success) {
+          savedCount++;
+        } else {
+          hasErrors = true;
+          console.error(`Failed to save setting: ${setting.name}`);
+        }
+      }
+
+      // Save integrations
+      const allIntegrations = settingsService.getIntegrations();
+      for (const integration of allIntegrations) {
+        const success = settingsService.updateIntegration(integration.id, integration);
+        if (!success) {
+          hasErrors = true;
+          console.error(`Failed to save integration: ${integration.name}`);
+        }
+      }
+
+      if (hasErrors) {
+        addNotification({
+          type: 'warning',
+          title: 'Partial Save',
+          message: `Saved ${savedCount} settings with some errors. Check console for details.`,
+          duration: 5000
+        });
+      } else {
+        addNotification({
+          type: 'success',
+          title: 'Settings Saved',
+          message: `All ${savedCount} settings have been saved successfully.`,
+          duration: 3000
+        });
+      }
+
+      setHasChanges(false);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      addNotification({
+        type: 'error',
+        title: 'Save Failed',
+        message: 'Failed to save settings. Please try again.',
+        duration: 5000
+      });
+    }
   };
 
   const toggleIntegration = (integrationId: string) => {
