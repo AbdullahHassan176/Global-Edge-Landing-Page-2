@@ -31,8 +31,8 @@ class OAuthService {
     // Check if we have valid client ID
     if (this.githubConfig.clientId === 'demo-github-client-id' || !this.githubConfig.clientId) {
       console.warn('GitHub OAuth not configured. Using demo mode.');
-      // In demo mode, show an alert and redirect to mock auth
-      alert('GitHub OAuth is not configured. This is a demo environment. Please use email/password login or contact support.');
+      // In demo mode, redirect to mock auth instead of showing alert
+      this.handleDemoGitHubAuth();
       return;
     }
 
@@ -47,13 +47,26 @@ class OAuthService {
     window.location.href = githubAuthUrl;
   }
 
+  // Handle demo GitHub authentication
+  private async handleDemoGitHubAuth() {
+    try {
+      const user = await this.mockGitHubAuth();
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('authProvider', 'github');
+      window.location.href = '/dashboard';
+    } catch (error) {
+      console.error('Demo GitHub auth error:', error);
+      alert('Demo authentication failed. Please use email/password login.');
+    }
+  }
+
   // LinkedIn OAuth
   initiateLinkedInLogin() {
     // Check if we have valid client ID
     if (this.linkedinConfig.clientId === 'demo-linkedin-client-id' || !this.linkedinConfig.clientId) {
       console.warn('LinkedIn OAuth not configured. Using demo mode.');
-      // In demo mode, show an alert and redirect to mock auth
-      alert('LinkedIn OAuth is not configured. This is a demo environment. Please use email/password login or contact support.');
+      // In demo mode, redirect to mock auth instead of showing alert
+      this.handleDemoLinkedInAuth();
       return;
     }
 
@@ -67,6 +80,19 @@ class OAuthService {
 
     const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`;
     window.location.href = linkedinAuthUrl;
+  }
+
+  // Handle demo LinkedIn authentication
+  private async handleDemoLinkedInAuth() {
+    try {
+      const user = await this.mockLinkedInAuth();
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('authProvider', 'linkedin');
+      window.location.href = '/dashboard';
+    } catch (error) {
+      console.error('Demo LinkedIn auth error:', error);
+      alert('Demo authentication failed. Please use email/password login.');
+    }
   }
 
   // Generate random state for CSRF protection

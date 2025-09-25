@@ -82,16 +82,8 @@ export default function LoginPage() {
   const handleGitHubLogin = async () => {
     setOauthLoading('github');
     try {
-      // For development, use mock authentication
-      // In production, this would redirect to GitHub OAuth
-      if (process.env.NODE_ENV === 'development') {
-        const user = await oauthService.mockGitHubAuth();
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('authProvider', 'github');
-        window.location.href = '/dashboard';
-      } else {
-        oauthService.initiateGitHubLogin();
-      }
+      // The OAuth service will handle demo vs production mode automatically
+      oauthService.initiateGitHubLogin();
     } catch (error) {
       console.error('GitHub login error:', error);
       setError('GitHub login failed. Please try again or use email/password login.');
@@ -102,16 +94,8 @@ export default function LoginPage() {
   const handleLinkedInLogin = async () => {
     setOauthLoading('linkedin');
     try {
-      // For development, use mock authentication
-      // In production, this would redirect to LinkedIn OAuth
-      if (process.env.NODE_ENV === 'development') {
-        const user = await oauthService.mockLinkedInAuth();
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('authProvider', 'linkedin');
-        window.location.href = '/dashboard';
-      } else {
-        oauthService.initiateLinkedInLogin();
-      }
+      // The OAuth service will handle demo vs production mode automatically
+      oauthService.initiateLinkedInLogin();
     } catch (error) {
       console.error('LinkedIn login error:', error);
       setError('LinkedIn login failed. Please try again or use email/password login.');
@@ -353,7 +337,7 @@ export default function LoginPage() {
                 <Icon name="info-circle" className="text-blue-600 text-sm mr-2 mt-0.5" />
                 <div className="text-xs text-blue-800">
                   <p className="font-semibold mb-1">OAuth Login Notice</p>
-                  <p>OAuth providers (GitHub, LinkedIn) are currently in demo mode. For full functionality, please use email/password login or contact support for OAuth setup.</p>
+                  <p>OAuth providers (GitHub, LinkedIn) will work in demo mode. For production OAuth setup, contact support to configure proper client IDs.</p>
                 </div>
               </div>
             </div>
