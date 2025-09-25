@@ -88,6 +88,7 @@ function UserManagementDashboard() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [showUserModal, setShowUserModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [updatingUsers, setUpdatingUsers] = useState<Set<string>>(new Set());
   const { notifications, addNotification, removeNotification } = useNotifications();
 
   // Load users on component mount
@@ -144,10 +145,65 @@ function UserManagementDashboard() {
     }
   };
 
-  const updateUserStatus = (userId: string, newStatus: string) => {
-    setUsers(prev => prev.map(user => 
-      user.id === userId ? { ...user, status: newStatus as any } : user
-    ));
+  const updateUserStatus = async (userId: string, newStatus: string) => {
+    try {
+      // Add user to updating set
+      setUpdatingUsers(prev => new Set(prev).add(userId));
+      
+      // Find the user being updated
+      const userToUpdate = users.find(user => user.id === userId);
+      if (!userToUpdate) {
+        addNotification({
+          type: 'error',
+          title: 'Update Failed',
+          message: 'User not found',
+          duration: 3000
+        });
+        return;
+      }
+
+      // Update local state immediately for better UX
+      setUsers(prev => prev.map(user => 
+        user.id === userId ? { ...user, status: newStatus as any } : user
+      ));
+
+      // Here you would typically make an API call to persist the change
+      // For now, we'll just log it
+      console.log(`User ${userId} status updated to ${newStatus}`);
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Show success notification
+      addNotification({
+        type: 'success',
+        title: 'Status Updated',
+        message: `${userToUpdate.firstName} ${userToUpdate.lastName}'s status changed to ${newStatus}`,
+        duration: 4000
+      });
+      
+    } catch (error) {
+      console.error('Error updating user status:', error);
+      
+      // Revert the local state change on error
+      setUsers(prev => prev.map(user => 
+        user.id === userId ? { ...user, status: userToUpdate?.status || 'pending' } : user
+      ));
+      
+      addNotification({
+        type: 'error',
+        title: 'Update Failed',
+        message: 'Failed to update user status. Please try again.',
+        duration: 5000
+      });
+    } finally {
+      // Remove user from updating set
+      setUpdatingUsers(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(userId);
+        return newSet;
+      });
+    }
   };
 
   const formatCurrency = (amount: number) => {
@@ -363,9 +419,14 @@ function UserManagementDashboard() {
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(user.status)}`}>
-                          {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
-                        </span>
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(user.status)}`}>
+                            {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                          </span>
+                          {updatingUsers.has(user.id) && (
+                            <div className="w-3 h-3 border border-global-teal border-t-transparent rounded-full animate-spin"></div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-sm font-medium ${getKycStatusColor(user.kycStatus)}`}>
@@ -407,13 +468,23 @@ function UserManagementDashboard() {
                           <select
                             value={user.status}
                             onChange={(e) => updateUserStatus(user.id, e.target.value)}
-                            className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm focus:ring-2 focus:ring-global-teal focus:border-global-teal hover:border-gray-400 transition-colors min-w-[120px]"
+                            disabled={updatingUsers.has(user.id)}
+                            className={`px-3 py-2 border border-gray-300 rounded-lg text-sm shadow-sm focus:ring-2 focus:ring-global-teal focus:border-global-teal hover:border-gray-400 transition-colors min-w-[120px] ${
+                              updatingUsers.has(user.id) 
+                                ? 'bg-gray-100 cursor-not-allowed opacity-60' 
+                                : 'bg-white'
+                            }`}
                           >
                             <option value="active">Active</option>
                             <option value="pending">Pending</option>
                             <option value="suspended">Suspend</option>
                             <option value="verified">Verify</option>
                           </select>
+                          {updatingUsers.has(user.id) && (
+                            <div className="ml-2 flex items-center">
+                              <div className="w-4 h-4 border-2 border-global-teal border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                          )}
                         </div>
                       </td>
                     </tr>
