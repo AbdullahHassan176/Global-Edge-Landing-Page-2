@@ -354,16 +354,18 @@ class SettingsService {
         name: 'Google Analytics',
         type: 'analytics',
         status: 'inactive',
-        lastSync: new Date(Date.now() - 86400000).toISOString(),
+        lastSync: new Date().toISOString(),
         description: 'Website analytics tracking',
         configuration: {
-          trackingId: '',
-          measurementId: ''
+          trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'G-XXXXXXXXXX',
+          measurementId: process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID || 'G-XXXXXXXXXX',
+          propertyId: process.env.GOOGLE_ANALYTICS_PROPERTY_ID || '',
+          apiKey: process.env.GOOGLE_ANALYTICS_API_KEY || ''
         },
         healthCheck: {
-          status: 'error',
-          lastCheck: new Date(Date.now() - 86400000).toISOString(),
-          error: 'Invalid tracking ID'
+          status: 'warning',
+          lastCheck: new Date().toISOString(),
+          responseTime: 0
         }
       },
       {
@@ -555,6 +557,40 @@ class SettingsService {
     const startTime = Date.now();
     
     try {
+      // Special validation for Google Analytics
+      if (integration.type === 'analytics') {
+        const { trackingId, measurementId } = integration.configuration;
+        
+        // Validate tracking ID format (GA4 format: G-XXXXXXXXXX)
+        if (!trackingId || trackingId === 'G-XXXXXXXXXX' || !trackingId.startsWith('G-')) {
+          return { 
+            success: false, 
+            error: 'Invalid Google Analytics tracking ID. Please enter a valid GA4 tracking ID (format: G-XXXXXXXXXX)' 
+          };
+        }
+        
+        // Validate measurement ID format
+        if (!measurementId || measurementId === 'G-XXXXXXXXXX' || !measurementId.startsWith('G-')) {
+          return { 
+            success: false, 
+            error: 'Invalid Google Analytics measurement ID. Please enter a valid GA4 measurement ID (format: G-XXXXXXXXXX)' 
+          };
+        }
+        
+        // Simulate successful validation
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const responseTime = Date.now() - startTime;
+        
+        this.updateIntegration(id, {
+          healthCheck: {
+            status: 'healthy',
+            lastCheck: new Date().toISOString(),
+            responseTime
+          }
+        });
+        return { success: true, responseTime };
+      }
+      
       // Simulate API call based on integration type
       await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 100));
       
@@ -692,6 +728,22 @@ class SettingsService {
     localStorage.removeItem('admin_cache');
     localStorage.removeItem('user_cache');
     localStorage.removeItem('asset_cache');
+  }
+
+  // Get Google Analytics setup instructions
+  getAnalyticsSetupInstructions(): string {
+    return `
+To set up Google Analytics:
+
+1. Go to https://analytics.google.com/
+2. Create a new property for your website
+3. Get your Measurement ID (format: G-XXXXXXXXXX)
+4. Copy the Measurement ID to the trackingId field
+5. Use the same ID for measurementId field
+6. Optionally, add your Property ID and API Key for advanced features
+
+Note: Make sure to use GA4 (Google Analytics 4) format, not the older Universal Analytics format.
+    `.trim();
   }
 }
 
