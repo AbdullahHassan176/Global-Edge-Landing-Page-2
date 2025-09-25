@@ -273,18 +273,64 @@ class UserAuthService {
       
       // Send password reset email
       try {
-        const { emailService } = await import('@/lib/services/emailService');
-        const emailResult = await emailService.sendPasswordResetEmail(user.email, resetToken);
+        const { emailIntegration } = await import('@/lib/integration/emailIntegration');
+        
+        const resetUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://theglobaledge.io'}/reset-password?token=${resetToken}`;
+        
+        const emailContent = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: linear-gradient(135deg, #0d9488, #7c3aed); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+              <h1 style="margin: 0; font-size: 28px; font-weight: bold;">Password Reset Request</h1>
+              <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Reset your Global Edge account password</p>
+            </div>
+            
+            <div style="background: white; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px;">
+              <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 24px;">Reset Your Password</h2>
+              <p style="color: #4b5563; margin: 0 0 20px 0;">You requested to reset your password for your Global Edge account.</p>
+              
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="${resetUrl}" 
+                   style="background: #0d9488; color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+                  Reset Password
+                </a>
+              </div>
+
+              <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                <h4 style="color: #92400e; margin: 0 0 10px 0; font-size: 16px;">⚠️ Security Notice</h4>
+                <p style="color: #92400e; margin: 0; font-size: 14px;">
+                  This link will expire in 1 hour for security reasons. If you didn't request this password reset, please ignore this email.
+                </p>
+              </div>
+
+              <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 30px; text-align: center; color: #6b7280; font-size: 14px;">
+                <p style="margin: 0;">If you have any questions, please contact our support team.</p>
+                <p style="margin: 5px 0 0 0;">© 2025 Global Edge. All rights reserved.</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const emailResult = await emailIntegration.sendCustomEmail(
+          user.email,
+          'Reset Your Global Edge Password',
+          emailContent,
+          {
+            isHtml: true,
+            priority: 'high'
+          }
+        );
         
         if (!emailResult.success) {
           console.error('Failed to send password reset email:', emailResult.error);
           // Still return success for security (don't reveal email sending issues)
+        } else {
+          console.log('Password reset email sent successfully to:', user.email);
         }
       } catch (emailError) {
         console.error('Email service error:', emailError);
         // Fallback to console log for development
         console.log(`Password reset token for ${email}: ${resetToken}`);
-        console.log(`Reset link: ${window.location.origin}/reset-password?token=${resetToken}`);
+        console.log(`Reset link: ${typeof window !== 'undefined' ? window.location.origin : 'https://theglobaledge.io'}/reset-password?token=${resetToken}`);
       }
       
       return { success: true };
