@@ -29,18 +29,26 @@ class AssetService {
   private storageKey = 'global-edge-assets';
 
   constructor() {
+    console.log('AssetService constructor called');
+    // Initialize with default assets immediately
+    this.initializeDefaultAssets();
+    console.log('Default assets initialized, count:', this.assets.length);
+    // Then try to load from localStorage if available
     this.loadAssets();
+    console.log('AssetService constructor completed, final asset count:', this.assets.length);
   }
 
   // Load assets from localStorage (in production, this would be from database)
   private loadAssets() {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(this.storageKey);
-      if (stored) {
-        this.assets = JSON.parse(stored);
-      } else {
-        // Initialize with default UAE assets
-        this.initializeDefaultAssets();
+      try {
+        const stored = localStorage.getItem(this.storageKey);
+        if (stored) {
+          this.assets = JSON.parse(stored);
+        }
+      } catch (error) {
+        console.error('Error loading assets from localStorage:', error);
+        // Keep default assets if localStorage fails
       }
     }
   }
@@ -212,7 +220,11 @@ class AssetService {
 
   // Get asset by ID
   async getAssetById(id: string): Promise<Asset | null> {
-    return this.assets.find(asset => asset.id === id) || null;
+    console.log('AssetService.getAssetById called with ID:', id);
+    console.log('Available assets:', this.assets.map(a => ({ id: a.id, name: a.name })));
+    const result = this.assets.find(asset => asset.id === id) || null;
+    console.log('AssetService.getAssetById result:', result);
+    return result;
   }
 
   // Get assets by category (for the assets page)
