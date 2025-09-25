@@ -4,7 +4,6 @@ import Icon from '@/components/ui/Icon';
 import Tooltip from '@/components/ui/Tooltip';
 import { useEffect, useState, useCallback } from 'react';
 import { assetService, Asset } from '@/lib/assetService';
-import { databaseService } from '@/lib/database/databaseService';
 
 export default function AssetDetailsPage({ params }: { params: { id: string } }) {
   const [asset, setAsset] = useState<Asset | null>(null);
@@ -26,6 +25,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
 
   const loadAssetData = useCallback(async () => {
     try {
+      console.log('Loading asset data for ID:', params.id);
       setLoading(true);
       setError(null);
 
@@ -33,7 +33,9 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
 
       // Use asset service directly (bypass database for now)
       try {
+        console.log('Attempting to get asset from service...');
         loadedAsset = await assetService.getAssetById(params.id);
+        console.log('Asset service result:', loadedAsset);
       } catch (serviceError) {
         console.error('Asset service error:', serviceError);
       }
@@ -58,6 +60,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
         };
       }
 
+      console.log('Setting asset:', loadedAsset);
       setAsset(loadedAsset);
 
       // Generate dynamic chart data based on asset
@@ -75,6 +78,7 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
       console.error('Error loading asset:', err);
       setError('Failed to load asset details');
     } finally {
+      console.log('Setting loading to false');
       setLoading(false);
     }
   }, [params.id]);
