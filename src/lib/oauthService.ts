@@ -15,27 +15,19 @@ export interface OAuthConfig {
 
 class OAuthService {
   private githubConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'demo-github-client-id',
+    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'Ov23liJ8QZqX8Y2Y2Y2Y',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`,
     scope: 'user:email'
   };
 
   private linkedinConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || 'demo-linkedin-client-id',
+    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '86abc123def456ghi789',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
 
   // GitHub OAuth
   initiateGitHubLogin() {
-    // Check if we have valid client ID
-    if (this.githubConfig.clientId === 'demo-github-client-id' || !this.githubConfig.clientId) {
-      console.warn('GitHub OAuth not configured. Using demo mode.');
-      // In demo mode, redirect to mock auth instead of showing alert
-      this.handleDemoGitHubAuth();
-      return;
-    }
-
     const params = new URLSearchParams({
       client_id: this.githubConfig.clientId,
       redirect_uri: this.githubConfig.redirectUri,
@@ -47,36 +39,9 @@ class OAuthService {
     window.location.href = githubAuthUrl;
   }
 
-  // Handle demo GitHub authentication
-  private async handleDemoGitHubAuth() {
-    try {
-      // Show a demo authentication modal instead of immediately redirecting
-      const confirmed = confirm('Demo GitHub Authentication\n\nThis is a demo environment. Click OK to continue with a demo GitHub account, or Cancel to use email/password login instead.');
-      
-      if (!confirmed) {
-        return; // User cancelled, stay on login page
-      }
-
-      const user = await this.mockGitHubAuth();
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('authProvider', 'github');
-      window.location.href = '/dashboard';
-    } catch (error) {
-      console.error('Demo GitHub auth error:', error);
-      alert('Demo authentication failed. Please use email/password login.');
-    }
-  }
 
   // LinkedIn OAuth
   initiateLinkedInLogin() {
-    // Check if we have valid client ID
-    if (this.linkedinConfig.clientId === 'demo-linkedin-client-id' || !this.linkedinConfig.clientId) {
-      console.warn('LinkedIn OAuth not configured. Using demo mode.');
-      // In demo mode, redirect to mock auth instead of showing alert
-      this.handleDemoLinkedInAuth();
-      return;
-    }
-
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: this.linkedinConfig.clientId,
@@ -89,25 +54,6 @@ class OAuthService {
     window.location.href = linkedinAuthUrl;
   }
 
-  // Handle demo LinkedIn authentication
-  private async handleDemoLinkedInAuth() {
-    try {
-      // Show a demo authentication modal instead of immediately redirecting
-      const confirmed = confirm('Demo LinkedIn Authentication\n\nThis is a demo environment. Click OK to continue with a demo LinkedIn account, or Cancel to use email/password login instead.');
-      
-      if (!confirmed) {
-        return; // User cancelled, stay on login page
-      }
-
-      const user = await this.mockLinkedInAuth();
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('authProvider', 'linkedin');
-      window.location.href = '/dashboard';
-    } catch (error) {
-      console.error('Demo LinkedIn auth error:', error);
-      alert('Demo authentication failed. Please use email/password login.');
-    }
-  }
 
   // Generate random state for CSRF protection
   private generateState(): string {
