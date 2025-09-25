@@ -94,6 +94,7 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error('GitHub login error:', error);
+      setError('GitHub login failed. Please try again or use email/password login.');
       setOauthLoading(null);
     }
   };
@@ -113,6 +114,7 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error('LinkedIn login error:', error);
+      setError('LinkedIn login failed. Please try again or use email/password login.');
       setOauthLoading(null);
     }
   };
@@ -343,6 +345,17 @@ export default function LoginPage() {
                   {oauthLoading === 'linkedin' ? 'Connecting...' : 'LinkedIn'}
                 </span>
               </button>
+            </div>
+
+            {/* OAuth Notice */}
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-start">
+                <Icon name="info-circle" className="text-blue-600 text-sm mr-2 mt-0.5" />
+                <div className="text-xs text-blue-800">
+                  <p className="font-semibold mb-1">OAuth Login Notice</p>
+                  <p>OAuth providers (GitHub, LinkedIn) are currently in demo mode. For full functionality, please use email/password login or contact support for OAuth setup.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

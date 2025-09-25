@@ -15,19 +15,27 @@ export interface OAuthConfig {
 
 class OAuthService {
   private githubConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'your-github-client-id',
-    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/github/callback`,
+    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'demo-github-client-id',
+    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`,
     scope: 'user:email'
   };
 
   private linkedinConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || 'your-linkedin-client-id',
-    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/linkedin/callback`,
+    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || 'demo-linkedin-client-id',
+    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
 
   // GitHub OAuth
   initiateGitHubLogin() {
+    // Check if we have valid client ID
+    if (this.githubConfig.clientId === 'demo-github-client-id' || !this.githubConfig.clientId) {
+      console.warn('GitHub OAuth not configured. Using demo mode.');
+      // In demo mode, show an alert and redirect to mock auth
+      alert('GitHub OAuth is not configured. This is a demo environment. Please use email/password login or contact support.');
+      return;
+    }
+
     const params = new URLSearchParams({
       client_id: this.githubConfig.clientId,
       redirect_uri: this.githubConfig.redirectUri,
@@ -41,6 +49,14 @@ class OAuthService {
 
   // LinkedIn OAuth
   initiateLinkedInLogin() {
+    // Check if we have valid client ID
+    if (this.linkedinConfig.clientId === 'demo-linkedin-client-id' || !this.linkedinConfig.clientId) {
+      console.warn('LinkedIn OAuth not configured. Using demo mode.');
+      // In demo mode, show an alert and redirect to mock auth
+      alert('LinkedIn OAuth is not configured. This is a demo environment. Please use email/password login or contact support.');
+      return;
+    }
+
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: this.linkedinConfig.clientId,
