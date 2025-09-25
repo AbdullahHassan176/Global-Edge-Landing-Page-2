@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { emailIntegration } from '@/lib/integration/emailIntegration';
-import { userAuthService } from '@/lib/userAuthService';
+import { userAuthIntegration } from '@/lib/integration/userAuthIntegration';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     // Store the user in the authentication system with password
     try {
-      const registerResult = await userAuthService.register({
+      const registerResult = await userAuthIntegration.register({
         email: user.email,
         password: tempPassword,
         firstName: user.firstName,
