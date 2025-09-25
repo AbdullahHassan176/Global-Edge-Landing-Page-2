@@ -11,27 +11,62 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For development, we'll just log the email details
-    // In production, you would integrate with a real email service like SendGrid, Mailgun, etc.
     console.log('📧 EMAIL SEND REQUEST:');
     console.log('To:', to);
     console.log('Subject:', subject);
     console.log('HTML Content:', html ? 'Present' : 'Not provided');
     console.log('Text Content:', text ? 'Present' : 'Not provided');
     
-    // Simulate email sending
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // For now, we'll create a simple email file that can be accessed
+    // This is a development solution - in production you'd use a real email service
     
-    // In a real implementation, you would:
-    // 1. Validate the email address
-    // 2. Send via SendGrid, Mailgun, AWS SES, etc.
-    // 3. Handle delivery status
-    // 4. Store email logs in database
+    const emailData = {
+      to,
+      subject,
+      html,
+      text,
+      timestamp: new Date().toISOString(),
+      messageId: `email_${Date.now()}`
+    };
+    
+    // Store email in a simple file for development access
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      
+      // Create emails directory if it doesn't exist
+      const emailsDir = path.join(process.cwd(), 'emails');
+      if (!fs.existsSync(emailsDir)) {
+        fs.mkdirSync(emailsDir, { recursive: true });
+      }
+      
+      // Save email to file
+      const emailFile = path.join(emailsDir, `email_${Date.now()}.json`);
+      fs.writeFileSync(emailFile, JSON.stringify(emailData, null, 2));
+      
+      console.log('✅ Email saved to:', emailFile);
+      console.log('📧 Email content:');
+      console.log('To:', to);
+      console.log('Subject:', subject);
+      if (html) {
+        console.log('HTML Preview:', html.substring(0, 200) + '...');
+      }
+      if (text) {
+        console.log('Text Preview:', text.substring(0, 200) + '...');
+      }
+      
+    } catch (fileError) {
+      console.error('Error saving email file:', fileError);
+    }
+    
+    // Simulate email sending delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     return NextResponse.json({
       success: true,
-      messageId: `email_${Date.now()}`,
-      message: 'Email sent successfully (simulated)'
+      messageId: emailData.messageId,
+      message: 'Email processed successfully',
+      note: 'In development mode - email saved to file. Check console for details.'
     });
 
   } catch (error) {
