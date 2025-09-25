@@ -99,6 +99,7 @@ function UserManagementDashboard() {
     lastName: '',
     email: '',
     phone: '',
+    password: '',
     role: 'investor' as 'issuer' | 'investor' | 'admin' | 'moderator',
     accountType: 'individual' as 'individual' | 'business',
     status: 'pending' as 'active' | 'pending' | 'suspended' | 'verified',
@@ -232,10 +233,20 @@ function UserManagementDashboard() {
       return;
     }
 
+    if (!newUser.password || newUser.password.length < 8) {
+      addNotification({
+        type: 'error',
+        title: 'Validation Error',
+        message: 'Password must be at least 8 characters long',
+        duration: 5000
+      });
+      return;
+    }
+
     setCreatingUser(true);
     try {
-      // Generate a temporary password
-      const tempPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8).toUpperCase();
+      // Use the password provided by admin
+      const userPassword = newUser.password;
       
       // Create user object
       const userToCreate = {
@@ -260,7 +271,7 @@ function UserManagementDashboard() {
           },
           body: JSON.stringify({
             user: userToCreate,
-            tempPassword,
+            tempPassword: userPassword,
             sendEmail: true
           })
         });
@@ -296,6 +307,7 @@ function UserManagementDashboard() {
         lastName: '',
         email: '',
         phone: '',
+        password: '',
         role: 'investor',
         accountType: 'individual',
         status: 'pending',
@@ -774,6 +786,19 @@ function UserManagementDashboard() {
                   </div>
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
+                  <input
+                    type="password"
+                    value={newUser.password}
+                    onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                    placeholder="Enter password (minimum 8 characters)"
+                    minLength={8}
+                  />
+                  <p className="text-sm text-gray-500 mt-1">This will be the user's login password</p>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Role *</label>
@@ -836,8 +861,8 @@ function UserManagementDashboard() {
                     <div>
                       <h4 className="text-blue-900 font-semibold mb-2">Email Notification</h4>
                       <p className="text-blue-800 text-sm">
-                        A temporary password will be generated and sent to the user's email address. 
-                        The user will be required to change their password on first login.
+                        The password you set will be sent to the user's email address. 
+                        The user can change their password anytime in their account settings.
                       </p>
                     </div>
                   </div>

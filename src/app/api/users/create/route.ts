@@ -58,16 +58,16 @@ export async function POST(request: NextRequest) {
               <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <h3 style="color: #374151; margin: 0 0 15px 0; font-size: 18px;">Login Information</h3>
                 <p style="margin: 5px 0; color: #4b5563;"><strong>Email:</strong> ${user.email}</p>
-                <p style="margin: 5px 0; color: #4b5563;"><strong>Temporary Password:</strong> <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${tempPassword}</code></p>
+                <p style="margin: 5px 0; color: #4b5563;"><strong>Password:</strong> <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${tempPassword}</code></p>
                 <p style="margin: 5px 0; color: #4b5563;"><strong>Role:</strong> ${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
                 <p style="margin: 5px 0; color: #4b5563;"><strong>Account Type:</strong> ${user.accountType.charAt(0).toUpperCase() + user.accountType.slice(1)}</p>
               </div>
 
               <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                <h4 style="color: #92400e; margin: 0 0 10px 0; font-size: 16px;">⚠️ Important Security Notice</h4>
+                <h4 style="color: #92400e; margin: 0 0 10px 0; font-size: 16px;">🔒 Security Notice</h4>
                 <p style="color: #92400e; margin: 0; font-size: 14px;">
-                  For security reasons, you will be required to change your password on your first login. 
-                  Please keep your temporary password secure and do not share it with anyone.
+                  Please keep your password secure and do not share it with anyone. 
+                  You can change your password anytime in your account settings.
                 </p>
               </div>
 
@@ -81,9 +81,9 @@ export async function POST(request: NextRequest) {
               <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <h4 style="color: #1e40af; margin: 0 0 10px 0; font-size: 16px;">What's Next?</h4>
                 <ul style="color: #1e40af; margin: 0; padding-left: 20px;">
-                  <li>Log in with your temporary password</li>
-                  <li>Change your password to something secure</li>
+                  <li>Log in with your provided password</li>
                   <li>Complete your profile setup</li>
+                  <li>Explore your dashboard and features</li>
                   <li>${user.role === 'investor' ? 'Start exploring investment opportunities' : user.role === 'issuer' ? 'Begin tokenizing your assets' : 'Access your admin dashboard'}</li>
                 </ul>
               </div>
