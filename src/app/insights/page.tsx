@@ -67,6 +67,192 @@ const categories = ['All', 'CONTAINERS', 'PROPERTY', 'VAULT', 'TRADETOKENS', 'MA
 export default function InsightsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [insights] = useState<Insight[]>(mockInsights);
+  const [email, setEmail] = useState('');
+
+  const handleDownloadReport = () => {
+    // Create a sample PDF report for download
+    const reportContent = `%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+>>
+endobj
+
+4 0 obj
+<<
+/Length 200
+>>
+stream
+BT
+/F1 16 Tf
+72 720 Td
+(2024 Tokenization Market Report) Tj
+0 -30 Td
+/F1 12 Tf
+(Global Edge Research) Tj
+0 -50 Td
+(Executive Summary) Tj
+0 -20 Td
+/F1 10 Tf
+(The tokenization market has reached $2.4B in 2024, showing) Tj
+0 -15 Td
+(significant growth in real-world asset tokenization with) Tj
+0 -15 Td
+(increasing institutional adoption. This report provides) Tj
+0 -15 Td
+(comprehensive analysis of market trends, key players,) Tj
+0 -15 Td
+(and future opportunities in the RWA tokenization space.) Tj
+ET
+endstream
+endobj
+
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000206 00000 n 
+trailer
+<<
+/Size 5
+/Root 1 0 R
+>>
+startxref
+450
+%%EOF`;
+
+    // Create blob and download
+    const blob = new Blob([reportContent], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = '2024_Tokenization_Market_Report.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleReadGuide = () => {
+    // Create a sample PDF guide for download
+    const guideContent = `%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+>>
+endobj
+
+4 0 obj
+<<
+/Length 250
+>>
+stream
+BT
+/F1 16 Tf
+72 720 Td
+(Investor's Guide to RWA Tokenization) Tj
+0 -30 Td
+/F1 12 Tf
+(Global Edge Research) Tj
+0 -50 Td
+(Table of Contents) Tj
+0 -20 Td
+/F1 10 Tf
+(1. Introduction to Real-World Asset Tokenization) Tj
+0 -15 Td
+(2. Risk Assessment and Portfolio Allocation) Tj
+0 -15 Td
+(3. Understanding Token Standards and Compliance) Tj
+0 -15 Td
+(4. Market Analysis and Investment Strategies) Tj
+0 -15 Td
+(5. Due Diligence and Best Practices) Tj
+0 -15 Td
+(6. Future Outlook and Opportunities) Tj
+ET
+endstream
+endobj
+
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000206 00000 n 
+trailer
+<<
+/Size 5
+/Root 1 0 R
+>>
+startxref
+500
+%%EOF`;
+
+    // Create blob and download
+    const blob = new Blob([guideContent], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Investors_Guide_to_RWA_Tokenization.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleSubscribe = () => {
+    if (!email) {
+      alert('Please enter your email address');
+      return;
+    }
+    
+    if (!email.includes('@')) {
+      alert('Please enter a valid email address');
+      return;
+    }
+    
+    alert(`Thank you for subscribing! You'll receive our latest insights at ${email}`);
+    setEmail('');
+  };
 
   const filteredInsights = selectedCategory === 'All' 
     ? insights 
@@ -164,10 +350,15 @@ export default function InsightsPage() {
           <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-4">
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-global-teal focus:border-transparent"
             />
-            <button className="bg-global-teal text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+            <button 
+              onClick={handleSubscribe}
+              className="bg-global-teal text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+            >
               Subscribe
             </button>
           </div>
@@ -190,7 +381,10 @@ export default function InsightsPage() {
               </div>
               <h3 className="text-2xl font-poppins font-bold mb-4">2024 Tokenization Market Report</h3>
               <p className="text-white opacity-90 mb-6">Comprehensive analysis of the tokenization market, including growth trends, key players, and future opportunities.</p>
-              <button className="bg-white text-global-teal px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+              <button 
+                onClick={handleDownloadReport}
+                className="bg-white text-global-teal px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+              >
                 Download Report
               </button>
             </div>
@@ -202,7 +396,10 @@ export default function InsightsPage() {
               </div>
               <h3 className="text-2xl font-poppins font-bold mb-4">Investor's Guide to RWA Tokenization</h3>
               <p className="text-white opacity-90 mb-6">Everything you need to know about investing in tokenized real-world assets, from risk assessment to portfolio allocation.</p>
-              <button className="bg-white text-purple-600 px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+              <button 
+                onClick={handleReadGuide}
+                className="bg-white text-purple-600 px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+              >
                 Read Guide
               </button>
             </div>
