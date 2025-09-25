@@ -187,7 +187,7 @@ function UserManagementDashboard() {
       
       // Revert the local state change on error
       setUsers(prev => prev.map(user => 
-        user.id === userId ? { ...user, status: userToUpdate?.status || 'pending' } : user
+        user.id === userId ? { ...user, status: 'pending' } : user
       ));
       
       addNotification({
