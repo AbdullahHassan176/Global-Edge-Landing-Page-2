@@ -15,6 +15,14 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
   const [investmentStage, setInvestmentStage] = useState('funding');
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [investmentAmount, setInvestmentAmount] = useState<number>(0);
+  const [calculatedReturns, setCalculatedReturns] = useState<{
+    expectedReturn: number;
+    totalReturn: number;
+    monthlyReturn: number;
+    daysToMaturity: number;
+  } | null>(null);
+  const [showReturnsModal, setShowReturnsModal] = useState(false);
 
   const loadAssetData = useCallback(async () => {
     try {
@@ -23,38 +31,11 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
 
       let loadedAsset: Asset | null = null;
 
-      // Try to get asset from database first
+      // Use asset service directly (bypass database for now)
       try {
-        const dbResponse = await databaseService.getAssetById(params.id);
-        if (dbResponse.success && dbResponse.data) {
-          // Convert database asset to local asset format
-          loadedAsset = {
-            id: dbResponse.data.id,
-            name: dbResponse.data.name,
-            type: dbResponse.data.type,
-            apr: dbResponse.data.apr,
-            risk: dbResponse.data.risk,
-            value: dbResponse.data.value,
-            route: dbResponse.data.route || '',
-            cargo: dbResponse.data.cargo || '',
-            image: dbResponse.data.image,
-            description: dbResponse.data.description,
-            status: dbResponse.data.status,
-            createdAt: dbResponse.data.createdAt,
-            updatedAt: dbResponse.data.updatedAt
-          };
-        }
-      } catch (dbError) {
-        console.log('Database not available, using local asset service');
-      }
-
-      // Fallback to local asset service if database failed
-      if (!loadedAsset) {
-        try {
-          loadedAsset = await assetService.getAssetById(params.id);
-        } catch (serviceError) {
-          console.error('Asset service error:', serviceError);
-        }
+        loadedAsset = await assetService.getAssetById(params.id);
+      } catch (serviceError) {
+        console.error('Asset service error:', serviceError);
       }
 
       // If still no asset found, create a fallback asset
@@ -64,8 +45,8 @@ export default function AssetDetailsPage({ params }: { params: { id: string } })
           id: params.id,
           name: `Asset ${params.id}`,
           type: 'container',
-          apr: 8.5,
-          risk: 'medium',
+          apr: '8.5%',
+          risk: 'Medium',
           value: '$125,000',
           route: 'Global Route',
           cargo: 'Electronics',
@@ -236,6 +217,30 @@ startxref
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
+  };
+
+  const handleCalculateReturns = () => {
+    if (!asset || investmentAmount <= 0) {
+      alert('Please enter a valid investment amount');
+      return;
+    }
+
+    // Extract APR from asset (remove % and convert to decimal)
+    const apr = parseFloat(asset.apr.replace('%', '')) / 100;
+    
+    // Calculate returns based on 1-year investment period
+    const expectedReturn = investmentAmount * apr;
+    const totalReturn = investmentAmount + expectedReturn;
+    const monthlyReturn = expectedReturn / 12;
+    const daysToMaturity = 365; // 1 year
+
+    setCalculatedReturns({
+      expectedReturn,
+      totalReturn,
+      monthlyReturn,
+      daysToMaturity
+    });
+    setShowReturnsModal(true);
   };
 
   const tabs = [
@@ -986,7 +991,14 @@ startxref
                 </Tooltip>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                  <input type="number" className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent" placeholder="50" min="50" />
+                  <input 
+                    type="number" 
+                    value={investmentAmount || ''}
+                    onChange={(e) => setInvestmentAmount(Number(e.target.value))}
+                    className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent" 
+                    placeholder="50" 
+                    min="50" 
+                  />
                 </div>
               </div>
 
@@ -998,7 +1010,10 @@ startxref
 
               <div className="text-center">
                 <Tooltip content="Calculate potential returns based on your investment amount">
-                  <button className="text-gray-600 hover:text-global-teal text-sm font-medium cursor-help">
+                  <button 
+                    onClick={handleCalculateReturns}
+                    className="text-gray-600 hover:text-global-teal text-sm font-medium cursor-help transition-colors"
+                  >
                     <Icon name="calculator" className="mr-1" />
                     Calculate Returns
                   </button>
@@ -1206,6 +1221,113 @@ startxref
                     Native Share
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Returns Calculation Modal */}
+      {showReturnsModal && calculatedReturns && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-poppins font-bold text-charcoal">Investment Returns</h3>
+              <button 
+                onClick={() => setShowReturnsModal(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <Icon name="close" size={6} />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-global-teal to-edge-purple rounded-xl p-6 text-white">
+                <h4 className="text-lg font-semibold mb-4">Your Investment Analysis</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span>Investment Amount:</span>
+                    <span className="font-semibold">${investmentAmount.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Expected APR:</span>
+                    <span className="font-semibold">{asset?.apr}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-4 bg-green-50 rounded-lg border border-green-200">
+                  <div>
+                    <p className="font-medium text-green-800">Expected Return</p>
+                    <p className="text-sm text-green-600">Annual profit from your investment</p>
+                  </div>
+                  <div className="text-2xl font-bold text-green-600">
+                    ${calculatedReturns.expectedReturn.toLocaleString()}
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <div>
+                    <p className="font-medium text-blue-800">Total Return</p>
+                    <p className="text-sm text-blue-600">Principal + expected return</p>
+                  </div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    ${calculatedReturns.totalReturn.toLocaleString()}
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center p-4 bg-purple-50 rounded-lg border border-purple-200">
+                  <div>
+                    <p className="font-medium text-purple-800">Monthly Return</p>
+                    <p className="text-sm text-purple-600">Average monthly profit</p>
+                  </div>
+                  <div className="text-2xl font-bold text-purple-600">
+                    ${calculatedReturns.monthlyReturn.toLocaleString()}
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <div>
+                    <p className="font-medium text-orange-800">Investment Period</p>
+                    <p className="text-sm text-orange-600">Time to maturity</p>
+                  </div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {calculatedReturns.daysToMaturity} days
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="flex items-start">
+                  <Icon name="warning" className="text-yellow-600 mr-2 mt-0.5" size={4} />
+                  <div>
+                    <p className="text-sm text-yellow-800 font-medium">Important Notice</p>
+                    <p className="text-xs text-yellow-700 mt-1">
+                      Returns are projections based on current market conditions and are not guaranteed. 
+                      Past performance does not indicate future results.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex space-x-3">
+                <button 
+                  onClick={() => setShowReturnsModal(false)}
+                  className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                >
+                  Close
+                </button>
+                <button 
+                  onClick={() => {
+                    setShowReturnsModal(false);
+                    // Scroll to invest button
+                    document.querySelector('button:contains("Invest Now")')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="flex-1 bg-global-teal text-white py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+                >
+                  Proceed to Invest
+                </button>
               </div>
             </div>
           </div>
