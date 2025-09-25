@@ -502,6 +502,70 @@ export default function CreateAssetPage() {
 
 // Step Components
 function BasicInfoStep({ request, setRequest, errors }: any) {
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+
+    setUploading(true);
+    try {
+      const newImages: string[] = [];
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+          alert('Please upload only image files');
+          continue;
+        }
+        
+        // Validate file size (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          alert('File size must be less than 10MB');
+          continue;
+        }
+        
+        // Create preview URL
+        const imageUrl = URL.createObjectURL(file);
+        newImages.push(imageUrl);
+      }
+      
+      const updatedImages = [...uploadedImages, ...newImages];
+      setUploadedImages(updatedImages);
+      
+      // Update request with images
+      setRequest({
+        ...request,
+        basicInfo: { 
+          ...request.basicInfo, 
+          images: updatedImages 
+        }
+      });
+      
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      alert('Error uploading images. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const updatedImages = uploadedImages.filter((_, i) => i !== index);
+    setUploadedImages(updatedImages);
+    
+    setRequest({
+      ...request,
+      basicInfo: { 
+        ...request.basicInfo, 
+        images: updatedImages 
+      }
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -537,6 +601,30 @@ function BasicInfoStep({ request, setRequest, errors }: any) {
       </div>
 
       <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+        <select
+          value={request.basicInfo.category || ''}
+          onChange={(e) => setRequest({
+            ...request,
+            basicInfo: { ...request.basicInfo, category: e.target.value }
+          })}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+        >
+          <option value="">Select a category</option>
+          <option value="real_estate">Real Estate</option>
+          <option value="shipping_logistics">Shipping & Logistics</option>
+          <option value="commodities">Commodities</option>
+          <option value="precious_metals">Precious Metals</option>
+          <option value="art_collectibles">Art & Collectibles</option>
+          <option value="intellectual_property">Intellectual Property</option>
+          <option value="infrastructure">Infrastructure</option>
+          <option value="agriculture">Agriculture</option>
+          <option value="energy">Energy</option>
+          <option value="technology">Technology</option>
+        </select>
+      </div>
+
+      <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
         <textarea
           value={request.basicInfo.description}
@@ -548,6 +636,72 @@ function BasicInfoStep({ request, setRequest, errors }: any) {
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
           placeholder="Describe your asset in detail"
         />
+      </div>
+
+      {/* Image Upload Section */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Asset Images *</label>
+        <p className="text-sm text-gray-600 mb-4">
+          Upload high-quality images that showcase your asset. At least one image is required.
+        </p>
+        
+        {/* Upload Area */}
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-global-teal transition-colors">
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+            id="image-upload"
+            disabled={uploading}
+          />
+          <label htmlFor="image-upload" className="cursor-pointer">
+            <Icon name="cloud-upload" className="text-gray-400 text-4xl mx-auto mb-4" />
+            <h4 className="text-lg font-medium text-gray-900 mb-2">
+              {uploading ? 'Uploading...' : 'Upload Asset Images'}
+            </h4>
+            <p className="text-gray-600 mb-4">
+              Drag and drop your images here, or click to browse
+            </p>
+            <button
+              type="button"
+              disabled={uploading}
+              className="bg-global-teal text-white px-6 py-3 rounded-lg font-medium hover:bg-global-teal-dark transition-colors disabled:opacity-50"
+            >
+              {uploading ? 'Uploading...' : 'Choose Images'}
+            </button>
+            <p className="text-xs text-gray-500 mt-2">
+              Supported formats: JPG, PNG, GIF, WebP (Max 10MB each)
+            </p>
+          </label>
+        </div>
+
+        {/* Image Preview Grid */}
+        {uploadedImages.length > 0 && (
+          <div className="mt-6">
+            <h4 className="text-sm font-medium text-gray-700 mb-3">
+              Uploaded Images ({uploadedImages.length})
+            </h4>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {uploadedImages.map((imageUrl, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={imageUrl}
+                    alt={`Asset image ${index + 1}`}
+                    className="w-full h-32 object-cover rounded-lg border border-gray-200"
+                  />
+                  <button
+                    onClick={() => removeImage(index)}
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Icon name="x" className="text-xs" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
