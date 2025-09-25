@@ -330,6 +330,17 @@ function ContentManagementDashboard() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [sortBy, setSortBy] = useState<'title' | 'date' | 'views' | 'status'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [newContent, setNewContent] = useState<Partial<ContentItem>>({
+    title: '',
+    type: 'page',
+    status: 'draft',
+    author: 'Admin User',
+    content: '',
+    excerpt: '',
+    category: '',
+    tags: [],
+    featured: false
+  });
   const { notifications, addNotification, removeNotification } = useNotifications();
 
   // Enhanced filtering and sorting
@@ -417,6 +428,59 @@ function ContentManagementDashboard() {
       message: `"${item.title}" status changed to ${newStatus.replace('_', ' ')}`,
       duration: 3000
     });
+  };
+
+  const handleCreateContent = () => {
+    if (!newContent.title?.trim()) {
+      addNotification({
+        type: 'error',
+        title: 'Validation Error',
+        message: 'Please enter a title for the content',
+        duration: 3000
+      });
+      return;
+    }
+
+    const contentItem: ContentItem = {
+      id: Date.now().toString(),
+      title: newContent.title!,
+      type: newContent.type!,
+      status: newContent.status!,
+      lastModified: new Date().toISOString(),
+      author: newContent.author!,
+      content: newContent.content || '',
+      excerpt: newContent.excerpt || '',
+      category: newContent.category || '',
+      tags: newContent.tags || [],
+      featured: newContent.featured || false,
+      views: 0
+    };
+
+    setContent(prev => [contentItem, ...prev]);
+    setShowCreateModal(false);
+    setNewContent({
+      title: '',
+      type: 'page',
+      status: 'draft',
+      author: 'Admin User',
+      content: '',
+      excerpt: '',
+      category: '',
+      tags: [],
+      featured: false
+    });
+
+    addNotification({
+      type: 'success',
+      title: 'Content Created',
+      message: `"${contentItem.title}" has been created successfully`,
+      duration: 3000
+    });
+  };
+
+  const handleTagInput = (value: string) => {
+    const tags = value.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+    setNewContent(prev => ({ ...prev, tags }));
   };
 
   const getStatusColor = (status: string) => {
@@ -1023,6 +1087,174 @@ function ContentManagementDashboard() {
                   className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors"
                 >
                   Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Create Content Modal */}
+        {showCreateModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+              <div className="flex items-center justify-between p-6 border-b">
+                <h3 className="text-2xl font-poppins font-bold text-charcoal">
+                  Create New Content
+                </h3>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <Icon name="times" className="text-xl" />
+                </button>
+              </div>
+              
+              <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Title *
+                    </label>
+                    <input
+                      type="text"
+                      value={newContent.title || ''}
+                      onChange={(e) => setNewContent(prev => ({ ...prev, title: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      placeholder="Enter content title"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Type
+                      </label>
+                      <select
+                        value={newContent.type || 'page'}
+                        onChange={(e) => setNewContent(prev => ({ ...prev, type: e.target.value as any }))}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      >
+                        <option value="page">Page</option>
+                        <option value="blog">Blog Post</option>
+                        <option value="document">Document</option>
+                        <option value="announcement">Announcement</option>
+                        <option value="faq">FAQ</option>
+                        <option value="testimonial">Testimonial</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Status
+                      </label>
+                      <select
+                        value={newContent.status || 'draft'}
+                        onChange={(e) => setNewContent(prev => ({ ...prev, status: e.target.value as any }))}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      >
+                        <option value="draft">Draft</option>
+                        <option value="pending_review">Pending Review</option>
+                        <option value="published">Published</option>
+                        <option value="archived">Archived</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Author
+                      </label>
+                      <input
+                        type="text"
+                        value={newContent.author || ''}
+                        onChange={(e) => setNewContent(prev => ({ ...prev, author: e.target.value }))}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                        placeholder="Enter author name"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Category
+                      </label>
+                      <input
+                        type="text"
+                        value={newContent.category || ''}
+                        onChange={(e) => setNewContent(prev => ({ ...prev, category: e.target.value }))}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                        placeholder="Enter category"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Excerpt
+                    </label>
+                    <textarea
+                      value={newContent.excerpt || ''}
+                      onChange={(e) => setNewContent(prev => ({ ...prev, excerpt: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      rows={3}
+                      placeholder="Enter content excerpt"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Content
+                    </label>
+                    <textarea
+                      value={newContent.content || ''}
+                      onChange={(e) => setNewContent(prev => ({ ...prev, content: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      rows={6}
+                      placeholder="Enter content body"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Tags (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      value={newContent.tags?.join(', ') || ''}
+                      onChange={(e) => handleTagInput(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      placeholder="Enter tags separated by commas"
+                    />
+                  </div>
+
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="featured"
+                      checked={newContent.featured || false}
+                      onChange={(e) => setNewContent(prev => ({ ...prev, featured: e.target.checked }))}
+                      className="h-4 w-4 text-global-teal focus:ring-global-teal border-gray-300 rounded"
+                    />
+                    <label htmlFor="featured" className="ml-2 block text-sm text-gray-700">
+                      Featured content
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-end p-6 border-t bg-gray-50">
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors mr-3"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleCreateContent}
+                  className="bg-global-teal text-white px-6 py-2 rounded-lg hover:bg-global-green transition-colors"
+                >
+                  <Icon name="plus" className="mr-2" />
+                  Create Content
                 </button>
               </div>
             </div>
