@@ -67,12 +67,15 @@ export async function POST(request: NextRequest) {
           </div>
         `;
 
-        const emailResult = await emailIntegration.sendCustomEmail({
-          to: user.email,
-          subject: `Welcome to Global Edge - Your Account is Ready!`,
-          html: emailContent,
-          from: 'noreply@theglobaledge.io'
-        });
+        const emailResult = await emailIntegration.sendCustomEmail(
+          user.email,
+          `Welcome to Global Edge - Your Account is Ready!`,
+          emailContent,
+          {
+            isHtml: true,
+            priority: 'high'
+          }
+        );
 
         if (emailResult.success) {
           console.log(`Welcome email sent successfully to ${user.email}`);
