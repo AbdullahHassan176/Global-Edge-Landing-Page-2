@@ -91,6 +91,21 @@ function UserManagementDashboard() {
   const [updatingUsers, setUpdatingUsers] = useState<Set<string>>(new Set());
   const { notifications, addNotification, removeNotification } = useNotifications();
 
+  // User creation state
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [creatingUser, setCreatingUser] = useState(false);
+  const [newUser, setNewUser] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    role: 'investor' as 'issuer' | 'investor' | 'admin' | 'moderator',
+    accountType: 'individual' as 'individual' | 'business',
+    status: 'pending' as 'active' | 'pending' | 'suspended' | 'verified',
+    kycStatus: 'pending' as 'pending' | 'approved' | 'rejected',
+    permissions: [] as string[]
+  });
+
   // Load users on component mount
   useEffect(() => {
     loadUsers();
@@ -203,6 +218,102 @@ function UserManagementDashboard() {
         newSet.delete(userId);
         return newSet;
       });
+    }
+  };
+
+  const handleCreateUser = async () => {
+    if (!newUser.firstName || !newUser.lastName || !newUser.email) {
+      addNotification({
+        type: 'error',
+        title: 'Validation Error',
+        message: 'Please fill in all required fields (First Name, Last Name, Email)',
+        duration: 5000
+      });
+      return;
+    }
+
+    setCreatingUser(true);
+    try {
+      // Generate a temporary password
+      const tempPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8).toUpperCase();
+      
+      // Create user object
+      const userToCreate = {
+        ...newUser,
+        id: Date.now().toString(),
+        createdAt: new Date().toISOString(),
+        lastLogin: '',
+        totalInvestments: 0,
+        assetsCreated: 0,
+        assetsUnderManagement: 0
+      };
+
+      // Add user to local state
+      setUsers(prev => [userToCreate, ...prev]);
+
+      // Send email notification
+      try {
+        const response = await fetch('/api/users/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user: userToCreate,
+            tempPassword,
+            sendEmail: true
+          })
+        });
+
+        if (response.ok) {
+          addNotification({
+            type: 'success',
+            title: 'User Created',
+            message: `User ${userToCreate.firstName} ${userToCreate.lastName} created successfully. Email sent with login details.`,
+            duration: 5000
+          });
+        } else {
+          addNotification({
+            type: 'warning',
+            title: 'User Created',
+            message: `User created but email notification failed. Please contact the user directly.`,
+            duration: 5000
+          });
+        }
+      } catch (emailError) {
+        console.error('Email sending error:', emailError);
+        addNotification({
+          type: 'warning',
+          title: 'User Created',
+          message: `User created but email notification failed. Please contact the user directly.`,
+          duration: 5000
+        });
+      }
+
+      // Reset form and close modal
+      setNewUser({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        role: 'investor',
+        accountType: 'individual',
+        status: 'pending',
+        kycStatus: 'pending',
+        permissions: []
+      });
+      setShowCreateModal(false);
+
+    } catch (error) {
+      console.error('Error creating user:', error);
+      addNotification({
+        type: 'error',
+        title: 'Creation Failed',
+        message: 'Failed to create user. Please try again.',
+        duration: 5000
+      });
+    } finally {
+      setCreatingUser(false);
     }
   };
 
@@ -329,6 +440,13 @@ function UserManagementDashboard() {
           <div className="bg-white rounded-2xl p-6 shadow-lg mb-8">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
               <div className="flex flex-wrap gap-4">
+                <button
+                  onClick={() => setShowCreateModal(true)}
+                  className="flex items-center px-6 py-3 bg-global-teal text-white rounded-full font-medium hover:bg-global-teal-dark transition-colors shadow-lg hover:shadow-xl"
+                >
+                  <Icon name="plus" className="mr-2" />
+                  Create New User
+                </button>
                 {[
                   { key: 'all', label: 'All Users', count: users.length, icon: 'users' },
                   { key: 'issuer', label: 'Issuers', count: users.filter(u => u.role === 'issuer').length, icon: 'building' },
@@ -586,6 +704,171 @@ function UserManagementDashboard() {
                   Edit User
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Create User Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b">
+              <h3 className="text-2xl font-poppins font-bold text-charcoal">
+                Create New User
+              </h3>
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Icon name="times" className="text-xl" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+              <div className="space-y-6">
+                {/* Basic Information */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                    <input
+                      type="text"
+                      value={newUser.firstName}
+                      onChange={(e) => setNewUser({ ...newUser, firstName: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      placeholder="Enter first name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                    <input
+                      type="text"
+                      value={newUser.lastName}
+                      onChange={(e) => setNewUser({ ...newUser, lastName: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      placeholder="Enter last name"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <input
+                      type="email"
+                      value={newUser.email}
+                      onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      placeholder="Enter email address"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                    <input
+                      type="tel"
+                      value={newUser.phone}
+                      onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                      placeholder="Enter phone number"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Role *</label>
+                    <select
+                      value={newUser.role}
+                      onChange={(e) => setNewUser({ ...newUser, role: e.target.value as any })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                    >
+                      <option value="investor">Investor</option>
+                      <option value="issuer">Issuer</option>
+                      <option value="admin">Admin</option>
+                      <option value="moderator">Moderator</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Account Type *</label>
+                    <select
+                      value={newUser.accountType}
+                      onChange={(e) => setNewUser({ ...newUser, accountType: e.target.value as any })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                    >
+                      <option value="individual">Individual</option>
+                      <option value="business">Business</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+                    <select
+                      value={newUser.status}
+                      onChange={(e) => setNewUser({ ...newUser, status: e.target.value as any })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="active">Active</option>
+                      <option value="verified">Verified</option>
+                      <option value="suspended">Suspended</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">KYC Status *</label>
+                    <select
+                      value={newUser.kycStatus}
+                      onChange={(e) => setNewUser({ ...newUser, kycStatus: e.target.value as any })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Email Notification Info */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-start">
+                    <Icon name="info-circle" className="text-blue-600 text-xl mr-3 mt-1" />
+                    <div>
+                      <h4 className="text-blue-900 font-semibold mb-2">Email Notification</h4>
+                      <p className="text-blue-800 text-sm">
+                        A temporary password will be generated and sent to the user's email address. 
+                        The user will be required to change their password on first login.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-end p-6 border-t bg-gray-50">
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors mr-3"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleCreateUser}
+                disabled={creatingUser}
+                className="bg-global-teal text-white px-6 py-2 rounded-lg hover:bg-global-teal-dark transition-colors disabled:opacity-50 flex items-center"
+              >
+                {creatingUser ? (
+                  <>
+                    <Icon name="spinner" className="animate-spin mr-2" />
+                    Creating...
+                  </>
+                ) : (
+                  <>
+                    <Icon name="plus" className="mr-2" />
+                    Create User
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>
