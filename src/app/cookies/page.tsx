@@ -1,14 +1,161 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
+import NotificationSystem, { useNotifications } from '@/components/ui/NotificationSystem';
+
+interface CookiePreferences {
+  essential: boolean;
+  analytics: boolean;
+  preferences: boolean;
+  marketing: boolean;
+}
 
 export default function CookiesPage() {
   // Get configuration
   const contactConfig = configService.getContactConfig();
   const businessConfig = configService.getBusinessConfig();
   
+  // Cookie preferences state
+  const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>({
+    essential: true, // Always true, cannot be disabled
+    analytics: true,
+    preferences: true,
+    marketing: false
+  });
+  
+  const [hasChanges, setHasChanges] = useState(false);
+  const { notifications, addNotification, removeNotification } = useNotifications();
+
+  // Load saved preferences on component mount
+  useEffect(() => {
+    const savedPreferences = localStorage.getItem('cookie-preferences');
+    if (savedPreferences) {
+      try {
+        const parsed = JSON.parse(savedPreferences);
+        setCookiePreferences(parsed);
+      } catch (error) {
+        console.error('Error loading cookie preferences:', error);
+      }
+    }
+  }, []);
+
+  // Handle individual cookie toggle changes
+  const handleCookieToggle = (type: keyof CookiePreferences) => {
+    if (type === 'essential') return; // Essential cookies cannot be disabled
+    
+    setCookiePreferences(prev => ({
+      ...prev,
+      [type]: !prev[type]
+    }));
+    setHasChanges(true);
+  };
+
+  // Save preferences
+  const handleSavePreferences = () => {
+    try {
+      localStorage.setItem('cookie-preferences', JSON.stringify(cookiePreferences));
+      setHasChanges(false);
+      
+      // Apply cookie settings
+      applyCookieSettings(cookiePreferences);
+      
+      addNotification({
+        type: 'success',
+        title: 'Preferences Saved',
+        message: 'Your cookie preferences have been saved successfully.',
+        duration: 3000
+      });
+    } catch (error) {
+      console.error('Error saving cookie preferences:', error);
+      addNotification({
+        type: 'error',
+        title: 'Save Failed',
+        message: 'Failed to save your preferences. Please try again.',
+        duration: 5000
+      });
+    }
+  };
+
+  // Accept all cookies
+  const handleAcceptAll = () => {
+    const allAccepted = {
+      essential: true,
+      analytics: true,
+      preferences: true,
+      marketing: true
+    };
+    
+    setCookiePreferences(allAccepted);
+    setHasChanges(true);
+    
+    // Auto-save when accepting all
+    setTimeout(() => {
+      handleSavePreferences();
+    }, 100);
+  };
+
+  // Reject all non-essential cookies
+  const handleRejectAll = () => {
+    const onlyEssential = {
+      essential: true,
+      analytics: false,
+      preferences: false,
+      marketing: false
+    };
+    
+    setCookiePreferences(onlyEssential);
+    setHasChanges(true);
+    
+    // Auto-save when rejecting all
+    setTimeout(() => {
+      handleSavePreferences();
+    }, 100);
+  };
+
+  // Apply cookie settings to the application
+  const applyCookieSettings = (preferences: CookiePreferences) => {
+    // Analytics cookies
+    if (preferences.analytics) {
+      // Enable Google Analytics
+      console.log('Analytics cookies enabled');
+      // Here you would initialize Google Analytics
+    } else {
+      // Disable Google Analytics
+      console.log('Analytics cookies disabled');
+      // Here you would disable Google Analytics
+    }
+
+    // Preference cookies
+    if (preferences.preferences) {
+      // Enable preference saving
+      console.log('Preference cookies enabled');
+    } else {
+      // Clear saved preferences
+      console.log('Preference cookies disabled');
+    }
+
+    // Marketing cookies
+    if (preferences.marketing) {
+      // Enable marketing tracking
+      console.log('Marketing cookies enabled');
+      // Here you would initialize marketing pixels
+    } else {
+      // Disable marketing tracking
+      console.log('Marketing cookies disabled');
+      // Here you would disable marketing pixels
+    }
+  };
+  
   return (
     <>
+      <NotificationSystem
+        notifications={notifications}
+        onRemove={removeNotification}
+      />
+      
       {/* COMPONENT: Cookies Hero */}
       <section id="cookies-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -222,7 +369,12 @@ export default function CookiesPage() {
                                 <p className="text-sm text-gray-600">Help us understand website usage</p>
                             </div>
                             <label className="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" className="sr-only peer" defaultChecked />
+                                <input 
+                                    type="checkbox" 
+                                    className="sr-only peer" 
+                                    checked={cookiePreferences.analytics}
+                                    onChange={() => handleCookieToggle('analytics')}
+                                />
                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-global-teal/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-global-teal"></div>
                             </label>
                         </div>
@@ -233,7 +385,12 @@ export default function CookiesPage() {
                                 <p className="text-sm text-gray-600">Remember your settings and preferences</p>
                             </div>
                             <label className="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" className="sr-only peer" defaultChecked />
+                                <input 
+                                    type="checkbox" 
+                                    className="sr-only peer" 
+                                    checked={cookiePreferences.preferences}
+                                    onChange={() => handleCookieToggle('preferences')}
+                                />
                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-global-teal/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-global-teal"></div>
                             </label>
                         </div>
@@ -244,20 +401,39 @@ export default function CookiesPage() {
                                 <p className="text-sm text-gray-600">Used for advertising and marketing purposes</p>
                             </div>
                             <label className="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" className="sr-only peer" />
+                                <input 
+                                    type="checkbox" 
+                                    className="sr-only peer" 
+                                    checked={cookiePreferences.marketing}
+                                    onChange={() => handleCookieToggle('marketing')}
+                                />
                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-global-teal/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-global-teal"></div>
                             </label>
                         </div>
                     </div>
 
                     <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                        <button className="bg-global-teal text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+                        <button 
+                            onClick={handleSavePreferences}
+                            disabled={!hasChanges}
+                            className={`px-6 py-3 rounded-full font-medium transition-colors ${
+                                hasChanges 
+                                    ? 'bg-global-teal text-white hover:bg-opacity-90' 
+                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            }`}
+                        >
                             Save Preferences
                         </button>
-                        <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors">
+                        <button 
+                            onClick={handleAcceptAll}
+                            className="border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors"
+                        >
                             Accept All
                         </button>
-                        <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors">
+                        <button 
+                            onClick={handleRejectAll}
+                            className="border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors"
+                        >
                             Reject All
                         </button>
                     </div>
