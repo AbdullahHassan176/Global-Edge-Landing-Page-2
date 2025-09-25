@@ -427,7 +427,7 @@ export default function AssetsPage() {
               }}
               className="text-global-teal hover:text-edge-purple font-medium"
             >
-              View All {categoryData.title.replace(' Assets', 's')}
+              View All {categoryData.title === 'All Assets' ? 'Assets' : categoryData.title.replace(' Assets', 's')}
               <Icon name="arrow-right" className="ml-2" />
             </button>
           </div>
