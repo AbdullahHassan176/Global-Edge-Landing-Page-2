@@ -28,6 +28,25 @@ export default function AdminAuthGuard({
 
   const checkAuth = () => {
     try {
+      // Development bypass - create a mock admin user for testing
+      if (process.env.NODE_ENV === 'development') {
+        const mockUser = {
+          id: 'dev-admin-1',
+          username: 'dev-admin',
+          email: 'admin@theglobaledge.io',
+          role: 'super-admin' as const,
+          permissions: ['all'],
+          lastLogin: new Date().toISOString(),
+          isActive: true
+        };
+        
+        setIsAuthenticated(true);
+        setUser(mockUser);
+        setHasAccess(true);
+        setIsLoading(false);
+        return;
+      }
+
       const currentUser = adminAuthService.getCurrentUser();
       const authenticated = adminAuthService.isAuthenticated();
 
