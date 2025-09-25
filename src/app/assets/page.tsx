@@ -593,7 +593,7 @@ export default function AssetsPage() {
                 onClick={() => setActiveCategory('property')}
                 className="w-full bg-green-600 text-white py-3 rounded-full font-medium hover:bg-green-700 transition-colors"
               >
-                Browse Properties
+                Browse Property
               </button>
             </div>
 
