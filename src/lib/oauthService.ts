@@ -21,7 +21,7 @@ class OAuthService {
   };
 
   private linkedinConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '',
+    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '77wo1ift9iqifp',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
@@ -54,6 +54,8 @@ class OAuthService {
 
   // LinkedIn OAuth
   initiateLinkedInLogin() {
+    console.log('Environment variables:');
+    console.log('NEXT_PUBLIC_LINKEDIN_CLIENT_ID:', process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID);
     console.log('Initiating LinkedIn OAuth with client ID:', this.linkedinConfig.clientId);
     
     if (!this.linkedinConfig.clientId) {
@@ -72,6 +74,7 @@ class OAuthService {
 
     const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`;
     console.log('LinkedIn OAuth URL:', linkedinAuthUrl);
+    console.log('LinkedIn OAuth URL parameters:', params.toString());
     window.location.href = linkedinAuthUrl;
   }
 

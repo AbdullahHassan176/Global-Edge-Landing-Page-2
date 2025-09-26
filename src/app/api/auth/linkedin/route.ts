@@ -16,13 +16,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if LinkedIn OAuth is configured
-    if (!process.env.LINKEDIN_CLIENT_ID || !process.env.LINKEDIN_CLIENT_SECRET) {
-      return NextResponse.json(
-        { error: 'LinkedIn OAuth is not configured. Please contact support or use email/password login.' },
-        { status: 400 }
-      );
-    }
+    // LinkedIn OAuth is now configured with hardcoded credentials
 
     // Exchange the code for an access token
     const tokenResponse = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
