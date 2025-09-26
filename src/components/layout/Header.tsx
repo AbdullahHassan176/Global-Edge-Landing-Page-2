@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from '../ui/Logo';
 import Icon from '../ui/Icon';
+import NotificationCenter from '../notifications/NotificationCenter';
 
 const navigationItems = [
   { label: 'How It Works', href: '/how-it-works' },
@@ -101,29 +102,8 @@ export default function Header() {
               
               {/* Notifications dropdown */}
               {isNotificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                  <div className="p-4 border-b border-gray-200">
-                    <h3 className="text-lg font-semibold text-charcoal">Notifications</h3>
-                  </div>
-                  <div className="max-h-64 overflow-y-auto">
-                    <div className="p-4 border-b border-gray-100 hover:bg-gray-50">
-                      <p className="text-sm text-gray-800">New asset available: Container #GE-2024-001</p>
-                      <p className="text-xs text-gray-500 mt-1">2 minutes ago</p>
-                    </div>
-                    <div className="p-4 border-b border-gray-100 hover:bg-gray-50">
-                      <p className="text-sm text-gray-800">Your investment in Property Token #PT-2024-003 has been confirmed</p>
-                      <p className="text-xs text-gray-500 mt-1">1 hour ago</p>
-                    </div>
-                    <div className="p-4 hover:bg-gray-50">
-                      <p className="text-sm text-gray-800">Monthly report is ready for download</p>
-                      <p className="text-xs text-gray-500 mt-1">1 day ago</p>
-                    </div>
-                  </div>
-                  <div className="p-4 border-t border-gray-200">
-                    <Link href="/admin/notifications" className="text-sm text-global-teal hover:text-edge-purple">
-                      View all notifications
-                    </Link>
-                  </div>
+                <div className="absolute right-0 mt-2 z-50">
+                  <NotificationCenter showHighPriority={true} />
                 </div>
               )}
             </div>
