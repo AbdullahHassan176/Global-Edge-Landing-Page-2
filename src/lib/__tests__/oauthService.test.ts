@@ -1,4 +1,4 @@
-import { OAuthService } from '../oauthService';
+import { oauthService } from '../oauthService';
 
 // Mock environment variables
 const mockEnv = {
@@ -22,10 +22,7 @@ Object.defineProperty(window, 'location', {
 });
 
 describe('OAuthService', () => {
-  let oauthService: OAuthService;
-
   beforeEach(() => {
-    oauthService = new OAuthService();
     // Reset window.location.href
     window.location.href = '';
   });
