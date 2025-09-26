@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import Tooltip from '@/components/ui/Tooltip';
+import { HoldingsTable } from '@/components/investor/HoldingsTable';
 import { userAuthService, User, Investment, Notification } from '@/lib/userAuthService';
 import { databaseService } from '@/lib/database/databaseService';
 import { assetService } from '@/lib/assetService';
@@ -386,6 +387,23 @@ export default function InvestorDashboard() {
               </button>
             </Tooltip>
           </div>
+        </div>
+
+        {/* Holdings Table */}
+        <div className="mb-8">
+          <HoldingsTable 
+            holdings={investments.map(inv => ({
+              id: inv.id,
+              assetKey: inv.assetId, // Using assetId as assetKey for now
+              assetName: 'Loading...', // Will be populated by the component
+              assetType: 'asset',
+              amount: inv.amount,
+              status: inv.status as 'active' | 'pending' | 'completed' | 'rejected',
+              purchaseDate: inv.createdAt,
+              currentValue: inv.amount * 1.05, // Mock current value
+              returns: inv.amount * 0.05 // Mock returns
+            }))}
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
