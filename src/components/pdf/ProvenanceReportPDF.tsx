@@ -1,0 +1,188 @@
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+
+interface TimelineItem {
+  type: 'event' | 'doc';
+  event?: {
+    txHash: string;
+    eventType: string;
+    eventTime: string;
+    signer: string;
+  };
+  doc?: {
+    docHash: string;
+    kind: string;
+  };
+}
+
+// Create styles for the PDF
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
+    padding: 30,
+    fontSize: 12,
+    fontFamily: 'Helvetica',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingBottom: 10,
+    borderBottom: '1 solid #E5E7EB',
+  },
+  logo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0D9488',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1F2937',
+  },
+  assetInfo: {
+    marginBottom: 20,
+    padding: 15,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 8,
+  },
+  assetKey: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#374151',
+    marginBottom: 5,
+  },
+  generatedAt: {
+    fontSize: 10,
+    color: '#6B7280',
+  },
+  table: {
+    width: 'auto',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+    borderBottomStyle: 'solid',
+    minHeight: 30,
+  },
+  tableHeader: {
+    backgroundColor: '#F3F4F6',
+    fontWeight: 'bold',
+  },
+  tableCell: {
+    flex: 1,
+    padding: 8,
+    fontSize: 10,
+    borderRightWidth: 1,
+    borderRightColor: '#E5E7EB',
+    borderRightStyle: 'solid',
+  },
+  typeBadge: {
+    padding: 2,
+    borderRadius: 3,
+    fontSize: 8,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  eventBadge: {
+    backgroundColor: '#DCFCE7',
+    color: '#166534',
+  },
+  docBadge: {
+    backgroundColor: '#DBEAFE',
+    color: '#1E40AF',
+  },
+  hashText: {
+    fontFamily: 'Courier',
+    fontSize: 8,
+    color: '#6B7280',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 30,
+    right: 30,
+    textAlign: 'center',
+    fontSize: 8,
+    color: '#9CA3AF',
+  },
+});
+
+interface ProvenanceReportPDFProps {
+  assetKey: string;
+  timeline: TimelineItem[];
+  generatedAt: string;
+}
+
+export const ProvenanceReportPDF = ({ assetKey, timeline, generatedAt }: ProvenanceReportPDFProps) => {
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.logo}>Global Edge</Text>
+          <Text style={styles.title}>Provenance Report</Text>
+        </View>
+
+        {/* Asset Information */}
+        <View style={styles.assetInfo}>
+          <Text style={styles.assetKey}>Asset: {assetKey}</Text>
+          <Text style={styles.generatedAt}>Generated: {generatedAt}</Text>
+        </View>
+
+        {/* Timeline Table */}
+        <View style={styles.table}>
+          {/* Table Header */}
+          <View style={[styles.tableRow, styles.tableHeader]}>
+            <Text style={[styles.tableCell, { flex: 0.8 }]}>Type</Text>
+            <Text style={[styles.tableCell, { flex: 1.5 }]}>Description</Text>
+            <Text style={[styles.tableCell, { flex: 1 }]}>Time</Text>
+            <Text style={[styles.tableCell, { flex: 1.2 }]}>Signer</Text>
+            <Text style={[styles.tableCell, { flex: 2 }]}>Hash</Text>
+          </View>
+
+          {/* Table Rows */}
+          {timeline.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <View style={styles.tableCell}>
+                <Text style={[
+                  styles.typeBadge,
+                  item.type === 'event' ? styles.eventBadge : styles.docBadge
+                ]}>
+                  {item.type === 'event' ? 'ON-CHAIN' : 'DOC'}
+                </Text>
+              </View>
+              <Text style={[styles.tableCell, { flex: 1.5 }]}>
+                {item.type === 'event' ? item.event?.eventType : item.doc?.kind}
+              </Text>
+              <Text style={[styles.tableCell, { flex: 1 }]}>
+                {new Date(item.type === 'event' ? item.event?.eventTime || '' : new Date()).toLocaleString()}
+              </Text>
+              <Text style={[styles.tableCell, { flex: 1.2 }]}>
+                {item.type === 'event' ? 
+                  `${item.event?.signer?.slice(0, 6)}...${item.event?.signer?.slice(-4)}` : 
+                  'N/A'
+                }
+              </Text>
+              <Text style={[styles.tableCell, { flex: 2 }]}>
+                <Text style={styles.hashText}>
+                  {item.type === 'event' ? item.event?.txHash : item.doc?.docHash}
+                </Text>
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Footer */}
+        <Text style={styles.footer}>
+          Generated by Global Edge Platform • {new Date().toLocaleDateString()}
+        </Text>
+      </Page>
+    </Document>
+  );
+};
