@@ -4,9 +4,22 @@ export async function POST(request: NextRequest) {
   try {
     const { code } = await request.json();
 
+    console.log('LinkedIn OAuth API called with code:', code ? 'present' : 'missing');
+    console.log('Environment variables:');
+    console.log('LINKEDIN_CLIENT_ID:', process.env.LINKEDIN_CLIENT_ID);
+    console.log('LINKEDIN_CLIENT_SECRET:', process.env.LINKEDIN_CLIENT_SECRET ? 'present' : 'missing');
+
     if (!code) {
       return NextResponse.json(
         { error: 'Authorization code is required' },
+        { status: 400 }
+      );
+    }
+
+    // Check if LinkedIn OAuth is configured
+    if (!process.env.LINKEDIN_CLIENT_ID || !process.env.LINKEDIN_CLIENT_SECRET) {
+      return NextResponse.json(
+        { error: 'LinkedIn OAuth is not configured. Please contact support or use email/password login.' },
         { status: 400 }
       );
     }
@@ -20,8 +33,8 @@ export async function POST(request: NextRequest) {
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code: code,
-        client_id: process.env.LINKEDIN_CLIENT_ID || '86abc123def456ghi789',
-        client_secret: process.env.LINKEDIN_CLIENT_SECRET || 'your-linkedin-client-secret',
+        client_id: process.env.LINKEDIN_CLIENT_ID || '',
+        client_secret: process.env.LINKEDIN_CLIENT_SECRET || '',
         redirect_uri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`
       })
     });

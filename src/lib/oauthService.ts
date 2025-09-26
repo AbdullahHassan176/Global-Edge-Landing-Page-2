@@ -21,7 +21,7 @@ class OAuthService {
   };
 
   private linkedinConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '86abc123def456ghi789',
+    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
