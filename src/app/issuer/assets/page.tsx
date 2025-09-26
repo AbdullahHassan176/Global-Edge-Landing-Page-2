@@ -4,11 +4,14 @@ import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User } from '@/lib/userAuthService';
 import { assetService, Asset } from '@/lib/assetService';
+import { getAssetHealth, AssetHealth, getOracleStatusColor, getOracleStatusIcon } from '@/lib/assetHealth';
 
 export default function IssuerAssetsPage() {
   const [user, setUser] = useState<User | null>(null);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
+  const [assetHealth, setAssetHealth] = useState<Record<string, AssetHealth>>({});
+  const [loadingHealth, setLoadingHealth] = useState<Record<string, boolean>>({});
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
@@ -43,10 +46,27 @@ export default function IssuerAssetsPage() {
       const allAssets = await assetService.getAllAssetsForAdmin();
       // Filter assets by issuer (in production, this would be done by the backend)
       setAssets(allAssets);
+      
+      // Load health data for each asset
+      loadAssetHealth(allAssets);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAssetHealth = async (assets: Asset[]) => {
+    for (const asset of assets) {
+      try {
+        setLoadingHealth(prev => ({ ...prev, [asset.id]: true }));
+        const health = await getAssetHealth(asset.id);
+        setAssetHealth(prev => ({ ...prev, [asset.id]: health }));
+      } catch (error) {
+        console.error(`Error loading health for asset ${asset.id}:`, error);
+      } finally {
+        setLoadingHealth(prev => ({ ...prev, [asset.id]: false }));
+      }
     }
   };
 
@@ -242,7 +262,24 @@ export default function IssuerAssetsPage() {
         {/* Assets Grid */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">Your Assets</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900">Your Assets</h2>
+              {/* Health Badge Legend */}
+              <div className="flex items-center space-x-4 text-xs text-gray-600">
+                <div className="flex items-center space-x-1">
+                  <div className="w-3 h-3 rounded-full bg-green-100 border border-green-200"></div>
+                  <span>Oracle: Green=OK, Amber=Stale, Red=Error</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-3 h-3 rounded-full bg-blue-100 border border-blue-200"></div>
+                  <span>Docs: Count of attached documents</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-3 h-3 rounded-full bg-red-100 border border-red-200"></div>
+                  <span>Exceptions: Open issues count</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="p-6">
             {assets.length === 0 ? (
@@ -274,6 +311,48 @@ export default function IssuerAssetsPage() {
                         {asset.status}
                       </span>
                     </div>
+
+                    {/* Health Badges */}
+                    {!loadingHealth[asset.id] && assetHealth[asset.id] && (
+                      <div className="flex items-center space-x-2 mb-4">
+                        {/* Oracle Badge */}
+                        <div 
+                          className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getOracleStatusColor(assetHealth[asset.id].oracle.status)}`}
+                          title={`Oracle: ${assetHealth[asset.id].oracle.status === 'ok' ? 'Verified within 24h' : assetHealth[asset.id].oracle.status === 'stale' ? 'Last verified 24-48h ago' : 'No recent verification'} (Nonce: ${assetHealth[asset.id].oracle.lastNonce})`}
+                        >
+                          <Icon 
+                            name={getOracleStatusIcon(assetHealth[asset.id].oracle.status)} 
+                            className="w-3 h-3 mr-1" 
+                          />
+                          Oracle
+                        </div>
+                        
+                        {/* Docs Badge */}
+                        <div 
+                          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200"
+                          title={`${assetHealth[asset.id].docsCount} document${assetHealth[asset.id].docsCount !== 1 ? 's' : ''} attached`}
+                        >
+                          <Icon name="document-text" className="w-3 h-3 mr-1" />
+                          {assetHealth[asset.id].docsCount}
+                        </div>
+                        
+                        {/* Exceptions Badge */}
+                        <div 
+                          className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${
+                            assetHealth[asset.id].exceptionsCount > 0 
+                              ? 'bg-red-100 text-red-800 border-red-200' 
+                              : 'bg-green-100 text-green-800 border-green-200'
+                          }`}
+                          title={`${assetHealth[asset.id].exceptionsCount} open exception${assetHealth[asset.id].exceptionsCount !== 1 ? 's' : ''}`}
+                        >
+                          <Icon 
+                            name={assetHealth[asset.id].exceptionsCount > 0 ? 'exclamation-triangle' : 'check-circle'} 
+                            className="w-3 h-3 mr-1" 
+                          />
+                          {assetHealth[asset.id].exceptionsCount}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-sm">

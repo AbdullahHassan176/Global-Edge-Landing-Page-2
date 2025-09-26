@@ -1,9 +1,10 @@
 'use client';
 
 import Icon from '@/components/ui/Icon';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Asset } from '@/types';
+import { getAssetHealth, AssetHealth, formatTimeAgo, getOracleStatusColor, getOracleStatusIcon } from '@/lib/assetHealth';
 
 interface AssetCardProps {
   asset: Asset;
@@ -19,6 +20,26 @@ export default function AssetCard({
   isWatched = false 
 }: AssetCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [assetHealth, setAssetHealth] = useState<AssetHealth | null>(null);
+  const [loadingHealth, setLoadingHealth] = useState(true);
+
+  // Load asset health data
+  useEffect(() => {
+    const loadHealth = async () => {
+      try {
+        setLoadingHealth(true);
+        const health = await getAssetHealth(asset.id);
+        setAssetHealth(health);
+      } catch (error) {
+        console.error('Error loading asset health:', error);
+        setAssetHealth(null);
+      } finally {
+        setLoadingHealth(false);
+      }
+    };
+
+    loadHealth();
+  }, [asset.id]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -87,6 +108,48 @@ export default function AssetCard({
             {asset.status.toUpperCase()}
           </span>
         </div>
+        
+        {/* Health Badges */}
+        {!loadingHealth && assetHealth && (
+          <div className="absolute top-4 left-4 mt-8 flex space-x-1">
+            {/* Oracle Badge */}
+            <div 
+              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getOracleStatusColor(assetHealth.oracle.status)}`}
+              title={`Oracle: ${assetHealth.oracle.status === 'ok' ? 'Verified within 24h' : assetHealth.oracle.status === 'stale' ? 'Last verified 24-48h ago' : 'No recent verification'} (Nonce: ${assetHealth.oracle.lastNonce})`}
+            >
+              <Icon 
+                name={getOracleStatusIcon(assetHealth.oracle.status)} 
+                className="w-3 h-3 mr-1" 
+              />
+              Oracle
+            </div>
+            
+            {/* Docs Badge */}
+            <div 
+              className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200"
+              title={`${assetHealth.docsCount} document${assetHealth.docsCount !== 1 ? 's' : ''} attached`}
+            >
+              <Icon name="document-text" className="w-3 h-3 mr-1" />
+              {assetHealth.docsCount}
+            </div>
+            
+            {/* Exceptions Badge */}
+            <div 
+              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${
+                assetHealth.exceptionsCount > 0 
+                  ? 'bg-red-100 text-red-800 border-red-200' 
+                  : 'bg-green-100 text-green-800 border-green-200'
+              }`}
+              title={`${assetHealth.exceptionsCount} open exception${assetHealth.exceptionsCount !== 1 ? 's' : ''}`}
+            >
+              <Icon 
+                name={assetHealth.exceptionsCount > 0 ? 'exclamation-triangle' : 'check-circle'} 
+                className="w-3 h-3 mr-1" 
+              />
+              {assetHealth.exceptionsCount}
+            </div>
+          </div>
+        )}
         <div className="absolute top-4 right-4">
           <button 
             onClick={() => onToggleWatchlist?.(asset.id)}
