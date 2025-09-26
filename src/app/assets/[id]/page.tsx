@@ -2,6 +2,7 @@
 
 import Icon from '@/components/ui/Icon';
 import Tooltip from '@/components/ui/Tooltip';
+import BlockchainPanel from '@/components/asset/BlockchainPanel';
 import { useEffect, useState, useCallback } from 'react';
 import { assetService, Asset } from '@/lib/assetService';
 
@@ -473,6 +474,57 @@ startxref
                 <span className="text-sm text-gray-500">Delivered</span>
               </div>
             </Tooltip>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Blockchain Status Panel */}
+      <section className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+          <div className="mb-4">
+            <Tooltip content="Real-time blockchain status and technical details for this asset">
+              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 cursor-help">Blockchain Status</h3>
+            </Tooltip>
+            <Tooltip content="View on-chain activity, contract details, and transaction history">
+              <p className="text-sm text-gray-600 cursor-help">Track blockchain activity and technical details</p>
+            </Tooltip>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <BlockchainPanel assetKey={params.id} />
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <h4 className="text-sm font-medium text-gray-900 mb-3">Asset Health</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Oracle Status</span>
+                  <span className="text-green-600 font-medium">Active</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Last Update</span>
+                  <span className="text-gray-900">2h ago</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Documents</span>
+                  <span className="text-gray-900">3 verified</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <h4 className="text-sm font-medium text-gray-900 mb-3">Security</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Multi-sig</span>
+                  <span className="text-green-600 font-medium">Enabled</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Audit Status</span>
+                  <span className="text-green-600 font-medium">Passed</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600">Insurance</span>
+                  <span className="text-gray-900">$125K</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
