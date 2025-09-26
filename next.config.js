@@ -5,6 +5,34 @@ const nextConfig = {
     NEXT_PUBLIC_FEATURE_FINANCING: process.env.NEXT_PUBLIC_FEATURE_FINANCING || 'true',
     NEXT_PUBLIC_FEATURE_OPS: process.env.NEXT_PUBLIC_FEATURE_OPS || 'true',
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   experimental: {
     serverComponentsExternalPackages: ['@react-pdf/renderer'],
   },
