@@ -80,21 +80,24 @@ export async function mockGetExceptions(params: { assetKey?: string; status?: 'o
 
   const exceptionTypes = ['SLA_BREACH', 'DOC_MISMATCH', 'COMPLIANCE_VIOLATION', 'AUDIT_FAILURE'];
   const severities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
-  const statuses = ['open', 'resolved'];
   
-  const exceptionCount = Math.floor(Math.random() * 4); // 0-3 exceptions
+  const exceptionCount = Math.floor(Math.random() * 4) + 1; // 1-4 exceptions
   const openCount = Math.floor(Math.random() * (exceptionCount + 1)); // Some may be open
   
   const mockExceptions = Array.from({ length: exceptionCount }, (_, i) => ({
-    id: `exc-${params.assetKey}-${i}`,
+    id: `exc-${params.assetKey || 'default'}-${i}`,
     type: exceptionTypes[i % exceptionTypes.length],
     severity: severities[i % severities.length],
     status: (i < openCount ? 'open' : 'resolved') as 'open' | 'resolved',
-    assetKey: params.assetKey,
-    title: `Exception ${i + 1} for asset ${params.assetKey}`,
-    description: `This is a mock exception of type ${exceptionTypes[i % exceptionTypes.length]}`,
+    assetKey: params.assetKey || 'default',
+    assetName: `Asset ${params.assetKey || 'default'}`,
+    message: `This is a mock exception of type ${exceptionTypes[i % exceptionTypes.length]}`,
     occurredAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
-    resolvedAt: i < openCount ? undefined : new Date(Date.now() - Math.random() * 3 * 24 * 60 * 60 * 1000).toISOString(),
+    resolved: i >= openCount,
+    metadata: {
+      exceptionType: exceptionTypes[i % exceptionTypes.length],
+      severity: severities[i % severities.length]
+    }
   }));
 
   // Filter by status if provided

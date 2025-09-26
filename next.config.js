@@ -1,37 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'storage.googleapis.com',
-        port: '',
-        pathname: '/uxpilot-auth.appspot.com/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'logos-world.net',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+  env: {
+    NEXT_PUBLIC_API_BASE: process.env.NEXT_PUBLIC_API_BASE || 'mock',
+    NEXT_PUBLIC_FEATURE_FINANCING: process.env.NEXT_PUBLIC_FEATURE_FINANCING || 'true',
+    NEXT_PUBLIC_FEATURE_OPS: process.env.NEXT_PUBLIC_FEATURE_OPS || 'true',
   },
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+  experimental: {
+    serverComponentsExternalPackages: ['@react-pdf/renderer'],
+  },
+  webpack: (config) => {
+    // Handle PDF generation
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+    return config;
   },
 }
 

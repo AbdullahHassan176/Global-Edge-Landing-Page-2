@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { exceptionsClient } from '@/lib/exceptions';
+import { mockGetExceptions } from '@/lib/mocks';
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,14 +10,28 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10', 10);
     const assetKey = searchParams.get('assetKey');
 
-    const response = await exceptionsClient.getExceptions({
-      ownerOnly,
-      severity,
-      limit,
-      assetKey: assetKey || undefined
+    // Use mock data directly to avoid recursion
+    const mockExceptions = await mockGetExceptions({
+      assetKey: assetKey || 'default',
+      status: 'open'
     });
 
-    return NextResponse.json(response);
+    // Filter by severity if specified
+    let filteredExceptions = mockExceptions;
+    if (severity.length > 0) {
+      filteredExceptions = mockExceptions.filter(exc => 
+        severity.includes(exc.severity)
+      );
+    }
+
+    // Apply limit
+    const limitedExceptions = filteredExceptions.slice(0, limit);
+
+    return NextResponse.json({
+      exceptions: limitedExceptions,
+      total: filteredExceptions.length,
+      hasMore: filteredExceptions.length > limit
+    });
   } catch (error) {
     console.error('Error fetching exceptions:', error);
     return NextResponse.json(

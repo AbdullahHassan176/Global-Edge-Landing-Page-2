@@ -63,6 +63,13 @@ export class ExceptionsClient {
     assetKey?: string;
   } = {}): Promise<ExceptionsResponse> {
     try {
+      // Check if we should use mock data
+      const useMockData = process.env.NEXT_PUBLIC_API_BASE === 'mock';
+      
+      if (useMockData) {
+        return this.getMockExceptions(params);
+      }
+
       const queryParams = new URLSearchParams();
       
       if (params.ownerOnly) queryParams.set('owned', 'true');
@@ -70,7 +77,12 @@ export class ExceptionsClient {
       if (params.limit) queryParams.set('limit', params.limit.toString());
       if (params.assetKey) queryParams.set('assetKey', params.assetKey);
 
-      const response = await fetch(`${this.baseUrl}?${queryParams.toString()}`);
+      // Use absolute URL to avoid relative URL issues
+      const baseUrl = typeof window !== 'undefined' 
+        ? `${window.location.origin}${this.baseUrl}`
+        : `http://localhost:3000${this.baseUrl}`;
+
+      const response = await fetch(`${baseUrl}?${queryParams.toString()}`);
       
       if (!response.ok) {
         throw new Error(`Failed to fetch exceptions: ${response.statusText}`);
