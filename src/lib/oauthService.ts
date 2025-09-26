@@ -21,7 +21,7 @@ class OAuthService {
   };
 
   private linkedinConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '86abc123def456ghi789',
+    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
@@ -55,6 +55,12 @@ class OAuthService {
   // LinkedIn OAuth
   initiateLinkedInLogin() {
     console.log('Initiating LinkedIn OAuth with client ID:', this.linkedinConfig.clientId);
+    
+    if (!this.linkedinConfig.clientId) {
+      alert('LinkedIn OAuth is not configured. Please contact support or use email/password login.');
+      console.error('LinkedIn OAuth not configured: NEXT_PUBLIC_LINKEDIN_CLIENT_ID is missing');
+      return;
+    }
     
     const params = new URLSearchParams({
       response_type: 'code',
