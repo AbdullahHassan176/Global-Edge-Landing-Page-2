@@ -15,7 +15,7 @@ export interface OAuthConfig {
 
 class OAuthService {
   private githubConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || '',
+    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'Ov23libFA9iThtAUjrFP',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`,
     scope: 'user:email'
   };
@@ -28,6 +28,9 @@ class OAuthService {
 
   // GitHub OAuth
   initiateGitHubLogin() {
+    console.log('Environment variables:');
+    console.log('NEXT_PUBLIC_GITHUB_CLIENT_ID:', process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID);
+    console.log('GITHUB_CLIENT_ID:', process.env.GITHUB_CLIENT_ID);
     console.log('Initiating GitHub OAuth with client ID:', this.githubConfig.clientId);
     
     if (!this.githubConfig.clientId) {
