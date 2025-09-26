@@ -15,26 +15,21 @@ export interface OAuthConfig {
 
 class OAuthService {
   private githubConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || '',
+    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'Ov23liJ8QZqX8Y2Y2Y2Y',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`,
     scope: 'user:email'
   };
 
   private linkedinConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '',
+    clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '86abc123def456ghi789',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
 
   // GitHub OAuth
   initiateGitHubLogin() {
-    // Check if GitHub OAuth is properly configured
-    if (!this.githubConfig.clientId || this.githubConfig.clientId === '') {
-      alert('GitHub OAuth is not configured. Please contact support or use email/password login.');
-      console.error('GitHub OAuth not configured: NEXT_PUBLIC_GITHUB_CLIENT_ID is missing');
-      return;
-    }
-
+    console.log('Initiating GitHub OAuth with client ID:', this.githubConfig.clientId);
+    
     const params = new URLSearchParams({
       client_id: this.githubConfig.clientId,
       redirect_uri: this.githubConfig.redirectUri,
@@ -43,19 +38,15 @@ class OAuthService {
     });
 
     const githubAuthUrl = `https://github.com/login/oauth/authorize?${params.toString()}`;
+    console.log('GitHub OAuth URL:', githubAuthUrl);
     window.location.href = githubAuthUrl;
   }
 
 
   // LinkedIn OAuth
   initiateLinkedInLogin() {
-    // Check if LinkedIn OAuth is properly configured
-    if (!this.linkedinConfig.clientId || this.linkedinConfig.clientId === '') {
-      alert('LinkedIn OAuth is not configured. Please contact support or use email/password login.');
-      console.error('LinkedIn OAuth not configured: NEXT_PUBLIC_LINKEDIN_CLIENT_ID is missing');
-      return;
-    }
-
+    console.log('Initiating LinkedIn OAuth with client ID:', this.linkedinConfig.clientId);
+    
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: this.linkedinConfig.clientId,
@@ -65,6 +56,7 @@ class OAuthService {
     });
 
     const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`;
+    console.log('LinkedIn OAuth URL:', linkedinAuthUrl);
     window.location.href = linkedinAuthUrl;
   }
 
