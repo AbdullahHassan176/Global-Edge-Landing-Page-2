@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
+import { getTxUrl, getAddressUrl } from '@/lib/explorer';
+import { mockGetTimeline } from '@/lib/mocks';
 
 interface BlockchainData {
   lastSigner: string;
@@ -46,36 +48,32 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
     setError(null);
     
     try {
-      // Mock API call - replace with actual tokensClient.getTimeline
+      // Use mock data if enabled, otherwise use real API
+      const timelineData = await mockGetTimeline(assetKey, { limit: 3 });
+      
+      // Extract data from timeline
+      const lastEvent = timelineData.timeline.find(item => item.type === 'event');
+      const lastSigner = lastEvent?.event?.signer || '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b';
+      const lastNonce = Math.floor(Math.random() * 100000);
+      
       const mockData: BlockchainData = {
-        lastSigner: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
-        lastNonce: 12345,
+        lastSigner,
+        lastNonce,
         chainName: 'Ethereum',
         contractAddress: '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6',
         network: 'mainnet',
         confirmationsPolicy: 12,
         eventRegistryAddress: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
-        recentTransactions: [
-          {
-            txHash: '0xabc123def456abc123def456abc123def456abc123def456abc123def456',
-            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-            eventType: 'AssetTransferred'
-          },
-          {
-            txHash: '0xdef456abc123def456abc123def456abc123def456abc123def456abc',
-            timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
-            eventType: 'OwnershipUpdated'
-          },
-          {
-            txHash: '0x123def456abc123def456abc123def456abc123def456abc123def',
-            timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6 hours ago
-            eventType: 'StatusChanged'
-          }
-        ]
+        recentTransactions: timelineData.timeline
+          .filter(item => item.type === 'event')
+          .slice(0, 3)
+          .map(item => ({
+            txHash: item.event?.txHash || '',
+            timestamp: item.event?.eventTime || new Date().toISOString(),
+            eventType: item.event?.eventType || 'Unknown'
+          }))
       };
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
       setBlockchainData(mockData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load blockchain data');
@@ -101,13 +99,11 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
   };
 
   const getExplorerUrl = (txHash: string) => {
-    // TODO: Replace with actual explorer URL from chain adapter
-    return `https://etherscan.io/tx/${txHash}`;
+    return getTxUrl(1, txHash); // Ethereum mainnet
   };
 
   const getContractUrl = (contractAddress: string) => {
-    // TODO: Replace with actual explorer URL from chain adapter
-    return `https://etherscan.io/address/${contractAddress}`;
+    return getAddressUrl(1, contractAddress); // Ethereum mainnet
   };
 
   const formatRelativeTime = (dateString: string) => {

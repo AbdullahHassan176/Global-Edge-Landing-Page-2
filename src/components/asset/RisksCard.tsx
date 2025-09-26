@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import Tooltip from '@/components/ui/Tooltip';
+import { mockGetExceptions } from '@/lib/mocks';
 
 interface RisksCardProps {
   assetKey: string;
@@ -25,17 +26,9 @@ export default function RisksCard({ assetKey, className = '' }: RisksCardProps) 
     setError(null);
     
     try {
-      // Mock API call - replace with actual tokensClient.getExceptions
-      const mockExceptionsCount = Math.floor(Math.random() * 4); // 0-3 exceptions
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // In production, replace with:
-      // const exceptions = await tokensClient.getExceptions({ assetKey, status: "open" });
-      // setExceptionsCount(exceptions.length);
-      
-      setExceptionsCount(mockExceptionsCount);
+      // Use mock data if enabled, otherwise use real API
+      const exceptions = await mockGetExceptions({ assetKey, status: "open" });
+      setExceptionsCount(exceptions.length);
     } catch (err) {
       console.error('Failed to load exceptions count:', err);
       setError(err instanceof Error ? err.message : 'Failed to load exceptions');
