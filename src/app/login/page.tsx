@@ -331,18 +331,6 @@ export default function LoginPage() {
               </button>
             </div>
 
-            {/* OAuth Configuration Notice */}
-            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <div className="flex items-start">
-                <Icon name="information-circle" className="text-blue-400 mr-3 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-sm text-blue-800">
-                    <strong>OAuth Setup Required:</strong> GitHub and LinkedIn OAuth need to be configured with valid client IDs. 
-                    See <code className="bg-blue-100 px-1 rounded">OAUTH_SETUP_GUIDE.md</code> for setup instructions.
-                  </p>
-                </div>
-              </div>
-            </div>
 
           </div>
         </div>
