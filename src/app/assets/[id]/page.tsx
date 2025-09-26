@@ -988,92 +988,110 @@ startxref
           {/* Enhanced Investment Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 sticky top-24">
-              <div className="text-center mb-6">
+              {/* Investment Header */}
+              <div className="text-center mb-8">
                 <Tooltip content="Expected annual percentage return based on current market conditions">
-                  <div className="text-3xl font-poppins font-bold text-global-teal mb-2 cursor-help">{asset.apr}</div>
+                  <div className="text-4xl font-poppins font-bold text-global-teal mb-2 cursor-help">{asset.apr}</div>
                 </Tooltip>
                 <Tooltip content="Target annual percentage return for this investment">
-                  <div className="text-sm text-gray-600 mb-4 cursor-help">Target APR</div>
+                  <div className="text-sm text-gray-600 mb-6 cursor-help">Target APR</div>
                 </Tooltip>
-                <Tooltip content="Progress bar showing how much funding has been raised">
-                  <div className="w-full bg-gray-200 rounded-full h-3 mb-2 cursor-help">
-                    <div className="bg-gradient-to-r from-global-teal to-aqua-start h-3 rounded-full" style={{width: '87%'}}></div>
-                  </div>
-                </Tooltip>
-                <Tooltip content="Current funding status with amount raised and percentage complete">
-                  <div className="flex justify-between text-sm text-gray-600 cursor-help">
-                    <span>$108,750 raised</span>
-                    <span>87%</span>
-                  </div>
-                </Tooltip>
+                
+                {/* Funding Progress */}
+                <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                  <Tooltip content="Progress bar showing how much funding has been raised">
+                    <div className="w-full bg-gray-200 rounded-full h-4 mb-3 cursor-help">
+                      <div className="bg-gradient-to-r from-global-teal to-aqua-start h-4 rounded-full transition-all duration-500" style={{width: '87%'}}></div>
+                    </div>
+                  </Tooltip>
+                  <Tooltip content="Current funding status with amount raised and percentage complete">
+                    <div className="flex justify-between text-sm cursor-help">
+                      <span className="text-gray-600 font-medium">$108,750 raised</span>
+                      <span className="text-global-teal font-bold">87%</span>
+                    </div>
+                  </Tooltip>
+                </div>
               </div>
 
-              <div className="space-y-4 mb-6">
-                <Tooltip content="Price per token for this investment opportunity">
-                  <div className="flex justify-between cursor-help">
-                    <span className="text-gray-600">Token Price</span>
-                    <span className="text-charcoal font-medium">$1.00</span>
-                  </div>
-                </Tooltip>
-                <Tooltip content="Minimum amount required to invest in this asset">
-                  <div className="flex justify-between cursor-help">
-                    <span className="text-gray-600">Min. Investment</span>
-                    <span className="text-charcoal font-medium">$50</span>
-                  </div>
-                </Tooltip>
-                <Tooltip content="Days remaining until the investment period closes">
-                  <div className="flex justify-between cursor-help">
-                    <span className="text-gray-600">Time Remaining</span>
-                    <span className="text-charcoal font-medium">32 days</span>
-                  </div>
-                </Tooltip>
-                <Tooltip content="Expected return per token based on the target APR">
-                  <div className="flex justify-between cursor-help">
-                    <span className="text-gray-600">Expected Return</span>
-                    <span className="text-green-600 font-medium">$1.142</span>
-                  </div>
-                </Tooltip>
+              {/* Investment Details */}
+              <div className="space-y-5 mb-8">
+                <div className="grid grid-cols-2 gap-4">
+                  <Tooltip content="Price per token for this investment opportunity">
+                    <div className="bg-gray-50 rounded-lg p-4 cursor-help">
+                      <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Token Price</div>
+                      <div className="text-lg font-semibold text-charcoal">$1.00</div>
+                    </div>
+                  </Tooltip>
+                  <Tooltip content="Minimum amount required to invest in this asset">
+                    <div className="bg-gray-50 rounded-lg p-4 cursor-help">
+                      <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Min. Investment</div>
+                      <div className="text-lg font-semibold text-charcoal">$50</div>
+                    </div>
+                  </Tooltip>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <Tooltip content="Days remaining until the investment period closes">
+                    <div className="bg-blue-50 rounded-lg p-4 cursor-help">
+                      <div className="text-xs text-blue-600 uppercase tracking-wide mb-1">Time Remaining</div>
+                      <div className="text-lg font-semibold text-blue-700">32 days</div>
+                    </div>
+                  </Tooltip>
+                  <Tooltip content="Expected return per token based on the target APR">
+                    <div className="bg-green-50 rounded-lg p-4 cursor-help">
+                      <div className="text-xs text-green-600 uppercase tracking-wide mb-1">Expected Return</div>
+                      <div className="text-lg font-semibold text-green-700">$1.142</div>
+                    </div>
+                  </Tooltip>
+                </div>
+                
                 <Tooltip content="Current stage of the investment lifecycle">
-                  <div className="flex justify-between cursor-help">
-                    <span className="text-gray-600">Current Stage</span>
-                    <span className="text-blue-600 font-medium">In Transit</span>
+                  <div className="bg-blue-50 rounded-lg p-4 cursor-help">
+                    <div className="text-xs text-blue-600 uppercase tracking-wide mb-1">Current Stage</div>
+                    <div className="text-lg font-semibold text-blue-700">In Transit</div>
                   </div>
                 </Tooltip>
               </div>
 
-              <div className="mb-6">
+              {/* Investment Input Section */}
+              <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg p-6 mb-6">
                 <Tooltip content="Enter the amount you want to invest in this asset (minimum $50)">
-                  <label className="block text-sm font-medium text-gray-700 mb-2 cursor-help">Investment Amount</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-3 cursor-help">Investment Amount</label>
                 </Tooltip>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">$</span>
                   <input 
                     type="number" 
                     value={investmentAmount || ''}
                     onChange={(e) => setInvestmentAmount(Number(e.target.value))}
-                    className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-global-teal focus:border-transparent" 
+                    className="w-full pl-10 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-global-teal focus:border-global-teal text-lg font-semibold transition-all duration-200" 
                     placeholder="50" 
                     min="50" 
                   />
                 </div>
+                <div className="text-xs text-gray-500 mt-2">Minimum investment: $50</div>
               </div>
 
-              <Tooltip content="Click to invest in this asset and start earning returns">
-                <button className="w-full bg-global-teal text-white py-3 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors mb-4 cursor-help">
-                  Invest Now
-                </button>
-              </Tooltip>
-
-              <div className="text-center">
-                <Tooltip content="Calculate potential returns based on your investment amount">
-                  <button 
-                    onClick={handleCalculateReturns}
-                    className="text-gray-600 hover:text-global-teal text-sm font-medium cursor-help transition-colors"
-                  >
-                    <Icon name="calculator" className="mr-1" />
-                    Calculate Returns
+              {/* Action Buttons */}
+              <div className="space-y-4">
+                <Tooltip content="Click to invest in this asset and start earning returns">
+                  <button className="w-full bg-gradient-to-r from-global-teal to-aqua-start text-white py-4 rounded-xl font-poppins font-bold text-lg hover:from-global-teal-dark hover:to-aqua-start-dark transition-all duration-300 shadow-lg hover:shadow-xl cursor-help transform hover:scale-105">
+                    <Icon name="arrow-right" className="mr-2" />
+                    Invest Now
                   </button>
                 </Tooltip>
+
+                <div className="text-center">
+                  <Tooltip content="Calculate potential returns based on your investment amount">
+                    <button 
+                      onClick={handleCalculateReturns}
+                      className="inline-flex items-center text-global-teal hover:text-global-teal-dark text-sm font-semibold cursor-help transition-colors duration-200 hover:underline"
+                    >
+                      <Icon name="calculator" className="mr-2" />
+                      Calculate Returns
+                    </button>
+                  </Tooltip>
+                </div>
               </div>
             </div>
 
