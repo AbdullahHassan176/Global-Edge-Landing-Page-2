@@ -569,63 +569,85 @@ startxref
                       </p>
                       
                       {/* Investment Details */}
-                      <div className="bg-gray-50 rounded-xl p-6 mb-6">
+                      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6">
                         <Tooltip content="Detailed information about the current investment status and progress">
-                          <h4 className="font-semibold text-charcoal mb-4 cursor-help">Investment Details</h4>
+                          <h4 className="text-xl font-semibold text-charcoal mb-6 cursor-help">Investment Details</h4>
                         </Tooltip>
-                        <div className="grid md:grid-cols-2 gap-6">
-                          <div>
-                            <div className="space-y-3">
+                        
+                        <div className="grid md:grid-cols-2 gap-8">
+                          {/* Left Column - Investment Progress and Location */}
+                          <div className="space-y-6">
+                            <div className="bg-blue-50 rounded-lg p-4">
                               <Tooltip content="Current stage of the investment lifecycle with completion percentage">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Investment Stage</span>
-                                  <span className="text-sm font-medium text-blue-600">In Transit (75% Complete)</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-blue-600 uppercase tracking-wide mb-1">Investment Stage</div>
+                                  <div className="text-lg font-semibold text-blue-700">In Transit (75% Complete)</div>
                                 </div>
                               </Tooltip>
+                            </div>
+                            
+                            <div className="bg-gray-50 rounded-lg p-4">
                               <Tooltip content="Current physical location of the asset during transit">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Current Location</span>
-                                  <span className="text-sm font-medium text-charcoal">Port of Hamburg</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Current Location</div>
+                                  <div className="text-lg font-semibold text-charcoal">Port of Hamburg</div>
                                 </div>
                               </Tooltip>
+                            </div>
+                            
+                            <div className="bg-gray-50 rounded-lg p-4">
                               <Tooltip content="Next major milestone in the investment journey">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Next Milestone</span>
-                                  <span className="text-sm font-medium text-charcoal">Port of Rotterdam (Jan 28)</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Next Milestone</div>
+                                  <div className="text-lg font-semibold text-charcoal">Port of Rotterdam (Jan 28)</div>
                                 </div>
                               </Tooltip>
+                            </div>
+                            
+                            <div className="bg-green-50 rounded-lg p-4">
                               <Tooltip content="Estimated date when the asset will reach its final destination">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Expected Delivery</span>
-                                  <span className="text-sm font-medium text-green-600">Jan 28, 2025</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-green-600 uppercase tracking-wide mb-1">Expected Delivery</div>
+                                  <div className="text-lg font-semibold text-green-700">Jan 28, 2025</div>
                                 </div>
                               </Tooltip>
                             </div>
                           </div>
-                          <div>
-                            <div className="space-y-3">
+                          
+                          {/* Right Column - Financials */}
+                          <div className="space-y-6">
+                            <div className="bg-green-50 rounded-lg p-4">
                               <Tooltip content="Total amount of funding raised from all investors">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Total Raised</span>
-                                  <span className="text-sm font-medium text-charcoal">$108,750</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-green-600 uppercase tracking-wide mb-1">Total Raised</div>
+                                  <div className="text-lg font-semibold text-green-700">$108,750</div>
                                 </div>
                               </Tooltip>
+                            </div>
+                            
+                            <div className="bg-red-50 rounded-lg p-4">
                               <Tooltip content="Amount still needed to reach the full funding target">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Remaining to Raise</span>
-                                  <span className="text-sm font-medium text-orange-600">$16,250</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-red-600 uppercase tracking-wide mb-1">Remaining to Raise</div>
+                                  <div className="text-lg font-semibold text-red-700">$16,250</div>
                                 </div>
                               </Tooltip>
+                            </div>
+                            
+                            <div className="bg-gray-50 rounded-lg p-4">
                               <Tooltip content="Average investment amount per investor">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Average Investment</span>
-                                  <span className="text-sm font-medium text-charcoal">$4,728</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Average Investment</div>
+                                  <div className="text-lg font-semibold text-charcoal">$4,728</div>
                                 </div>
                               </Tooltip>
+                            </div>
+                            
+                            <div className="bg-gray-50 rounded-lg p-4">
                               <Tooltip content="Highest single investment amount in this asset">
-                                <div className="flex justify-between cursor-help">
-                                  <span className="text-sm text-gray-600">Largest Investment</span>
-                                  <span className="text-sm font-medium text-charcoal">$15,000</span>
+                                <div className="cursor-help">
+                                  <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">Largest Investment</div>
+                                  <div className="text-lg font-semibold text-charcoal">$15,000</div>
                                 </div>
                               </Tooltip>
                             </div>
