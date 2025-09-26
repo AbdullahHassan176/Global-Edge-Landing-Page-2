@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
+import QuickActionBar from '@/components/issuer/QuickActionBar';
 
 interface AssetDetailLayoutProps {
   children: React.ReactNode;
@@ -96,6 +97,17 @@ export default function AssetDetailLayout({ children }: AssetDetailLayoutProps) 
                   <Icon name="check-circle" className="w-4 h-4 mr-1" />
                   Active
                 </span>
+              </div>
+            </div>
+            
+            {/* Quick Actions Bar */}
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Quick Actions</h3>
+                  <p className="text-xs text-gray-500">Administrative actions for this asset</p>
+                </div>
+                <QuickActionBar assetKey={assetKey} />
               </div>
             </div>
           </div>
