@@ -22,7 +22,7 @@ class OAuthService {
 
   private linkedinConfig: OAuthConfig = {
     clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '77wo1ift9iqifp',
-    redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
+    redirectUri: `${process.env.NEXT_PUBLIC_APP_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
     scope: 'r_liteprofile r_emailaddress'
   };
 
@@ -54,9 +54,13 @@ class OAuthService {
 
   // LinkedIn OAuth
   initiateLinkedInLogin() {
+    console.log('=== LinkedIn OAuth Debug ===');
     console.log('Environment variables:');
     console.log('NEXT_PUBLIC_LINKEDIN_CLIENT_ID:', process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID);
-    console.log('Initiating LinkedIn OAuth with client ID:', this.linkedinConfig.clientId);
+    console.log('NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL);
+    console.log('LinkedIn Config:', this.linkedinConfig);
+    console.log('Client ID:', this.linkedinConfig.clientId);
+    console.log('Redirect URI:', this.linkedinConfig.redirectUri);
     
     if (!this.linkedinConfig.clientId) {
       alert('LinkedIn OAuth is not configured. Please contact support or use email/password login.');
@@ -73,8 +77,12 @@ class OAuthService {
     });
 
     const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`;
-    console.log('LinkedIn OAuth URL:', linkedinAuthUrl);
-    console.log('LinkedIn OAuth URL parameters:', params.toString());
+    console.log('=== LinkedIn OAuth URL ===');
+    console.log('Full URL:', linkedinAuthUrl);
+    console.log('Parameters:', params.toString());
+    console.log('Client ID in URL:', params.get('client_id'));
+    console.log('=== End Debug ===');
+    
     window.location.href = linkedinAuthUrl;
   }
 
