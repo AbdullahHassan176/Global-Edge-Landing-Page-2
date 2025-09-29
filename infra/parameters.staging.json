@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "env": {
+      "value": "staging"
+    },
+    "appName": {
+      "value": "global-edge-staging"
+    },
+    "pgSkuName": {
+      "value": "GP_Standard_D4s_v3"
+    },
+    "pgVersion": {
+      "value": "16"
+    },
+    "enablePublicAccess": {
+      "value": false
+    },
+    "containerAppsSku": {
+      "value": "Consumption"
+    },
+    "storageSku": {
+      "value": "Standard_GRS"
+    }
+  }
+}

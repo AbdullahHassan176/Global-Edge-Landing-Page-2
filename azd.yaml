@@ -1,0 +1,48 @@
+name: global-edge-portal
+metadata:
+  template: custom
+  version: 1.0.0
+  description: Global Edge Tokenization Platform - Complete Azure deployment management
+
+hooks:
+  postprovision:
+    shell: bash
+    run: ./scripts/post_deploy_check.sh
+  postdeploy:
+    shell: bash
+    run: ./scripts/migrate.sh
+
+infra:
+  provider: bicep
+  path: ./infra
+
+services:
+  web:
+    project: ./src
+    dist: ./.next
+    language: js
+    host: containerapp
+    docker:
+      path: ./Dockerfile
+    env:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_BASE: azure
+  api:
+    project: ./src/app/api
+    language: js
+    host: containerapp
+    docker:
+      path: ./Dockerfile.api
+    env:
+      NODE_ENV: production
+
+environments:
+  dev:
+    subscription: ${AZURE_SUBSCRIPTION_ID}
+    location: East US
+  staging:
+    subscription: ${AZURE_SUBSCRIPTION_ID}
+    location: East US
+  prod:
+    subscription: ${AZURE_SUBSCRIPTION_ID}
+    location: East US

@@ -16,7 +16,8 @@
     "@typescript-eslint/no-non-null-assertion": "warn",
     "react-hooks/exhaustive-deps": "warn",
     "react/no-unescaped-entities": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "no-restricted-syntax": "off"
   },
   "env": {
     "browser": true,
