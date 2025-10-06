@@ -1,4 +1,5 @@
 
+import Head from 'next/head';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
@@ -9,6 +10,74 @@ export default function RiskDisclosuresPage() {
   
   return (
     <>
+      <Head>
+        <title>Risk Disclosures | Investment Risk Awareness | The Global Edge</title>
+        <meta name="description" content="Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education." />
+        <meta name="keywords" content="risk disclosures, investment risk awareness, tokenized asset risks, investment transparency, investor education, risk management, investment warnings" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/risk-disclosures" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Risk Disclosures | Investment Risk Awareness | The Global Edge" />
+        <meta property="og:description" content="Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/risk-disclosures" />
+        <meta property="og:image" content="https://theglobaledge.io/og-risk-disclosures.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Risk Disclosures | Investment Risk Awareness | The Global Edge" />
+        <meta name="twitter:description" content="Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-risk-disclosures.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Risk Disclosures - Investment Risk Awareness",
+              "description": "Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education.",
+              "url": "https://theglobaledge.io/risk-disclosures",
+              "mainEntity": {
+                "@type": "Article",
+                "headline": "Investment Risk Disclosure",
+                "description": "Comprehensive risk disclosures for tokenized asset investments",
+                "author": {
+                  "@type": "Organization",
+                  "name": "The Global Edge Risk Management Team"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "datePublished": "2024-01-01",
+                "dateModified": "2024-01-01",
+                "articleSection": "Risk Management"
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Risk Disclosures",
+                    "item": "https://theglobaledge.io/risk-disclosures"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
       {/* COMPONENT: Risk Disclosures Hero */}
       <section id="risk-disclosures-hero" className="bg-gradient-to-br from-red-600 via-orange-500 to-yellow-500 h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-30"></div>
@@ -18,10 +87,13 @@ export default function RiskDisclosuresPage() {
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">RISK DISCLOSURES</span>
                   </div>
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
-                      Important Risk Disclosures
+                      Investment Risk Disclosure
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Transparency for Every Investor
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Please read these risk disclosures carefully before investing. All investments carry risk of loss.
+                      Please read these risk disclosures carefully before investing. All investments carry risk of loss. Learn more in our <Link href="/faq" className="underline hover:text-global-teal transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link>.
                   </p>
               </div>
           </div>
@@ -53,7 +125,7 @@ export default function RiskDisclosuresPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">General Investment Risks</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">All investments carry inherent risks that you should understand</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">All investments carry inherent risks that you should understand. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -113,7 +185,7 @@ export default function RiskDisclosuresPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Asset-Specific Risks</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Different asset types carry unique risks you should understand</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Different asset types carry unique risks you should understand. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
               </div>
 
               <div className="space-y-12">
@@ -205,7 +277,7 @@ export default function RiskDisclosuresPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Risk Mitigation Measures</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We implement various measures to help mitigate investment risks</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We implement various measures to help mitigate investment risks. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
@@ -261,7 +333,7 @@ export default function RiskDisclosuresPage() {
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Investment Suitability</h2>
-                  <p className="text-xl text-gray-600">Consider whether tokenized assets are suitable for your investment profile</p>
+                  <p className="text-xl text-gray-600">Consider whether tokenized assets are suitable for your investment profile. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-lg">
@@ -313,7 +385,7 @@ export default function RiskDisclosuresPage() {
       <section id="risk-contact" className="py-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-6">Questions About Risks?</h2>
-              <p className="text-xl text-gray-600 mb-8">Contact our risk management team for more information</p>
+              <p className="text-xl text-gray-600 mb-8">Contact our risk management team for more information. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
               
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="grid md:grid-cols-2 gap-8">

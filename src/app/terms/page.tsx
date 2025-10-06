@@ -1,4 +1,5 @@
 
+import Head from 'next/head';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
 
@@ -9,6 +10,74 @@ export default function TermsPage() {
   
   return (
     <>
+      <Head>
+        <title>Terms & Conditions | The Global Edge UAE</title>
+        <meta name="description" content="Review the terms governing your use of The Global Edge platform and tokenization services." />
+        <meta name="keywords" content="terms and conditions, Global Edge UAE, platform terms, tokenization services, user agreement, legal terms, platform governance, service terms" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/terms" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Terms & Conditions | The Global Edge UAE" />
+        <meta property="og:description" content="Review the terms governing your use of The Global Edge platform and tokenization services." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/terms" />
+        <meta property="og:image" content="https://theglobaledge.io/og-terms.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Terms & Conditions | The Global Edge UAE" />
+        <meta name="twitter:description" content="Review the terms governing your use of The Global Edge platform and tokenization services." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-terms.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Terms & Conditions - The Global Edge UAE",
+              "description": "Review the terms governing your use of The Global Edge platform and tokenization services",
+              "url": "https://theglobaledge.io/terms",
+              "mainEntity": {
+                "@type": "Article",
+                "headline": "Terms & Conditions",
+                "description": "Your agreement with The Global Edge platform and tokenization services",
+                "author": {
+                  "@type": "Organization",
+                  "name": "The Global Edge Legal Team"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "datePublished": "2024-12-20",
+                "dateModified": "2024-12-20",
+                "articleSection": "Legal Terms"
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Terms & Conditions",
+                    "item": "https://theglobaledge.io/terms"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
       {/* COMPONENT: Terms Hero */}
       <section id="terms-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -17,8 +86,11 @@ export default function TermsPage() {
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
                       Terms & Conditions
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Your Agreement with The Global Edge
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Please read these terms carefully before using our platform.
+                      Please read these terms carefully before using our platform. Review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> and <Link href="/cookies" className="underline hover:text-global-teal transition-colors">cookie policy</Link> for complete information.
                   </p>
               </div>
           </div>
@@ -32,7 +104,7 @@ export default function TermsPage() {
                       <p className="text-sm text-gray-600 mb-4">Last updated: December 20, 2024</p>
                       <p className="text-gray-700 leading-relaxed">
                           These Terms and Conditions ("Terms") govern your use of the Global Edge platform and services. 
-                          By accessing or using our platform, you agree to be bound by these Terms.
+                          By accessing or using our platform, you agree to be bound by these Terms. Please also review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/cookies" className="text-global-teal hover:text-edge-purple transition-colors">cookie policy</Link> for complete information.
                       </p>
                   </div>
 
@@ -62,6 +134,9 @@ export default function TermsPage() {
                           <h2 className="text-2xl font-poppins font-bold text-charcoal mb-4">3. User Accounts and Registration</h2>
                           <p className="text-gray-700 leading-relaxed mb-4">
                               To access certain features of our platform, you must register for an account. You agree to:
+                          </p>
+                          <p className="text-gray-700 leading-relaxed mb-4">
+                              For more information about data handling, please review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/cookies" className="text-global-teal hover:text-edge-purple transition-colors">cookie policy</Link>.
                           </p>
                           <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
                               <li>Provide accurate, current, and complete information during registration</li>
@@ -171,6 +246,9 @@ export default function TermsPage() {
                           <p className="text-gray-700 leading-relaxed mb-4">
                               If you have any questions about these Terms, please contact us at:
                           </p>
+                          <p className="text-gray-700 leading-relaxed mb-4">
+                              For additional information, please review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/cookies" className="text-global-teal hover:text-edge-purple transition-colors">cookie policy</Link>.
+                          </p>
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
                                   <strong>{businessConfig.companyName}</strong><br />
@@ -189,6 +267,7 @@ export default function TermsPage() {
       <section id="related-links" className="py-20 bg-gray-50">
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-8 text-center">Related Legal Documents</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">Review our complete legal framework. Learn about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/cookies" className="text-global-teal hover:text-edge-purple transition-colors">cookie policy</Link>.</p>
               
               <div className="grid md:grid-cols-3 gap-6">
                   <Link href="/privacy" className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center group">

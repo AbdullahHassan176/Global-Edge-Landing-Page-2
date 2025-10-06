@@ -1,4 +1,5 @@
 
+import Head from 'next/head';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
 
@@ -9,6 +10,74 @@ export default function PrivacyPage() {
   
   return (
     <>
+      <Head>
+        <title>Privacy Policy | Data Protection | The Global Edge</title>
+        <meta name="description" content="Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations." />
+        <meta name="keywords" content="privacy policy, data protection, personal data, UAE data protection, data collection, data storage, data usage, privacy rights, data security" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/privacy" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Privacy Policy | Data Protection | The Global Edge" />
+        <meta property="og:description" content="Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/privacy" />
+        <meta property="og:image" content="https://theglobaledge.io/og-privacy.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Privacy Policy | Data Protection | The Global Edge" />
+        <meta name="twitter:description" content="Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-privacy.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Privacy Policy - Data Protection",
+              "description": "Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations",
+              "url": "https://theglobaledge.io/privacy",
+              "mainEntity": {
+                "@type": "Article",
+                "headline": "Privacy Policy",
+                "description": "Protecting your personal information in accordance with UAE data protection regulations",
+                "author": {
+                  "@type": "Organization",
+                  "name": "The Global Edge Privacy Team"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "datePublished": "2024-12-20",
+                "dateModified": "2024-12-20",
+                "articleSection": "Privacy & Data Protection"
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Privacy Policy",
+                    "item": "https://theglobaledge.io/privacy"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
       {/* COMPONENT: Privacy Hero */}
       <section id="privacy-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -17,8 +86,11 @@ export default function PrivacyPage() {
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
                       Privacy Policy
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Protecting Your Personal Information
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Your privacy is important to us. Learn how we protect and use your information.
+                      Your privacy is important to us. Learn how we protect and use your information. Review our <Link href="/terms" className="underline hover:text-global-teal transition-colors">terms and conditions</Link> and <Link href="/security" className="underline hover:text-global-teal transition-colors">security measures</Link>.
                   </p>
               </div>
           </div>
@@ -32,7 +104,7 @@ export default function PrivacyPage() {
                       <p className="text-sm text-gray-600 mb-4">Last updated: December 20, 2024</p>
                       <p className="text-gray-700 leading-relaxed">
                           This Privacy Policy describes how Global Edge collects, uses, and protects your personal information 
-                          when you use our platform and services.
+                          when you use our platform and services. Please also review our <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms and conditions</Link> and <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link>.
                       </p>
                   </div>
 
@@ -94,7 +166,7 @@ export default function PrivacyPage() {
                       <div>
                           <h2 className="text-2xl font-poppins font-bold text-charcoal mb-4">4. Data Security</h2>
                           <p className="text-gray-700 leading-relaxed mb-4">
-                              We implement comprehensive security measures to protect your information:
+                              We implement comprehensive security measures to protect your information. Learn more about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and review our <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms and conditions</Link>.
                           </p>
                           <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
                               <li>End-to-end encryption for data transmission</li>
@@ -189,6 +261,9 @@ export default function PrivacyPage() {
                           <p className="text-gray-700 leading-relaxed mb-4">
                               If you have questions about this Privacy Policy or our data practices, please contact us:
                           </p>
+                          <p className="text-gray-700 leading-relaxed mb-4">
+                              For additional information, please review our <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms and conditions</Link> and <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link>.
+                          </p>
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
                                   <strong>{businessConfig.companyName} Privacy Team</strong><br />
@@ -207,6 +282,7 @@ export default function PrivacyPage() {
       <section id="data-protection-rights" className="py-20 bg-gray-50">
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Your Data Protection Rights</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">Understand your rights regarding personal data. Learn about our <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms and conditions</Link> and <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link>.</p>
               
               <div className="grid md:grid-cols-2 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg">

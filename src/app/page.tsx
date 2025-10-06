@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { getPartnersForLandingPage } from '@/lib/partnersData';
 import WaitlistModal from '@/components/ui/WaitlistModal';
@@ -14,28 +15,91 @@ export default function HomePage() {
 
   return (
     <>
+      <Head>
+        <title>Real-World Asset Tokenization UAE | The Global Edge</title>
+        <meta name="description" content="The Global Edge is a VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets." />
+        <meta name="keywords" content="real-world asset tokenization UAE, VARA compliance, asset tokenization Dubai, RWA tokenization, digital assets UAE, blockchain investment, tokenized real estate, container tokenization" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Real-World Asset Tokenization UAE | The Global Edge" />
+        <meta property="og:description" content="VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io" />
+        <meta property="og:image" content="https://theglobaledge.io/og-image.jpg" />
+        <meta property="og:site_name" content="The Global Edge" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Real-World Asset Tokenization UAE | The Global Edge" />
+        <meta name="twitter:description" content="VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-image.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "The Global Edge",
+              "url": "https://theglobaledge.io",
+              "logo": "https://theglobaledge.io/logo.png",
+              "description": "VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets.",
+              "foundingDate": "2024",
+              "industry": "Financial Technology",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "AE",
+                "addressRegion": "UAE"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "info@theglobaledge.io"
+              },
+              "sameAs": [
+                "https://linkedin.com/company/global-edge",
+                "https://twitter.com/globaledge"
+              ],
+              "offers": {
+                "@type": "Offer",
+                "name": "Real-World Asset Tokenization",
+                "description": "VARA-compliant tokenization of containers, real estate, and logistics assets in the UAE",
+                "price": "Variable",
+                "priceCurrency": "AED"
+              }
+            })
+          }}
+        />
+      </Head>
+      
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
           <div className="max-w-3xl text-white">
             <h1 className="text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight">
-              Tokenizing Global Trade Logistics & Real Assets
+              Tokenizing Real-World Assets with Confidence
             </h1>
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight">
+              Backed by Compliance. Powered by Innovation.
+            </h2>
             <p className="text-xl lg:text-2xl mb-8 font-inter font-light opacity-90">
-              Invest in asset-backed tokens with complete transparency. Own fractions of shipping containers, real estate, and trade inventory with blockchain-verified provenance.
+              Invest in asset-backed tokens with complete transparency. Own fractions of <Link href="/assets?category=containers" className="underline hover:text-global-teal transition-colors">shipping containers</Link>, <Link href="/assets?category=property" className="underline hover:text-global-teal transition-colors">real estate</Link>, and <Link href="/assets?category=tradetokens" className="underline hover:text-global-teal transition-colors">trade inventory</Link> with blockchain-verified provenance.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
               <Link href="/assets" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
                 Explore Assets
                 <Icon name="arrow-right" className="ml-2" size={8} />
               </Link>
-              <button 
-                onClick={() => setShowWaitlistModal(true)}
-                className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors"
-              >
-                Join Investor Waitlist
-              </button>
+              <Link href="/how-it-works" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                How It Works
+              </Link>
+              <Link href="/investors" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                For Investors
+              </Link>
             </div>
           </div>
         </div>
@@ -81,7 +145,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">How It Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to start investing in tokenized real-world assets</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to start investing in <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">tokenized real-world assets</Link>. Learn more about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">VARA-compliant process</Link> and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
           </div>
           <div className="grid md:grid-cols-5 gap-8">
             <Link href="/register" className="text-center group cursor-pointer">
@@ -128,7 +192,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Investment Categories</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Diversify across multiple real-world asset classes</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Diversify across multiple <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">real-world asset classes</Link></p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <Link href="/assets?category=containers" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
@@ -240,7 +304,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Security & Compliance</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Built with institutional-grade security and regulatory compliance</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Built with <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">institutional-grade security</Link> and <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">regulatory compliance</Link></p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <Link href="/security" className="text-center group cursor-pointer">
@@ -300,7 +364,7 @@ export default function HomePage() {
           <div className="flex justify-between items-center mb-12">
             <div>
               <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Latest Insights</h2>
-              <p className="text-xl text-gray-600">Stay informed about market trends and opportunities</p>
+              <p className="text-xl text-gray-600">Stay informed about <Link href="/insights" className="text-global-teal hover:text-edge-purple transition-colors">market trends and opportunities</Link></p>
             </div>
             <Link href="/insights" className="text-global-teal font-medium hover:text-edge-purple transition-colors">
               View All Articles

@@ -1,6 +1,7 @@
 
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -38,16 +39,88 @@ export default function StatusPage() {
   };
   return (
     <>
+      <Head>
+        <title>Platform Status | Uptime & Maintenance | The Global Edge</title>
+        <meta name="description" content="Check real-time uptime and system maintenance updates for The Global Edge tokenization platform." />
+        <meta name="keywords" content="platform status, uptime, maintenance, system status, tokenization platform, real-time status, service monitoring, system updates, platform health" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/status" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Platform Status | Uptime & Maintenance | The Global Edge" />
+        <meta property="og:description" content="Check real-time uptime and system maintenance updates for The Global Edge tokenization platform." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/status" />
+        <meta property="og:image" content="https://theglobaledge.io/og-status.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Platform Status | Uptime & Maintenance | The Global Edge" />
+        <meta name="twitter:description" content="Check real-time uptime and system maintenance updates for The Global Edge tokenization platform." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-status.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Platform Status - Uptime & Maintenance",
+              "description": "Check real-time uptime and system maintenance updates for The Global Edge tokenization platform",
+              "url": "https://theglobaledge.io/status",
+              "mainEntity": {
+                "@type": "Article",
+                "headline": "Platform Status",
+                "description": "System uptime and service announcements for The Global Edge platform",
+                "author": {
+                  "@type": "Organization",
+                  "name": "The Global Edge Technical Team"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "datePublished": "2024-12-20",
+                "dateModified": "2024-12-20",
+                "articleSection": "System Status"
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Platform Status",
+                    "item": "https://theglobaledge.io/status"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
+      
       {/* COMPONENT: Status Hero */}
       <section id="status-hero" className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-500 h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
               <div className="max-w-4xl text-white">
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
-                      System Status
+                      Platform Status
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      System Uptime & Service Announcements
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Real-time status of all Global Edge services and systems.
+                      Real-time status of all Global Edge services and systems. Learn about our <Link href="/security" className="underline hover:text-global-teal transition-colors">security measures</Link> and <Link href="/contact" className="underline hover:text-global-teal transition-colors">contact us</Link> for support.
                   </p>
               </div>
           </div>
@@ -94,6 +167,7 @@ export default function StatusPage() {
       <section id="service-status" className="py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Service Status</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">Monitor all platform services in real-time. Learn about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for support.</p>
               
               <div className="space-y-6">
                   <div className="bg-white rounded-2xl p-6 shadow-lg">
@@ -247,6 +321,7 @@ export default function StatusPage() {
       <section id="performance-metrics" className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Performance Metrics</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">Track platform performance and reliability. Learn about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for support.</p>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
@@ -292,6 +367,7 @@ export default function StatusPage() {
       <section id="recent-incidents" className="py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Recent Incidents</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">View incident history and resolution status. Learn about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for support.</p>
               
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="text-center py-12">
@@ -312,6 +388,7 @@ export default function StatusPage() {
       <section id="maintenance-schedule" className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Scheduled Maintenance</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">View upcoming maintenance windows and updates. Learn about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for support.</p>
               
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="text-center py-12">
@@ -332,6 +409,7 @@ export default function StatusPage() {
       <section id="status-updates" className="py-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Stay Updated</h2>
+              <p className="text-xl text-gray-600 mb-8 text-center">Subscribe to status updates and notifications. Learn about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for support.</p>
               
               <div className="grid md:grid-cols-2 gap-8">
                   <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
@@ -372,7 +450,7 @@ export default function StatusPage() {
       <section id="status-contact" className="py-20 bg-gray-50">
           <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-6">Experiencing Issues?</h2>
-              <p className="text-xl text-gray-600 mb-8">If you're experiencing problems not reflected in our status page, please contact our support team.</p>
+              <p className="text-xl text-gray-600 mb-8">If you're experiencing problems not reflected in our status page, please contact our support team. Learn about our <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">security measures</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for support.</p>
               
               <div className="bg-white rounded-2xl p-8 shadow-lg">
                   <div className="grid md:grid-cols-2 gap-8">

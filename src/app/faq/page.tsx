@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
@@ -22,6 +23,91 @@ export default function FAQPage() {
   };
   return (
     <>
+      <Head>
+        <title>FAQs | Tokenization Platform Questions | The Global Edge</title>
+        <meta name="description" content="Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding." />
+        <meta name="keywords" content="FAQs, tokenization platform questions, VARA compliance, asset tokenization, investor onboarding, platform questions, tokenization FAQ, RWA questions" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/faq" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="FAQs | Tokenization Platform Questions | The Global Edge" />
+        <meta property="og:description" content="Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/faq" />
+        <meta property="og:image" content="https://theglobaledge.io/og-faq.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FAQs | Tokenization Platform Questions | The Global Edge" />
+        <meta name="twitter:description" content="Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-faq.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "name": "Frequently Asked Questions - The Global Edge Platform",
+              "description": "Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding",
+              "url": "https://theglobaledge.io/faq",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "What is The Global Edge platform?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Global Edge is a VARA-compliant platform that tokenizes real-world assets like shipping containers, real estate, and trade inventory, allowing investors to own fractional shares of these assets through blockchain technology."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How does asset tokenization work?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Asset tokenization involves converting ownership rights of physical assets into digital tokens on a blockchain. Each token represents a fractional ownership stake in the underlying asset, with full VARA compliance."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What is VARA compliance?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "VARA (Virtual Asset Regulatory Authority) compliance ensures that our platform meets UAE regulatory standards for virtual asset operations, providing investor protection and regulatory oversight."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What is the minimum investment amount?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The minimum investment varies by asset type, but most assets can be invested in with as little as $50. Some premium assets may have higher minimums, typically ranging from $100 to $1,000."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How are my assets protected?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your assets are protected by multiple layers of security including cold storage, multi-signature wallets, comprehensive insurance coverage, and VARA regulatory compliance."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How do I get started as an investor?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "To get started, create an account, complete KYC verification, and fund your account. You can then browse available tokenized assets and make your first investment."
+                  }
+                }
+              ]
+            })
+          }}
+        />
+      </Head>
+      
       {/* COMPONENT: FAQ Hero */}
       <section id="faq-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -33,8 +119,11 @@ export default function FAQPage() {
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
                       Frequently Asked Questions
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Everything You Need to Know About Tokenization
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Find answers to common questions about tokenized assets, investing, and our platform.
+                      Find answers to common questions about <Link href="/assets" className="underline hover:text-global-teal transition-colors">tokenized assets</Link>, <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">investing</Link>, and our platform. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and explore <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>.
                   </p>
               </div>
           </div>
@@ -45,7 +134,7 @@ export default function FAQPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Browse by Category</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Find answers organized by topic</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Find answers organized by topic. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-4 gap-6 mb-16">
@@ -245,7 +334,7 @@ export default function FAQPage() {
       <section id="contact-support" className="py-20 bg-gray-50">
           <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
               <h2 className="text-3xl font-poppins font-bold text-charcoal mb-6">Still Have Questions?</h2>
-              <p className="text-xl text-gray-600 mb-8">Our support team is here to help you with any questions or concerns.</p>
+              <p className="text-xl text-gray-600 mb-8">Our support team is here to help you with any questions or concerns. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               
               <div className="grid md:grid-cols-3 gap-6 mb-12">
                   <div className="bg-white rounded-2xl p-6 shadow-lg">

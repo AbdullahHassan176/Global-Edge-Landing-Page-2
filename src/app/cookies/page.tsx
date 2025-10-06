@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
@@ -151,6 +152,75 @@ export default function CookiesPage() {
   
   return (
     <>
+      <Head>
+        <title>Cookies Policy | Analytics & Performance | The Global Edge</title>
+        <meta name="description" content="Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience." />
+        <meta name="keywords" content="cookies policy, analytics, performance, site performance, user experience, cookie management, browser preferences, tracking cookies, analytics cookies" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/cookies" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Cookies Policy | Analytics & Performance | The Global Edge" />
+        <meta property="og:description" content="Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/cookies" />
+        <meta property="og:image" content="https://theglobaledge.io/og-cookies.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Cookies Policy | Analytics & Performance | The Global Edge" />
+        <meta name="twitter:description" content="Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-cookies.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Cookies Policy - Analytics & Performance",
+              "description": "Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience",
+              "url": "https://theglobaledge.io/cookies",
+              "mainEntity": {
+                "@type": "Article",
+                "headline": "Cookies Policy",
+                "description": "Managing your browser preferences for cookies and analytics",
+                "author": {
+                  "@type": "Organization",
+                  "name": "The Global Edge Privacy Team"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "datePublished": "2024-12-20",
+                "dateModified": "2024-12-20",
+                "articleSection": "Privacy & Cookies"
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Cookies Policy",
+                    "item": "https://theglobaledge.io/cookies"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
+      
       <NotificationSystem
         notifications={notifications}
         onRemove={removeNotification}
@@ -164,8 +234,11 @@ export default function CookiesPage() {
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
                       Cookie Policy
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Managing Your Browser Preferences
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Learn how we use cookies and similar technologies to enhance your experience.
+                      Learn how we use cookies and similar technologies to enhance your experience. Review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> for complete information.
                   </p>
               </div>
           </div>
@@ -178,7 +251,7 @@ export default function CookiesPage() {
                   <div className="mb-8">
                       <p className="text-sm text-gray-600 mb-4">Last updated: December 20, 2024</p>
                       <p className="text-gray-700 leading-relaxed">
-                          This Cookie Policy explains how Global Edge uses cookies and similar technologies when you visit our website and use our platform.
+                          This Cookie Policy explains how Global Edge uses cookies and similar technologies when you visit our website and use our platform. Please also review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> for complete information.
                       </p>
                   </div>
 
@@ -281,7 +354,7 @@ export default function CookiesPage() {
                       <div>
                           <h2 className="text-2xl font-poppins font-bold text-charcoal mb-4">Managing Your Cookie Preferences</h2>
                           <p className="text-gray-700 leading-relaxed mb-4">
-                              You have several options for managing cookies:
+                              You have several options for managing cookies. Learn more about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> for complete information.
                           </p>
                           
                           <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Browser Settings</h3>
@@ -332,6 +405,9 @@ export default function CookiesPage() {
                           <p className="text-gray-700 leading-relaxed mb-4">
                               If you have any questions about our use of cookies, please contact us:
                           </p>
+                          <p className="text-gray-700 leading-relaxed mb-4">
+                              For additional information, please review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.
+                          </p>
                           <div className="bg-gray-50 rounded-lg p-6">
                               <p className="text-gray-700">
                                   <strong>{businessConfig.companyName} Privacy Team</strong><br />
@@ -350,6 +426,7 @@ export default function CookiesPage() {
         <section id="cookie-management" className="py-20 bg-gray-50">
             <div className="max-w-4xl mx-auto px-6 lg:px-8">
                 <h2 className="text-3xl font-poppins font-bold text-charcoal mb-12 text-center">Manage Your Cookie Preferences</h2>
+                <p className="text-xl text-gray-600 mb-8 text-center">Control your cookie settings and preferences. Learn more about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
                 
                 <div className="bg-white rounded-2xl p-8 shadow-lg">
                     <div className="space-y-6">

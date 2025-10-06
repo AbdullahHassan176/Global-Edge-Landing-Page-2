@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -34,6 +35,7 @@
     "highcharts": "^11.2.0",
     "highcharts-react-official": "^3.2.1",
     "next": "14.0.4",
+    "next-sitemap": "^4.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",

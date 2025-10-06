@@ -1,5 +1,6 @@
 
 import Link from 'next/link';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
@@ -9,6 +10,71 @@ export default function SecurityPage() {
   
   return (
     <>
+      <Head>
+        <title>Security | Blockchain, Compliance & Infrastructure | The Global Edge</title>
+        <meta name="description" content="Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance." />
+        <meta name="keywords" content="blockchain security, VARA compliance, tokenized asset security, data protection, transaction security, infrastructure security, regulatory compliance, blockchain integrity" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/security" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Security | Blockchain, Compliance & Infrastructure | The Global Edge" />
+        <meta property="og:description" content="Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/security" />
+        <meta property="og:image" content="https://theglobaledge.io/og-security.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Security | Blockchain, Compliance & Infrastructure | The Global Edge" />
+        <meta name="twitter:description" content="Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-security.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "TechArticle",
+              "headline": "Security: Blockchain, Compliance & Infrastructure",
+              "description": "Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance",
+              "url": "https://theglobaledge.io/security",
+              "datePublished": "2024-01-01",
+              "dateModified": "2024-01-01",
+              "author": {
+                "@type": "Organization",
+                "name": "The Global Edge Security Team"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "The Global Edge",
+                "url": "https://theglobaledge.io"
+              },
+              "about": [
+                {
+                  "@type": "Thing",
+                  "name": "Blockchain Security",
+                  "description": "Security measures for blockchain-based tokenized assets"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "VARA Compliance",
+                  "description": "Regulatory compliance with UAE Virtual Asset Regulatory Authority"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Data Protection",
+                  "description": "Comprehensive data security and privacy protection measures"
+                }
+              ],
+              "articleSection": "Security & Compliance",
+              "wordCount": 1500
+            })
+          }}
+        />
+      </Head>
+      
       {/* COMPONENT: Security Hero */}
       <section id="security-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -18,10 +84,13 @@ export default function SecurityPage() {
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">SECURITY</span>
                   </div>
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
-                      Bank-Grade Security for Your Investments
+                      Our Security Commitment
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Blockchain Integrity Meets Regulatory Trust
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Your assets are protected by institutional-grade security measures and regulatory compliance.
+                      Your <Link href="/assets" className="underline hover:text-global-teal transition-colors">assets</Link> are protected by institutional-grade security measures and <Link href="/security" className="underline hover:text-global-teal transition-colors">regulatory compliance</Link>. Learn about our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> and <Link href="/terms" className="underline hover:text-global-teal transition-colors">terms of service</Link>.
                   </p>
               </div>
           </div>
@@ -32,7 +101,7 @@ export default function SecurityPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Multi-Layer Security Architecture</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We employ multiple layers of security to protect your investments and personal data</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We employ multiple layers of security to protect your investments and personal data. Learn about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms of service</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -92,7 +161,7 @@ export default function SecurityPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Security Standards & Certifications</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We maintain the highest security standards and undergo regular audits</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We maintain the highest security standards and undergo regular audits. Learn about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms of service</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12">
@@ -267,7 +336,7 @@ export default function SecurityPage() {
                   Invest with Confidence
               </h2>
               <p className="text-xl text-white opacity-90 mb-8">
-                  Your security is our top priority. Start investing in tokenized assets with complete peace of mind.
+                  Your security is our top priority. Start investing in tokenized assets with complete peace of mind. Learn about our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> and <Link href="/terms" className="underline hover:text-global-teal transition-colors">terms of service</Link>.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                   <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">

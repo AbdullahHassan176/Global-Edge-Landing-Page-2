@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { assetService, Asset } from '@/lib/assetService';
 import { assetIntegration } from '@/lib/integration/assetIntegration';
@@ -310,6 +311,57 @@ export default function AssetsPage() {
 
   return (
     <>
+      <Head>
+        <title>Tokenized Assets | Container & Real Estate Tokens | The Global Edge</title>
+        <meta name="description" content="Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights." />
+        <meta name="keywords" content="tokenized assets, container tokens, real estate tokens, shipping container investment, property tokenization, blockchain assets, RWA tokens, digital assets" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/assets" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Tokenized Assets | Container & Real Estate Tokens | The Global Edge" />
+        <meta property="og:description" content="Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/assets" />
+        <meta property="og:image" content="https://theglobaledge.io/og-assets.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Tokenized Assets | Container & Real Estate Tokens | The Global Edge" />
+        <meta name="twitter:description" content="Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-assets.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": "Tokenized Real-World Assets",
+              "description": "Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights",
+              "url": "https://theglobaledge.io/assets",
+              "numberOfItems": assets.length,
+              "itemListElement": assets.slice(0, 10).map((asset, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                  "@type": "FinancialProduct",
+                  "name": asset.name,
+                  "description": `${asset.type} asset with ${asset.apr}% APR`,
+                  "category": asset.type,
+                  "offers": {
+                    "@type": "Offer",
+                    "price": asset.value,
+                    "priceCurrency": "USD"
+                  }
+                }
+              }))
+            })
+          }}
+        />
+      </Head>
+      
       {/* Enhanced Header with Breadcrumbs */}
       <section className="bg-gradient-to-r from-global-teal to-edge-purple h-[500px] relative overflow-hidden">
         <div className="absolute inset-0 bg-black bg-opacity-10"></div>
@@ -325,10 +377,13 @@ export default function AssetsPage() {
             </nav>
             
             <h1 className="text-4xl lg:text-6xl font-poppins font-bold mb-6 leading-tight">
-              Discover Tokenized Assets
+              Explore Tokenized Assets
             </h1>
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+              Invest in Tokenized Containers & Properties
+            </h2>
             <p className="text-xl lg:text-2xl font-inter font-light opacity-90 max-w-3xl mb-8">
-              Invest in verified real-world assets with transparent blockchain tracking, competitive returns, and institutional-grade security.
+              Invest in verified real-world assets with <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">transparent blockchain tracking</Link>, competitive returns, and <Link href="/security" className="underline hover:text-global-teal transition-colors">institutional-grade security</Link>. Learn about our <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link> and <Link href="/partners" className="underline hover:text-global-teal transition-colors">partner network</Link>.
             </p>
             
             {/* Quick Stats */}
@@ -944,7 +999,7 @@ export default function AssetsPage() {
                 <Icon name="building" className="text-green-600" />
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">Property</h3>
-              <p className="text-gray-600 mb-6">Commercial and residential real estate with rental income streams and long-term appreciation potential.</p>
+              <p className="text-gray-600 mb-6">Commercial and residential <Link href="/assets?category=property" className="text-global-teal hover:text-edge-purple transition-colors">real estate</Link> with rental income streams and long-term appreciation potential. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <p className="text-sm text-gray-500">Available Assets</p>
@@ -969,7 +1024,7 @@ export default function AssetsPage() {
                 <Icon name="boxes" className="text-purple-600" />
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">TradeTokens</h3>
-              <p className="text-gray-600 mb-6">Tokenized trade inventory with short-term returns from global supply chain movements and commodity trading.</p>
+              <p className="text-gray-600 mb-6">Tokenized <Link href="/assets?category=tradetokens" className="text-global-teal hover:text-edge-purple transition-colors">trade inventory</Link> with short-term returns from global supply chain movements and commodity trading. Discover our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and <Link href="/partners" className="text-global-teal hover:text-edge-purple transition-colors">partner network</Link>.</p>
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <p className="text-sm text-gray-500">Available Assets</p>
@@ -994,7 +1049,7 @@ export default function AssetsPage() {
                 <Icon name="vault" className="text-orange-600" />
               </div>
               <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">Vault</h3>
-              <p className="text-gray-600 mb-6">Secure storage for precious metals, gems, and high-value assets with insurance-backed protection and stable returns.</p>
+              <p className="text-gray-600 mb-6">Secure storage for <Link href="/assets?category=vault" className="text-global-teal hover:text-edge-purple transition-colors">precious metals</Link>, gems, and high-value assets with insurance-backed protection and stable returns. Explore our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <p className="text-sm text-gray-500">Available Assets</p>
@@ -1023,7 +1078,7 @@ export default function AssetsPage() {
             Ready to Start Investing?
           </h2>
           <p className="text-xl text-white opacity-90 mb-8">
-            Join thousands of investors earning returns from tokenized real-world assets
+            Join thousands of investors earning returns from tokenized real-world assets. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link>, explore <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>, and discover our <Link href="/partners" className="underline hover:text-global-teal transition-colors">partner network</Link>.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <button 

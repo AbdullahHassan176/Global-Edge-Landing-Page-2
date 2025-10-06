@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
@@ -62,7 +63,63 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <>
+      <Head>
+        <title>Dashboard | Asset Management & Investor Portal | The Global Edge</title>
+        <meta name="description" content="Access your investor dashboard — monitor tokenized assets, portfolio performance, and compliance documentation on The Global Edge platform." />
+        <meta name="keywords" content="investor dashboard, asset management, portfolio tracking, tokenized assets, investment portal, compliance documentation, RWA dashboard" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://theglobaledge.io/dashboard" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Dashboard | Asset Management & Investor Portal | The Global Edge" />
+        <meta property="og:description" content="Access your investor dashboard — monitor tokenized assets, portfolio performance, and compliance documentation on The Global Edge platform." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/dashboard" />
+        <meta property="og:image" content="https://theglobaledge.io/og-dashboard.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Dashboard | Asset Management & Investor Portal | The Global Edge" />
+        <meta name="twitter:description" content="Access your investor dashboard — monitor tokenized assets, portfolio performance, and compliance documentation on The Global Edge platform." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-dashboard.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "The Global Edge Dashboard",
+              "description": "Asset management and investor portal for monitoring tokenized assets, portfolio performance, and compliance documentation",
+              "url": "https://theglobaledge.io/dashboard",
+              "applicationCategory": "FinanceApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "name": "Asset Management Dashboard",
+                "description": "Monitor tokenized assets, portfolio performance, and compliance documentation"
+              },
+              "featureList": [
+                "Portfolio Analytics",
+                "Investment Tracking", 
+                "Asset Management",
+                "Compliance Documentation",
+                "Performance Monitoring",
+                "Transaction History"
+              ],
+              "provider": {
+                "@type": "Organization",
+                "name": "The Global Edge",
+                "url": "https://theglobaledge.io"
+              }
+            })
+          }}
+        />
+      </Head>
+      
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Header */}
       <header className="bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -91,13 +148,13 @@ export default function DashboardPage() {
                   <Icon name="user" className="text-white" />
                 )}
               </div>
-              <button
-                onClick={handleLogout}
+              <Link
+                href="/logout"
                 className="flex items-center text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100"
               >
                 <Icon name="logout" className="h-5 w-5 mr-2" />
                 Logout
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -117,10 +174,13 @@ export default function DashboardPage() {
             </span>
           </div>
           <h1 className="text-4xl font-poppins font-bold text-charcoal mb-4">
-            Welcome back, {user.name}!
+            Your Investment Dashboard
           </h1>
+          <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+            Manage Tokenized Assets Securely
+          </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Access your investment dashboard, manage your portfolio, and explore new opportunities in tokenized assets.
+            Access your investment dashboard, manage your portfolio, and explore new opportunities in <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">tokenized assets</Link>. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and manage your account.
           </p>
         </div>
 
@@ -213,7 +273,7 @@ export default function DashboardPage() {
                 <Icon name="search" className="text-white text-xl" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Browse Assets</h3>
-              <p className="text-sm text-gray-600 text-center">Explore investment opportunities</p>
+              <p className="text-sm text-gray-600 text-center">Explore <Link href="/assets" className="text-blue-600 hover:text-blue-800 transition-colors">investment opportunities</Link></p>
             </Link>
 
             <Link 
@@ -246,7 +306,7 @@ export default function DashboardPage() {
                 <Icon name="user" className="text-white text-xl" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Profile</h3>
-              <p className="text-sm text-gray-600 text-center">Manage your account</p>
+              <p className="text-sm text-gray-600 text-center">Manage your account and <Link href="/investors" className="text-orange-600 hover:text-orange-800 transition-colors">investment profile</Link></p>
             </Link>
           </div>
         </div>
@@ -276,6 +336,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
-    </div>
+      </div>
+    </>
   );
 }

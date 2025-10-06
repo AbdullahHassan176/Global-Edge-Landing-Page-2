@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -104,7 +105,77 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-global-teal via-blue-50 to-edge-purple flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <>
+      <Head>
+        <title>Login | Secure Access to The Global Edge Platform</title>
+        <meta name="description" content="Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights." />
+        <meta name="keywords" content="login, secure access, Global Edge platform, tokenized asset dashboard, investor tools, portfolio insights, user authentication" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="https://theglobaledge.io/login" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Login | Secure Access to The Global Edge Platform" />
+        <meta property="og:description" content="Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/login" />
+        <meta property="og:image" content="https://theglobaledge.io/og-login.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Login | Secure Access to The Global Edge Platform" />
+        <meta name="twitter:description" content="Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-login.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Login - Secure Access to The Global Edge Platform",
+              "description": "Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights",
+              "url": "https://theglobaledge.io/login",
+              "mainEntity": {
+                "@type": "Article",
+                "headline": "Login to The Global Edge",
+                "description": "Access your tokenized asset dashboard securely",
+                "author": {
+                  "@type": "Organization",
+                  "name": "The Global Edge Security Team"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "datePublished": "2024-12-20",
+                "dateModified": "2024-12-20",
+                "articleSection": "User Authentication"
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Login",
+                    "item": "https://theglobaledge.io/login"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
+      
+      <div className="min-h-screen bg-gradient-to-br from-global-teal via-blue-50 to-edge-purple flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="w-full h-full" style={{
@@ -128,11 +199,14 @@ export default function LoginPage() {
         </div>
         
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-poppins font-bold text-white mb-4">
-            Welcome Back
+          <h1 className="text-4xl font-poppins font-bold text-white mb-4">
+            Login to The Global Edge
+          </h1>
+          <h2 className="text-2xl font-poppins font-semibold text-white mb-4">
+            Access your tokenized asset dashboard securely
           </h2>
           <p className="text-white/80 text-lg">
-            Sign in to access your investment dashboard
+            Sign in to access your investment dashboard. <Link href="/register" className="underline hover:text-global-teal transition-colors">Create an account</Link> or review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link>.
           </p>
         </div>
       </div>
@@ -339,12 +413,16 @@ export default function LoginPage() {
         <div className="mt-8 text-center">
           <p className="text-white/80 text-sm">
             Don't have an account?{' '}
-            <Link href="/register/role" className="font-semibold text-white hover:text-global-teal transition-colors">
+            <Link href="/register" className="font-semibold text-white hover:text-global-teal transition-colors">
               Create one here
             </Link>
+          </p>
+          <p className="text-white/60 text-xs mt-2">
+            By signing in, you agree to our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link>.
           </p>
         </div>
       </div>
     </div>
+    </>
   );
 }

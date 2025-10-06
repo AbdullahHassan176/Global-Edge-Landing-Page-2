@@ -1,9 +1,83 @@
 
+import Head from 'next/head';
 import Link from 'next/link';
 
 export default function GetStartedPage() {
   return (
     <>
+      <Head>
+        <title>Get Started | Join The Global Edge Platform</title>
+        <meta name="description" content="Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today." />
+        <meta name="keywords" content="get started, join platform, investor registration, issuer registration, tokenized assets, digital asset ecosystem, platform onboarding, investment registration" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/get-started" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Get Started | Join The Global Edge Platform" />
+        <meta property="og:description" content="Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/get-started" />
+        <meta property="og:image" content="https://theglobaledge.io/og-get-started.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Get Started | Join The Global Edge Platform" />
+        <meta name="twitter:description" content="Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-get-started.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "Get Started - Join The Global Edge Platform",
+              "description": "Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today.",
+              "url": "https://theglobaledge.io/get-started",
+              "mainEntity": {
+                "@type": "Service",
+                "name": "Platform Registration",
+                "description": "Registration service for investors and issuers to join The Global Edge platform",
+                "provider": {
+                  "@type": "Organization",
+                  "name": "The Global Edge",
+                  "url": "https://theglobaledge.io"
+                },
+                "offers": [
+                  {
+                    "@type": "Offer",
+                    "name": "Investor Registration",
+                    "description": "Register as an investor to access tokenized assets"
+                  },
+                  {
+                    "@type": "Offer",
+                    "name": "Issuer Registration", 
+                    "description": "Register as an issuer to tokenize your assets"
+                  }
+                ]
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://theglobaledge.io"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Get Started",
+                    "item": "https://theglobaledge.io/get-started"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+      </Head>
       {/* COMPONENT: Get Started Hero */}
       <section id="get-started-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -13,10 +87,13 @@ export default function GetStartedPage() {
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">GET STARTED</span>
                   </div>
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
-                      Start Investing in Tokenized Assets Today
+                      Get Started with The Global Edge
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Register as an Investor or Issuer
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Join thousands of investors earning returns from real-world assets. Get started in minutes with our simple onboarding process.
+                      Join thousands of investors earning returns from real-world assets. Get started in minutes with our simple onboarding process. Learn about <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="underline hover:text-global-teal transition-colors">dashboard</Link>.
                   </p>
               </div>
           </div>
@@ -27,7 +104,7 @@ export default function GetStartedPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Get Started in 3 Simple Steps</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">From account creation to your first investment in under 10 minutes</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">From account creation to your first investment in under 10 minutes. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="text-global-teal hover:text-edge-purple transition-colors">dashboard</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
@@ -88,7 +165,7 @@ export default function GetStartedPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Choose Your Account Type</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Select the account type that best fits your investment needs</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Select the account type that best fits your investment needs. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="text-global-teal hover:text-edge-purple transition-colors">dashboard</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
@@ -170,7 +247,7 @@ export default function GetStartedPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Identity Verification Process</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Our KYC process is fast, secure, and compliant with international regulations</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Our KYC process is fast, secure, and compliant with international regulations. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="text-global-teal hover:text-edge-purple transition-colors">dashboard</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12">
@@ -281,7 +358,7 @@ export default function GetStartedPage() {
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Getting Started FAQ</h2>
-                  <p className="text-xl text-gray-600">Common questions about starting your investment journey</p>
+                  <p className="text-xl text-gray-600">Common questions about starting your investment journey. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="text-global-teal hover:text-edge-purple transition-colors">dashboard</Link>.</p>
               </div>
 
               <div className="space-y-8">
@@ -315,7 +392,7 @@ export default function GetStartedPage() {
                   Ready to Start Your Investment Journey?
               </h2>
               <p className="text-xl text-white opacity-90 mb-8">
-                  Join thousands of investors earning returns from tokenized real-world assets. Get started today.
+                  Join thousands of investors earning returns from tokenized real-world assets. Get started today. Learn about <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="underline hover:text-global-teal transition-colors">dashboard</Link>.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                   <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">

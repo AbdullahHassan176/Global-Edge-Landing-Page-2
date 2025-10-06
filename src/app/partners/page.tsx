@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
 import Link from 'next/link';
@@ -55,24 +56,111 @@ const partnershipBenefits = [
 export default function PartnersPage() {
   return (
     <>
+      <Head>
+        <title>Our Partners | Institutional Alliances | The Global Edge</title>
+        <meta name="description" content="Discover our ecosystem partners — logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE." />
+        <meta name="keywords" content="partners UAE, institutional alliances, logistics partners, asset managers, technology providers, tokenization infrastructure, blockchain partners, RWA partners" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/partners" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Our Partners | Institutional Alliances | The Global Edge" />
+        <meta property="og:description" content="Discover our ecosystem partners — logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/partners" />
+        <meta property="og:image" content="https://theglobaledge.io/og-partners.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Our Partners | Institutional Alliances | The Global Edge" />
+        <meta name="twitter:description" content="Discover our ecosystem partners — logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-partners.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "The Global Edge Partners",
+              "description": "Ecosystem partners including logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE",
+              "url": "https://theglobaledge.io/partners",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "AE"
+              },
+              "hasPart": [
+                {
+                  "@type": "Organization",
+                  "name": "Logistics Partners",
+                  "description": "Leading shipping and logistics companies enabling asset tokenization"
+                },
+                {
+                  "@type": "Organization", 
+                  "name": "Financial Partners",
+                  "description": "Banking and financial service providers supporting tokenized assets"
+                },
+                {
+                  "@type": "Organization",
+                  "name": "Technology Partners", 
+                  "description": "Blockchain and oracle infrastructure providers"
+                },
+                {
+                  "@type": "Organization",
+                  "name": "Legal & Compliance Partners",
+                  "description": "Legal and regulatory compliance partners ensuring VARA compliance"
+                }
+              ],
+              "memberOf": {
+                "@type": "Organization",
+                "name": "The Global Edge",
+                "url": "https://theglobaledge.io"
+              }
+            })
+          }}
+        />
+      </Head>
+      
       {/* Hero Section */}
-      <HeroSection
-        title="Partnership Program"
-        subtitle="PARTNER WITH US"
-        description="Join our ecosystem of leading companies in logistics, technology, and finance to unlock new opportunities in asset tokenization."
-        primaryButtonText="Become a Partner"
-        primaryButtonHref="/partner-application"
-        secondaryButtonText="View Partnership Benefits"
-        secondaryButtonHref="#benefits"
-        showArrow={true}
-      />
+      <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">
+        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
+          <div className="max-w-3xl text-white">
+            <div className="flex items-center mb-4">
+              <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">PARTNER WITH US</span>
+            </div>
+            <h1 className="text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight">
+              Our Partners
+            </h1>
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight">
+              Collaborating for Real-World Asset Innovation
+            </h2>
+            <p className="text-xl lg:text-2xl mb-8 font-inter font-light opacity-90">
+              Join our ecosystem of leading companies in logistics, technology, and finance to unlock new opportunities in asset tokenization. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and <Link href="/contact" className="underline hover:text-global-teal transition-colors">contact us</Link> for partnership opportunities.
+            </p>
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+              <Link href="/partner-application" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
+                Become a Partner
+                <Icon name="arrow-right" className="ml-2" size={8} />
+              </Link>
+              <Link href="#benefits" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+                View Benefits
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 opacity-10">
+          <div className="w-full h-full bg-gradient-to-tl from-aqua-start to-transparent rounded-full"></div>
+        </div>
+      </section>
 
       {/* Partnership Benefits */}
       <section id="benefits" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Partnership Benefits</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Unlock new revenue streams and market opportunities through strategic partnerships</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Unlock new revenue streams and market opportunities through strategic partnerships. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for partnership opportunities.</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -94,7 +182,7 @@ export default function PartnersPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Our Partner Ecosystem</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Trusted by industry leaders across multiple sectors</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Trusted by industry leaders across multiple sectors. Discover our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> to join our ecosystem.</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-12">
@@ -132,7 +220,7 @@ export default function PartnersPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Partnership Process</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to become a Global Edge partner</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to become a Global Edge partner. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and <Link href="/contact" className="text-global-teal hover:text-edge-purple transition-colors">contact us</Link> for more information.</p>
           </div>
           
           <div className="grid md:grid-cols-4 gap-8">
@@ -178,7 +266,7 @@ export default function PartnersPage() {
             Ready to Partner with Us?
           </h2>
           <p className="text-xl text-white opacity-90 mb-8">
-            Join our ecosystem and unlock new opportunities in asset tokenization
+            Join our ecosystem and unlock new opportunities in asset tokenization. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and <Link href="/contact" className="underline hover:text-global-teal transition-colors">contact us</Link> for partnership opportunities.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <Link 

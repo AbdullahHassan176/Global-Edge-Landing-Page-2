@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
@@ -22,6 +23,74 @@ export default function PricingPage() {
   };
   return (
     <>
+      <Head>
+        <title>Pricing | Tokenization Platform Fees | The Global Edge</title>
+        <meta name="description" content="Transparent pricing for tokenization services — from asset onboarding to investor management. See how The Global Edge structures its fees." />
+        <meta name="keywords" content="tokenization platform fees, asset onboarding pricing, investor management fees, RWA tokenization costs, blockchain platform pricing, tokenization services pricing" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://theglobaledge.io/pricing" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Pricing | Tokenization Platform Fees | The Global Edge" />
+        <meta property="og:description" content="Transparent pricing for tokenization services — from asset onboarding to investor management. See how The Global Edge structures its fees." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://theglobaledge.io/pricing" />
+        <meta property="og:image" content="https://theglobaledge.io/og-pricing.jpg" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pricing | Tokenization Platform Fees | The Global Edge" />
+        <meta name="twitter:description" content="Transparent pricing for tokenization services — from asset onboarding to investor management. See how The Global Edge structures its fees." />
+        <meta name="twitter:image" content="https://theglobaledge.io/og-pricing.jpg" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": "The Global Edge Tokenization Platform",
+              "description": "Transparent pricing for tokenization services — from asset onboarding to investor management",
+              "url": "https://theglobaledge.io/pricing",
+              "category": "Financial Services",
+              "brand": {
+                "@type": "Brand",
+                "name": "The Global Edge"
+              },
+              "offers": [
+                {
+                  "@type": "Offer",
+                  "name": "Basic Plan",
+                  "price": "0",
+                  "priceCurrency": "USD",
+                  "description": "Free plan for individual investors with basic tokenization features"
+                },
+                {
+                  "@type": "Offer",
+                  "name": "Pro Plan",
+                  "price": "29",
+                  "priceCurrency": "USD",
+                  "description": "Advanced features for serious investors with enhanced tokenization capabilities"
+                },
+                {
+                  "@type": "Offer",
+                  "name": "Enterprise Plan",
+                  "price": "Custom",
+                  "priceCurrency": "USD",
+                  "description": "Custom solutions for institutions with full tokenization platform access"
+                }
+              ],
+              "provider": {
+                "@type": "Organization",
+                "name": "The Global Edge",
+                "url": "https://theglobaledge.io"
+              }
+            })
+          }}
+        />
+      </Head>
+      
       {/* COMPONENT: Pricing Hero */}
       <section id="pricing-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -31,10 +100,13 @@ export default function PricingPage() {
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">PRICING</span>
                   </div>
                   <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
-                      Transparent Pricing for Tokenized Assets
+                      Platform Pricing
                   </h1>
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                      Simple and Transparent Tokenization Fees
+                  </h2>
                   <p className="text-xl font-inter font-light opacity-90">
-                      Simple, transparent pricing with no hidden fees. Pay only for what you use.
+                      Simple, transparent pricing with no hidden fees. Pay only for what you use with <Link href="/assets" className="underline hover:text-global-teal transition-colors">tokenized asset investments</Link>. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>.
                   </p>
               </div>
           </div>
@@ -45,7 +117,7 @@ export default function PricingPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Choose Your Plan</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Flexible pricing options for investors of all sizes</p>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">Flexible pricing options for investors of all sizes. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">
@@ -215,7 +287,7 @@ export default function PricingPage() {
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
                   <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Frequently Asked Questions</h2>
-                  <p className="text-xl text-gray-600">Everything you need to know about our pricing</p>
+                  <p className="text-xl text-gray-600">Everything you need to know about our pricing. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               </div>
 
               <div className="space-y-8">
@@ -249,7 +321,7 @@ export default function PricingPage() {
                   Ready to Start Investing?
               </h2>
               <p className="text-xl text-white opacity-90 mb-8">
-                  Join thousands of investors earning returns from tokenized real-world assets
+                  Join thousands of investors earning returns from tokenized real-world assets. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and explore <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                   <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
