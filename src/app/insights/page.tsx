@@ -65,6 +65,11 @@ const mockInsights: Insight[] = [
 
 const categories = ['All', 'CONTAINERS', 'PROPERTY', 'VAULT', 'TRADETOKENS', 'MARKET', 'TECHNOLOGY'];
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function InsightsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [insights] = useState<Insight[]>(mockInsights);
@@ -341,12 +346,13 @@ startxref
       {/* Hero Section */}
       <section className="gradient-bg py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center text-white">
-            <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4">Insights & Research</h1>
-            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+          <div className="text-white max-w-6xl text-left text-balance">
+            <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 break-words">Insights & Research</h1>
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words">
               Thought Leadership on Tokenization and Real-World Assets
             </h2>
-            <p className="text-xl opacity-90 mb-8">Stay informed with the latest trends, analysis, and opportunities in <Link href="/assets" className="underline hover:text-global-teal transition-colors">tokenized real-world assets</Link>. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and explore our <Link href="/partners" className="underline hover:text-global-teal transition-colors">partner network</Link>.</p>
+            <p className="text-base sm:text-lg md:text-xl opacity-90 mb-6 max-w-6xl leading-relaxed">Stay informed with the latest trends, analysis, and opportunities in <Link href="/assets" className="underline hover:text-global-teal transition-colors">tokenized real-world assets</Link>. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and explore our <Link href="/partners" className="underline hover:text-global-teal transition-colors">partner network</Link>.</p>
+            <p className="text-base sm:text-lg md:text-xl opacity-90 mb-8 max-w-6xl leading-relaxed">Our RWA tokenization news in the UAE covers the latest developments in blockchain technology, regulatory updates, and market trends shaping the future of real-world asset digitization. Stay ahead with comprehensive analysis and expert insights on <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization innovations</Link> and compliance frameworks.</p>
           </div>
         </div>
       </section>
@@ -375,6 +381,9 @@ startxref
       {/* Insights Grid */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Blockchain Insights & Compliance Updates</h2>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredInsights.map((insight) => (
               <article key={insight.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">

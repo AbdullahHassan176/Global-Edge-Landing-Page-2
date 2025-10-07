@@ -1,3 +1,8 @@
+/*
+Layout Rollback Continuation:
+- Applied hero text width expansion to secondary pages
+- Preserved all text, links, and styling
+*/
 'use client';
 
 import Head from 'next/head';
@@ -227,18 +232,21 @@ export default function CookiesPage() {
       />
       
       {/* COMPONENT: Cookies Hero */}
-      <section id="cookies-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
+      <section id="cookies-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[350px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+          <div className="relative max-w-7xl mx-auto px-6 py-6 lg:px-8 h-full flex items-center">
+              <div className="max-w-4xl lg:max-w-5xl text-white text-balance">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words">
                       Cookie Policy
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words">
                       Managing Your Browser Preferences
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-3xl leading-relaxed">
                       Learn how we use cookies and similar technologies to enhance your experience. Review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> for complete information.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-3xl leading-relaxed">
+                      Our cookies policy and analytics in the UAE comply with international data protection standards while providing enhanced user experience through performance monitoring and preference management. We implement transparent cookie practices that respect user privacy and <Link href="/privacy" className="underline hover:text-global-teal transition-colors">data protection rights</Link>.
                   </p>
               </div>
           </div>

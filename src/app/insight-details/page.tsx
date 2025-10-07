@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -116,6 +117,31 @@ export default function InsightDetailsPage() {
 
   return (
     <>
+      <Head>
+        <title>{insight.title} | The Global Edge Insights</title>
+        <meta name="description" content="Read insights about blockchain compliance, RWA tokenization, and asset innovation in the UAE from The Global Edge." />
+        <meta name="robots" content="index, follow" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": insight.title,
+              "description": insight.description,
+              "datePublished": insight.date,
+              "author": {
+                "@type": "Organization",
+                "name": "The Global Edge Research Team"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "The Global Edge"
+              }
+            })
+          }}
+        />
+      </Head>
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
@@ -132,15 +158,18 @@ export default function InsightDetailsPage() {
       {/* Article Header */}
       <section className="py-16 bg-soft-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 max-w-3xl md:max-w-4xl mx-auto text-balance">
             <div className="inline-flex items-center px-4 py-2 bg-global-teal bg-opacity-10 rounded-full mb-6">
               <span className="text-global-teal font-semibold text-sm">{insight.category}</span>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-poppins font-bold text-charcoal mb-6">
+            <h1 className="text-4xl lg:text-5xl font-poppins font-bold text-charcoal mb-6 break-words">
               {insight.title}
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 max-w-prose mx-auto leading-relaxed">
               {insight.description}
+            </p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-prose mx-auto leading-relaxed">
+              Discover more insights about blockchain compliance, RWA tokenization, and asset innovation. Explore our <Link href="/insights" className="text-global-teal hover:text-edge-purple transition-colors">complete insights library</Link> for comprehensive analysis and expert perspectives.
             </p>
             <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
               <div className="flex items-center space-x-2">

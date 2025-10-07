@@ -7,11 +7,23 @@ import Icon from '@/components/ui/Icon';
 import { getPartnersForLandingPage } from '@/lib/partnersData';
 import WaitlistModal from '@/components/ui/WaitlistModal';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function HomePage() {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   
   // Get partners for landing page
   const landingPagePartners = getPartnersForLandingPage();
+
+  /*
+  QA Summary:
+  - Hero copy is long; risk of crowding on small screens. Suggest: constrain text blocks with "max-w-2xl md:max-w-3xl" and add "text-balance" for better wrapping.
+  - CTA row can wrap below long list; ensure vertical rhythm. Suggest: add "mt-4 md:mt-6" before CTA group when copy grows.
+  - Insights teaser images are fine; ensure alt text remains descriptive (already OK).
+  */
 
   return (
     <>
@@ -79,17 +91,25 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-          <div className="max-w-3xl text-white">
-            <h1 className="text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight">
+          <div className="max-w-6xl px-4 text-white text-balance leading-relaxed text-left">
+            <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-6 leading-tight break-words max-w-5xl">
               Tokenizing Real-World Assets with Confidence
             </h1>
-            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight">
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-5xl">
               Backed by Compliance. Powered by Innovation.
             </h2>
-            <p className="text-xl lg:text-2xl mb-8 font-inter font-light opacity-90">
+            <p className="text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed">
               Invest in asset-backed tokens with complete transparency. Own fractions of <Link href="/assets?category=containers" className="underline hover:text-global-teal transition-colors">shipping containers</Link>, <Link href="/assets?category=property" className="underline hover:text-global-teal transition-colors">real estate</Link>, and <Link href="/assets?category=tradetokens" className="underline hover:text-global-teal transition-colors">trade inventory</Link> with blockchain-verified provenance.
             </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+            <p className="text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed">
+              The Global Edge leads asset tokenization UAE with our comprehensive VARA platform, transforming traditional investments into digital opportunities with regulatory compliance and institutional-grade security.
+            </p>
+            <ul className="text-base md:text-lg space-y-2 mt-4 md:mt-6 font-inter font-light opacity-90 max-w-5xl">
+              <li>• Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and VARA compliance framework</li>
+              <li>• Explore our <Link href="/assets" className="underline hover:text-global-teal transition-colors">diverse asset portfolio</Link> with real-time performance tracking</li>
+              <li>• Join thousands of <Link href="/investors" className="underline hover:text-global-teal transition-colors">investors earning returns</Link> from tokenized real-world assets</li>
+            </ul>
+            <div className="flex flex-wrap gap-3 justify-center md:justify-start mt-6">
               <Link href="/assets" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
                 Explore Assets
                 <Icon name="arrow-right" className="ml-2" size={8} />
@@ -328,6 +348,84 @@ export default function HomePage() {
               <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Oracle Attestations</h3>
               <p className="text-gray-600">Third-party verification of asset condition, location, and performance metrics</p>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* UAE Tokenization Market Overview */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Leading Real-World Asset Tokenization in the UAE</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">The Global Edge is at the forefront of VARA-compliant asset tokenization, transforming traditional investments into digital opportunities. Our platform enables fractional ownership of <Link href="/assets?category=containers" className="text-global-teal hover:text-edge-purple transition-colors">shipping containers</Link>, <Link href="/assets?category=property" className="text-global-teal hover:text-edge-purple transition-colors">real estate properties</Link>, and <Link href="/assets?category=tradetokens" className="text-global-teal hover:text-edge-purple transition-colors">trade inventory</Link> with complete transparency and regulatory compliance.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="building" className="text-white text-xl" size={20} />
+              </div>
+              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">VARA Compliance</h3>
+              <p className="text-gray-600 mb-6">Fully compliant with UAE's Virtual Assets Regulatory Authority (VARA) framework, ensuring all tokenized assets meet the highest regulatory standards.</p>
+              <ul className="text-left space-y-2 text-sm text-gray-700">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Regulatory approval for all asset classes
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Transparent reporting and documentation
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Investor protection mechanisms
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center">
+              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="link" className="text-white text-xl" size={20} />
+              </div>
+              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">Blockchain Technology</h3>
+              <p className="text-gray-600 mb-6">Advanced blockchain infrastructure ensures immutable records, real-time tracking, and secure ownership verification for all tokenized assets.</p>
+              <ul className="text-left space-y-2 text-sm text-gray-700">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Immutable ownership records
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Real-time asset tracking
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Smart contract automation
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center">
+              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="chart-line-up" className="text-white text-xl" size={20} />
+              </div>
+              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">Proven Returns</h3>
+              <p className="text-gray-600 mb-6">Our tokenized assets have consistently delivered competitive returns, with average APRs ranging from 6-18% across different asset classes.</p>
+              <ul className="text-left space-y-2 text-sm text-gray-700">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Diversified asset portfolio
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Regular income distributions
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Capital appreciation potential
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

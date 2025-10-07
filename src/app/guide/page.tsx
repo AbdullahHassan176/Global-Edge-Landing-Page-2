@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -16,18 +17,27 @@ export default function InvestmentGuidePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Investment Guide
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Everything you need to know about investing in tokenized real-world assets with Global Edge.
-            </p>
-          </div>
+    <>
+      <Head>
+        <title>User Guide – Navigating The Global Edge Platform | The Global Edge</title>
+        <meta name="description" content="Complete user guide for The Global Edge tokenization platform — learn how to invest, manage assets, and navigate our VARA-compliant ecosystem." />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-3xl md:max-w-4xl mx-auto text-balance">
+              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6 break-words">
+                User Guide – Navigating The Global Edge Platform
+              </h1>
+              <h2 className="text-2xl font-poppins font-semibold mb-6 break-words">
+                How to Use Our Tokenization Platform
+              </h2>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-prose mx-auto mb-6 leading-relaxed">
+                Everything you need to know about investing in tokenized real-world assets with Global Edge. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link>, explore <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>, and <Link href="/get-started" className="underline hover:text-global-teal transition-colors">get started</Link> with your first investment.
+              </p>
+            </div>
         </div>
       </section>
 

@@ -163,7 +163,7 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
         {/* Welcome Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 max-w-3xl mx-auto text-balance">
           <div className="inline-flex items-center px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200 mb-6">
             <Icon 
               name={authProvider === 'github' ? 'github' : authProvider === 'linkedin' ? 'linkedin' : 'envelope'} 
@@ -173,13 +173,13 @@ export default function DashboardPage() {
               Signed in with {authProvider || 'Email'}
             </span>
           </div>
-          <h1 className="text-4xl font-poppins font-bold text-charcoal mb-4">
-            Your Investment Dashboard
+          <h1 className="text-4xl font-poppins font-bold text-charcoal mb-4 break-words">
+            Investor Dashboard
           </h1>
-          <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
-            Manage Tokenized Assets Securely
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-prose mx-auto mb-6 leading-relaxed">
+            Manage your tokenized assets securely.
+          </p>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-prose mx-auto leading-relaxed">
             Access your investment dashboard, manage your portfolio, and explore new opportunities in <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">tokenized assets</Link>. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and manage your account.
           </p>
         </div>

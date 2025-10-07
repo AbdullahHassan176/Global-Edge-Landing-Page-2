@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -62,19 +63,28 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div className="text-center">
-            <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <Icon name="check" className="h-8 w-8 text-green-600" />
+      <>
+        <Head>
+          <title>Reset Your Password | The Global Edge</title>
+          <meta name="description" content="Set a new password to access your Global Edge account." />
+          <meta name="robots" content="noindex, nofollow" />
+        </Head>
+        <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md w-full space-y-8">
+            <div className="text-center">
+              <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <Icon name="check" className="h-8 w-8 text-green-600" />
+              </div>
+              <h1 className="text-3xl font-poppins font-bold text-charcoal">
+                Reset Your Password
+              </h1>
+              <p className="mt-2 text-sm text-gray-600">
+                Set a new password to access your Global Edge account.
+              </p>
+              <p className="mt-2 text-sm text-gray-600">
+                Your password has been successfully reset. You can now log in with your new password.
+              </p>
             </div>
-            <h2 className="text-3xl font-poppins font-bold text-charcoal">
-              Password reset successful
-            </h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Your password has been successfully reset. You can now log in with your new password.
-            </p>
-          </div>
 
           <div className="mt-8">
             <Link
@@ -90,19 +100,28 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <div className="mx-auto h-12 w-12 bg-global-teal rounded-full flex items-center justify-center mb-4">
-            <Icon name="key" className="h-6 w-6 text-white" />
+    <>
+      <Head>
+        <title>Reset Your Password | The Global Edge</title>
+        <meta name="description" content="Set a new password to access your Global Edge account." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <div className="mx-auto h-12 w-12 bg-global-teal rounded-full flex items-center justify-center mb-4">
+              <Icon name="key" className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-center text-3xl font-poppins font-bold text-charcoal">
+              Reset Your Password
+            </h1>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Set a new password to access your Global Edge account.
+            </p>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Enter your new password below.
+            </p>
           </div>
-          <h2 className="text-center text-3xl font-poppins font-bold text-charcoal">
-            Reset your password
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your new password below.
-          </p>
-        </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -54,19 +55,25 @@ export default function EmailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-poppins font-bold text-charcoal">
-                Email Management
-              </h1>
-              <p className="text-gray-600 mt-2">
-                View and manage password reset emails
-              </p>
-            </div>
+    <>
+      <Head>
+        <title>Admin Email Management | The Global Edge</title>
+        <meta name="description" content="Admin email management for monitoring and managing platform emails." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-poppins font-bold text-charcoal">
+                  Admin Email Management
+                </h1>
+                <p className="text-gray-600 mt-2">
+                  View and manage password reset emails
+                </p>
+              </div>
             <Link
               href="/admin"
               className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"

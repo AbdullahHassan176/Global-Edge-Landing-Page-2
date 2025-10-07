@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -71,19 +72,28 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <div className="mx-auto h-12 w-12 bg-global-teal rounded-full flex items-center justify-center mb-4">
-            <Icon name="lock" className="h-6 w-6 text-white" />
+    <>
+      <Head>
+        <title>Forgot Password | The Global Edge</title>
+        <meta name="description" content="Reset your Global Edge account password securely." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <div className="mx-auto h-12 w-12 bg-global-teal rounded-full flex items-center justify-center mb-4">
+              <Icon name="lock" className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-center text-3xl font-poppins font-bold text-charcoal">
+              Forgot Password
+            </h1>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Reset your Global Edge account password securely.
+            </p>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              No worries! Enter your email address and we'll send you a link to reset your password.
+            </p>
           </div>
-          <h2 className="text-center text-3xl font-poppins font-bold text-charcoal">
-            Forgot your password?
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            No worries! Enter your email address and we'll send you a link to reset your password.
-          </p>
-        </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div>

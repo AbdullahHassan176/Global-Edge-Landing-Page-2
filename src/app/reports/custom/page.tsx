@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState } from 'react';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
@@ -161,20 +162,26 @@ export default function CustomReportPage() {
   };
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Custom Report Builder
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Create personalized investment reports tailored to your specific needs and requirements.
-            </p>
+    <>
+      <Head>
+        <title>Custom Reports | The Global Edge</title>
+        <meta name="description" content="Generate personalized analytics for tokenized assets." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-3xl md:max-w-4xl mx-auto text-balance">
+              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6 break-words">
+                Custom Reports
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-prose mx-auto leading-relaxed">
+                Generate personalized analytics for tokenized assets.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Configuration Section */}
       <section className="py-20">

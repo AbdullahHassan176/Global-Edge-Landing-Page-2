@@ -1,6 +1,8 @@
 'use client';
 
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function AssetDetailsPage() {
@@ -16,6 +18,11 @@ export default function AssetDetailsPage() {
 
   return (
     <>
+      <Head>
+        <title>Asset Details – Tokenized Real-World Asset | The Global Edge</title>
+        <meta name="description" content="Detailed view of tokenized assets on The Global Edge — explore asset documents, compliance data, and performance." />
+        <meta name="robots" content="index, follow" />
+      </Head>
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
@@ -33,13 +40,14 @@ export default function AssetDetailsPage() {
       <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="max-w-3xl md:max-w-4xl text-balance">
               <div className="flex items-center space-x-3 mb-4">
                 <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm font-medium">Container Asset</span>
                 <span className="bg-green-500 bg-opacity-20 px-3 py-1 rounded-full text-sm font-medium">Active</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-6">Shanghai-Los Angeles Container</h1>
-              <p className="text-xl opacity-90 mb-8">High-performance shipping container on the Asia-Pacific trade route with consistent returns and low volatility.</p>
+              <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-6 break-words">Asset Details – Tokenized Real-World Asset</h1>
+              <p className="text-base sm:text-lg md:text-xl opacity-90 mb-6 max-w-prose leading-relaxed">This VARA-compliant tokenized asset provides fractional ownership opportunities with full regulatory compliance and transparent investor visibility. Explore our <Link href="/assets" className="underline hover:text-global-teal transition-colors">complete asset portfolio</Link> and learn about <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>.</p>
+              <p className="text-base sm:text-lg md:text-xl opacity-90 mb-8 max-w-prose leading-relaxed">High-performance shipping container on the Asia-Pacific trade route with consistent returns and low volatility.</p>
               
               <div className="grid grid-cols-2 gap-6">
                 <div>

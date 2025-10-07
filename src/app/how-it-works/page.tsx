@@ -5,6 +5,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function HowItWorksPage() {
   const [showListAssetModal, setShowListAssetModal] = useState(false);
   const [showLearnMoreModal, setShowLearnMoreModal] = useState(false);
@@ -96,17 +101,17 @@ export default function HowItWorksPage() {
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-          <div className="max-w-4xl text-white">
+          <div className="max-w-6xl text-white text-balance text-left">
             <div className="flex items-center mb-4">
               <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">TOKENIZATION PROCESS</span>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+            <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl">
               How Global Edge Tokenizes Real-World Assets
             </h1>
-            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
               Step-by-Step Tokenization Process
             </h2>
-            <p className="text-xl font-inter font-light opacity-90">
+            <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed">
               Complete transparency through our VARA-compliant <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> with <Link href="/security" className="underline hover:text-global-teal transition-colors">blockchain verification</Link> and oracle attestations
             </p>
           </div>
@@ -117,8 +122,9 @@ export default function HowItWorksPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-poppins font-bold text-charcoal mb-4">Transparent Asset Tokenization</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Every asset goes through rigorous <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">verification</Link>, documentation, and <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">blockchain registration</Link> to ensure complete transparency and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investor protection</Link>. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link>.</p>
+            <h2 className="text-3xl font-poppins font-bold text-charcoal mb-4 break-words">Transparent Asset Tokenization</h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mb-6 leading-relaxed text-balance">Real-world asset tokenization in the UAE transforms physical assets like shipping containers, real estate, and trade inventory into digital tokens that can be traded on blockchain networks. Our VARA-compliant platform ensures all tokenized assets meet UAE regulatory standards while providing fractional ownership opportunities to investors worldwide.</p>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mb-6 leading-relaxed text-balance">Every asset goes through rigorous <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">verification</Link>, documentation, and <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">blockchain registration</Link> to ensure complete transparency and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investor protection</Link>. <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">Explore tokenized assets</Link> available for investment and learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link>.</p>
           </div>
           
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
@@ -478,6 +484,84 @@ export default function HowItWorksPage() {
                       <div className="text-sm text-gray-600 mb-2">Launch Preparation</div>
                       <div className="text-xl font-poppins font-bold text-global-teal">1-2 Business Days</div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VARA Compliance Deep Dive */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">VARA-Compliant Tokenization Framework</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Our tokenization process is built on UAE's Virtual Assets Regulatory Authority (VARA) framework, ensuring complete regulatory compliance and investor protection. Learn more about our <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">tokenized assets</Link> and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-6">Regulatory Compliance</h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="shield-check" className="text-blue-600" size={12} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal mb-2">VARA License Compliance</h4>
+                    <p className="text-gray-600 text-sm">All tokenized assets operate under VARA-approved frameworks with proper licensing and regulatory oversight.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="file-contract" className="text-green-600" size={12} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal mb-2">Legal Documentation</h4>
+                    <p className="text-gray-600 text-sm">Comprehensive legal frameworks including SPV formation, custody agreements, and investor protection mechanisms.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="users" className="text-purple-600" size={12} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal mb-2">Investor Protection</h4>
+                    <p className="text-gray-600 text-sm">Robust investor protection measures including KYC/KYB verification, risk disclosures, and transparent reporting.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-8 shadow-lg">
+              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-6">Technology Infrastructure</h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="link" className="text-orange-600" size={12} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal mb-2">Blockchain Security</h4>
+                    <p className="text-gray-600 text-sm">Enterprise-grade blockchain infrastructure with multi-signature wallets and cold storage protocols.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="satellite-dish" className="text-teal-600" size={12} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal mb-2">Oracle Integration</h4>
+                    <p className="text-gray-600 text-sm">Real-time data feeds from trusted oracle networks for continuous asset monitoring and verification.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="eye" className="text-red-600" size={12} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal mb-2">Transparency Dashboard</h4>
+                    <p className="text-gray-600 text-sm">Complete visibility into asset performance, location tracking, and financial metrics for all investors.</p>
                   </div>
                 </div>
               </div>

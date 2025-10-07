@@ -2,6 +2,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function GetStartedPage() {
   return (
     <>
@@ -82,18 +87,21 @@ export default function GetStartedPage() {
       <section id="get-started-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
+              <div className="max-w-6xl text-white text-balance text-left">
                   <div className="flex items-center mb-4">
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">GET STARTED</span>
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl">
                       Get Started with The Global Edge
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
                       Register as an Investor or Issuer
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed">
                       Join thousands of investors earning returns from real-world assets. Get started in minutes with our simple onboarding process. Learn about <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="underline hover:text-global-teal transition-colors">dashboard</Link>.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed">
+                      Companies in the UAE can issue tokenized assets through our VARA-compliant platform, transforming physical assets like shipping containers, real estate, and trade inventory into digital tokens. This process enables fractional ownership, enhanced liquidity, and global investor access while maintaining full regulatory compliance with UAE standards.
                   </p>
               </div>
           </div>
@@ -103,8 +111,14 @@ export default function GetStartedPage() {
       <section id="quick-start-steps" className="py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
-                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Get Started in 3 Simple Steps</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">From account creation to your first investment in under 10 minutes. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="text-global-teal hover:text-edge-purple transition-colors">dashboard</Link>.</p>
+                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Onboarding Your Assets Securely</h2>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">From account creation to your first investment in under 10 minutes. Learn about <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="text-global-teal hover:text-edge-purple transition-colors">dashboard</Link>.</p>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-6">Our secure onboarding process ensures all assets meet VARA compliance standards. Learn more about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and regulatory framework.</p>
+                  <ul className="text-lg text-gray-600 max-w-2xl mx-auto space-y-2 text-left">
+                      <li>• <strong>Asset Verification:</strong> Independent third-party verification of asset existence, condition, and ownership</li>
+                      <li>• <strong>Legal Documentation:</strong> SPV formation, custody agreements, and investor protection mechanisms</li>
+                      <li>• <strong>Oracle Integration:</strong> Real-time monitoring and blockchain deployment for transparent tracking</li>
+                  </ul>
               </div>
 
               <div className="grid md:grid-cols-3 gap-8">

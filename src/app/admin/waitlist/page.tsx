@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -151,26 +152,39 @@ export default function WaitlistManagementPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-soft-white flex items-center justify-center">
-        <div className="text-center">
-          <Icon name="spinner" className="animate-spin text-global-teal text-4xl mb-4" />
-          <p className="text-lg text-gray-700">Loading waitlist submissions...</p>
+      <>
+        <Head>
+          <title>Admin Waitlist | The Global Edge</title>
+          <meta name="description" content="Waitlist management and monitoring for The Global Edge platform." />
+          <meta name="robots" content="noindex, nofollow" />
+        </Head>
+        <div className="min-h-screen bg-soft-white flex items-center justify-center">
+          <div className="text-center">
+            <Icon name="spinner" className="animate-spin text-global-teal text-4xl mb-4" />
+            <p className="text-lg text-gray-700">Loading waitlist submissions...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
     <AdminAuthGuard>
-      <div className="min-h-screen bg-soft-white">
-        <NotificationSystem
-          notifications={notifications}
-          onRemove={removeNotification}
-        />
+      <>
+        <Head>
+          <title>Admin Waitlist | The Global Edge</title>
+          <meta name="description" content="Waitlist management and monitoring for The Global Edge platform." />
+          <meta name="robots" content="noindex, nofollow" />
+        </Head>
+        <div className="min-h-screen bg-soft-white">
+          <NotificationSystem
+            notifications={notifications}
+            onRemove={removeNotification}
+          />
 
         <header className="bg-white shadow-sm p-6">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 className="text-3xl font-poppins font-bold text-charcoal">Waitlist Management</h1>
+            <h1 className="text-3xl font-poppins font-bold text-charcoal">Admin Waitlist</h1>
             <div className="flex items-center space-x-4">
               <button
                 onClick={loadSubmissions}

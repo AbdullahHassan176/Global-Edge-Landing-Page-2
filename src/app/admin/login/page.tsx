@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -85,7 +86,13 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <>
+      <Head>
+        <title>Admin Login | The Global Edge</title>
+        <meta name="description" content="Admin login for The Global Edge platform." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-20">
         <div className="w-full h-full" style={{
@@ -110,9 +117,9 @@ export default function AdminLoginPage() {
         </div>
         
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-poppins font-bold text-white mb-4">
-            Admin Access
-          </h2>
+          <h1 className="text-4xl font-poppins font-bold text-white mb-4">
+            Admin Login
+          </h1>
           <p className="text-white/80 text-lg">
             Secure administrative login for Global Edge platform
           </p>

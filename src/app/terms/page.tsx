@@ -1,8 +1,18 @@
+/*
+Layout Rollback Continuation:
+- Applied hero text width expansion to secondary pages
+- Preserved all text, links, and styling
+*/
 
 import Head from 'next/head';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function TermsPage() {
   // Get configuration
   const contactConfig = configService.getContactConfig();
@@ -82,15 +92,18 @@ export default function TermsPage() {
       <section id="terms-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+              <div className="max-w-6xl text-white text-left">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl">
                       Terms & Conditions
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
                       Your Agreement with The Global Edge
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed">
                       Please read these terms carefully before using our platform. Review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> and <Link href="/cookies" className="underline hover:text-global-teal transition-colors">cookie policy</Link> for complete information.
+                  </p>
+                  <p className="text-lg font-inter font-light opacity-90 max-w-6xl leading-relaxed">
+                      These terms and conditions for The Global Edge platform outline the legal framework governing your use of our tokenization services, investment platform, and digital asset management tools. By using our platform, you agree to comply with all applicable terms and <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy protections</Link>.
                   </p>
               </div>
           </div>

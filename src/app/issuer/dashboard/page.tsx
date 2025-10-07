@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
@@ -209,21 +210,27 @@ export default function IssuerDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Notification System */}
-      <NotificationSystem
-        notifications={notifications}
-        onRemove={removeNotification}
-      />
+    <>
+      <Head>
+        <title>Issuer Dashboard | The Global Edge</title>
+        <meta name="description" content="Manage your tokenized asset listings and performance reports." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Notification System */}
+        <NotificationSystem
+          notifications={notifications}
+          onRemove={removeNotification}
+        />
 
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Issuer Dashboard</h1>
-              <p className="text-gray-600 mt-1">Welcome back, {user.firstName}!</p>
-            </div>
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Issuer Dashboard</h1>
+                <p className="text-gray-600 mt-1">Manage your tokenized asset listings and performance reports.</p>
+              </div>
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-800">{user.company}</p>
@@ -400,6 +407,7 @@ export default function IssuerDashboard() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

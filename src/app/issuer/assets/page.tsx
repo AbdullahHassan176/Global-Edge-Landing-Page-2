@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User } from '@/lib/userAuthService';
@@ -181,15 +182,21 @@ export default function IssuerAssetsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Asset Management</h1>
-              <p className="text-gray-600 mt-1">Manage your tokenized assets and investment opportunities</p>
-            </div>
+    <>
+      <Head>
+        <title>Issuer Assets Management | The Global Edge</title>
+        <meta name="description" content="View and update your issued tokenized assets." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Issuer Assets Management</h1>
+                <p className="text-gray-600 mt-1">View and update your issued tokenized assets.</p>
+              </div>
             <button
               onClick={() => setShowAddModal(true)}
               className="bg-global-teal text-white px-6 py-3 rounded-lg font-medium hover:bg-global-teal-dark transition-colors flex items-center"

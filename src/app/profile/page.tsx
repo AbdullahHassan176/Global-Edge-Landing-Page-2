@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -153,28 +154,34 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      <NotificationSystem
-        notifications={notifications}
-        onRemove={removeNotification}
-      />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon name="user" className="text-white text-3xl" />
+    <>
+      <Head>
+        <title>Your Profile – The Global Edge</title>
+        <meta name="description" content="Manage your account details, KYC documents, and preferences." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        <NotificationSystem
+          notifications={notifications}
+          onRemove={removeNotification}
+        />
+        
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-3xl md:max-w-4xl mx-auto text-balance">
+              <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Icon name="user" className="text-white text-3xl" />
+              </div>
+              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6 break-words">
+                Your Profile – The Global Edge
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-prose mx-auto leading-relaxed">
+                Manage your account details, KYC documents, and preferences.
+              </p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              My Profile
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Manage your personal information and investment preferences.
-            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Profile Content */}
       <section className="py-20">

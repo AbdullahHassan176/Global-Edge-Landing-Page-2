@@ -7,6 +7,11 @@ import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState('general');
   
@@ -112,18 +117,21 @@ export default function FAQPage() {
       <section id="faq-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
+              <div className="max-w-6xl text-white text-balance text-left">
                   <div className="flex items-center mb-4">
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">FAQ</span>
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl">
                       Frequently Asked Questions
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
                       Everything You Need to Know About Tokenization
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed">
                       Find answers to common questions about <Link href="/assets" className="underline hover:text-global-teal transition-colors">tokenized assets</Link>, <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">investing</Link>, and our platform. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and explore <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed">
+                      Asset tokenization in the UAE is revolutionizing investment opportunities through VARA-compliant platforms that enable fractional ownership of real-world assets. Our platform ensures regulatory compliance while providing transparent, secure access to tokenized containers, real estate, and trade inventory.
                   </p>
               </div>
           </div>
@@ -133,7 +141,7 @@ export default function FAQPage() {
       <section id="faq-categories" className="py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
-                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Browse by Category</h2>
+                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Common Questions About Tokenization</h2>
                   <p className="text-xl text-gray-600 max-w-3xl mx-auto">Find answers organized by topic. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
               </div>
 
@@ -233,6 +241,16 @@ export default function FAQPage() {
                   <div className="bg-white rounded-2xl p-8 shadow-lg">
                       <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">Is Global Edge regulated?</h3>
                       <p className="text-gray-600">Yes, Global Edge operates under strict regulatory compliance including KYC/AML requirements, SOC 2 Type II certification, and adherence to international financial regulations. We work with licensed custodians and maintain full transparency in all our operations.</p>
+                  </div>
+
+                  <div className="bg-white rounded-2xl p-8 shadow-lg">
+                      <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">What is VARA compliance and why is it important?</h3>
+                      <p className="text-gray-600">VARA (Virtual Assets Regulatory Authority) is the UAE's regulatory framework for virtual assets. Our VARA compliance ensures all tokenized assets meet UAE regulatory standards, providing investor protection, transparent reporting, and legal compliance for all participants in the UAE market.</p>
+                  </div>
+
+                  <div className="bg-white rounded-2xl p-8 shadow-lg">
+                      <h3 className="text-xl font-poppins font-semibold text-charcoal mb-4">How do I track my tokenized asset performance?</h3>
+                      <p className="text-gray-600">You can track your investments through our investor dashboard, which provides real-time performance metrics, asset location tracking, income distributions, and portfolio analytics. All data is blockchain-verified and updated continuously through oracle networks.</p>
                   </div>
               </div>
           </div>

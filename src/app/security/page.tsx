@@ -4,6 +4,11 @@ import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function SecurityPage() {
   // Get configuration
   const contactConfig = configService.getContactConfig();
@@ -79,18 +84,21 @@ export default function SecurityPage() {
       <section id="security-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
+              <div className="max-w-6xl text-white text-balance text-left">
                   <div className="flex items-center mb-4">
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">SECURITY</span>
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl">
                       Our Security Commitment
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
                       Blockchain Integrity Meets Regulatory Trust
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed">
                       Your <Link href="/assets" className="underline hover:text-global-teal transition-colors">assets</Link> are protected by institutional-grade security measures and <Link href="/security" className="underline hover:text-global-teal transition-colors">regulatory compliance</Link>. Learn about our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link> and <Link href="/terms" className="underline hover:text-global-teal transition-colors">terms of service</Link>.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed">
+                      Our secure tokenized assets UAE platform ensures complete protection of digital investments through advanced blockchain technology, VARA compliance, and institutional-grade security protocols. Every transaction and asset is safeguarded with <Link href="/privacy" className="underline hover:text-global-teal transition-colors">comprehensive privacy protection</Link> and regulatory oversight.
                   </p>
               </div>
           </div>
@@ -100,8 +108,13 @@ export default function SecurityPage() {
       <section id="security-overview" className="py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
-                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Multi-Layer Security Architecture</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">We employ multiple layers of security to protect your investments and personal data. Learn about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms of service</Link>.</p>
+                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Our Blockchain & Compliance Framework</h2>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">We employ multiple layers of security to protect your investments and personal data. Learn about our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link> and <Link href="/terms" className="text-global-teal hover:text-edge-purple transition-colors">terms of service</Link>.</p>
+                  <ul className="text-lg text-gray-600 max-w-2xl mx-auto space-y-2 text-left">
+                      <li>• <strong>Advanced Encryption:</strong> End-to-end encryption for all data transmission and storage with AES-256 standards</li>
+                      <li>• <strong>Regular Security Audits:</strong> Third-party security audits and penetration testing conducted quarterly</li>
+                      <li>• <strong>Multi-Signature Wallets:</strong> Multi-signature authentication for all transactions requiring multiple approvals</li>
+                  </ul>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

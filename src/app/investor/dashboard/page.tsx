@@ -1,5 +1,7 @@
 'use client';
 
+import Head from 'next/head';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
@@ -238,15 +240,16 @@ export default function InvestorDashboard() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Investment Dashboard</h1>
-              <p className="text-gray-600 mt-1">Welcome back, {user.firstName}!</p>
-            </div>
+    <>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Investor Dashboard</h1>
+                <p className="text-gray-600 mt-1">Access and manage your portfolio of tokenized assets in real time.</p>
+              </div>
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-800">{user.firstName} {user.lastName}</p>
@@ -485,5 +488,6 @@ export default function InvestorDashboard() {
         </div>
       </div>
     </div>
+    </>
   );
 }

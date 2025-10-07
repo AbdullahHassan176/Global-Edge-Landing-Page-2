@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User, WhitelabelBranding } from '@/lib/userAuthService';
@@ -153,15 +154,21 @@ ${branding.customCss}
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Branding & Whitelabeling</h1>
-              <p className="text-gray-600 mt-1">Customize your investor portal with your brand identity</p>
-            </div>
+    <>
+      <Head>
+        <title>Issuer Branding | The Global Edge</title>
+        <meta name="description" content="Customize your brand presence within The Global Edge ecosystem." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Issuer Branding</h1>
+                <p className="text-gray-600 mt-1">Customize your brand presence within The Global Edge ecosystem.</p>
+              </div>
             <div className="flex space-x-4">
               <button
                 onClick={() => setPreviewMode(!previewMode)}

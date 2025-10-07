@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -102,20 +103,29 @@ export default function PartnerApplicationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Partner Application
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Join our ecosystem of leading companies and unlock new opportunities in asset tokenization.
-            </p>
+    <>
+      <Head>
+        <title>Apply to Become a Partner | The Global Edge</title>
+        <meta name="description" content="Join The Global Edge tokenization ecosystem — apply to become an official VARA-aligned partner." />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-3xl md:max-w-4xl mx-auto text-balance">
+              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6 break-words">
+                Apply to Become a Partner
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-prose mx-auto mb-6 leading-relaxed">
+                Join our ecosystem of leading companies and unlock new opportunities in asset tokenization.
+              </p>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-prose mx-auto leading-relaxed">
+                Partner with The Global Edge to access our VARA-compliant tokenization platform and explore <Link href="/partners" className="underline hover:text-global-teal transition-colors">partnership benefits</Link>.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Application Form */}
       <section className="py-20">

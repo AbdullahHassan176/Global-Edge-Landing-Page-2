@@ -198,14 +198,14 @@ export default function LoginPage() {
           </Link>
         </div>
         
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-poppins font-bold text-white mb-4">
-            Login to The Global Edge
+        <div className="text-center mb-8 max-w-3xl mx-auto text-balance">
+          <h1 className="text-4xl font-poppins font-bold text-white mb-4 break-words">
+            Secure Login – The Global Edge
           </h1>
-          <h2 className="text-2xl font-poppins font-semibold text-white mb-4">
-            Access your tokenized asset dashboard securely
-          </h2>
-          <p className="text-white/80 text-lg">
+          <p className="text-white/90 text-base sm:text-lg md:text-xl mb-6 max-w-prose leading-relaxed mx-auto">
+            Access your investor dashboard safely.
+          </p>
+          <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-prose leading-relaxed mx-auto">
             Sign in to access your investment dashboard. <Link href="/register" className="underline hover:text-global-teal transition-colors">Create an account</Link> or review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link>.
           </p>
         </div>

@@ -9,6 +9,11 @@ import Icon from '@/components/ui/Icon';
 import { assetService, Asset } from '@/lib/assetService';
 import { assetIntegration } from '@/lib/integration/assetIntegration';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function AssetsPage() {
   const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState('containers');
@@ -366,24 +371,20 @@ export default function AssetsPage() {
       <section className="bg-gradient-to-r from-global-teal to-edge-purple h-[500px] relative overflow-hidden">
         <div className="absolute inset-0 bg-black bg-opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-          <div className="max-w-4xl text-white">
-            {/* Breadcrumbs */}
-            <nav className="flex items-center mb-6 text-sm">
-              <Link href="/" className="hover:opacity-80 transition-opacity">Home</Link>
-              <Icon name="chevron-right" className="mx-3 text-sm opacity-60 w-4 h-4" />
-              <span className="opacity-80">Assets</span>
-              <Icon name="chevron-right" className="mx-3 text-sm opacity-60 w-4 h-4" />
-              <span className="font-medium">{categoryData.title}</span>
-            </nav>
+          <div className="max-w-6xl text-white text-balance text-left">
+            {/* Breadcrumbs removed for cleaner header */}
             
-            <h1 className="text-4xl lg:text-6xl font-poppins font-bold mb-6 leading-tight">
+            <h1 className="text-4xl lg:text-6xl font-poppins font-bold mb-6 leading-tight break-words max-w-6xl">
               Explore Tokenized Assets
             </h1>
-            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
               Invest in Tokenized Containers & Properties
             </h2>
-            <p className="text-xl lg:text-2xl font-inter font-light opacity-90 max-w-3xl mb-8">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter font-light opacity-90 max-w-6xl mb-6 leading-relaxed">
               Invest in verified real-world assets with <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">transparent blockchain tracking</Link>, competitive returns, and <Link href="/security" className="underline hover:text-global-teal transition-colors">institutional-grade security</Link>. Learn about our <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link> and <Link href="/partners" className="underline hover:text-global-teal transition-colors">partner network</Link>.
+            </p>
+            <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl mb-6 leading-relaxed">
+              Our tokenized assets in Dubai include shipping containers with GPS tracking and verified cargo, plus commercial and residential real estate properties with rental income streams. Each asset is backed by physical collateral and secured through our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">VARA-compliant tokenization process</Link>, providing <Link href="/investors" className="underline hover:text-global-teal transition-colors">investors with fractional ownership</Link> opportunities in premium Dubai assets.
             </p>
             
             {/* Quick Stats */}
@@ -684,9 +685,12 @@ export default function AssetsPage() {
       {/* Enhanced Assets Grid */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Available Tokenized Assets</h2>
+          </div>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-poppins font-bold text-charcoal mb-2">{categoryData.title}</h2>
+              <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">{categoryData.title}</h3>
               <p className="text-gray-600 text-lg">{categoryData.description}</p>
               <div className="flex items-center space-x-4 mt-4">
                 <span className="text-sm text-gray-500">
@@ -984,6 +988,84 @@ export default function AssetsPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Investment Benefits & Risk Management */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Why Invest in Tokenized Real-World Assets?</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Tokenized assets offer unique advantages over traditional investments, combining the stability of real-world assets with the liquidity and accessibility of digital tokens. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-6">
+                <Icon name="chart-line-up" className="text-white text-lg" size={20} />
+              </div>
+              <h3 className="text-xl font-poppins font-bold text-charcoal mb-4">Diversified Returns</h3>
+              <p className="text-gray-600 mb-4">Access multiple asset classes with competitive yields ranging from 6-18% APR across containers, real estate, and trade inventory.</p>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Regular income distributions
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Capital appreciation potential
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Inflation hedge benefits
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8">
+              <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-6">
+                <Icon name="shield" className="text-white text-lg" size={20} />
+              </div>
+              <h3 className="text-xl font-poppins font-bold text-charcoal mb-4">Risk Mitigation</h3>
+              <p className="text-gray-600 mb-4">Comprehensive risk management through diversification, insurance coverage, and oracle-verified asset monitoring.</p>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Asset-backed security
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Insurance protection
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Real-time monitoring
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8">
+              <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-6">
+                <Icon name="link" className="text-white text-lg" size={20} />
+              </div>
+              <h3 className="text-xl font-poppins font-bold text-charcoal mb-4">Blockchain Transparency</h3>
+              <p className="text-gray-600 mb-4">Complete transparency through blockchain technology with immutable records and real-time asset tracking.</p>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Immutable ownership records
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Real-time asset tracking
+                </li>
+                <li className="flex items-center">
+                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                  Complete audit trails
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 

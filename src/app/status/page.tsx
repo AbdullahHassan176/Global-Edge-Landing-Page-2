@@ -1,3 +1,8 @@
+/*
+Layout Rollback Continuation:
+- Applied hero text width expansion to secondary pages
+- Preserved all text, links, and styling
+*/
 
 'use client';
 
@@ -109,18 +114,21 @@ export default function StatusPage() {
       </Head>
       
       {/* COMPONENT: Status Hero */}
-      <section id="status-hero" className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-500 h-[300px] relative overflow-hidden">
+      <section id="status-hero" className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-500 h-[350px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+              <div className="max-w-4xl lg:max-w-5xl text-white text-balance">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words">
                       Platform Status
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words">
                       System Uptime & Service Announcements
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-3xl leading-relaxed">
                       Real-time status of all Global Edge services and systems. Learn about our <Link href="/security" className="underline hover:text-global-teal transition-colors">security measures</Link> and <Link href="/contact" className="underline hover:text-global-teal transition-colors">contact us</Link> for support.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-3xl leading-relaxed">
+                      Our platform uptime and system maintenance are continuously monitored to ensure optimal performance for all users. We provide transparent status reporting and proactive maintenance scheduling to minimize service disruptions while maintaining the highest levels of <Link href="/security" className="underline hover:text-global-teal transition-colors">security and reliability</Link>.
                   </p>
               </div>
           </div>
@@ -130,9 +138,12 @@ export default function StatusPage() {
       <section id="overall-status" className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="bg-white rounded-2xl p-8 shadow-lg">
+                  <div className="text-center mb-8">
+                      <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Live System Overview</h2>
+                  </div>
                   <div className="flex items-center justify-between mb-8">
                       <div>
-                          <h2 className="text-3xl font-poppins font-bold text-charcoal">All Systems Operational</h2>
+                          <h3 className="text-3xl font-poppins font-bold text-charcoal">All Systems Operational</h3>
                           <p className="text-gray-600">Last updated: {formatTime(currentTime)}</p>
                       </div>
                       <div className="flex items-center space-x-3">

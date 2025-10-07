@@ -1,22 +1,29 @@
+import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
 export default function ActivityPage() {
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Investment Activity
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Track all your investment activities, transactions, and portfolio changes in real-time.
-            </p>
+    <>
+      <Head>
+        <title>Activity & Transaction History | The Global Edge</title>
+        <meta name="description" content="View your transaction activity and tokenized asset history on The Global Edge platform." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-3xl md:max-w-4xl mx-auto text-balance">
+              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6 break-words">
+                Activity & Transaction History
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-prose mx-auto leading-relaxed">
+                View your transaction activity and tokenized asset history on The Global Edge.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Activity Timeline */}
       <section className="py-20">

@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { notificationService } from '@/lib/notificationService';
@@ -156,20 +157,26 @@ function NotificationsDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Header */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Admin Notifications
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Monitor new account registrations and partnership applications
-            </p>
+    <>
+      <Head>
+        <title>Admin Notifications | The Global Edge</title>
+        <meta name="description" content="Admin notifications dashboard for monitoring platform activity." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Header */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
+                Admin Notifications
+              </h1>
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
+                Monitor new account registrations and partnership applications
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Notifications Dashboard */}
       <section className="py-20">

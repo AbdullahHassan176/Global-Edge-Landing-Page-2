@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -388,12 +389,19 @@ function SettingsDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Notification System */}
-      <NotificationSystem
-        notifications={notifications}
-        onRemove={removeNotification}
-      />
+    <AdminAuthGuard>
+      <>
+        <Head>
+          <title>Admin Settings | The Global Edge</title>
+          <meta name="description" content="System settings and configuration management for The Global Edge platform." />
+          <meta name="robots" content="noindex, nofollow" />
+        </Head>
+        <div className="min-h-screen bg-soft-white">
+        {/* Notification System */}
+        <NotificationSystem
+          notifications={notifications}
+          onRemove={removeNotification}
+        />
 
       {/* Integration Configuration Modal */}
       <IntegrationConfigModal
@@ -419,6 +427,12 @@ function SettingsDashboard() {
       {/* Header */}
       <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-poppins font-bold mb-4">Admin Settings</h1>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto">
+              System settings and configuration management for The Global Edge platform.
+            </p>
+          </div>
           <div className="flex items-center justify-between mb-6">
             <Link 
               href="/admin" 

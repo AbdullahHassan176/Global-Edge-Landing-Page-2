@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -88,22 +89,28 @@ function AnalyticsDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Header */}
-      <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center mb-6">
-            <Link 
-              href="/admin" 
-              className="flex items-center text-white hover:text-gray-200 transition-colors"
-            >
-              <Icon name="arrow-left" className="mr-2" />
-              Back to Admin
-            </Link>
-          </div>
+    <>
+      <Head>
+        <title>Admin Analytics | The Global Edge</title>
+        <meta name="description" content="Admin analytics dashboard for monitoring platform performance." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Header */}
+        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex items-center mb-6">
+              <Link 
+                href="/admin" 
+                className="flex items-center text-white hover:text-gray-200 transition-colors"
+              >
+                <Icon name="arrow-left" className="mr-2" />
+                Back to Admin
+              </Link>
+            </div>
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              Analytics Dashboard
+              Admin Analytics
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
               Comprehensive analytics, performance metrics, and system health monitoring.

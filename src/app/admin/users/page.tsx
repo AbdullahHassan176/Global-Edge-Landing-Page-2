@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -358,12 +359,18 @@ function UserManagementDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-soft-white">
-      {/* Notification System */}
-      <NotificationSystem
-        notifications={notifications}
-        onRemove={removeNotification}
-      />
+    <>
+      <Head>
+        <title>Admin Users | The Global Edge</title>
+        <meta name="description" content="User management and administration for The Global Edge platform." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-soft-white">
+        {/* Notification System */}
+        <NotificationSystem
+          notifications={notifications}
+          onRemove={removeNotification}
+        />
 
       {/* Header */}
       <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -379,10 +386,10 @@ function UserManagementDashboard() {
           </div>
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
-              User Management
+              Admin Users
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Manage user accounts, permissions, and access controls across the platform.
+              User management and administration for The Global Edge platform.
             </p>
           </div>
         </div>

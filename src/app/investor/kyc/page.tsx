@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User, KycDocument } from '@/lib/userAuthService';
@@ -140,15 +141,21 @@ export default function KYCPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">KYC Verification</h1>
-              <p className="text-gray-600 mt-1">Complete your identity verification to start investing</p>
-            </div>
+    <>
+      <Head>
+        <title>KYC Verification | The Global Edge</title>
+        <meta name="description" content="Submit or update your KYC documents to comply with VARA standards." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">KYC Verification</h1>
+                <p className="text-gray-600 mt-1">Submit or update your KYC documents to comply with VARA standards.</p>
+              </div>
             <div className="text-right">
               <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
                 user.kycStatus === 'approved' ? 'bg-green-100 text-green-800' :

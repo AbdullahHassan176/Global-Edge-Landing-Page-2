@@ -82,18 +82,21 @@ export default function RiskDisclosuresPage() {
       <section id="risk-disclosures-hero" className="bg-gradient-to-br from-red-600 via-orange-500 to-yellow-500 h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-30"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
+              <div className="max-w-3xl md:max-w-4xl text-white text-balance">
                   <div className="flex items-center mb-4">
                       <span className="text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full">RISK DISCLOSURES</span>
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words">
                       Investment Risk Disclosure
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words">
                       Transparency for Every Investor
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-prose leading-relaxed">
                       Please read these risk disclosures carefully before investing. All investments carry risk of loss. Learn more in our <Link href="/faq" className="underline hover:text-global-teal transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="underline hover:text-global-teal transition-colors">privacy policy</Link>.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-prose leading-relaxed">
+                      Investment risk of tokenized assets includes market volatility, liquidity constraints, regulatory changes, and technology risks. While tokenization provides fractional ownership and enhanced accessibility, it also introduces unique risks that traditional investments may not have, requiring careful consideration of your risk tolerance and investment objectives.
                   </p>
               </div>
           </div>
@@ -124,8 +127,13 @@ export default function RiskDisclosuresPage() {
       <section id="general-risks" className="py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-16">
-                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">General Investment Risks</h2>
-                  <p className="text-xl text-gray-600 max-w-3xl mx-auto">All investments carry inherent risks that you should understand. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
+                  <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Key Risks to Consider</h2>
+                  <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">All investments carry inherent risks that you should understand. Learn more in our <Link href="/faq" className="text-global-teal hover:text-edge-purple transition-colors">FAQ section</Link> and review our <Link href="/privacy" className="text-global-teal hover:text-edge-purple transition-colors">privacy policy</Link>.</p>
+                  <ul className="text-lg text-gray-600 max-w-2xl mx-auto space-y-2 text-left">
+                      <li>• <strong>Market Risk:</strong> Tokenized asset values fluctuate based on underlying asset performance, market conditions, and investor sentiment</li>
+                      <li>• <strong>Liquidity Risk:</strong> Limited secondary market trading may result in difficulty selling tokens at desired prices or timeframes</li>
+                      <li>• <strong>Regulatory Risk:</strong> Changes in VARA regulations or international laws may impact tokenized asset operations and investor rights</li>
+                  </ul>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

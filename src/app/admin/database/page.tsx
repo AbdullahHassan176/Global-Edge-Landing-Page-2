@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 
@@ -101,13 +102,19 @@ export default function DatabasePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Database Management</h1>
-          <p className="mt-2 text-gray-600">Monitor and manage your Azure Cosmos DB connection</p>
-        </div>
+    <>
+      <Head>
+        <title>Admin Database Management | The Global Edge</title>
+        <meta name="description" content="Admin database management for monitoring Azure Cosmos DB." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">Admin Database Management</h1>
+            <p className="mt-2 text-gray-600">Monitor and manage your Azure Cosmos DB connection</p>
+          </div>
 
         {/* Connection Status */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Inter, Poppins } from 'next/font/google';
 import '@/styles/globals.css';
 import Header from '@/components/layout/Header';
@@ -15,35 +15,35 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-export const metadata: Metadata = {
-  title: 'Global Edge - Tokenizing Real-World Assets',
-  description: 'Invest in tokenized real-world assets including shipping containers, real estate, and trade inventory with complete transparency and blockchain verification.',
-  keywords: 'tokenization, real estate, shipping containers, blockchain, investment, assets',
-  authors: [{ name: 'Global Edge' }],
-  robots: 'index, follow',
-  metadataBase: new URL('https://globalnext.rocks'),
-  icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
-  },
-  openGraph: {
-    title: 'Global Edge - Tokenizing Real-World Assets',
-    description: 'Invest in tokenized real-world assets with complete transparency',
-    type: 'website',
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Global Edge - Tokenizing Real-World Assets',
-    description: 'Invest in tokenized real-world assets with complete transparency',
-  },
-};
+// classic head handled per-page; layout has global scripts and structure
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
 };
+
+export const metadata = {
+  title: 'The Global Edge',
+  description:
+    'Empowering global trade through tokenization. Manage, track, and invest in logistics assets securely and transparently.',
+  robots: 'index, follow',
+  openGraph: {
+    title: 'The Global Edge',
+    description:
+      'Tokenizing logistics and real-world assets to unlock global opportunities.',
+    url: 'https://theglobaledge.io',
+    siteName: 'The Global Edge',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'The Global Edge' }],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Global Edge',
+    description:
+      'Tokenizing logistics and real-world assets to unlock global opportunities.',
+    images: ['/og-image.jpg'],
+  },
+} as const;
 
 export default function RootLayout({
   children,
@@ -52,44 +52,41 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <head>
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QWR6TE1R87"></script>
-        <script
+      <head></head>
+      <body className="font-inter bg-soft-white">
+        {/* Google Tag Manager */}
+        <Script
+          id="google-tag-manager"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-5J7PSV92');
+            `,
+          }}
+        />
+
+        {/* Google Analytics 4 */}
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-QWR6TE1R87"
+        />
+        <Script
+          id="ga4-init"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
+              function gtag(){dataLayer.push(arguments);} 
               gtag('js', new Date());
               gtag('config', 'G-QWR6TE1R87');
             `,
           }}
         />
-        {/* End Google tag */}
-        
-        {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-       j=d.createElement(s),dl=l!='dataLayer'?"&l="+l:'';j.async=true;j.src=
-       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-       })(window,document,'script','dataLayer','GTM-5J7PSV92');`
-          }}
-        />
-        {/* End Google Tag Manager */}
-      </head>
-      <body className="font-inter bg-soft-white">
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5J7PSV92"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          ></iframe>
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
         <Header />
         <main className="min-h-screen">
           {children}

@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
@@ -241,31 +242,37 @@ export default function CreateAssetPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Notification System */}
-      <NotificationSystem
-        notifications={notifications}
-        onRemove={removeNotification}
-      />
-
-      {/* Error Explanation Modal */}
-      {currentValidation && (
-        <ErrorExplanationModal
-          isOpen={showErrorModal}
-          onClose={() => setShowErrorModal(false)}
-          errors={currentValidation.errors}
-          warnings={currentValidation.warnings}
-          suggestions={currentValidation.suggestions}
-          stepName={steps.find(s => s.key === currentStep)?.title || 'Current Step'}
+    <>
+      <Head>
+        <title>Create New Tokenized Asset | The Global Edge</title>
+        <meta name="description" content="Onboard a new real-world asset for tokenization." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
+        {/* Notification System */}
+        <NotificationSystem
+          notifications={notifications}
+          onRemove={removeNotification}
         />
-      )}
 
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Create New Asset</h1>
+        {/* Error Explanation Modal */}
+        {currentValidation && (
+          <ErrorExplanationModal
+            isOpen={showErrorModal}
+            onClose={() => setShowErrorModal(false)}
+            errors={currentValidation.errors}
+            warnings={currentValidation.warnings}
+            suggestions={currentValidation.suggestions}
+            stepName={steps.find(s => s.key === currentStep)?.title || 'Current Step'}
+          />
+        )}
+
+        {/* Header */}
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Create New Tokenized Asset</h1>
               <p className="text-gray-600 mt-1">Tokenize your asset for investment opportunities</p>
             </div>
             <div className="flex items-center space-x-4">

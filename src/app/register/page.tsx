@@ -350,17 +350,17 @@ export default function RegisterPage() {
       <div className="relative z-10 max-w-2xl w-full mx-4">
         <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 max-w-3xl mx-auto text-balance">
             <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
               <Icon name={selectedRole === 'issuer' ? 'building' : 'chart-line'} className="text-white text-2xl" />
             </div>
-            <h1 className="text-3xl font-poppins font-bold text-white mb-2">
-              Create Your Account
+            <h1 className="text-3xl font-poppins font-bold text-white mb-2 break-words">
+              Create Your Account – The Global Edge
             </h1>
-            <h2 className="text-xl font-poppins font-semibold text-white mb-4">
-              Join The Global Edge and access tokenized investments
-            </h2>
-            <p className="text-white/70">
+            <p className="text-white/90 text-base sm:text-lg md:text-xl mb-4 max-w-prose leading-relaxed mx-auto">
+              Join our VARA-aligned tokenization platform.
+            </p>
+            <p className="text-white/70 text-base sm:text-lg md:text-xl max-w-prose leading-relaxed mx-auto">
               Join Global Edge and start your {selectedRole === 'issuer' ? 'asset tokenization' : 'investment'} journey. <Link href="/login" className="text-global-teal hover:text-edge-purple transition-colors">Already have an account?</Link> Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link>.
             </p>
           </div>

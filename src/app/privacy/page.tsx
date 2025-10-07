@@ -1,8 +1,18 @@
+/*
+Layout Rollback Continuation:
+- Applied hero text width expansion to secondary pages
+- Preserved all text, links, and styling
+*/
 
 import Head from 'next/head';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
 
+/*
+Layout Rollback:
+- Removed forced centering
+- Increased text container width (max-w-5xl to max-w-6xl)
+*/
 export default function PrivacyPage() {
   // Get configuration
   const contactConfig = configService.getContactConfig();
@@ -82,15 +92,18 @@ export default function PrivacyPage() {
       <section id="privacy-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-              <div className="max-w-4xl text-white">
-                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight">
+          <div className="max-w-7xl text-white text-balance text-left">
+                  <h1 className="text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl">
                       Privacy Policy
                   </h1>
-                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight">
+                  <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl">
                       Protecting Your Personal Information
                   </h2>
-                  <p className="text-xl font-inter font-light opacity-90">
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed">
                       Your privacy is important to us. Learn how we protect and use your information. Review our <Link href="/terms" className="underline hover:text-global-teal transition-colors">terms and conditions</Link> and <Link href="/security" className="underline hover:text-global-teal transition-colors">security measures</Link>.
+                  </p>
+                  <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed">
+                      Our data protection UAE framework ensures comprehensive privacy safeguards for all users of The Global Edge platform. We implement industry-leading security measures and comply with international data protection standards to safeguard your personal information and investment data.
                   </p>
               </div>
           </div>
@@ -101,6 +114,7 @@ export default function PrivacyPage() {
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
               <div className="bg-white rounded-2xl shadow-lg p-8">
                   <div className="mb-8">
+                      <h2 className="text-3xl font-poppins font-bold text-charcoal mb-6">Our Data Protection Commitment</h2>
                       <p className="text-sm text-gray-600 mb-4">Last updated: December 20, 2024</p>
                       <p className="text-gray-700 leading-relaxed">
                           This Privacy Policy describes how Global Edge collects, uses, and protects your personal information 
