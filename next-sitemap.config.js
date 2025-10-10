@@ -8,6 +8,6 @@ module.exports = {
   exclude: ['/404', '/500', '/admin/*', '/api/*'],
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],
-    additionalSitemaps: ['https://theglobaledge.io/sitemap.xml'],
+    additionalSitemaps: [],
   },
 };
