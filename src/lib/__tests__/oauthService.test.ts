@@ -39,7 +39,7 @@ describe('OAuthService', () => {
         'github.com/login/oauth/authorize'
       );
       expect(window.location.href).toContain('client_id=test-github-client-id');
-      expect(window.location.href).toContain('scope=user:email');
+      expect(window.location.href).toContain('scope=user%3Aemail');
     });
 
     it('should call the initiateGitHubLogin method', () => {
