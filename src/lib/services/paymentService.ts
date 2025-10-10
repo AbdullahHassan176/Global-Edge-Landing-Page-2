@@ -9,7 +9,14 @@ export interface PaymentIntent {
   id: string;
   amount: number;
   currency: string;
-  status: 'requires_payment_method' | 'requires_confirmation' | 'requires_action' | 'processing' | 'requires_capture' | 'succeeded' | 'canceled';
+  status:
+    | 'requires_payment_method'
+    | 'requires_confirmation'
+    | 'requires_action'
+    | 'processing'
+    | 'requires_capture'
+    | 'succeeded'
+    | 'canceled';
   client_secret: string;
 }
 
@@ -32,7 +39,11 @@ class PaymentService {
   /**
    * Create a payment intent for investment
    */
-  async createPaymentIntent(options: CreatePaymentIntentOptions): Promise<{ success: boolean; paymentIntent?: PaymentIntent; error?: string }> {
+  async createPaymentIntent(options: CreatePaymentIntentOptions): Promise<{
+    success: boolean;
+    paymentIntent?: PaymentIntent;
+    error?: string;
+  }> {
     try {
       const response = await fetch('/api/stripe/create-payment-intent', {
         method: 'POST',
@@ -52,12 +63,16 @@ class PaymentService {
         return { success: true, paymentIntent: data.paymentIntent };
       } else {
         const error = await response.json();
-        return { success: false, error: error.message || 'Failed to create payment intent' };
+        return {
+          success: false,
+          error: error.message || 'Failed to create payment intent',
+        };
       }
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred' 
+      return {
+        success: false,
+        error:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -76,15 +91,18 @@ class PaymentService {
     if (amount <= 0) {
       return { isValid: false, error: 'Amount must be greater than 0' };
     }
-    
+
     if (amount < 100) {
       return { isValid: false, error: 'Minimum investment amount is $100' };
     }
-    
+
     if (amount > 1000000) {
-      return { isValid: false, error: 'Maximum investment amount is $1,000,000' };
+      return {
+        isValid: false,
+        error: 'Maximum investment amount is $1,000,000',
+      };
     }
-    
+
     return { isValid: true };
   }
 
@@ -101,14 +119,18 @@ class PaymentService {
   /**
    * Calculate fees
    */
-  calculateFees(amount: number): { totalFees: number; platformFee: number; processingFee: number } {
+  calculateFees(amount: number): {
+    totalFees: number;
+    platformFee: number;
+    processingFee: number;
+  } {
     const platformFeeRate = 0.025; // 2.5% platform fee
     const processingFeeRate = 0.029; // 2.9% + $0.30 processing fee
-    
+
     const platformFee = amount * platformFeeRate;
-    const processingFee = (amount * processingFeeRate) + 0.30;
+    const processingFee = amount * processingFeeRate + 0.3;
     const totalFees = platformFee + processingFee;
-    
+
     return {
       totalFees: Math.round(totalFees * 100) / 100,
       platformFee: Math.round(platformFee * 100) / 100,

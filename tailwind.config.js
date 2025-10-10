@@ -12,12 +12,12 @@ module.exports = {
         'edge-purple': '#713A9B',
         'aqua-start': '#00D4C0',
         'aqua-end': '#7F5CD0',
-        'charcoal': '#2B2D42',
-        'soft-white': '#F7F9FC'
+        charcoal: '#2B2D42',
+        'soft-white': '#F7F9FC',
       },
       fontFamily: {
-        'poppins': ['Poppins', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -36,4 +36,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};

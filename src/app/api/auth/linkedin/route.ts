@@ -4,10 +4,16 @@ export async function POST(request: NextRequest) {
   try {
     const { code } = await request.json();
 
-    console.log('LinkedIn OAuth API called with code:', code ? 'present' : 'missing');
+    console.log(
+      'LinkedIn OAuth API called with code:',
+      code ? 'present' : 'missing'
+    );
     console.log('Environment variables:');
     console.log('LINKEDIN_CLIENT_ID:', process.env.LINKEDIN_CLIENT_ID);
-    console.log('LINKEDIN_CLIENT_SECRET:', process.env.LINKEDIN_CLIENT_SECRET ? 'present' : 'missing');
+    console.log(
+      'LINKEDIN_CLIENT_SECRET:',
+      process.env.LINKEDIN_CLIENT_SECRET ? 'present' : 'missing'
+    );
 
     if (!code) {
       return NextResponse.json(
@@ -19,19 +25,22 @@ export async function POST(request: NextRequest) {
     // LinkedIn OAuth is now configured with hardcoded credentials
 
     // Exchange the code for an access token
-    const tokenResponse = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        code: code,
-        client_id: process.env.LINKEDIN_CLIENT_ID || '77wo1ift9iqifp',
-        client_secret: process.env.LINKEDIN_CLIENT_SECRET || '',
-        redirect_uri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`
-      })
-    });
+    const tokenResponse = await fetch(
+      'https://www.linkedin.com/oauth/v2/accessToken',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          grant_type: 'authorization_code',
+          code: code,
+          client_id: process.env.LINKEDIN_CLIENT_ID || '77wo1ift9iqifp',
+          client_secret: process.env.LINKEDIN_CLIENT_SECRET || '',
+          redirect_uri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
+        }),
+      }
+    );
 
     if (!tokenResponse.ok) {
       throw new Error('Failed to exchange code for access token');
@@ -45,12 +54,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Fetch user profile data from LinkedIn API
-    const profileResponse = await fetch('https://api.linkedin.com/v2/people/~', {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'X-Restli-Protocol-Version': '2.0.0'
+    const profileResponse = await fetch(
+      'https://api.linkedin.com/v2/people/~',
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'X-Restli-Protocol-Version': '2.0.0',
+        },
       }
-    });
+    );
 
     if (!profileResponse.ok) {
       throw new Error('Failed to fetch user profile from LinkedIn');
@@ -59,12 +71,15 @@ export async function POST(request: NextRequest) {
     const profileData = await profileResponse.json();
 
     // Fetch user email (requires additional API call)
-    const emailResponse = await fetch('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'X-Restli-Protocol-Version': '2.0.0'
+    const emailResponse = await fetch(
+      'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))',
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'X-Restli-Protocol-Version': '2.0.0',
+        },
       }
-    });
+    );
 
     let email = 'no-email@linkedin.com';
     if (emailResponse.ok) {
@@ -79,12 +94,18 @@ export async function POST(request: NextRequest) {
       email: email,
       firstName: profileData.firstName?.localized?.en_US || 'LinkedIn',
       lastName: profileData.lastName?.localized?.en_US || 'User',
-      profilePicture: profileData.profilePicture?.['displayImage~']?.elements?.[0]?.identifiers?.[0]?.identifier || 'https://media.licdn.com/dms/image/C4D03AQHxK8Y2X8Y2Y2/profile-displayphoto-shrink_400_400/0/1234567890'
+      profilePicture:
+        profileData.profilePicture?.['displayImage~']?.elements?.[0]
+          ?.identifiers?.[0]?.identifier ||
+        'https://media.licdn.com/dms/image/C4D03AQHxK8Y2X8Y2Y2/profile-displayphoto-shrink_400_400/0/1234567890',
     });
   } catch (error) {
     console.error('LinkedIn OAuth error:', error);
     return NextResponse.json(
-      { error: 'LinkedIn authentication failed', details: (error as Error).message },
+      {
+        error: 'LinkedIn authentication failed',
+        details: (error as Error).message,
+      },
       { status: 500 }
     );
   }

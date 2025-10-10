@@ -1,6 +1,6 @@
 /**
  * Database Connection Test API Route
- * 
+ *
  * This endpoint tests the connection to Azure Cosmos DB
  * and returns database statistics.
  */
@@ -12,16 +12,16 @@ export async function GET(request: NextRequest) {
   try {
     // Initialize database service first
     await databaseService.initialize();
-    
+
     // Test database connection
     const connectionTest = await databaseService.testConnection();
-    
+
     if (!connectionTest) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Database connection failed',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         },
         { status: 500 }
       );
@@ -36,18 +36,17 @@ export async function GET(request: NextRequest) {
       data: {
         connection: 'Connected',
         timestamp: new Date().toISOString(),
-        stats
-      }
+        stats,
+      },
     });
-
   } catch (error) {
     console.error('Database test error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
       { status: 500 }
     );

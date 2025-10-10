@@ -1,6 +1,6 @@
 /**
  * Asset Management Integration
- * 
+ *
  * This service integrates the existing assetService with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -14,7 +14,11 @@ export class AssetIntegration {
   /**
    * Get all assets with database integration
    */
-  async getAssets(): Promise<{ success: boolean; assets?: Asset[]; error?: string }> {
+  async getAssets(): Promise<{
+    success: boolean;
+    assets?: Asset[];
+    error?: string;
+  }> {
     try {
       const assets = await assetService.getAssets();
       return { success: true, assets };
@@ -27,7 +31,9 @@ export class AssetIntegration {
   /**
    * Get asset by ID with database integration
    */
-  async getAssetById(id: string): Promise<{ success: boolean; asset?: Asset; error?: string }> {
+  async getAssetById(
+    id: string
+  ): Promise<{ success: boolean; asset?: Asset; error?: string }> {
     try {
       const asset = await assetService.getAssetById(id);
       if (asset) {
@@ -43,7 +49,9 @@ export class AssetIntegration {
   /**
    * Create asset with database integration
    */
-  async createAsset(assetData: Omit<Asset, 'id' | 'createdAt' | 'updatedAt'>): Promise<{ success: boolean; asset?: Asset; error?: string }> {
+  async createAsset(
+    assetData: Omit<Asset, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<{ success: boolean; asset?: Asset; error?: string }> {
     try {
       const asset = await assetService.addAsset(assetData);
       return { success: true, asset };
@@ -56,7 +64,10 @@ export class AssetIntegration {
   /**
    * Update asset with database integration
    */
-  async updateAsset(id: string, updates: Partial<Asset>): Promise<{ success: boolean; asset?: Asset; error?: string }> {
+  async updateAsset(
+    id: string,
+    updates: Partial<Asset>
+  ): Promise<{ success: boolean; asset?: Asset; error?: string }> {
     try {
       const asset = await assetService.updateAsset(id, updates);
       if (asset) {
@@ -85,10 +96,14 @@ export class AssetIntegration {
   /**
    * Get assets by type with database integration
    */
-  async getAssetsByType(type: string): Promise<{ success: boolean; assets?: Asset[]; error?: string }> {
+  async getAssetsByType(
+    type: string
+  ): Promise<{ success: boolean; assets?: Asset[]; error?: string }> {
     try {
       if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getAssets({ type: type as any });
+        const dbResult = await workingDatabaseService.getAssets({
+          type: type as any,
+        });
         if (dbResult.success && dbResult.data) {
           return { success: true, assets: dbResult.data.items };
         }
@@ -107,10 +122,14 @@ export class AssetIntegration {
   /**
    * Get assets by status with database integration
    */
-  async getAssetsByStatus(status: string): Promise<{ success: boolean; assets?: Asset[]; error?: string }> {
+  async getAssetsByStatus(
+    status: string
+  ): Promise<{ success: boolean; assets?: Asset[]; error?: string }> {
     try {
       if (this.useDatabase) {
-        const dbResult = await workingDatabaseService.getAssets({ status: status as any });
+        const dbResult = await workingDatabaseService.getAssets({
+          status: status as any,
+        });
         if (dbResult.success && dbResult.data) {
           return { success: true, assets: dbResult.data.items };
         }
@@ -131,7 +150,9 @@ export class AssetIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`AssetIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `AssetIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

@@ -4,10 +4,16 @@ export async function POST(request: NextRequest) {
   try {
     const { code } = await request.json();
 
-    console.log('GitHub OAuth API called with code:', code ? 'present' : 'missing');
+    console.log(
+      'GitHub OAuth API called with code:',
+      code ? 'present' : 'missing'
+    );
     console.log('Environment variables:');
     console.log('GITHUB_CLIENT_ID:', process.env.GITHUB_CLIENT_ID);
-    console.log('GITHUB_CLIENT_SECRET:', process.env.GITHUB_CLIENT_SECRET ? 'present' : 'missing');
+    console.log(
+      'GITHUB_CLIENT_SECRET:',
+      process.env.GITHUB_CLIENT_SECRET ? 'present' : 'missing'
+    );
 
     if (!code) {
       return NextResponse.json(
@@ -17,19 +23,24 @@ export async function POST(request: NextRequest) {
     }
 
     // Exchange the code for an access token
-    const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        client_id: process.env.GITHUB_CLIENT_ID || 'Ov23libFA9iThtAUjrFP',
-        client_secret: process.env.GITHUB_CLIENT_SECRET || 'd48fb0c1781bc1886434e22a3c0db57209a7014a',
-        code: code,
-        redirect_uri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`
-      })
-    });
+    const tokenResponse = await fetch(
+      'https://github.com/login/oauth/access_token',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          client_id: process.env.GITHUB_CLIENT_ID || 'Ov23libFA9iThtAUjrFP',
+          client_secret:
+            process.env.GITHUB_CLIENT_SECRET ||
+            'd48fb0c1781bc1886434e22a3c0db57209a7014a',
+          code: code,
+          redirect_uri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`,
+        }),
+      }
+    );
 
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
@@ -49,9 +60,9 @@ export async function POST(request: NextRequest) {
     // Fetch user data from GitHub API
     const userResponse = await fetch('https://api.github.com/user', {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
     });
 
     if (!userResponse.ok) {
@@ -63,9 +74,9 @@ export async function POST(request: NextRequest) {
     // Fetch user email (requires additional API call)
     const emailResponse = await fetch('https://api.github.com/user/emails', {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
     });
 
     let email = userData.email;
@@ -82,12 +93,15 @@ export async function POST(request: NextRequest) {
       email: email || 'no-email@github.com',
       name: userData.name || userData.login,
       login: userData.login,
-      avatar_url: userData.avatar_url
+      avatar_url: userData.avatar_url,
     });
   } catch (error) {
     console.error('GitHub OAuth error:', error);
     return NextResponse.json(
-      { error: 'GitHub authentication failed', details: (error as Error).message },
+      {
+        error: 'GitHub authentication failed',
+        details: (error as Error).message,
+      },
       { status: 500 }
     );
   }

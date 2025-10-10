@@ -1,6 +1,6 @@
 /**
  * Database Models for Tokenized Assets Platform
- * 
+ *
  * This file contains all TypeScript interfaces and types for the database schema
  * used in the Global Edge tokenized assets platform.
  */
@@ -123,7 +123,11 @@ export interface LogisticsInfo {
 export interface DocumentReference {
   id: string;
   name: string;
-  type: 'investment_agreement' | 'kyc_document' | 'proof_of_funds' | 'tax_document';
+  type:
+    | 'investment_agreement'
+    | 'kyc_document'
+    | 'proof_of_funds'
+    | 'tax_document';
   url: string;
   uploadedAt: string;
   verified: boolean;
@@ -263,7 +267,14 @@ export interface ComplianceCheck {
 export interface Notification {
   id: string;
   userId: string;
-  type: 'investment_update' | 'kyc_required' | 'kyc_approved' | 'kyc_rejected' | 'payment_required' | 'investment_completed' | 'system_alert';
+  type:
+    | 'investment_update'
+    | 'kyc_required'
+    | 'kyc_approved'
+    | 'kyc_rejected'
+    | 'payment_required'
+    | 'investment_completed'
+    | 'system_alert';
   title: string;
   message: string;
   read: boolean;
@@ -382,7 +393,12 @@ export interface IssuerBranding {
 
 export interface SystemSetting {
   id: string;
-  category: 'general' | 'security' | 'notifications' | 'payments' | 'compliance';
+  category:
+    | 'general'
+    | 'security'
+    | 'notifications'
+    | 'payments'
+    | 'compliance';
   key: string;
   value: any;
   type: 'string' | 'number' | 'boolean' | 'json';
@@ -410,10 +426,26 @@ export interface AuditLog {
 
 export type UserRole = 'admin' | 'issuer' | 'investor' | 'moderator';
 export type AssetType = 'container' | 'property' | 'inventory' | 'vault';
-export type InvestmentStatus = 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled';
+export type InvestmentStatus =
+  | 'pending'
+  | 'approved'
+  | 'rejected'
+  | 'completed'
+  | 'cancelled';
 export type KYCStatus = 'pending' | 'approved' | 'rejected' | 'under_review';
-export type NotificationType = 'investment' | 'kyc' | 'asset' | 'system' | 'admin';
-export type DocumentType = 'passport' | 'drivers_license' | 'national_id' | 'utility_bill' | 'bank_statement' | 'government_letter';
+export type NotificationType =
+  | 'investment'
+  | 'kyc'
+  | 'asset'
+  | 'system'
+  | 'admin';
+export type DocumentType =
+  | 'passport'
+  | 'drivers_license'
+  | 'national_id'
+  | 'utility_bill'
+  | 'bank_statement'
+  | 'government_letter';
 
 // ============================================================================
 // API RESPONSE TYPES

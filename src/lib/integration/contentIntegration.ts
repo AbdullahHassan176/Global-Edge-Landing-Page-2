@@ -1,6 +1,6 @@
 /**
  * Admin Content Management Integration
- * 
+ *
  * This service integrates content management with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -28,7 +28,11 @@ export class ContentIntegration {
   /**
    * Get all content items with database integration
    */
-  async getContentItems(): Promise<{ success: boolean; items?: ContentItem[]; error?: string }> {
+  async getContentItems(): Promise<{
+    success: boolean;
+    items?: ContentItem[];
+    error?: string;
+  }> {
     try {
       // Use mock service for now (database integration needs proper content container)
       const mockItems = this.getMockContentItems();
@@ -42,7 +46,9 @@ export class ContentIntegration {
   /**
    * Get content item by ID with database integration
    */
-  async getContentItem(id: string): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
+  async getContentItem(
+    id: string
+  ): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
       const mockItems = this.getMockContentItems();
       const item = mockItems.find(item => item.id === id);
@@ -59,13 +65,15 @@ export class ContentIntegration {
   /**
    * Create content item with database integration
    */
-  async createContentItem(itemData: Omit<ContentItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
+  async createContentItem(
+    itemData: Omit<ContentItem, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
       const mockItem = {
         ...itemData,
         id: `content-${Date.now()}`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
       return { success: true, item: mockItem };
     } catch (error) {
@@ -77,7 +85,10 @@ export class ContentIntegration {
   /**
    * Update content item with database integration
    */
-  async updateContentItem(id: string, updates: Partial<ContentItem>): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
+  async updateContentItem(
+    id: string,
+    updates: Partial<ContentItem>
+  ): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
       const mockItems = this.getMockContentItems();
       const item = mockItems.find(item => item.id === id);
@@ -95,7 +106,9 @@ export class ContentIntegration {
   /**
    * Delete content item with database integration
    */
-  async deleteContentItem(id: string): Promise<{ success: boolean; error?: string }> {
+  async deleteContentItem(
+    id: string
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // Mock service (just return success)
       return { success: true };
@@ -108,11 +121,13 @@ export class ContentIntegration {
   /**
    * Publish content item with database integration
    */
-  async publishContentItem(id: string): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
+  async publishContentItem(
+    id: string
+  ): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
       const updates = {
         status: 'published' as const,
-        publishedAt: new Date().toISOString()
+        publishedAt: new Date().toISOString(),
       };
 
       return await this.updateContentItem(id, updates);
@@ -125,10 +140,12 @@ export class ContentIntegration {
   /**
    * Archive content item with database integration
    */
-  async archiveContentItem(id: string): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
+  async archiveContentItem(
+    id: string
+  ): Promise<{ success: boolean; item?: ContentItem; error?: string }> {
     try {
       const updates = {
-        status: 'archived' as const
+        status: 'archived' as const,
       };
 
       return await this.updateContentItem(id, updates);
@@ -141,11 +158,18 @@ export class ContentIntegration {
   /**
    * Get content statistics with database integration
    */
-  async getContentStats(): Promise<{ success: boolean; stats?: any; error?: string }> {
+  async getContentStats(): Promise<{
+    success: boolean;
+    stats?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getContentItems();
       if (!result.success || !result.items) {
-        return { success: false, error: 'Failed to get content items for stats' };
+        return {
+          success: false,
+          error: 'Failed to get content items for stats',
+        };
       }
 
       const items = result.items;
@@ -158,10 +182,11 @@ export class ContentIntegration {
           page: items.filter(item => item.type === 'page').length,
           asset: items.filter(item => item.type === 'asset').length,
           user: items.filter(item => item.type === 'user').length,
-          notification: items.filter(item => item.type === 'notification').length,
-          setting: items.filter(item => item.type === 'setting').length
+          notification: items.filter(item => item.type === 'notification')
+            .length,
+          setting: items.filter(item => item.type === 'setting').length,
         },
-        byCategory: this.getCategoryStats(items)
+        byCategory: this.getCategoryStats(items),
       };
 
       return { success: true, stats };
@@ -201,8 +226,8 @@ export class ContentIntegration {
         publishedAt: '2024-01-15T10:00:00Z',
         metadata: {
           seoTitle: 'Global Edge - Tokenized Assets Platform',
-          seoDescription: 'Invest in tokenized assets with Global Edge'
-        }
+          seoDescription: 'Invest in tokenized assets with Global Edge',
+        },
       },
       {
         id: 'content-2',
@@ -219,8 +244,8 @@ export class ContentIntegration {
         metadata: {
           assetType: 'property',
           location: 'Dubai Marina',
-          value: '$350,000'
-        }
+          value: '$350,000',
+        },
       },
       {
         id: 'content-3',
@@ -235,9 +260,9 @@ export class ContentIntegration {
         updatedAt: '2024-01-17T14:00:00Z',
         metadata: {
           priority: 'high',
-          targetAudience: 'all_users'
-        }
-      }
+          targetAudience: 'all_users',
+        },
+      },
     ];
   }
 
@@ -246,7 +271,9 @@ export class ContentIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`ContentIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `ContentIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

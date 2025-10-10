@@ -6,25 +6,35 @@
 import { FEATURE_FINANCING, FEATURE_OPS } from './flags';
 
 // Check if we should use mock data
-export const USE_MOCK_DATA = process.env.NEXT_PUBLIC_API_BASE === "mock";
+export const USE_MOCK_DATA = process.env.NEXT_PUBLIC_API_BASE === 'mock';
 
 /**
  * Mock timeline data generator
  */
-export async function mockGetTimeline(assetKey: string, params?: { limit?: number }) {
+export async function mockGetTimeline(
+  assetKey: string,
+  params?: { limit?: number }
+) {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
   const limit = params?.limit || 10;
   const now = Date.now();
-  
+
   const mockEvents = Array.from({ length: limit }, (_, i) => ({
     type: 'event' as const,
     event: {
       txHash: `0x${Math.random().toString(16).substr(2, 64)}`,
-      eventType: ['AssetCreated', 'OwnershipTransferred', 'StatusChanged', 'MaintenancePerformed'][i % 4],
-      eventTime: new Date(now - (i * 24 * 60 * 60 * 1000)).toISOString(),
+      eventType: [
+        'AssetCreated',
+        'OwnershipTransferred',
+        'StatusChanged',
+        'MaintenancePerformed',
+      ][i % 4],
+      eventTime: new Date(now - i * 24 * 60 * 60 * 1000).toISOString(),
       signer: `0x${Math.random().toString(16).substr(2, 40)}`,
     },
   }));
@@ -39,9 +49,11 @@ export async function mockGetTimeline(assetKey: string, params?: { limit?: numbe
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 300));
-  
+
   return {
-    timeline: [...mockEvents, ...mockDocs].sort(() => Math.random() - 0.5).slice(0, limit),
+    timeline: [...mockEvents, ...mockDocs]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, limit),
   };
 }
 
@@ -50,40 +62,60 @@ export async function mockGetTimeline(assetKey: string, params?: { limit?: numbe
  */
 export async function mockListDocs(assetKey: string) {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
-  const docTypes = ['Bill of Lading', 'Insurance Certificate', 'Cargo Manifest', 'Inspection Report', 'Certificate of Origin'];
+  const docTypes = [
+    'Bill of Lading',
+    'Insurance Certificate',
+    'Cargo Manifest',
+    'Inspection Report',
+    'Certificate of Origin',
+  ];
   const docCount = Math.floor(Math.random() * 5) + 1; // 1-5 documents
-  
+
   const mockDocs = Array.from({ length: docCount }, (_, i) => ({
     id: `doc-${assetKey}-${i}`,
     name: docTypes[i % docTypes.length],
     hash: `0x${Math.random().toString(16).substr(2, 64)}`,
     size: Math.floor(Math.random() * 1000000) + 10000, // 10KB - 1MB
-    uploadedAt: new Date(Date.now() - (i * 7 * 24 * 60 * 60 * 1000)).toISOString(),
+    uploadedAt: new Date(
+      Date.now() - i * 7 * 24 * 60 * 60 * 1000
+    ).toISOString(),
   }));
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 200));
-  
+
   return mockDocs;
 }
 
 /**
  * Mock exceptions list generator
  */
-export async function mockGetExceptions(params: { assetKey?: string; status?: 'open' | 'resolved' }) {
+export async function mockGetExceptions(params: {
+  assetKey?: string;
+  status?: 'open' | 'resolved';
+}) {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
-  const exceptionTypes = ['SLA_BREACH', 'DOC_MISMATCH', 'COMPLIANCE_VIOLATION', 'AUDIT_FAILURE'];
+  const exceptionTypes = [
+    'SLA_BREACH',
+    'DOC_MISMATCH',
+    'COMPLIANCE_VIOLATION',
+    'AUDIT_FAILURE',
+  ];
   const severities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
-  
+
   const exceptionCount = Math.floor(Math.random() * 4) + 1; // 1-4 exceptions
   const openCount = Math.floor(Math.random() * (exceptionCount + 1)); // Some may be open
-  
+
   const mockExceptions = Array.from({ length: exceptionCount }, (_, i) => ({
     id: `exc-${params.assetKey || 'default'}-${i}`,
     type: exceptionTypes[i % exceptionTypes.length],
@@ -92,22 +124,24 @@ export async function mockGetExceptions(params: { assetKey?: string; status?: 'o
     assetKey: params.assetKey || 'default',
     assetName: `Asset ${params.assetKey || 'default'}`,
     message: `This is a mock exception of type ${exceptionTypes[i % exceptionTypes.length]}`,
-    occurredAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+    occurredAt: new Date(
+      Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000
+    ).toISOString(),
     resolved: i >= openCount,
     metadata: {
       exceptionType: exceptionTypes[i % exceptionTypes.length],
-      severity: severities[i % severities.length]
-    }
+      severity: severities[i % severities.length],
+    },
   }));
 
   // Filter by status if provided
-  const filteredExceptions = params.status 
+  const filteredExceptions = params.status
     ? mockExceptions.filter(exc => exc.status === params.status)
     : mockExceptions;
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 250));
-  
+
   return filteredExceptions;
 }
 
@@ -116,7 +150,9 @@ export async function mockGetExceptions(params: { assetKey?: string; status?: 'o
  */
 export async function mockAdminActions() {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
   const actions = [
@@ -145,7 +181,7 @@ export async function mockAdminActions() {
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 100));
-  
+
   return actions;
 }
 
@@ -154,16 +190,18 @@ export async function mockAdminActions() {
  */
 export async function mockGetAssetHealth(assetKey: string) {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
   const now = Date.now();
   const lastSeen = now - Math.random() * 72 * 3600 * 1000; // Up to 72 hours ago
   const lastNonce = Math.floor(Math.random() * 100000);
-  
+
   let oracleStatus: 'ok' | 'stale' | 'error' = 'ok';
   const hoursSinceLastSeen = (now - lastSeen) / (3600 * 1000);
-  
+
   if (hoursSinceLastSeen <= 24) {
     oracleStatus = 'ok';
   } else if (hoursSinceLastSeen <= 48) {
@@ -174,7 +212,7 @@ export async function mockGetAssetHealth(assetKey: string) {
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 150));
-  
+
   return {
     oracle: {
       status: oracleStatus,
@@ -191,7 +229,9 @@ export async function mockGetAssetHealth(assetKey: string) {
  */
 export async function mockGetUserData(userId: string) {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
   const mockUser = {
@@ -206,7 +246,7 @@ export async function mockGetUserData(userId: string) {
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 100));
-  
+
   return mockUser;
 }
 
@@ -215,24 +255,29 @@ export async function mockGetUserData(userId: string) {
  */
 export async function mockGetNotifications(userId: string) {
   if (!USE_MOCK_DATA) {
-    throw new Error('Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.');
+    throw new Error(
+      'Mock data is disabled. Set NEXT_PUBLIC_API_BASE=mock to enable.'
+    );
   }
 
   const notificationTypes = ['info', 'warning', 'error', 'success'];
   const notificationCount = Math.floor(Math.random() * 10) + 1; // 1-10 notifications
-  
-  const mockNotifications = Array.from({ length: notificationCount }, (_, i) => ({
-    id: `notif-${userId}-${i}`,
-    type: notificationTypes[i % notificationTypes.length],
-    title: `Notification ${i + 1}`,
-    message: `This is a mock notification for user ${userId}`,
-    timestamp: new Date(Date.now() - (i * 60 * 60 * 1000)).toISOString(),
-    read: Math.random() > 0.5,
-  }));
+
+  const mockNotifications = Array.from(
+    { length: notificationCount },
+    (_, i) => ({
+      id: `notif-${userId}-${i}`,
+      type: notificationTypes[i % notificationTypes.length],
+      title: `Notification ${i + 1}`,
+      message: `This is a mock notification for user ${userId}`,
+      timestamp: new Date(Date.now() - i * 60 * 60 * 1000).toISOString(),
+      read: Math.random() > 0.5,
+    })
+  );
 
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 200));
-  
+
   return mockNotifications;
 }
 

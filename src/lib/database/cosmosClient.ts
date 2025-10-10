@@ -1,6 +1,6 @@
 /**
  * Azure Cosmos DB Client
- * 
+ *
  * This file contains the Cosmos DB client configuration and connection management
  * for the Global Edge tokenized assets platform.
  */
@@ -53,7 +53,9 @@ class CosmosDBClient {
   getContainer(containerName: keyof typeof cosmosConfig.containers): Container {
     const container = this.containers.get(containerName);
     if (!container) {
-      throw new Error(`Container ${containerName} not found. Make sure to call initialize() first.`);
+      throw new Error(
+        `Container ${containerName} not found. Make sure to call initialize() first.`
+      );
     }
     return container;
   }
@@ -63,7 +65,9 @@ class CosmosDBClient {
    */
   getDatabase(): Database {
     if (!this.database) {
-      throw new Error('Database not initialized. Make sure to call initialize() first.');
+      throw new Error(
+        'Database not initialized. Make sure to call initialize() first.'
+      );
     }
     return this.database;
   }
@@ -88,7 +92,7 @@ class CosmosDBClient {
     try {
       const database = this.getDatabase();
       const containers = await database.containers.readAll().fetchAll();
-      
+
       const stats = {
         databaseId: database.id,
         containerCount: containers.resources.length,

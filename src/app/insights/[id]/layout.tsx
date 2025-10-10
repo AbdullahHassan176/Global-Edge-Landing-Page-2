@@ -7,8 +7,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return generateDynamicMetadata({ path: `/insights/${params.id}` });
 }
 
-export default function InsightDetailLayout({ children }: { children: React.ReactNode }) {
+export default function InsightDetailLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }
-
-

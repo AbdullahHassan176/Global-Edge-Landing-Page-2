@@ -21,11 +21,14 @@ export async function POST(request: NextRequest) {
         firstName: user.firstName,
         lastName: user.lastName,
         country: user.country || 'US',
-        role: user.role || 'investor'
+        role: user.role || 'investor',
       });
 
       if (!registerResult.success) {
-        console.error('Failed to register user in auth system:', registerResult.error);
+        console.error(
+          'Failed to register user in auth system:',
+          registerResult.error
+        );
         return NextResponse.json(
           { error: 'Failed to create user authentication' },
           { status: 500 }
@@ -102,7 +105,7 @@ export async function POST(request: NextRequest) {
           emailContent,
           {
             isHtml: true,
-            priority: 'high'
+            priority: 'high',
           }
         );
 
@@ -151,19 +154,21 @@ export async function POST(request: NextRequest) {
             adminNotificationContent,
             {
               isHtml: true,
-              priority: 'high'
+              priority: 'high',
             }
           );
 
           if (adminResult.success) {
             console.log('Admin notification sent successfully');
           } else {
-            console.error('Failed to send admin notification:', adminResult.error);
+            console.error(
+              'Failed to send admin notification:',
+              adminResult.error
+            );
           }
         } catch (adminError) {
           console.error('Error sending admin notification:', adminError);
         }
-
       } catch (emailError) {
         console.error('Error sending welcome email:', emailError);
         // Don't fail the entire request if email fails
@@ -178,10 +183,9 @@ export async function POST(request: NextRequest) {
         id: user.id,
         email: user.email,
         role: user.role,
-        status: user.status
-      }
+        status: user.status,
+      },
     });
-
   } catch (error) {
     console.error('Error creating user:', error);
     return NextResponse.json(

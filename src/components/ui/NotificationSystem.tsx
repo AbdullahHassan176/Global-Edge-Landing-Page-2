@@ -23,10 +23,13 @@ interface NotificationSystemProps {
   onRemove: (id: string) => void;
 }
 
-export default function NotificationSystem({ notifications, onRemove }: NotificationSystemProps) {
+export default function NotificationSystem({
+  notifications,
+  onRemove,
+}: NotificationSystemProps) {
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-2">
-      {notifications.map((notification) => (
+    <div className='fixed top-4 right-4 z-50 space-y-2'>
+      {notifications.map(notification => (
         <NotificationToast
           key={notification.id}
           notification={notification}
@@ -107,21 +110,27 @@ function NotificationToast({ notification, onRemove }: NotificationToastProps) {
       }`}
     >
       <div className={`p-4 border-l-4 ${getNotificationStyles()}`}>
-        <div className="flex items-start">
-          <div className="flex-shrink-0">
-            <Icon name={getIcon()} className={`h-5 w-5 ${
-              notification.type === 'success' ? 'text-green-400' :
-              notification.type === 'error' ? 'text-red-400' :
-              notification.type === 'warning' ? 'text-yellow-400' :
-              'text-blue-400'
-            }`} />
+        <div className='flex items-start'>
+          <div className='flex-shrink-0'>
+            <Icon
+              name={getIcon()}
+              className={`h-5 w-5 ${
+                notification.type === 'success'
+                  ? 'text-green-400'
+                  : notification.type === 'error'
+                    ? 'text-red-400'
+                    : notification.type === 'warning'
+                      ? 'text-yellow-400'
+                      : 'text-blue-400'
+              }`}
+            />
           </div>
-          <div className="ml-3 flex-1">
-            <h3 className="text-sm font-medium">{notification.title}</h3>
-            <p className="text-sm mt-1 opacity-90">{notification.message}</p>
-            
+          <div className='ml-3 flex-1'>
+            <h3 className='text-sm font-medium'>{notification.title}</h3>
+            <p className='text-sm mt-1 opacity-90'>{notification.message}</p>
+
             {notification.actions && notification.actions.length > 0 && (
-              <div className="mt-3 flex space-x-2">
+              <div className='mt-3 flex space-x-2'>
                 {notification.actions.map((action, index) => (
                   <button
                     key={index}
@@ -138,12 +147,12 @@ function NotificationToast({ notification, onRemove }: NotificationToastProps) {
               </div>
             )}
           </div>
-          <div className="ml-4 flex-shrink-0">
+          <div className='ml-4 flex-shrink-0'>
             <button
               onClick={handleRemove}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className='text-gray-400 hover:text-gray-600 transition-colors'
             >
-              <Icon name="x-mark" className="h-4 w-4" />
+              <Icon name='x-mark' className='h-4 w-4' />
             </button>
           </div>
         </div>
@@ -163,7 +172,7 @@ export function useNotifications() {
       duration: 5000, // Default 5 seconds
       ...notification,
     };
-    
+
     setNotifications(prev => [...prev, newNotification]);
     return id;
   };

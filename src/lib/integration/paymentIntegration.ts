@@ -1,6 +1,6 @@
 /**
  * Payment Integration
- * 
+ *
  * This service integrates payment processing with Stripe and PayPal
  * while maintaining backward compatibility with mock data.
  */
@@ -72,7 +72,10 @@ export class PaymentIntegration {
       return { success: true };
     } catch (error) {
       console.error('Payment integration initialization error:', error);
-      return { success: false, error: 'Failed to initialize payment integration' };
+      return {
+        success: false,
+        error: 'Failed to initialize payment integration',
+      };
     }
   }
 
@@ -98,18 +101,27 @@ export class PaymentIntegration {
           description,
           metadata,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         };
 
         // Store in database (using users container for now)
         const dbResult = await this.storePaymentIntent(paymentIntent);
         if (dbResult.success) {
-          return { success: true, result: { success: true, paymentIntentId: paymentIntent.id } };
+          return {
+            success: true,
+            result: { success: true, paymentIntentId: paymentIntent.id },
+          };
         }
       }
 
       // Fallback to mock payment processing
-      const mockResult = await this.processMockPayment(amount, currency, paymentMethod, description, metadata);
+      const mockResult = await this.processMockPayment(
+        amount,
+        currency,
+        paymentMethod,
+        description,
+        metadata
+      );
       return { success: true, result: mockResult };
     } catch (error) {
       console.error('Create payment intent error:', error);
@@ -137,7 +149,13 @@ export class PaymentIntegration {
       // const paymentIntent = await stripe.paymentIntents.create({...});
 
       // Mock Stripe payment processing
-      const mockResult = await this.processMockPayment(amount, currency, 'stripe', description, metadata);
+      const mockResult = await this.processMockPayment(
+        amount,
+        currency,
+        'stripe',
+        description,
+        metadata
+      );
       return { success: true, result: mockResult };
     } catch (error) {
       console.error('Stripe payment error:', error);
@@ -164,7 +182,13 @@ export class PaymentIntegration {
       // const request = new paypal.orders.OrdersCreateRequest();
 
       // Mock PayPal payment processing
-      const mockResult = await this.processMockPayment(amount, currency, 'paypal', description, metadata);
+      const mockResult = await this.processMockPayment(
+        amount,
+        currency,
+        'paypal',
+        description,
+        metadata
+      );
       return { success: true, result: mockResult };
     } catch (error) {
       console.error('PayPal payment error:', error);
@@ -175,7 +199,9 @@ export class PaymentIntegration {
   /**
    * Get payment methods for user with database integration
    */
-  async getPaymentMethods(userId: string): Promise<{ success: boolean; methods?: PaymentMethod[]; error?: string }> {
+  async getPaymentMethods(
+    userId: string
+  ): Promise<{ success: boolean; methods?: PaymentMethod[]; error?: string }> {
     try {
       if (this.useDatabase) {
         // Get payment methods from database
@@ -208,7 +234,7 @@ export class PaymentIntegration {
           ...methodData,
           id: `pm_${Date.now()}`,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         };
 
         const dbResult = await this.storePaymentMethod(paymentMethod);
@@ -222,7 +248,7 @@ export class PaymentIntegration {
         ...methodData,
         id: `pm_${Date.now()}`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
       return { success: true, method: mockMethod };
     } catch (error) {
@@ -234,7 +260,9 @@ export class PaymentIntegration {
   /**
    * Get payment history for user with database integration
    */
-  async getPaymentHistory(userId: string): Promise<{ success: boolean; payments?: PaymentIntent[]; error?: string }> {
+  async getPaymentHistory(
+    userId: string
+  ): Promise<{ success: boolean; payments?: PaymentIntent[]; error?: string }> {
     try {
       if (this.useDatabase) {
         // Get payment history from database
@@ -273,12 +301,12 @@ export class PaymentIntegration {
       return {
         success: true,
         paymentIntentId: `pi_mock_${Date.now()}`,
-        clientSecret: `pi_mock_${Date.now()}_secret`
+        clientSecret: `pi_mock_${Date.now()}_secret`,
       };
     } else {
       return {
         success: false,
-        error: 'Payment failed - insufficient funds'
+        error: 'Payment failed - insufficient funds',
       };
     }
   }
@@ -286,13 +314,15 @@ export class PaymentIntegration {
   /**
    * Store payment intent in database
    */
-  private async storePaymentIntent(paymentIntent: PaymentIntent): Promise<{ success: boolean; error?: string }> {
+  private async storePaymentIntent(
+    paymentIntent: PaymentIntent
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would store this in a dedicated payments container
       // For now, we'll use the users container with a type field
       const paymentData = {
         ...paymentIntent,
-        type: 'payment_intent'
+        type: 'payment_intent',
       };
 
       // This would be implemented with the actual database service
@@ -306,7 +336,9 @@ export class PaymentIntegration {
   /**
    * Get payment methods from database
    */
-  private async getPaymentMethodsFromDatabase(userId: string): Promise<{ success: boolean; methods?: PaymentMethod[]; error?: string }> {
+  private async getPaymentMethodsFromDatabase(
+    userId: string
+  ): Promise<{ success: boolean; methods?: PaymentMethod[]; error?: string }> {
     try {
       // In a real implementation, you would query the database
       // For now, return mock data
@@ -314,14 +346,19 @@ export class PaymentIntegration {
       return { success: true, methods: mockMethods };
     } catch (error) {
       console.error('Get payment methods from database error:', error);
-      return { success: false, error: 'Failed to get payment methods from database' };
+      return {
+        success: false,
+        error: 'Failed to get payment methods from database',
+      };
     }
   }
 
   /**
    * Store payment method in database
    */
-  private async storePaymentMethod(paymentMethod: PaymentMethod): Promise<{ success: boolean; error?: string }> {
+  private async storePaymentMethod(
+    paymentMethod: PaymentMethod
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would store this in the database
       return { success: true };
@@ -334,7 +371,9 @@ export class PaymentIntegration {
   /**
    * Get payment history from database
    */
-  private async getPaymentHistoryFromDatabase(userId: string): Promise<{ success: boolean; payments?: PaymentIntent[]; error?: string }> {
+  private async getPaymentHistoryFromDatabase(
+    userId: string
+  ): Promise<{ success: boolean; payments?: PaymentIntent[]; error?: string }> {
     try {
       // In a real implementation, you would query the database
       // For now, return mock data
@@ -342,7 +381,10 @@ export class PaymentIntegration {
       return { success: true, payments: mockPayments };
     } catch (error) {
       console.error('Get payment history from database error:', error);
-      return { success: false, error: 'Failed to get payment history from database' };
+      return {
+        success: false,
+        error: 'Failed to get payment history from database',
+      };
     }
   }
 
@@ -358,10 +400,10 @@ export class PaymentIntegration {
         status: 'active',
         details: {
           last4: '4242',
-          brand: 'visa'
+          brand: 'visa',
         },
         createdAt: '2024-01-15T10:00:00Z',
-        updatedAt: '2024-01-15T10:00:00Z'
+        updatedAt: '2024-01-15T10:00:00Z',
       },
       {
         id: 'pm_2',
@@ -369,11 +411,11 @@ export class PaymentIntegration {
         provider: 'paypal',
         status: 'active',
         details: {
-          email: 'user@example.com'
+          email: 'user@example.com',
         },
         createdAt: '2024-01-16T09:00:00Z',
-        updatedAt: '2024-01-16T09:00:00Z'
-      }
+        updatedAt: '2024-01-16T09:00:00Z',
+      },
     ];
   }
 
@@ -392,11 +434,11 @@ export class PaymentIntegration {
         metadata: {
           investmentId: 'inv_1',
           assetId: 'asset_1',
-          userId
+          userId,
         },
         createdAt: '2024-01-15T10:00:00Z',
         updatedAt: '2024-01-15T10:05:00Z',
-        completedAt: '2024-01-15T10:05:00Z'
+        completedAt: '2024-01-15T10:05:00Z',
       },
       {
         id: 'pi_2',
@@ -408,12 +450,12 @@ export class PaymentIntegration {
         metadata: {
           investmentId: 'inv_2',
           assetId: 'asset_2',
-          userId
+          userId,
         },
         createdAt: '2024-01-16T14:30:00Z',
         updatedAt: '2024-01-16T14:35:00Z',
-        completedAt: '2024-01-16T14:35:00Z'
-      }
+        completedAt: '2024-01-16T14:35:00Z',
+      },
     ];
   }
 
@@ -422,7 +464,9 @@ export class PaymentIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`PaymentIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `PaymentIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

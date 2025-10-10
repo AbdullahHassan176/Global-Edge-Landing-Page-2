@@ -37,7 +37,10 @@ class WaitlistService {
           this.submissions = JSON.parse(stored);
         }
       } catch (error) {
-        console.error('Error loading waitlist submissions from storage:', error);
+        console.error(
+          'Error loading waitlist submissions from storage:',
+          error
+        );
         this.submissions = [];
       }
     }
@@ -54,47 +57,58 @@ class WaitlistService {
   }
 
   // Add a new waitlist submission
-  async addSubmission(submissionData: Omit<WaitlistSubmission, 'id' | 'status'>): Promise<WaitlistSubmission> {
+  async addSubmission(
+    submissionData: Omit<WaitlistSubmission, 'id' | 'status'>
+  ): Promise<WaitlistSubmission> {
     try {
       // Try to save to database first
       const dbResult = await workingDatabaseService.createWaitlistSubmission({
         ...submissionData,
-        status: 'new'
+        status: 'new',
       });
 
       if (dbResult.success && dbResult.data) {
         console.log('✅ Waitlist submission saved to database:', dbResult.data);
         return dbResult.data;
       } else {
-        console.warn('⚠️ Database save failed, falling back to localStorage:', dbResult.error);
-        
+        console.warn(
+          '⚠️ Database save failed, falling back to localStorage:',
+          dbResult.error
+        );
+
         // Fallback to localStorage
         const submission: WaitlistSubmission = {
           ...submissionData,
           id: `waitlist-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          status: 'new'
+          status: 'new',
         };
 
         this.submissions.unshift(submission);
         this.saveToStorage();
-        
-        console.log('✅ Waitlist submission added to localStorage:', submission);
+
+        console.log(
+          '✅ Waitlist submission added to localStorage:',
+          submission
+        );
         return submission;
       }
     } catch (error) {
       console.error('❌ Error saving waitlist submission:', error);
-      
+
       // Fallback to localStorage
       const submission: WaitlistSubmission = {
         ...submissionData,
         id: `waitlist-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        status: 'new'
+        status: 'new',
       };
 
       this.submissions.unshift(submission);
       this.saveToStorage();
-      
-      console.log('✅ Waitlist submission added to localStorage (fallback):', submission);
+
+      console.log(
+        '✅ Waitlist submission added to localStorage (fallback):',
+        submission
+      );
       return submission;
     }
   }
@@ -104,12 +118,15 @@ class WaitlistService {
     try {
       // Try to get from database first
       const dbResult = await workingDatabaseService.getWaitlistSubmissions();
-      
+
       if (dbResult.success && dbResult.data) {
         console.log('✅ Waitlist submissions loaded from database');
         return dbResult.data;
       } else {
-        console.warn('⚠️ Database load failed, using localStorage:', dbResult.error);
+        console.warn(
+          '⚠️ Database load failed, using localStorage:',
+          dbResult.error
+        );
         return [...this.submissions]; // Return a copy from localStorage
       }
     } catch (error) {
@@ -119,12 +136,17 @@ class WaitlistService {
   }
 
   // Get submissions by status
-  getSubmissionsByStatus(status: WaitlistSubmission['status']): WaitlistSubmission[] {
+  getSubmissionsByStatus(
+    status: WaitlistSubmission['status']
+  ): WaitlistSubmission[] {
     return this.submissions.filter(sub => sub.status === status);
   }
 
   // Update submission status
-  updateSubmissionStatus(id: string, status: WaitlistSubmission['status']): boolean {
+  updateSubmissionStatus(
+    id: string,
+    status: WaitlistSubmission['status']
+  ): boolean {
     const submission = this.submissions.find(sub => sub.id === id);
     if (submission) {
       submission.status = status;
@@ -143,13 +165,14 @@ class WaitlistService {
   // Search submissions
   searchSubmissions(query: string): WaitlistSubmission[] {
     const lowerQuery = query.toLowerCase();
-    return this.submissions.filter(sub => 
-      sub.firstName.toLowerCase().includes(lowerQuery) ||
-      sub.lastName.toLowerCase().includes(lowerQuery) ||
-      sub.email.toLowerCase().includes(lowerQuery) ||
-      sub.company?.toLowerCase().includes(lowerQuery) ||
-      sub.investorType.toLowerCase().includes(lowerQuery) ||
-      sub.tokenInterest.toLowerCase().includes(lowerQuery)
+    return this.submissions.filter(
+      sub =>
+        sub.firstName.toLowerCase().includes(lowerQuery) ||
+        sub.lastName.toLowerCase().includes(lowerQuery) ||
+        sub.email.toLowerCase().includes(lowerQuery) ||
+        sub.company?.toLowerCase().includes(lowerQuery) ||
+        sub.investorType.toLowerCase().includes(lowerQuery) ||
+        sub.tokenInterest.toLowerCase().includes(lowerQuery)
     );
   }
 
@@ -166,7 +189,7 @@ class WaitlistService {
       new: newCount,
       contacted: contactedCount,
       qualified: qualifiedCount,
-      rejected: rejectedCount
+      rejected: rejectedCount,
     };
   }
 

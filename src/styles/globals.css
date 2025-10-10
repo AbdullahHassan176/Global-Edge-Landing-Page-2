@@ -5,13 +5,13 @@
 @tailwind utilities;
 
 :root {
-  --global-teal: #007D86;
-  --edge-purple: #713A9B;
-  --aqua-start: #00D4C0;
-  --aqua-end: #7F5CD0;
-  --charcoal: #2B2D42;
-  --soft-white: #F7F9FC;
-  
+  --global-teal: #007d86;
+  --edge-purple: #713a9b;
+  --aqua-start: #00d4c0;
+  --aqua-end: #7f5cd0;
+  --charcoal: #2b2d42;
+  --soft-white: #f7f9fc;
+
   /* Icon sizes */
   --icon-xs: 16px;
   --icon-sm: 20px;
@@ -44,7 +44,8 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-html, body {
+html,
+body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -54,61 +55,61 @@ html, body {
   .btn-primary {
     @apply bg-global-teal text-white px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition-colors;
   }
-  
+
   .btn-secondary {
     @apply border-2 border-edge-purple text-edge-purple px-6 py-2 rounded-full font-medium hover:bg-edge-purple hover:text-white transition-colors;
   }
-  
+
   .btn-outline {
     @apply border border-gray-300 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-50 transition-colors;
   }
-  
+
   .card {
     @apply bg-white rounded-2xl shadow-sm border border-gray-200;
   }
-  
+
   .card-hover {
     @apply hover:shadow-lg transition-shadow;
   }
-  
+
   .gradient-bg {
     @apply bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end;
   }
-  
+
   .text-gradient {
     @apply bg-gradient-to-r from-global-teal to-edge-purple bg-clip-text text-transparent;
   }
-  
+
   /* Icon utilities */
   .icon {
     display: inline-block;
     line-height: 1;
   }
-  
+
   .icon-xs {
     width: var(--icon-xs);
     height: var(--icon-xs);
     font-size: var(--icon-xs);
   }
-  
+
   .icon-sm {
     width: var(--icon-sm);
     height: var(--icon-sm);
     font-size: var(--icon-sm);
   }
-  
+
   .icon-md {
     width: var(--icon-md);
     height: var(--icon-md);
     font-size: var(--icon-md);
   }
-  
+
   .icon-lg {
     width: var(--icon-lg);
     height: var(--icon-lg);
     font-size: var(--icon-lg);
   }
-  
+
   .icon-xl {
     width: var(--icon-xl);
     height: var(--icon-xl);
@@ -129,7 +130,7 @@ html, body {
     justify-content: center !important;
     vertical-align: middle !important;
   }
-  
+
   .force-icon-medium {
     width: 22px !important;
     height: 22px !important;
@@ -150,7 +151,7 @@ html, body {
   .animate-fade-in {
     animation: fadeIn 0.5s ease-in-out;
   }
-  
+
   .animate-slide-up {
     animation: slideUp 0.3s ease-out;
   }

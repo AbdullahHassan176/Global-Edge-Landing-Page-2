@@ -4,14 +4,16 @@ import { API_KEYS } from '@/lib/config/apiKeys';
 
 export async function POST(request: NextRequest) {
   try {
-    const { amount, currency = 'usd', metadata = {}, description = 'Global Edge Investment' } = await request.json();
+    const {
+      amount,
+      currency = 'usd',
+      metadata = {},
+      description = 'Global Edge Investment',
+    } = await request.json();
 
     // Validate amount
     if (!amount || amount <= 0) {
-      return NextResponse.json(
-        { error: 'Invalid amount' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
 
     // Create payment intent with Stripe
@@ -38,10 +40,9 @@ export async function POST(request: NextRequest) {
         client_secret: paymentIntent.client_secret,
       },
     });
-
   } catch (error) {
     console.error('Stripe payment intent creation error:', error);
-    
+
     return NextResponse.json(
       { error: 'Failed to create payment intent' },
       { status: 500 }

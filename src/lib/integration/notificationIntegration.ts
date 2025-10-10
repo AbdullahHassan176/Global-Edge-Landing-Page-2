@@ -1,6 +1,6 @@
 /**
  * Notification System Integration
- * 
+ *
  * This service integrates the notification system with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -15,7 +15,11 @@ export class NotificationIntegration {
   /**
    * Get all notifications with database integration
    */
-  async getNotifications(): Promise<{ success: boolean; notifications?: Notification[]; error?: string }> {
+  async getNotifications(): Promise<{
+    success: boolean;
+    notifications?: Notification[];
+    error?: string;
+  }> {
     try {
       // Use mock service for now (database integration needs proper notification container)
       const mockNotifications = notificationService.getAdminNotifications();
@@ -29,11 +33,15 @@ export class NotificationIntegration {
   /**
    * Get notifications by user ID with database integration
    */
-  async getNotificationsByUserId(userId: string): Promise<{ success: boolean; notifications?: Notification[]; error?: string }> {
+  async getNotificationsByUserId(userId: string): Promise<{
+    success: boolean;
+    notifications?: Notification[];
+    error?: string;
+  }> {
     try {
-      const mockNotifications = notificationService.getAdminNotifications().filter(
-        notif => notif.data.userId === userId
-      );
+      const mockNotifications = notificationService
+        .getAdminNotifications()
+        .filter(notif => notif.data.userId === userId);
       return { success: true, notifications: mockNotifications as any };
     } catch (error) {
       console.error('Get notifications by user error:', error);
@@ -44,12 +52,18 @@ export class NotificationIntegration {
   /**
    * Create notification with database integration
    */
-  async createNotification(notificationData: Omit<Notification, 'id' | 'createdAt'>): Promise<{ success: boolean; notification?: Notification; error?: string }> {
+  async createNotification(
+    notificationData: Omit<Notification, 'id' | 'createdAt'>
+  ): Promise<{
+    success: boolean;
+    notification?: Notification;
+    error?: string;
+  }> {
     try {
       const mockNotification = {
         ...notificationData,
         id: `notif-${Date.now()}`,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       };
       return { success: true, notification: mockNotification };
     } catch (error) {
@@ -61,7 +75,14 @@ export class NotificationIntegration {
   /**
    * Update notification status with database integration
    */
-  async updateNotificationStatus(id: string, status: 'unread' | 'read' | 'sent' | 'failed' | 'processed' | 'reviewed'): Promise<{ success: boolean; notification?: Notification; error?: string }> {
+  async updateNotificationStatus(
+    id: string,
+    status: 'unread' | 'read' | 'sent' | 'failed' | 'processed' | 'reviewed'
+  ): Promise<{
+    success: boolean;
+    notification?: Notification;
+    error?: string;
+  }> {
     try {
       const mockNotifications = notificationService.getAdminNotifications();
       const notification = mockNotifications.find(notif => notif.id === id);
@@ -79,9 +100,14 @@ export class NotificationIntegration {
   /**
    * Get email notifications with database integration
    */
-  async getEmailNotifications(): Promise<{ success: boolean; notifications?: any[]; error?: string }> {
+  async getEmailNotifications(): Promise<{
+    success: boolean;
+    notifications?: any[];
+    error?: string;
+  }> {
     try {
-      const mockEmailNotifications = notificationService.getEmailNotifications();
+      const mockEmailNotifications =
+        notificationService.getEmailNotifications();
       return { success: true, notifications: mockEmailNotifications };
     } catch (error) {
       console.error('Get email notifications error:', error);
@@ -92,9 +118,14 @@ export class NotificationIntegration {
   /**
    * Get webhook notifications with database integration
    */
-  async getWebhookNotifications(): Promise<{ success: boolean; notifications?: any[]; error?: string }> {
+  async getWebhookNotifications(): Promise<{
+    success: boolean;
+    notifications?: any[];
+    error?: string;
+  }> {
     try {
-      const mockWebhookNotifications = notificationService.getWebhookNotifications();
+      const mockWebhookNotifications =
+        notificationService.getWebhookNotifications();
       return { success: true, notifications: mockWebhookNotifications };
     } catch (error) {
       console.error('Get webhook notifications error:', error);
@@ -105,11 +136,18 @@ export class NotificationIntegration {
   /**
    * Get notification statistics with database integration
    */
-  async getNotificationStats(): Promise<{ success: boolean; stats?: any; error?: string }> {
+  async getNotificationStats(): Promise<{
+    success: boolean;
+    stats?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getNotifications();
       if (!result.success || !result.notifications) {
-        return { success: false, error: 'Failed to get notifications for stats' };
+        return {
+          success: false,
+          error: 'Failed to get notifications for stats',
+        };
       }
 
       const notifications = result.notifications;
@@ -118,14 +156,28 @@ export class NotificationIntegration {
         unread: notifications.filter(notif => !notif.read).length,
         read: notifications.filter(notif => notif.read).length,
         byType: {
-          investment_update: notifications.filter(notif => notif.type === 'investment_update').length,
-          kyc_required: notifications.filter(notif => notif.type === 'kyc_required').length,
-          kyc_approved: notifications.filter(notif => notif.type === 'kyc_approved').length,
-          kyc_rejected: notifications.filter(notif => notif.type === 'kyc_rejected').length,
-          payment_required: notifications.filter(notif => notif.type === 'payment_required').length,
-          investment_completed: notifications.filter(notif => notif.type === 'investment_completed').length,
-          system_alert: notifications.filter(notif => notif.type === 'system_alert').length
-        }
+          investment_update: notifications.filter(
+            notif => notif.type === 'investment_update'
+          ).length,
+          kyc_required: notifications.filter(
+            notif => notif.type === 'kyc_required'
+          ).length,
+          kyc_approved: notifications.filter(
+            notif => notif.type === 'kyc_approved'
+          ).length,
+          kyc_rejected: notifications.filter(
+            notif => notif.type === 'kyc_rejected'
+          ).length,
+          payment_required: notifications.filter(
+            notif => notif.type === 'payment_required'
+          ).length,
+          investment_completed: notifications.filter(
+            notif => notif.type === 'investment_completed'
+          ).length,
+          system_alert: notifications.filter(
+            notif => notif.type === 'system_alert'
+          ).length,
+        },
       };
 
       return { success: true, stats };
@@ -140,7 +192,9 @@ export class NotificationIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`NotificationIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `NotificationIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

@@ -11,7 +11,7 @@ function AdminDashboard() {
     totalUsers: 0,
     activeSubmissions: 0,
     emailsSent: 0,
-    webhooksSent: 0
+    webhooksSent: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -22,20 +22,33 @@ function AdminDashboard() {
   const loadStats = async () => {
     try {
       setLoading(true);
-      
+
       // Simulate API calls to get real data
-      const [usersResponse, submissionsResponse, emailsResponse, webhooksResponse] = await Promise.all([
-        fetch('/api/users').then(res => res.json()).catch(() => ({ count: 2847 })),
-        fetch('/api/integration/users').then(res => res.json()).catch(() => ({ active: 156 })),
-        fetch('/api/integration/email').then(res => res.json()).catch(() => ({ sent: 12439 })),
-        fetch('/api/integration/realtime').then(res => res.json()).catch(() => ({ processed: 8923 }))
+      const [
+        usersResponse,
+        submissionsResponse,
+        emailsResponse,
+        webhooksResponse,
+      ] = await Promise.all([
+        fetch('/api/users')
+          .then(res => res.json())
+          .catch(() => ({ count: 2847 })),
+        fetch('/api/integration/users')
+          .then(res => res.json())
+          .catch(() => ({ active: 156 })),
+        fetch('/api/integration/email')
+          .then(res => res.json())
+          .catch(() => ({ sent: 12439 })),
+        fetch('/api/integration/realtime')
+          .then(res => res.json())
+          .catch(() => ({ processed: 8923 })),
       ]);
 
       setStats({
         totalUsers: usersResponse.count || 2847,
         activeSubmissions: submissionsResponse.active || 156,
         emailsSent: emailsResponse.sent || 12439,
-        webhooksSent: webhooksResponse.processed || 8923
+        webhooksSent: webhooksResponse.processed || 8923,
       });
     } catch (error) {
       console.error('Error loading stats:', error);
@@ -44,7 +57,7 @@ function AdminDashboard() {
         totalUsers: 2847,
         activeSubmissions: 156,
         emailsSent: 12439,
-        webhooksSent: 8923
+        webhooksSent: 8923,
       });
     } finally {
       setLoading(false);
@@ -53,403 +66,458 @@ function AdminDashboard() {
 
   return (
     <>
-      
-      <div className="min-h-screen bg-soft-white">
+      <div className='min-h-screen bg-soft-white'>
         {/* Header */}
-        <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center">
-              <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
+        <section className='bg-gradient-to-br from-global-teal to-edge-purple text-white py-20'>
+          <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+            <div className='text-center'>
+              <h1 className='text-4xl md:text-6xl font-poppins font-bold mb-6'>
                 Admin Dashboard
               </h1>
-              <p className="text-xl text-white/90 max-w-3xl mx-auto">
-                Manage notifications, monitor system activity, and oversee user submissions.
+              <p className='text-xl text-white/90 max-w-3xl mx-auto'>
+                Manage notifications, monitor system activity, and oversee user
+                submissions.
               </p>
             </div>
           </div>
         </section>
 
-      {/* Admin Tools */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Admin Tools</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Access all administrative functions and monitoring tools</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Notifications Dashboard */}
-            <Tooltip content="Monitor all user submissions, email notifications, and webhook activity in real-time">
-              <Link 
-                href="/admin/notifications"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="bell" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Notifications</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Monitor all user submissions, email notifications, and webhook activity in real-time.
+        {/* Admin Tools */}
+        <section className='py-20'>
+          <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+            <div className='text-center mb-16'>
+              <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+                Admin Tools
+              </h2>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                Access all administrative functions and monitoring tools
               </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Dashboard
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* User Management */}
-            <Tooltip content="Manage user accounts, permissions, and access controls across the platform">
-              <Link 
-                href="/admin/users"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="users" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">User Management</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Manage user accounts, permissions, and access controls across the platform.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  Manage Users
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* Analytics */}
-            <Tooltip content="View comprehensive analytics, reports, and performance metrics for the platform">
-              <Link 
-                href="/admin/analytics"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="chart-line" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Analytics</h3>
-              <p className="text-gray-600 text-center mb-6">
-                View comprehensive analytics, reports, and performance metrics for the platform.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  View Analytics
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* Content Management */}
-            <Tooltip content="Manage platform content, assets, and user-generated content">
-              <Link 
-                href="/admin/content"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="edit" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Content Management</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Manage platform content, assets, and user-generated content.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  Manage Content
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* Security Center */}
-            <Tooltip content="Monitor security events, manage access controls, and review audit logs">
-              <Link 
-                href="/admin/security"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="shield-halved" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Security Center</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Monitor security events, manage access controls, and review audit logs.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  Security Center
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* Asset Management */}
-            <Tooltip content="Manage tokenized assets, monitor performance, and oversee asset lifecycle">
-              <Link 
-                href="/admin/assets"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="boxes" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Asset Management</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Manage tokenized assets, monitor performance, and oversee asset lifecycle.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  Manage Assets
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* Waitlist Management */}
-            <Tooltip content="Manage investor waitlist, review applications, and process approvals">
-              <Link 
-                href="/admin/waitlist"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="user-plus" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Waitlist Management</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Manage investor waitlist, review applications, and process approvals.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  Manage Waitlist
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-
-            {/* Settings */}
-            <Tooltip content="Configure platform settings, system parameters, and global preferences">
-              <Link 
-                href="/admin/settings"
-                className="group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help"
-              >
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <Icon name="cog" className="text-white text-2xl" />
-              </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4 text-center">Settings</h3>
-              <p className="text-gray-600 text-center mb-6">
-                Configure platform settings, system parameters, and global preferences.
-              </p>
-              <div className="text-center">
-                <span className="inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors">
-                  Platform Settings
-                  <Icon name="arrow-right" className="ml-2" />
-                </span>
-              </div>
-              </Link>
-            </Tooltip>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Stats */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Quick Stats</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Real-time platform metrics and performance indicators</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Tooltip content="Total number of registered users across all account types">
-              <div className="p-8 shadow-lg text-center cursor-help">
-                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="users" className="text-white text-2xl" />
-                </div>
-                {loading ? (
-                  <div className="animate-pulse">
-                    <div className="h-8 bg-gray-300 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">
-                      {stats.totalUsers.toLocaleString()}
-                    </h3>
-                    <p className="text-gray-600">Total Users</p>
-                  </>
-                )}
-              </div>
-            </Tooltip>
-
-            <Tooltip content="Number of active investment submissions currently being processed">
-              <div className="p-8 shadow-lg text-center cursor-help">
-                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="file-text" className="text-white text-2xl" />
-                </div>
-                {loading ? (
-                  <div className="animate-pulse">
-                    <div className="h-8 bg-gray-300 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">
-                      {stats.activeSubmissions.toLocaleString()}
-                    </h3>
-                    <p className="text-gray-600">Active Submissions</p>
-                  </>
-                )}
-              </div>
-            </Tooltip>
-
-            <Tooltip content="Total number of emails sent through the platform notification system">
-              <div className="p-8 shadow-lg text-center cursor-help">
-                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="mail" className="text-white text-2xl" />
-                </div>
-                {loading ? (
-                  <div className="animate-pulse">
-                    <div className="h-8 bg-gray-300 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">
-                      {stats.emailsSent.toLocaleString()}
-                    </h3>
-                    <p className="text-gray-600">Emails Sent</p>
-                  </>
-                )}
-              </div>
-            </Tooltip>
-
-            <Tooltip content="Total number of webhook events processed by the platform">
-              <div className="p-8 shadow-lg text-center cursor-help">
-                <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="globe" className="text-white text-2xl" />
-                </div>
-                {loading ? (
-                  <div className="animate-pulse">
-                    <div className="h-8 bg-gray-300 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded"></div>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="text-3xl font-poppins font-bold text-charcoal mb-2">
-                      {stats.webhooksSent.toLocaleString()}
-                    </h3>
-                    <p className="text-gray-600">Webhooks Sent</p>
-                  </>
-                )}
-              </div>
-            </Tooltip>
-          </div>
-        </div>
-      </section>
-
-      {/* Recent Investments */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            <div>
-              <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Recent Investments</h2>
-              <p className="text-xl text-gray-600">Monitor all investment activity across the platform</p>
             </div>
-            <Link 
-              href="/admin/assets" 
-              className="text-global-teal font-medium hover:text-edge-purple transition-colors"
-            >
-              View All Assets
-              <Icon name="arrow-right" className="ml-2" />
-            </Link>
-          </div>
 
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-gray-200">
-              <h3 className="text-lg font-poppins font-semibold text-charcoal">Investment Activity</h3>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <Icon name="trending-up" className="text-green-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-charcoal">New Investment</p>
-                      <p className="text-sm text-gray-600">Container #CT-2024-001</p>
-                    </div>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+              {/* Notifications Dashboard */}
+              <Tooltip content='Monitor all user submissions, email notifications, and webhook activity in real-time'>
+                <Link
+                  href='/admin/notifications'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='bell' className='text-white text-2xl' />
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-charcoal">$25,000</p>
-                    <p className="text-sm text-gray-600">2 hours ago</p>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Notifications
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Monitor all user submissions, email notifications, and
+                    webhook activity in real-time.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      View Dashboard
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
                   </div>
-                </div>
+                </Link>
+              </Tooltip>
 
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Icon name="building" className="text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-charcoal">Property Investment</p>
-                      <p className="text-sm text-gray-600">Commercial Real Estate #RE-2024-003</p>
-                    </div>
+              {/* User Management */}
+              <Tooltip content='Manage user accounts, permissions, and access controls across the platform'>
+                <Link
+                  href='/admin/users'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='users' className='text-white text-2xl' />
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-charcoal">$150,000</p>
-                    <p className="text-sm text-gray-600">5 hours ago</p>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    User Management
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Manage user accounts, permissions, and access controls
+                    across the platform.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      Manage Users
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
                   </div>
-                </div>
+                </Link>
+              </Tooltip>
 
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                      <Icon name="boxes-stacked" className="text-purple-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-charcoal">Trade Token</p>
-                      <p className="text-sm text-gray-600">Commodity Inventory #TT-2024-007</p>
-                    </div>
+              {/* Analytics */}
+              <Tooltip content='View comprehensive analytics, reports, and performance metrics for the platform'>
+                <Link
+                  href='/admin/analytics'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='chart-line' className='text-white text-2xl' />
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-charcoal">$75,000</p>
-                    <p className="text-sm text-gray-600">1 day ago</p>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Analytics
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    View comprehensive analytics, reports, and performance
+                    metrics for the platform.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      View Analytics
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
                   </div>
-                </div>
-              </div>
+                </Link>
+              </Tooltip>
+
+              {/* Content Management */}
+              <Tooltip content='Manage platform content, assets, and user-generated content'>
+                <Link
+                  href='/admin/content'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='edit' className='text-white text-2xl' />
+                  </div>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Content Management
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Manage platform content, assets, and user-generated content.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      Manage Content
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
+                  </div>
+                </Link>
+              </Tooltip>
+
+              {/* Security Center */}
+              <Tooltip content='Monitor security events, manage access controls, and review audit logs'>
+                <Link
+                  href='/admin/security'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon
+                      name='shield-halved'
+                      className='text-white text-2xl'
+                    />
+                  </div>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Security Center
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Monitor security events, manage access controls, and review
+                    audit logs.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      Security Center
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
+                  </div>
+                </Link>
+              </Tooltip>
+
+              {/* Asset Management */}
+              <Tooltip content='Manage tokenized assets, monitor performance, and oversee asset lifecycle'>
+                <Link
+                  href='/admin/assets'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='boxes' className='text-white text-2xl' />
+                  </div>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Asset Management
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Manage tokenized assets, monitor performance, and oversee
+                    asset lifecycle.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      Manage Assets
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
+                  </div>
+                </Link>
+              </Tooltip>
+
+              {/* Waitlist Management */}
+              <Tooltip content='Manage investor waitlist, review applications, and process approvals'>
+                <Link
+                  href='/admin/waitlist'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='user-plus' className='text-white text-2xl' />
+                  </div>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Waitlist Management
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Manage investor waitlist, review applications, and process
+                    approvals.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      Manage Waitlist
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
+                  </div>
+                </Link>
+              </Tooltip>
+
+              {/* Settings */}
+              <Tooltip content='Configure platform settings, system parameters, and global preferences'>
+                <Link
+                  href='/admin/settings'
+                  className='group p-8 hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-global-teal cursor-help'
+                >
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform'>
+                    <Icon name='cog' className='text-white text-2xl' />
+                  </div>
+                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4 text-center'>
+                    Settings
+                  </h3>
+                  <p className='text-gray-600 text-center mb-6'>
+                    Configure platform settings, system parameters, and global
+                    preferences.
+                  </p>
+                  <div className='text-center'>
+                    <span className='inline-flex items-center text-global-teal font-semibold group-hover:text-edge-purple transition-colors'>
+                      Platform Settings
+                      <Icon name='arrow-right' className='ml-2' />
+                    </span>
+                  </div>
+                </Link>
+              </Tooltip>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Navigation */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-poppins font-bold text-charcoal mb-8">Quick Navigation</h2>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link 
-              href="/admin/notifications" 
-              className="bg-global-teal text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors"
-            >
-              View Notifications Dashboard
-            </Link>
-            <Link 
-              href="/" 
-              className="border-2 border-global-teal text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-global-teal hover:text-white transition-colors"
-            >
-              Back to Homepage
-            </Link>
+        {/* Quick Stats */}
+        <section className='py-20 bg-gray-50'>
+          <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+            <div className='text-center mb-16'>
+              <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+                Quick Stats
+              </h2>
+              <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+                Real-time platform metrics and performance indicators
+              </p>
+            </div>
+
+            <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+              <Tooltip content='Total number of registered users across all account types'>
+                <div className='p-8 shadow-lg text-center cursor-help'>
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4'>
+                    <Icon name='users' className='text-white text-2xl' />
+                  </div>
+                  {loading ? (
+                    <div className='animate-pulse'>
+                      <div className='h-8 bg-gray-300 rounded mb-2'></div>
+                      <div className='h-4 bg-gray-200 rounded'></div>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className='text-3xl font-poppins font-bold text-charcoal mb-2'>
+                        {stats.totalUsers.toLocaleString()}
+                      </h3>
+                      <p className='text-gray-600'>Total Users</p>
+                    </>
+                  )}
+                </div>
+              </Tooltip>
+
+              <Tooltip content='Number of active investment submissions currently being processed'>
+                <div className='p-8 shadow-lg text-center cursor-help'>
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4'>
+                    <Icon name='file-text' className='text-white text-2xl' />
+                  </div>
+                  {loading ? (
+                    <div className='animate-pulse'>
+                      <div className='h-8 bg-gray-300 rounded mb-2'></div>
+                      <div className='h-4 bg-gray-200 rounded'></div>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className='text-3xl font-poppins font-bold text-charcoal mb-2'>
+                        {stats.activeSubmissions.toLocaleString()}
+                      </h3>
+                      <p className='text-gray-600'>Active Submissions</p>
+                    </>
+                  )}
+                </div>
+              </Tooltip>
+
+              <Tooltip content='Total number of emails sent through the platform notification system'>
+                <div className='p-8 shadow-lg text-center cursor-help'>
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4'>
+                    <Icon name='mail' className='text-white text-2xl' />
+                  </div>
+                  {loading ? (
+                    <div className='animate-pulse'>
+                      <div className='h-8 bg-gray-300 rounded mb-2'></div>
+                      <div className='h-4 bg-gray-200 rounded'></div>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className='text-3xl font-poppins font-bold text-charcoal mb-2'>
+                        {stats.emailsSent.toLocaleString()}
+                      </h3>
+                      <p className='text-gray-600'>Emails Sent</p>
+                    </>
+                  )}
+                </div>
+              </Tooltip>
+
+              <Tooltip content='Total number of webhook events processed by the platform'>
+                <div className='p-8 shadow-lg text-center cursor-help'>
+                  <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-4'>
+                    <Icon name='globe' className='text-white text-2xl' />
+                  </div>
+                  {loading ? (
+                    <div className='animate-pulse'>
+                      <div className='h-8 bg-gray-300 rounded mb-2'></div>
+                      <div className='h-4 bg-gray-200 rounded'></div>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className='text-3xl font-poppins font-bold text-charcoal mb-2'>
+                        {stats.webhooksSent.toLocaleString()}
+                      </h3>
+                      <p className='text-gray-600'>Webhooks Sent</p>
+                    </>
+                  )}
+                </div>
+              </Tooltip>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* Recent Investments */}
+        <section className='py-20'>
+          <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+            <div className='flex justify-between items-center mb-12'>
+              <div>
+                <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+                  Recent Investments
+                </h2>
+                <p className='text-xl text-gray-600'>
+                  Monitor all investment activity across the platform
+                </p>
+              </div>
+              <Link
+                href='/admin/assets'
+                className='text-global-teal font-medium hover:text-edge-purple transition-colors'
+              >
+                View All Assets
+                <Icon name='arrow-right' className='ml-2' />
+              </Link>
+            </div>
+
+            <div className='bg-white rounded-2xl shadow-lg overflow-hidden'>
+              <div className='p-6 border-b border-gray-200'>
+                <h3 className='text-lg font-poppins font-semibold text-charcoal'>
+                  Investment Activity
+                </h3>
+              </div>
+              <div className='p-6'>
+                <div className='space-y-4'>
+                  <div className='flex items-center justify-between p-4 bg-gray-50 rounded-lg'>
+                    <div className='flex items-center space-x-4'>
+                      <div className='w-10 h-10 bg-green-100 rounded-full flex items-center justify-center'>
+                        <Icon name='trending-up' className='text-green-600' />
+                      </div>
+                      <div>
+                        <p className='font-medium text-charcoal'>
+                          New Investment
+                        </p>
+                        <p className='text-sm text-gray-600'>
+                          Container #CT-2024-001
+                        </p>
+                      </div>
+                    </div>
+                    <div className='text-right'>
+                      <p className='font-semibold text-charcoal'>$25,000</p>
+                      <p className='text-sm text-gray-600'>2 hours ago</p>
+                    </div>
+                  </div>
+
+                  <div className='flex items-center justify-between p-4 bg-gray-50 rounded-lg'>
+                    <div className='flex items-center space-x-4'>
+                      <div className='w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center'>
+                        <Icon name='building' className='text-blue-600' />
+                      </div>
+                      <div>
+                        <p className='font-medium text-charcoal'>
+                          Property Investment
+                        </p>
+                        <p className='text-sm text-gray-600'>
+                          Commercial Real Estate #RE-2024-003
+                        </p>
+                      </div>
+                    </div>
+                    <div className='text-right'>
+                      <p className='font-semibold text-charcoal'>$150,000</p>
+                      <p className='text-sm text-gray-600'>5 hours ago</p>
+                    </div>
+                  </div>
+
+                  <div className='flex items-center justify-between p-4 bg-gray-50 rounded-lg'>
+                    <div className='flex items-center space-x-4'>
+                      <div className='w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center'>
+                        <Icon
+                          name='boxes-stacked'
+                          className='text-purple-600'
+                        />
+                      </div>
+                      <div>
+                        <p className='font-medium text-charcoal'>Trade Token</p>
+                        <p className='text-sm text-gray-600'>
+                          Commodity Inventory #TT-2024-007
+                        </p>
+                      </div>
+                    </div>
+                    <div className='text-right'>
+                      <p className='font-semibold text-charcoal'>$75,000</p>
+                      <p className='text-sm text-gray-600'>1 day ago</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Navigation */}
+        <section className='py-20'>
+          <div className='max-w-4xl mx-auto px-6 lg:px-8 text-center'>
+            <h2 className='text-3xl font-poppins font-bold text-charcoal mb-8'>
+              Quick Navigation
+            </h2>
+            <div className='flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6'>
+              <Link
+                href='/admin/notifications'
+                className='bg-global-teal text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors'
+              >
+                View Notifications Dashboard
+              </Link>
+              <Link
+                href='/'
+                className='border-2 border-global-teal text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-global-teal hover:text-white transition-colors'
+              >
+                Back to Homepage
+              </Link>
+            </div>
+          </div>
+        </section>
+      </div>
     </>
   );
 }

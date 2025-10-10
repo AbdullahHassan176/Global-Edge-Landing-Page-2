@@ -33,7 +33,9 @@ describe('OAuthService', () => {
 
       oauthService.initiateGitHubLogin();
 
-      expect(window.location.href).toContain('github.com/login/oauth/authorize');
+      expect(window.location.href).toContain(
+        'github.com/login/oauth/authorize'
+      );
       expect(window.location.href).toContain('client_id=test-github-client-id');
       expect(window.location.href).toContain('scope=user:email');
 
@@ -69,9 +71,15 @@ describe('OAuthService', () => {
 
       oauthService.initiateLinkedInLogin();
 
-      expect(window.location.href).toContain('linkedin.com/oauth/v2/authorization');
-      expect(window.location.href).toContain('client_id=test-linkedin-client-id');
-      expect(window.location.href).toContain('scope=r_liteprofile%20r_emailaddress');
+      expect(window.location.href).toContain(
+        'linkedin.com/oauth/v2/authorization'
+      );
+      expect(window.location.href).toContain(
+        'client_id=test-linkedin-client-id'
+      );
+      expect(window.location.href).toContain(
+        'scope=r_liteprofile%20r_emailaddress'
+      );
 
       consoleSpy.mockRestore();
     });

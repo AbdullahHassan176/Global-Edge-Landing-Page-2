@@ -26,11 +26,11 @@ export async function PUT(
     }
 
     const success = waitlistService.updateSubmissionStatus(id, status);
-    
+
     if (success) {
       return NextResponse.json({
         success: true,
-        message: 'Submission status updated successfully'
+        message: 'Submission status updated successfully',
       });
     } else {
       return NextResponse.json(
@@ -54,11 +54,11 @@ export async function GET(
   try {
     const { id } = params;
     const submission = waitlistService.getSubmissionById(id);
-    
+
     if (submission) {
       return NextResponse.json({
         success: true,
-        submission
+        submission,
       });
     } else {
       return NextResponse.json(

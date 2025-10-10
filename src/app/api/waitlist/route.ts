@@ -20,12 +20,26 @@ export async function POST(request: NextRequest) {
     const body: WaitlistSubmissionRequest = await request.json();
 
     // Validate required fields
-    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'investorType', 'tokenInterest', 'heardFrom', 'investmentAmount'];
-    const missingFields = requiredFields.filter(field => !body[field as keyof WaitlistSubmissionRequest]);
-    
+    const requiredFields = [
+      'firstName',
+      'lastName',
+      'email',
+      'phone',
+      'investorType',
+      'tokenInterest',
+      'heardFrom',
+      'investmentAmount',
+    ];
+    const missingFields = requiredFields.filter(
+      field => !body[field as keyof WaitlistSubmissionRequest]
+    );
+
     if (missingFields.length > 0) {
       return NextResponse.json(
-        { success: false, error: `Missing required fields: ${missingFields.join(', ')}` },
+        {
+          success: false,
+          error: `Missing required fields: ${missingFields.join(', ')}`,
+        },
         { status: 400 }
       );
     }
@@ -44,7 +58,7 @@ export async function POST(request: NextRequest) {
       ...body,
       submittedAt: new Date().toISOString(),
       ip: request.ip || 'unknown',
-      userAgent: request.headers.get('user-agent') || 'unknown'
+      userAgent: request.headers.get('user-agent') || 'unknown',
     };
 
     // 1. Save to waitlist service
@@ -69,14 +83,17 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for joining our waitlist! We\'ll be in touch soon with exclusive investment opportunities.',
-      submissionId: savedSubmission.id
+      message:
+        "Thank you for joining our waitlist! We'll be in touch soon with exclusive investment opportunities.",
+      submissionId: savedSubmission.id,
     });
-
   } catch (error) {
     console.error('Waitlist submission error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to process waitlist submission. Please try again.' },
+      {
+        success: false,
+        error: 'Failed to process waitlist submission. Please try again.',
+      },
       { status: 500 }
     );
   }
@@ -86,12 +103,12 @@ export async function GET() {
   try {
     const submissions = await waitlistService.getAllSubmissions();
     const stats = waitlistService.getStats();
-    
+
     return NextResponse.json({
       success: true,
       submissions,
       stats,
-      message: 'Waitlist submissions retrieved successfully'
+      message: 'Waitlist submissions retrieved successfully',
     });
   } catch (error) {
     console.error('Error retrieving waitlist submissions:', error);
@@ -107,9 +124,12 @@ async function sendAdminNotification(submission: any) {
   try {
     // Initialize email integration
     await emailIntegration.initialize();
-    
+
     // Send admin notification email to both admins
-    const adminEmails = ['abdullah.hassan@globalnext.rocks', 'mohammed.sidat@globalnext.rocks'];
+    const adminEmails = [
+      'abdullah.hassan@globalnext.rocks',
+      'mohammed.sidat@globalnext.rocks',
+    ];
     const result = await emailIntegration.sendCustomEmail(
       adminEmails,
       `New Investor Waitlist Submission - ${submission.firstName} ${submission.lastName}`,
@@ -135,13 +155,13 @@ This is an admin-only notification.
       `,
       {
         priority: 'high',
-        isHtml: false
+        isHtml: false,
       }
     );
-    
+
     if (result.success) {
       console.log('✅ Admin notification email sent successfully');
-      
+
       // Also send a copy to info@theglobaledge.io for record keeping
       await emailIntegration.sendCustomEmail(
         'info@theglobaledge.io',
@@ -159,11 +179,14 @@ Admin team has been notified for follow-up.
         `,
         {
           priority: 'normal',
-          isHtml: false
+          isHtml: false,
         }
       );
     } else {
-      console.error('❌ Failed to send admin notification email:', result.error);
+      console.error(
+        '❌ Failed to send admin notification email:',
+        result.error
+      );
     }
   } catch (error) {
     console.error('❌ Admin notification error:', error);
@@ -174,7 +197,7 @@ async function sendUserConfirmation(submission: any) {
   try {
     // Initialize email integration
     await emailIntegration.initialize();
-    
+
     // Send user confirmation email
     const result = await emailIntegration.sendCustomEmail(
       submission.email,
@@ -201,10 +224,10 @@ The Global Edge Team
       `,
       {
         priority: 'normal',
-        isHtml: false
+        isHtml: false,
       }
     );
-    
+
     if (result.success) {
       console.log('✅ User confirmation email sent successfully');
     } else {

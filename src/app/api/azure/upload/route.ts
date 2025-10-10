@@ -21,10 +21,9 @@ export async function POST(request: NextRequest) {
       fileName,
       containerName,
     });
-
   } catch (error) {
     console.error('Azure upload error:', error);
-    
+
     return NextResponse.json(
       { error: 'Failed to process upload request' },
       { status: 500 }

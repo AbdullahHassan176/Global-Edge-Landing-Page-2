@@ -1,6 +1,6 @@
 /**
  * Partners Data Configuration
- * 
+ *
  * This file contains all partner information including logos, links, and categories
  * for display on the landing page and partners page.
  */
@@ -24,7 +24,7 @@ export const partners: Partner[] = [
     website: 'https://www.maersk.com',
     category: 'logistics',
     description: 'Global container shipping and logistics',
-    featured: true
+    featured: true,
   },
   {
     id: 'msc',
@@ -33,7 +33,7 @@ export const partners: Partner[] = [
     website: 'https://www.msc.com',
     category: 'logistics',
     description: 'Mediterranean Shipping Company',
-    featured: true
+    featured: true,
   },
   {
     id: 'cma-cgm',
@@ -42,7 +42,7 @@ export const partners: Partner[] = [
     website: 'https://www.cma-cgm.com',
     category: 'logistics',
     description: 'French container transportation and shipping',
-    featured: true
+    featured: true,
   },
   {
     id: 'cosco',
@@ -51,7 +51,7 @@ export const partners: Partner[] = [
     website: 'https://www.coscoshipping.com',
     category: 'logistics',
     description: 'China Ocean Shipping Company',
-    featured: true
+    featured: true,
   },
   {
     id: 'hapag-lloyd',
@@ -60,7 +60,7 @@ export const partners: Partner[] = [
     website: 'https://www.hapag-lloyd.com',
     category: 'logistics',
     description: 'German international shipping and container transportation',
-    featured: true
+    featured: true,
   },
   {
     id: 'one',
@@ -69,7 +69,7 @@ export const partners: Partner[] = [
     website: 'https://www.one-line.com',
     category: 'logistics',
     description: 'Ocean Network Express',
-    featured: true
+    featured: true,
   },
   {
     id: 'dhl',
@@ -78,7 +78,7 @@ export const partners: Partner[] = [
     website: 'https://www.dhl.com',
     category: 'logistics',
     description: 'Global logistics and express shipping',
-    featured: true
+    featured: true,
   },
   {
     id: 'fedex',
@@ -87,7 +87,7 @@ export const partners: Partner[] = [
     website: 'https://www.fedex.com',
     category: 'logistics',
     description: 'American multinational delivery services',
-    featured: true
+    featured: true,
   },
   {
     id: 'ups',
@@ -96,7 +96,7 @@ export const partners: Partner[] = [
     website: 'https://www.ups.com',
     category: 'logistics',
     description: 'United Parcel Service',
-    featured: true
+    featured: true,
   },
 
   // Financial Partners
@@ -107,7 +107,7 @@ export const partners: Partner[] = [
     website: 'https://www.jpmorganchase.com',
     category: 'financial',
     description: 'American multinational investment bank',
-    featured: true
+    featured: true,
   },
   {
     id: 'goldman-sachs',
@@ -116,7 +116,7 @@ export const partners: Partner[] = [
     website: 'https://www.goldmansachs.com',
     category: 'financial',
     description: 'American multinational investment bank',
-    featured: true
+    featured: true,
   },
   {
     id: 'blackrock',
@@ -125,7 +125,7 @@ export const partners: Partner[] = [
     website: 'https://www.blackrock.com',
     category: 'financial',
     description: 'American multinational investment management corporation',
-    featured: true
+    featured: true,
   },
   {
     id: 'fidelity',
@@ -134,7 +134,7 @@ export const partners: Partner[] = [
     website: 'https://www.fidelity.com',
     category: 'financial',
     description: 'American multinational financial services corporation',
-    featured: true
+    featured: true,
   },
   {
     id: 'vanguard',
@@ -143,7 +143,7 @@ export const partners: Partner[] = [
     website: 'https://www.vanguard.com',
     category: 'financial',
     description: 'American registered investment advisor',
-    featured: true
+    featured: true,
   },
   {
     id: 'state-street',
@@ -151,8 +151,9 @@ export const partners: Partner[] = [
     logo: 'https://logos-world.net/wp-content/uploads/2021/02/State-Street-Logo.png',
     website: 'https://www.statestreet.com',
     category: 'financial',
-    description: 'American multinational financial services and bank holding company',
-    featured: true
+    description:
+      'American multinational financial services and bank holding company',
+    featured: true,
   },
 
   // Technology Partners
@@ -163,7 +164,7 @@ export const partners: Partner[] = [
     website: 'https://chain.link',
     category: 'technology',
     description: 'Decentralized oracle network',
-    featured: true
+    featured: true,
   },
   {
     id: 'polygon',
@@ -172,7 +173,7 @@ export const partners: Partner[] = [
     website: 'https://polygon.technology',
     category: 'technology',
     description: 'Ethereum scaling solution',
-    featured: true
+    featured: true,
   },
   {
     id: 'ethereum',
@@ -181,7 +182,7 @@ export const partners: Partner[] = [
     website: 'https://ethereum.org',
     category: 'technology',
     description: 'Decentralized blockchain platform',
-    featured: true
+    featured: true,
   },
   {
     id: 'ipfs',
@@ -190,7 +191,7 @@ export const partners: Partner[] = [
     website: 'https://ipfs.io',
     category: 'technology',
     description: 'InterPlanetary File System',
-    featured: true
+    featured: true,
   },
   {
     id: 'the-graph',
@@ -198,8 +199,9 @@ export const partners: Partner[] = [
     logo: 'https://logos-world.net/wp-content/uploads/2021/02/The-Graph-Logo.png',
     website: 'https://thegraph.com',
     category: 'technology',
-    description: 'Decentralized protocol for indexing and querying blockchain data',
-    featured: true
+    description:
+      'Decentralized protocol for indexing and querying blockchain data',
+    featured: true,
   },
   {
     id: 'alchemy',
@@ -208,7 +210,7 @@ export const partners: Partner[] = [
     website: 'https://www.alchemy.com',
     category: 'technology',
     description: 'Blockchain infrastructure platform',
-    featured: true
+    featured: true,
   },
 
   // Legal & Compliance Partners
@@ -219,7 +221,7 @@ export const partners: Partner[] = [
     website: 'https://www.dlapiper.com',
     category: 'legal',
     description: 'Multinational law firm',
-    featured: false
+    featured: false,
   },
   {
     id: 'clifford-chance',
@@ -228,7 +230,7 @@ export const partners: Partner[] = [
     website: 'https://www.cliffordchance.com',
     category: 'legal',
     description: 'International law firm',
-    featured: false
+    featured: false,
   },
   {
     id: 'latham-watkins',
@@ -237,7 +239,7 @@ export const partners: Partner[] = [
     website: 'https://www.lw.com',
     category: 'legal',
     description: 'International law firm',
-    featured: false
+    featured: false,
   },
   {
     id: 'skadden',
@@ -246,7 +248,7 @@ export const partners: Partner[] = [
     website: 'https://www.skadden.com',
     category: 'legal',
     description: 'American multinational law firm',
-    featured: false
+    featured: false,
   },
   {
     id: 'sullivan-cromwell',
@@ -255,7 +257,7 @@ export const partners: Partner[] = [
     website: 'https://www.sullcrom.com',
     category: 'legal',
     description: 'American multinational law firm',
-    featured: false
+    featured: false,
   },
   {
     id: 'cravath',
@@ -264,12 +266,14 @@ export const partners: Partner[] = [
     website: 'https://www.cravath.com',
     category: 'legal',
     description: 'American multinational law firm',
-    featured: false
-  }
+    featured: false,
+  },
 ];
 
 // Helper functions
-export const getPartnersByCategory = (category: Partner['category']): Partner[] => {
+export const getPartnersByCategory = (
+  category: Partner['category']
+): Partner[] => {
   return partners.filter(partner => partner.category === category);
 };
 

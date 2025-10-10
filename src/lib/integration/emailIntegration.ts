@@ -1,6 +1,6 @@
 /**
  * Email Service Integration
- * 
+ *
  * This service integrates real email delivery with multiple providers
  * while maintaining backward compatibility with mock data.
  */
@@ -59,15 +59,21 @@ export class EmailIntegration {
     try {
       // Initialize email providers
       await this.initializeProviders();
-      
+
       // Load email templates
       await this.loadEmailTemplates();
 
-      console.log('Email integration initialized with providers:', Array.from(this.providers.keys()));
+      console.log(
+        'Email integration initialized with providers:',
+        Array.from(this.providers.keys())
+      );
       return { success: true };
     } catch (error) {
       console.error('Email integration initialization error:', error);
-      return { success: false, error: 'Failed to initialize email integration' };
+      return {
+        success: false,
+        error: 'Failed to initialize email integration',
+      };
     }
   }
 
@@ -82,8 +88,9 @@ export class EmailIntegration {
         enabled: true,
         config: {
           apiKey: process.env.SENDGRID_API_KEY,
-          fromEmail: process.env.SENDGRID_FROM_EMAIL || 'noreply@theglobaledge.io'
-        }
+          fromEmail:
+            process.env.SENDGRID_FROM_EMAIL || 'noreply@theglobaledge.io',
+        },
       });
     }
 
@@ -95,8 +102,9 @@ export class EmailIntegration {
         config: {
           apiKey: process.env.MAILGUN_API_KEY,
           domain: process.env.MAILGUN_DOMAIN,
-          fromEmail: process.env.MAILGUN_FROM_EMAIL || 'noreply@theglobaledge.io'
-        }
+          fromEmail:
+            process.env.MAILGUN_FROM_EMAIL || 'noreply@theglobaledge.io',
+        },
       });
     }
 
@@ -109,13 +117,18 @@ export class EmailIntegration {
           accessKeyId: process.env.AWS_ACCESS_KEY_ID,
           secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
           region: process.env.AWS_SES_REGION || 'us-east-1',
-          fromEmail: process.env.AWS_SES_FROM_EMAIL || 'noreply@theglobaledge.io'
-        }
+          fromEmail:
+            process.env.AWS_SES_FROM_EMAIL || 'noreply@theglobaledge.io',
+        },
       });
     }
 
     // SMTP
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    if (
+      process.env.SMTP_HOST &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS
+    ) {
       this.providers.set('smtp', {
         name: 'smtp',
         enabled: true,
@@ -125,8 +138,8 @@ export class EmailIntegration {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS,
           secure: process.env.SMTP_SECURE === 'true',
-          fromEmail: process.env.SMTP_FROM_EMAIL || 'noreply@theglobaledge.io'
-        }
+          fromEmail: process.env.SMTP_FROM_EMAIL || 'noreply@theglobaledge.io',
+        },
       });
     }
   }
@@ -203,7 +216,7 @@ export class EmailIntegration {
           © 2025 Global Edge. All rights reserved.
           This email was sent to {{email}}. If you didn't create this account, please contact support.
         `,
-        variables: ['firstName', 'email', 'dashboardUrl']
+        variables: ['firstName', 'email', 'dashboardUrl'],
       },
       {
         id: 'investment_confirmation',
@@ -275,8 +288,16 @@ export class EmailIntegration {
           © 2025 Global Edge. All rights reserved.
           This email was sent to {{email}}.
         `,
-        variables: ['firstName', 'email', 'assetName', 'amount', 'investmentId', 'date', 'dashboardUrl']
-      }
+        variables: [
+          'firstName',
+          'email',
+          'assetName',
+          'amount',
+          'investmentId',
+          'date',
+          'dashboardUrl',
+        ],
+      },
     ];
 
     for (const template of templates) {
@@ -305,9 +326,18 @@ export class EmailIntegration {
       }
 
       // Replace variables in template
-      const processedSubject = this.replaceVariables(template.subject, variables);
-      const processedHtmlContent = this.replaceVariables(template.htmlContent, variables);
-      const processedTextContent = this.replaceVariables(template.textContent, variables);
+      const processedSubject = this.replaceVariables(
+        template.subject,
+        variables
+      );
+      const processedHtmlContent = this.replaceVariables(
+        template.htmlContent,
+        variables
+      );
+      const processedTextContent = this.replaceVariables(
+        template.textContent,
+        variables
+      );
 
       // Create email message
       const message: EmailMessage = {
@@ -324,7 +354,7 @@ export class EmailIntegration {
         status: 'pending',
         provider: options.provider || this.getDefaultProvider(),
         retryCount: 0,
-        maxRetries: 3
+        maxRetries: 3,
       };
 
       // Send email
@@ -364,7 +394,7 @@ export class EmailIntegration {
         status: 'pending',
         provider: options.provider || this.getDefaultProvider(),
         retryCount: 0,
-        maxRetries: 3
+        maxRetries: 3,
       };
 
       const result = await this.sendEmail(message);
@@ -378,17 +408,22 @@ export class EmailIntegration {
   /**
    * Send email using specified provider
    */
-  private async sendEmail(message: EmailMessage): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  private async sendEmail(
+    message: EmailMessage
+  ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       const provider = this.providers.get(message.provider);
       if (!provider || !provider.enabled) {
-        return { success: false, error: `Provider ${message.provider} not available` };
+        return {
+          success: false,
+          error: `Provider ${message.provider} not available`,
+        };
       }
 
       // In a real implementation, you would use the actual email service SDKs here
       // For now, we'll simulate sending
       const result = await this.simulateEmailSend(message, provider);
-      
+
       if (result.success) {
         // Store email in database
         await this.storeEmailMessage(message);
@@ -404,7 +439,10 @@ export class EmailIntegration {
   /**
    * Simulate email sending (for development)
    */
-  private async simulateEmailSend(message: EmailMessage, provider: EmailProvider): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  private async simulateEmailSend(
+    message: EmailMessage,
+    provider: EmailProvider
+  ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       // Simulate sending delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -415,14 +453,16 @@ export class EmailIntegration {
       if (isSuccess) {
         message.status = 'sent';
         message.sentAt = new Date().toISOString();
-        console.log(`Email sent via ${provider.name} to ${Array.isArray(message.to) ? message.to.join(', ') : message.to}`);
-        
+        console.log(
+          `Email sent via ${provider.name} to ${Array.isArray(message.to) ? message.to.join(', ') : message.to}`
+        );
+
         return { success: true, messageId: message.id };
       } else {
         message.status = 'failed';
         message.failedAt = new Date().toISOString();
         message.errorMessage = 'Simulated delivery failure';
-        
+
         return { success: false, error: 'Simulated delivery failure' };
       }
     } catch (error) {
@@ -434,14 +474,20 @@ export class EmailIntegration {
   /**
    * Replace variables in template content
    */
-  private replaceVariables(content: string, variables: Record<string, any>): string {
+  private replaceVariables(
+    content: string,
+    variables: Record<string, any>
+  ): string {
     let processedContent = content;
-    
+
     for (const [key, value] of Object.entries(variables)) {
       const placeholder = `{{${key}}}`;
-      processedContent = processedContent.replace(new RegExp(placeholder, 'g'), String(value));
+      processedContent = processedContent.replace(
+        new RegExp(placeholder, 'g'),
+        String(value)
+      );
     }
-    
+
     return processedContent;
   }
 
@@ -455,19 +501,21 @@ export class EmailIntegration {
         return name;
       }
     }
-    
+
     return 'sendgrid'; // Fallback
   }
 
   /**
    * Store email message in database
    */
-  private async storeEmailMessage(message: EmailMessage): Promise<{ success: boolean; error?: string }> {
+  private async storeEmailMessage(
+    message: EmailMessage
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would store this in the database
       // For now, we'll just add it to the queue
       this.emailQueue.push(message);
-      
+
       return { success: true };
     } catch (error) {
       console.error('Store email message error:', error);
@@ -486,7 +534,7 @@ export class EmailIntegration {
         failed: this.emailQueue.filter(e => e.status === 'failed').length,
         pending: this.emailQueue.filter(e => e.status === 'pending').length,
         byProvider: this.getProviderStats(),
-        byTemplate: this.getTemplateStats()
+        byTemplate: this.getTemplateStats(),
       };
 
       return { success: true, stats };
@@ -501,11 +549,11 @@ export class EmailIntegration {
    */
   private getProviderStats(): Record<string, number> {
     const stats: Record<string, number> = {};
-    
+
     for (const email of this.emailQueue) {
       stats[email.provider] = (stats[email.provider] || 0) + 1;
     }
-    
+
     return stats;
   }
 
@@ -514,20 +562,24 @@ export class EmailIntegration {
    */
   private getTemplateStats(): Record<string, number> {
     const stats: Record<string, number> = {};
-    
+
     for (const email of this.emailQueue) {
       if (email.templateId) {
         stats[email.templateId] = (stats[email.templateId] || 0) + 1;
       }
     }
-    
+
     return stats;
   }
 
   /**
    * Get available providers
    */
-  getAvailableProviders(): { success: boolean; providers?: EmailProvider[]; error?: string } {
+  getAvailableProviders(): {
+    success: boolean;
+    providers?: EmailProvider[];
+    error?: string;
+  } {
     try {
       const providers = Array.from(this.providers.values());
       return { success: true, providers };
@@ -540,7 +592,11 @@ export class EmailIntegration {
   /**
    * Get available templates
    */
-  getAvailableTemplates(): { success: boolean; templates?: EmailTemplate[]; error?: string } {
+  getAvailableTemplates(): {
+    success: boolean;
+    templates?: EmailTemplate[];
+    error?: string;
+  } {
     try {
       const templates = Array.from(this.templates.values());
       return { success: true, templates };
@@ -555,7 +611,9 @@ export class EmailIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`EmailIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `EmailIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

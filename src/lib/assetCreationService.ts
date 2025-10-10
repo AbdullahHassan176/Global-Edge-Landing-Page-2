@@ -6,9 +6,24 @@
 export interface AssetCreationRequest {
   id: string;
   issuerId: string;
-  status: 'draft' | 'submitted' | 'under_review' | 'approved' | 'rejected' | 'live' | 'paused' | 'completed';
+  status:
+    | 'draft'
+    | 'submitted'
+    | 'under_review'
+    | 'approved'
+    | 'rejected'
+    | 'live'
+    | 'paused'
+    | 'completed';
   tokenStandard: 'ERC-20' | 'ERC-721' | 'ERC-1155' | 'Custom';
-  assetType: 'container' | 'property' | 'inventory' | 'vault' | 'commodity' | 'artwork' | 'intellectual_property';
+  assetType:
+    | 'container'
+    | 'property'
+    | 'inventory'
+    | 'vault'
+    | 'commodity'
+    | 'artwork'
+    | 'intellectual_property';
   basicInfo: AssetBasicInfo;
   tokenizationDetails: TokenizationDetails;
   legalCompliance: LegalCompliance;
@@ -110,7 +125,13 @@ export interface LegalCompliance {
 }
 
 export interface ComplianceRequirement {
-  type: 'securities' | 'anti_money_laundering' | 'know_your_customer' | 'tax' | 'environmental' | 'safety';
+  type:
+    | 'securities'
+    | 'anti_money_laundering'
+    | 'know_your_customer'
+    | 'tax'
+    | 'environmental'
+    | 'safety';
   description: string;
   required: boolean;
   status: 'pending' | 'completed' | 'exempt';
@@ -144,7 +165,11 @@ export interface FinancialDetails {
 }
 
 export interface ValuationDetails {
-  valuationMethod: 'comparable_sales' | 'income_approach' | 'cost_approach' | 'hybrid';
+  valuationMethod:
+    | 'comparable_sales'
+    | 'income_approach'
+    | 'cost_approach'
+    | 'hybrid';
   valuationAmount: number;
   valuationDate: string;
   valuator: string;
@@ -251,14 +276,30 @@ export interface AssetDocument {
   expiryDate?: string;
 }
 
-export type AssetDocumentType = 
-  | 'title_deed' | 'property_survey' | 'valuation_report' | 'insurance_policy'
-  | 'legal_opinion' | 'audit_report' | 'tax_certificate' | 'compliance_certificate'
-  | 'technical_specification' | 'security_audit' | 'regulatory_approval'
-  | 'environmental_assessment' | 'safety_certificate' | 'inspection_report'
-  | 'financial_statements' | 'business_plan' | 'market_analysis'
-  | 'intellectual_property_certificate' | 'export_license' | 'import_license'
-  | 'warehouse_receipt' | 'quality_certificate' | 'origin_certificate';
+export type AssetDocumentType =
+  | 'title_deed'
+  | 'property_survey'
+  | 'valuation_report'
+  | 'insurance_policy'
+  | 'legal_opinion'
+  | 'audit_report'
+  | 'tax_certificate'
+  | 'compliance_certificate'
+  | 'technical_specification'
+  | 'security_audit'
+  | 'regulatory_approval'
+  | 'environmental_assessment'
+  | 'safety_certificate'
+  | 'inspection_report'
+  | 'financial_statements'
+  | 'business_plan'
+  | 'market_analysis'
+  | 'intellectual_property_certificate'
+  | 'export_license'
+  | 'import_license'
+  | 'warehouse_receipt'
+  | 'quality_certificate'
+  | 'origin_certificate';
 
 export interface KYCRequirements {
   investorTypes: InvestorType[];
@@ -270,7 +311,12 @@ export interface KYCRequirements {
 }
 
 export interface InvestorType {
-  type: 'accredited' | 'qualified' | 'retail' | 'institutional' | 'family_office';
+  type:
+    | 'accredited'
+    | 'qualified'
+    | 'retail'
+    | 'institutional'
+    | 'family_office';
   description: string;
   requirements: string[];
 }
@@ -282,7 +328,11 @@ export interface GeographicRestriction {
 }
 
 export interface AdditionalRequirement {
-  type: 'source_of_funds' | 'investment_experience' | 'risk_tolerance' | 'custom';
+  type:
+    | 'source_of_funds'
+    | 'investment_experience'
+    | 'risk_tolerance'
+    | 'custom';
   description: string;
   required: boolean;
   validationMethod: 'document' | 'questionnaire' | 'verification';
@@ -326,127 +376,268 @@ export const ASSET_CREATION_STEPS = [
   'documents',
   'kyc_requirements',
   'investor_criteria',
-  'review_submission'
+  'review_submission',
 ] as const;
 
-export type AssetCreationStep = typeof ASSET_CREATION_STEPS[number];
+export type AssetCreationStep = (typeof ASSET_CREATION_STEPS)[number];
 
 // Document requirements by asset type and token standard
-export const DOCUMENT_REQUIREMENTS: Record<string, Record<string, AssetDocumentType[]>> = {
-  'property': {
+export const DOCUMENT_REQUIREMENTS: Record<
+  string,
+  Record<string, AssetDocumentType[]>
+> = {
+  property: {
     'ERC-20': [
-      'title_deed', 'property_survey', 'valuation_report', 'insurance_policy',
-      'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'environmental_assessment', 'safety_certificate', 'inspection_report'
+      'title_deed',
+      'property_survey',
+      'valuation_report',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'environmental_assessment',
+      'safety_certificate',
+      'inspection_report',
     ],
     'ERC-721': [
-      'title_deed', 'property_survey', 'valuation_report', 'insurance_policy',
-      'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'environmental_assessment', 'safety_certificate', 'inspection_report'
+      'title_deed',
+      'property_survey',
+      'valuation_report',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'environmental_assessment',
+      'safety_certificate',
+      'inspection_report',
     ],
     'ERC-1155': [
-      'title_deed', 'property_survey', 'valuation_report', 'insurance_policy',
-      'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'environmental_assessment', 'safety_certificate', 'inspection_report'
-    ]
+      'title_deed',
+      'property_survey',
+      'valuation_report',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'environmental_assessment',
+      'safety_certificate',
+      'inspection_report',
+    ],
   },
-  'container': {
+  container: {
     'ERC-20': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'export_license'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'export_license',
     ],
     'ERC-721': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'export_license'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'export_license',
     ],
     'ERC-1155': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'export_license'
-    ]
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'export_license',
+    ],
   },
-  'inventory': {
+  inventory: {
     'ERC-20': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'business_plan'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'business_plan',
     ],
     'ERC-721': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'business_plan'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'business_plan',
     ],
     'ERC-1155': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'business_plan'
-    ]
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'business_plan',
+    ],
   },
-  'vault': {
+  vault: {
     'ERC-20': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'safety_certificate'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'safety_certificate',
     ],
     'ERC-721': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'safety_certificate'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'safety_certificate',
     ],
     'ERC-1155': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'safety_certificate'
-    ]
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'safety_certificate',
+    ],
   },
-  'commodity': {
+  commodity: {
     'ERC-20': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'market_analysis'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'market_analysis',
     ],
     'ERC-721': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'market_analysis'
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'market_analysis',
     ],
     'ERC-1155': [
-      'warehouse_receipt', 'quality_certificate', 'origin_certificate',
-      'insurance_policy', 'legal_opinion', 'audit_report', 'tax_certificate',
-      'compliance_certificate', 'inspection_report', 'market_analysis'
-    ]
+      'warehouse_receipt',
+      'quality_certificate',
+      'origin_certificate',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'market_analysis',
+    ],
   },
-  'artwork': {
+  artwork: {
     'ERC-721': [
-      'intellectual_property_certificate', 'valuation_report', 'insurance_policy',
-      'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'inspection_report', 'origin_certificate'
+      'intellectual_property_certificate',
+      'valuation_report',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'origin_certificate',
     ],
     'ERC-1155': [
-      'intellectual_property_certificate', 'valuation_report', 'insurance_policy',
-      'legal_opinion', 'audit_report', 'tax_certificate', 'compliance_certificate',
-      'inspection_report', 'origin_certificate'
-    ]
+      'intellectual_property_certificate',
+      'valuation_report',
+      'insurance_policy',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'inspection_report',
+      'origin_certificate',
+    ],
   },
-  'intellectual_property': {
+  intellectual_property: {
     'ERC-20': [
-      'intellectual_property_certificate', 'valuation_report', 'legal_opinion',
-      'audit_report', 'tax_certificate', 'compliance_certificate',
-      'business_plan', 'market_analysis', 'technical_specification'
+      'intellectual_property_certificate',
+      'valuation_report',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'business_plan',
+      'market_analysis',
+      'technical_specification',
     ],
     'ERC-721': [
-      'intellectual_property_certificate', 'valuation_report', 'legal_opinion',
-      'audit_report', 'tax_certificate', 'compliance_certificate',
-      'business_plan', 'market_analysis', 'technical_specification'
+      'intellectual_property_certificate',
+      'valuation_report',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'business_plan',
+      'market_analysis',
+      'technical_specification',
     ],
     'ERC-1155': [
-      'intellectual_property_certificate', 'valuation_report', 'legal_opinion',
-      'audit_report', 'tax_certificate', 'compliance_certificate',
-      'business_plan', 'market_analysis', 'technical_specification'
-    ]
-  }
+      'intellectual_property_certificate',
+      'valuation_report',
+      'legal_opinion',
+      'audit_report',
+      'tax_certificate',
+      'compliance_certificate',
+      'business_plan',
+      'market_analysis',
+      'technical_specification',
+    ],
+  },
 };
 
 class AssetCreationService {
@@ -471,7 +662,7 @@ class AssetCreationService {
         country: '',
         region: '',
         images: [],
-        tags: []
+        tags: [],
       },
       tokenizationDetails: {
         totalTokens: 0,
@@ -486,15 +677,15 @@ class AssetCreationService {
           reservedTokens: 0,
           issuerTokens: 0,
           investorTokens: 0,
-          platformTokens: 0
+          platformTokens: 0,
         },
         liquidityPlan: {
           primaryMarket: true,
           secondaryMarket: false,
           liquidityPool: false,
           exchangeListings: [],
-          marketMaker: ''
-        }
+          marketMaker: '',
+        },
       },
       legalCompliance: {
         jurisdiction: '',
@@ -505,7 +696,7 @@ class AssetCreationService {
           lawFirm: '',
           opinionDate: '',
           documentUrl: '',
-          summary: ''
+          summary: '',
         },
         insurance: {
           required: true,
@@ -513,10 +704,10 @@ class AssetCreationService {
           policyNumber: '',
           coverageAmount: 0,
           expiryDate: '',
-          documentUrl: ''
+          documentUrl: '',
         },
         escrowAgent: '',
-        custodian: ''
+        custodian: '',
       },
       financialDetails: {
         valuation: {
@@ -525,7 +716,7 @@ class AssetCreationService {
           valuationDate: '',
           valuator: '',
           documentUrl: '',
-          currency: 'USD'
+          currency: 'USD',
         },
         revenueModel: {
           type: 'rental',
@@ -535,8 +726,8 @@ class AssetCreationService {
             investorPercentage: 80,
             issuerPercentage: 15,
             platformPercentage: 5,
-            distributionMethod: 'automatic'
-          }
+            distributionMethod: 'automatic',
+          },
         },
         financialProjections: [],
         auditReports: [],
@@ -546,8 +737,8 @@ class AssetCreationService {
           taxStatus: 'pending',
           lastFiling: '',
           nextFiling: '',
-          documentUrl: ''
-        }
+          documentUrl: '',
+        },
       },
       technicalSpecs: {
         blockchain: 'Ethereum',
@@ -558,17 +749,17 @@ class AssetCreationService {
           auditDate: '',
           findings: [],
           documentUrl: '',
-          score: 0
+          score: 0,
         },
         oracleIntegration: {
           required: false,
           provider: '',
           dataFeeds: [],
-          updateFrequency: ''
+          updateFrequency: '',
         },
         metadata: {
-          attributes: []
-        }
+          attributes: [],
+        },
       },
       documents: [],
       kycRequirements: {
@@ -576,14 +767,14 @@ class AssetCreationService {
         minimumInvestment: 0,
         geographicRestrictions: [],
         accreditationRequired: false,
-        additionalRequirements: []
+        additionalRequirements: [],
       },
       investorCriteria: {
-        transferRestrictions: []
+        transferRestrictions: [],
       },
       reviewHistory: [],
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     this.saveAssetRequest(request);
@@ -593,16 +784,19 @@ class AssetCreationService {
   /**
    * Update asset creation request
    */
-  async updateAssetRequest(requestId: string, updates: Partial<AssetCreationRequest>): Promise<AssetCreationRequest | null> {
+  async updateAssetRequest(
+    requestId: string,
+    updates: Partial<AssetCreationRequest>
+  ): Promise<AssetCreationRequest | null> {
     const requests = this.getAssetRequests();
     const index = requests.findIndex(req => req.id === requestId);
-    
+
     if (index === -1) return null;
 
     requests[index] = {
       ...requests[index],
       ...updates,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     this.saveAssetRequests(requests);
@@ -615,7 +809,7 @@ class AssetCreationService {
   async submitForReview(requestId: string): Promise<boolean> {
     const request = await this.updateAssetRequest(requestId, {
       status: 'submitted',
-      submittedAt: new Date().toISOString()
+      submittedAt: new Date().toISOString(),
     });
 
     if (request) {
@@ -627,11 +821,11 @@ class AssetCreationService {
         reviewerRole: 'admin',
         status: 'pending',
         comments: 'Asset submitted for review',
-        reviewedAt: new Date().toISOString()
+        reviewedAt: new Date().toISOString(),
       };
 
       await this.updateAssetRequest(requestId, {
-        reviewHistory: [...request.reviewHistory, reviewEntry]
+        reviewHistory: [...request.reviewHistory, reviewEntry],
       });
 
       return true;
@@ -643,45 +837,63 @@ class AssetCreationService {
   /**
    * Get required documents for asset type and token standard
    */
-  getRequiredDocuments(assetType: string, tokenStandard: string): AssetDocumentType[] {
+  getRequiredDocuments(
+    assetType: string,
+    tokenStandard: string
+  ): AssetDocumentType[] {
     return DOCUMENT_REQUIREMENTS[assetType]?.[tokenStandard] || [];
   }
 
   /**
    * Validate asset creation request
    */
-  validateAssetRequest(request: AssetCreationRequest): { valid: boolean; errors: string[] } {
+  validateAssetRequest(request: AssetCreationRequest): {
+    valid: boolean;
+    errors: string[];
+  } {
     const errors: string[] = [];
 
     // Basic info validation
     if (!request.basicInfo.name) errors.push('Asset name is required');
-    if (!request.basicInfo.description) errors.push('Asset description is required');
+    if (!request.basicInfo.description)
+      errors.push('Asset description is required');
     if (!request.basicInfo.location) errors.push('Asset location is required');
-    if (request.basicInfo.images.length === 0) errors.push('At least one image is required');
+    if (request.basicInfo.images.length === 0)
+      errors.push('At least one image is required');
 
     // Tokenization validation
-    if (request.tokenizationDetails.totalTokens <= 0) errors.push('Total tokens must be greater than 0');
-    if (request.tokenizationDetails.tokenPrice <= 0) errors.push('Token price must be greater than 0');
-    if (request.tokenizationDetails.minimumInvestment <= 0) errors.push('Minimum investment must be greater than 0');
-    if (!request.tokenizationDetails.tokenSymbol) errors.push('Token symbol is required');
-    if (!request.tokenizationDetails.tokenName) errors.push('Token name is required');
+    if (request.tokenizationDetails.totalTokens <= 0)
+      errors.push('Total tokens must be greater than 0');
+    if (request.tokenizationDetails.tokenPrice <= 0)
+      errors.push('Token price must be greater than 0');
+    if (request.tokenizationDetails.minimumInvestment <= 0)
+      errors.push('Minimum investment must be greater than 0');
+    if (!request.tokenizationDetails.tokenSymbol)
+      errors.push('Token symbol is required');
+    if (!request.tokenizationDetails.tokenName)
+      errors.push('Token name is required');
 
     // Financial validation
-    if (request.financialDetails.valuation.valuationAmount <= 0) errors.push('Valuation amount must be greater than 0');
-    if (!request.financialDetails.valuation.valuator) errors.push('Valuator is required');
+    if (request.financialDetails.valuation.valuationAmount <= 0)
+      errors.push('Valuation amount must be greater than 0');
+    if (!request.financialDetails.valuation.valuator)
+      errors.push('Valuator is required');
 
     // Document validation
-    const requiredDocs = this.getRequiredDocuments(request.assetType, request.tokenStandard);
+    const requiredDocs = this.getRequiredDocuments(
+      request.assetType,
+      request.tokenStandard
+    );
     const uploadedDocs = request.documents.map(doc => doc.type);
     const missingDocs = requiredDocs.filter(doc => !uploadedDocs.includes(doc));
-    
+
     if (missingDocs.length > 0) {
       errors.push(`Missing required documents: ${missingDocs.join(', ')}`);
     }
 
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   }
 
@@ -716,7 +928,7 @@ class AssetCreationService {
   private saveAssetRequest(request: AssetCreationRequest): void {
     const requests = this.getAssetRequests();
     const index = requests.findIndex(req => req.id === request.id);
-    
+
     if (index === -1) {
       requests.push(request);
     } else {

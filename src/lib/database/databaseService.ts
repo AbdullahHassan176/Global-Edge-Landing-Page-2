@@ -1,17 +1,29 @@
 /**
  * Database Service Layer
- * 
+ *
  * This file contains the main database service with CRUD operations
  * for all entities in the Global Edge tokenized assets platform.
  */
 
 import { cosmosClient } from './cosmosClient';
 import { cosmosConfig } from './cosmosConfig';
-import { 
-  User, Asset, Investment, KYCApplication, Notification, AdminLog,
-  AssetCreationRequest, IssuerBranding, SystemSetting, AuditLog,
-  QueryOptions, AssetQueryOptions, InvestmentQueryOptions, UserQueryOptions,
-  ApiResponse, PaginatedResponse
+import {
+  User,
+  Asset,
+  Investment,
+  KYCApplication,
+  Notification,
+  AdminLog,
+  AssetCreationRequest,
+  IssuerBranding,
+  SystemSetting,
+  AuditLog,
+  QueryOptions,
+  AssetQueryOptions,
+  InvestmentQueryOptions,
+  UserQueryOptions,
+  ApiResponse,
+  PaginatedResponse,
 } from './models';
 
 export class DatabaseService {
@@ -38,11 +50,13 @@ export class DatabaseService {
   // USER OPERATIONS
   // ============================================================================
 
-  async createUser(user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<User>> {
+  async createUser(
+    user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponse<User>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       const newUser: User = {
         ...user,
         id: this.generateId(),
@@ -53,7 +67,10 @@ export class DatabaseService {
       const { resource } = await container.items.create(newUser);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -62,14 +79,17 @@ export class DatabaseService {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
       const { resource } = await container.item(id, id).read();
-      
+
       if (!resource) {
         return { success: false, error: 'User not found' };
       }
-      
+
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -80,7 +100,7 @@ export class DatabaseService {
       const { resources } = await container.items
         .query({
           query: 'SELECT * FROM c WHERE c.email = @email',
-          parameters: [{ name: '@email', value: email }]
+          parameters: [{ name: '@email', value: email }],
         })
         .fetchAll();
 
@@ -90,15 +110,21 @@ export class DatabaseService {
 
       return { success: true, data: resources[0] };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async updateUser(id: string, updates: Partial<User>): Promise<ApiResponse<User>> {
+  async updateUser(
+    id: string,
+    updates: Partial<User>
+  ): Promise<ApiResponse<User>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       const { resource: existingUser } = await container.item(id, id).read();
       if (!existingUser) {
         return { success: false, error: 'User not found' };
@@ -113,15 +139,20 @@ export class DatabaseService {
       const { resource } = await container.item(id, id).replace(updatedUser);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getUsers(options: UserQueryOptions = {}): Promise<ApiResponse<PaginatedResponse<User>>> {
+  async getUsers(
+    options: UserQueryOptions = {}
+  ): Promise<ApiResponse<PaginatedResponse<User>>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       let query = 'SELECT * FROM c';
       const parameters: any[] = [];
       const conditions: string[] = [];
@@ -174,7 +205,10 @@ export class DatabaseService {
 
       return { success: true, data: result };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -182,11 +216,13 @@ export class DatabaseService {
   // ASSET OPERATIONS
   // ============================================================================
 
-  async createAsset(asset: Omit<Asset, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<Asset>> {
+  async createAsset(
+    asset: Omit<Asset, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponse<Asset>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
-      
+
       const newAsset: Asset = {
         ...asset,
         id: this.generateId(),
@@ -197,7 +233,10 @@ export class DatabaseService {
       const { resource } = await container.items.create(newAsset);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -206,22 +245,27 @@ export class DatabaseService {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
       const { resource } = await container.item(id, id).read();
-      
+
       if (!resource) {
         return { success: false, error: 'Asset not found' };
       }
-      
+
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getAssets(options: AssetQueryOptions = {}): Promise<ApiResponse<PaginatedResponse<Asset>>> {
+  async getAssets(
+    options: AssetQueryOptions = {}
+  ): Promise<ApiResponse<PaginatedResponse<Asset>>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
-      
+
       let query = 'SELECT * FROM c';
       const parameters: any[] = [];
       const conditions: string[] = [];
@@ -291,7 +335,7 @@ export class DatabaseService {
       // For development, always return sample data when database fails
       console.log('Database not available, returning sample assets');
       const sampleData = this.getSampleAssets(options);
-      
+
       const page = options.page || 1;
       const pageSize = options.pageSize || 10;
       const startIndex = (page - 1) * pageSize;
@@ -310,11 +354,14 @@ export class DatabaseService {
     }
   }
 
-  async updateAsset(id: string, updates: Partial<Asset>): Promise<ApiResponse<Asset>> {
+  async updateAsset(
+    id: string,
+    updates: Partial<Asset>
+  ): Promise<ApiResponse<Asset>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
-      
+
       const { resource: existingAsset } = await container.item(id, id).read();
       if (!existingAsset) {
         return { success: false, error: 'Asset not found' };
@@ -329,7 +376,10 @@ export class DatabaseService {
       const { resource } = await container.item(id, id).replace(updatedAsset);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -337,11 +387,13 @@ export class DatabaseService {
   // INVESTMENT OPERATIONS
   // ============================================================================
 
-  async createInvestment(investment: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<Investment>> {
+  async createInvestment(
+    investment: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponse<Investment>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('investments');
-      
+
       const newInvestment: Investment = {
         ...investment,
         id: this.generateId(),
@@ -352,7 +404,10 @@ export class DatabaseService {
       const { resource } = await container.items.create(newInvestment);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -361,22 +416,27 @@ export class DatabaseService {
       await this.initialize();
       const container = cosmosClient.getContainer('investments');
       const { resource } = await container.item(id, id).read();
-      
+
       if (!resource) {
         return { success: false, error: 'Investment not found' };
       }
-      
+
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getInvestments(options: InvestmentQueryOptions = {}): Promise<ApiResponse<PaginatedResponse<Investment>>> {
+  async getInvestments(
+    options: InvestmentQueryOptions = {}
+  ): Promise<ApiResponse<PaginatedResponse<Investment>>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('investments');
-      
+
       let query = 'SELECT * FROM c';
       const parameters: any[] = [];
       const conditions: string[] = [];
@@ -444,7 +504,7 @@ export class DatabaseService {
       // For development, always return sample data when database fails
       console.log('Database not available, returning sample data');
       const sampleData = this.getSampleInvestments(options);
-      
+
       const page = options.page || 1;
       const pageSize = options.pageSize || 10;
       const startIndex = (page - 1) * pageSize;
@@ -463,12 +523,17 @@ export class DatabaseService {
     }
   }
 
-  async updateInvestment(id: string, updates: Partial<Investment>): Promise<ApiResponse<Investment>> {
+  async updateInvestment(
+    id: string,
+    updates: Partial<Investment>
+  ): Promise<ApiResponse<Investment>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('investments');
-      
-      const { resource: existingInvestment } = await container.item(id, id).read();
+
+      const { resource: existingInvestment } = await container
+        .item(id, id)
+        .read();
       if (!existingInvestment) {
         return { success: false, error: 'Investment not found' };
       }
@@ -479,10 +544,15 @@ export class DatabaseService {
         updatedAt: new Date().toISOString(),
       };
 
-      const { resource } = await container.item(id, id).replace(updatedInvestment);
+      const { resource } = await container
+        .item(id, id)
+        .replace(updatedInvestment);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -490,11 +560,13 @@ export class DatabaseService {
   // KYC OPERATIONS
   // ============================================================================
 
-  async createKYCApplication(kyc: Omit<KYCApplication, 'id' | 'submittedAt'>): Promise<ApiResponse<KYCApplication>> {
+  async createKYCApplication(
+    kyc: Omit<KYCApplication, 'id' | 'submittedAt'>
+  ): Promise<ApiResponse<KYCApplication>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('kycApplications');
-      
+
       const newKYC: KYCApplication = {
         ...kyc,
         id: this.generateId(),
@@ -504,7 +576,10 @@ export class DatabaseService {
       const { resource } = await container.items.create(newKYC);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -515,7 +590,7 @@ export class DatabaseService {
       const { resources } = await container.items
         .query({
           query: 'SELECT * FROM c WHERE c.userId = @userId',
-          parameters: [{ name: '@userId', value: userId }]
+          parameters: [{ name: '@userId', value: userId }],
         })
         .fetchAll();
 
@@ -525,15 +600,21 @@ export class DatabaseService {
 
       return { success: true, data: resources[0] };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async updateKYCApplication(id: string, updates: Partial<KYCApplication>): Promise<ApiResponse<KYCApplication>> {
+  async updateKYCApplication(
+    id: string,
+    updates: Partial<KYCApplication>
+  ): Promise<ApiResponse<KYCApplication>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('kycApplications');
-      
+
       const { resource: existingKYC } = await container.item(id, id).read();
       if (!existingKYC) {
         return { success: false, error: 'KYC application not found' };
@@ -547,7 +628,10 @@ export class DatabaseService {
       const { resource } = await container.item(id, id).replace(updatedKYC);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -555,11 +639,13 @@ export class DatabaseService {
   // NOTIFICATION OPERATIONS
   // ============================================================================
 
-  async createNotification(notification: Omit<Notification, 'id' | 'createdAt'>): Promise<ApiResponse<Notification>> {
+  async createNotification(
+    notification: Omit<Notification, 'id' | 'createdAt'>
+  ): Promise<ApiResponse<Notification>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('notifications');
-      
+
       const newNotification: Notification = {
         ...notification,
         id: this.generateId(),
@@ -569,18 +655,25 @@ export class DatabaseService {
       const { resource } = await container.items.create(newNotification);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getNotificationsByUserId(userId: string, limit: number = 50): Promise<ApiResponse<Notification[]>> {
+  async getNotificationsByUserId(
+    userId: string,
+    limit: number = 50
+  ): Promise<ApiResponse<Notification[]>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('notifications');
       const { resources } = await container.items
         .query({
-          query: 'SELECT * FROM c WHERE c.userId = @userId ORDER BY c.createdAt DESC',
-          parameters: [{ name: '@userId', value: userId }]
+          query:
+            'SELECT * FROM c WHERE c.userId = @userId ORDER BY c.createdAt DESC',
+          parameters: [{ name: '@userId', value: userId }],
         })
         .fetchAll();
 
@@ -603,8 +696,10 @@ export class DatabaseService {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('notifications');
-      
-      const { resource: existingNotification } = await container.item(id, id).read();
+
+      const { resource: existingNotification } = await container
+        .item(id, id)
+        .read();
       if (!existingNotification) {
         return { success: false, error: 'Notification not found' };
       }
@@ -614,7 +709,9 @@ export class DatabaseService {
         read: true,
       };
 
-      const { resource } = await container.item(id, id).replace(updatedNotification);
+      const { resource } = await container
+        .item(id, id)
+        .replace(updatedNotification);
       return { success: true, data: resource };
     } catch (error) {
       // For development, simulate successful notification read
@@ -638,7 +735,9 @@ export class DatabaseService {
   /**
    * Get sample investments for development/testing
    */
-  private getSampleInvestments(options: InvestmentQueryOptions = {}): Investment[] {
+  private getSampleInvestments(
+    options: InvestmentQueryOptions = {}
+  ): Investment[] {
     const sampleInvestments: Investment[] = [
       {
         id: 'inv-001',
@@ -662,13 +761,19 @@ export class DatabaseService {
           platformFee: 50,
           processingFee: 25,
           managementFee: 100,
-          totalFees: 175
+          totalFees: 175,
         },
-        investmentDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-        maturityDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDate: new Date(
+          Date.now() - 2 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 365 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         documents: [],
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+        adminApprovedAt: new Date(
+          Date.now() - 1 * 24 * 60 * 60 * 1000
+        ).toISOString(),
       },
       {
         id: 'inv-002',
@@ -692,9 +797,9 @@ export class DatabaseService {
           platformFee: 100,
           processingFee: 50,
           managementFee: 200,
-          totalFees: 350
+          totalFees: 350,
         },
-        documents: []
+        documents: [],
       },
       {
         id: 'inv-003',
@@ -718,13 +823,19 @@ export class DatabaseService {
           platformFee: 75,
           processingFee: 37.5,
           managementFee: 150,
-          totalFees: 262.5
+          totalFees: 262.5,
         },
-        investmentDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-        maturityDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDate: new Date(
+          Date.now() - 7 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        maturityDate: new Date(
+          Date.now() - 1 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         documents: [],
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString()
+        adminApprovedAt: new Date(
+          Date.now() - 6 * 24 * 60 * 60 * 1000
+        ).toISOString(),
       },
       {
         id: 'inv-004',
@@ -748,13 +859,19 @@ export class DatabaseService {
           platformFee: 30,
           processingFee: 15,
           managementFee: 60,
-          totalFees: 105
+          totalFees: 105,
         },
-        investmentDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-        maturityDate: new Date(Date.now() + 300 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDate: new Date(
+          Date.now() - 3 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 300 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         documents: [],
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+        adminApprovedAt: new Date(
+          Date.now() - 2 * 24 * 60 * 60 * 1000
+        ).toISOString(),
       },
       {
         id: 'inv-005',
@@ -778,10 +895,10 @@ export class DatabaseService {
           platformFee: 150,
           processingFee: 75,
           managementFee: 300,
-          totalFees: 525
+          totalFees: 525,
         },
         documents: [],
-        adminNotes: 'KYC verification failed - insufficient documentation'
+        adminNotes: 'KYC verification failed - insufficient documentation',
       },
       {
         id: 'inv-006',
@@ -805,13 +922,19 @@ export class DatabaseService {
           platformFee: 80,
           processingFee: 40,
           managementFee: 160,
-          totalFees: 280
+          totalFees: 280,
         },
-        investmentDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-        maturityDate: new Date(Date.now() + 200 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDate: new Date(
+          Date.now() - 4 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 200 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         documents: [],
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString()
+        adminApprovedAt: new Date(
+          Date.now() - 3 * 24 * 60 * 60 * 1000
+        ).toISOString(),
       },
       {
         id: 'inv-007',
@@ -835,23 +958,29 @@ export class DatabaseService {
           platformFee: 120,
           processingFee: 60,
           managementFee: 240,
-          totalFees: 420
+          totalFees: 420,
         },
-        documents: []
-      }
+        documents: [],
+      },
     ];
 
     // Apply filters to sample data
     let filteredInvestments = sampleInvestments;
 
     if (options.userId) {
-      filteredInvestments = filteredInvestments.filter(inv => inv.userId === options.userId);
+      filteredInvestments = filteredInvestments.filter(
+        inv => inv.userId === options.userId
+      );
     }
     if (options.assetId) {
-      filteredInvestments = filteredInvestments.filter(inv => inv.assetId === options.assetId);
+      filteredInvestments = filteredInvestments.filter(
+        inv => inv.assetId === options.assetId
+      );
     }
     if (options.status) {
-      filteredInvestments = filteredInvestments.filter(inv => inv.status === options.status);
+      filteredInvestments = filteredInvestments.filter(
+        inv => inv.status === options.status
+      );
     }
 
     return filteredInvestments;
@@ -867,7 +996,8 @@ export class DatabaseService {
         userId: userId,
         type: 'investment_update',
         title: 'Investment Approved',
-        message: 'Your investment of $5,000 in Jebel Ali-Dubai Container has been approved and is now active.',
+        message:
+          'Your investment of $5,000 in Jebel Ali-Dubai Container has been approved and is now active.',
         read: false,
         priority: 'high',
         createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
@@ -876,14 +1006,15 @@ export class DatabaseService {
         actionText: 'View Asset',
         emailSent: true,
         smsSent: false,
-        pushSent: true
+        pushSent: true,
       },
       {
         id: 'notif-002',
         userId: userId,
         type: 'kyc_required',
         title: 'KYC Verification Required',
-        message: 'Please complete your KYC verification to continue investing in tokenized assets.',
+        message:
+          'Please complete your KYC verification to continue investing in tokenized assets.',
         read: false,
         priority: 'urgent',
         createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
@@ -892,14 +1023,15 @@ export class DatabaseService {
         actionText: 'Complete KYC',
         emailSent: true,
         smsSent: true,
-        pushSent: true
+        pushSent: true,
       },
       {
         id: 'notif-003',
         userId: userId,
         type: 'system_alert',
         title: 'New Asset Available',
-        message: 'A new container asset "Abu Dhabi-Rotterdam Route" is now available for investment.',
+        message:
+          'A new container asset "Abu Dhabi-Rotterdam Route" is now available for investment.',
         read: true,
         priority: 'medium',
         createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
@@ -908,14 +1040,15 @@ export class DatabaseService {
         actionText: 'View Asset',
         emailSent: true,
         smsSent: false,
-        pushSent: false
+        pushSent: false,
       },
       {
         id: 'notif-004',
         userId: userId,
         type: 'system_alert',
         title: 'Platform Update',
-        message: 'New features have been added to your dashboard. Check out the enhanced investment tracking.',
+        message:
+          'New features have been added to your dashboard. Check out the enhanced investment tracking.',
         read: true,
         priority: 'low',
         createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
@@ -924,14 +1057,15 @@ export class DatabaseService {
         actionText: 'View Dashboard',
         emailSent: false,
         smsSent: false,
-        pushSent: true
+        pushSent: true,
       },
       {
         id: 'notif-005',
         userId: userId,
         type: 'investment_update',
         title: 'Investment Returns Available',
-        message: 'Your investment in Dubai Property Token has generated returns of $1,125. Funds are now available.',
+        message:
+          'Your investment in Dubai Property Token has generated returns of $1,125. Funds are now available.',
         read: false,
         priority: 'high',
         createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
@@ -940,8 +1074,8 @@ export class DatabaseService {
         actionText: 'View Investment',
         emailSent: true,
         smsSent: false,
-        pushSent: true
-      }
+        pushSent: true,
+      },
     ];
 
     return sampleNotifications;
@@ -956,15 +1090,19 @@ export class DatabaseService {
         id: '1',
         name: 'Jebel Ali-Dubai Container',
         type: 'container',
-        description: 'High-value electronics and luxury goods container route from Jebel Ali Port to Dubai.',
+        description:
+          'High-value electronics and luxury goods container route from Jebel Ali Port to Dubai.',
         value: '$45,000',
         apr: '12.5%',
         risk: 'Medium',
         route: 'Jebel Ali Port → Dubai',
         cargo: 'Electronics & Luxury Goods',
         status: 'active',
-        image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
-        createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+        image:
+          'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
+        createdAt: new Date(
+          Date.now() - 30 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
         issuerId: 'demo-issuer-1',
         tokenStandard: 'ERC-20',
@@ -972,22 +1110,28 @@ export class DatabaseService {
         availableSupply: 750,
         minimumInvestment: 1000,
         maximumInvestment: 50000,
-        investmentDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDeadline: new Date(
+          Date.now() + 30 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         expectedReturn: 12.5,
         riskLevel: 'Medium',
-        maturityDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 365 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         location: {
           country: 'UAE',
           city: 'Dubai',
           coordinates: { latitude: 25.2048, longitude: 55.2708 },
-          address: 'Jebel Ali Port, Dubai, UAE'
+          address: 'Jebel Ali Port, Dubai, UAE',
         },
         logistics: {
           shippingCompany: 'Maersk Line',
           trackingNumber: 'MAEU123456789',
-          estimatedDelivery: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
-          insuranceProvider: 'Lloyd\'s of London',
-          insuranceAmount: 45000
+          estimatedDelivery: new Date(
+            Date.now() + 14 * 24 * 60 * 60 * 1000
+          ).toISOString(),
+          insuranceProvider: "Lloyd's of London",
+          insuranceAmount: 45000,
         },
         complianceStatus: 'approved',
         legalDocuments: [],
@@ -997,26 +1141,32 @@ export class DatabaseService {
           averageInvestmentSize: 3000,
           returnRate: 12.5,
           volatility: 8.2,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
         },
         adminApproved: true,
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
-        adminNotes: 'Approved for tokenization'
+        adminApprovedAt: new Date(
+          Date.now() - 25 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        adminNotes: 'Approved for tokenization',
       },
       {
         id: '2',
         name: 'Abu Dhabi-Rotterdam Container',
         type: 'container',
-        description: 'Petrochemicals and oil products container route from Abu Dhabi to Rotterdam.',
+        description:
+          'Petrochemicals and oil products container route from Abu Dhabi to Rotterdam.',
         value: '$38,000',
         apr: '11.8%',
         risk: 'Medium',
         route: 'Abu Dhabi → Rotterdam',
         cargo: 'Petrochemicals & Oil Products',
         status: 'active',
-        image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
-        createdAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
+        image:
+          'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
+        createdAt: new Date(
+          Date.now() - 25 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
         issuerId: 'demo-issuer-1',
         tokenStandard: 'ERC-20',
@@ -1024,22 +1174,28 @@ export class DatabaseService {
         availableSupply: 600,
         minimumInvestment: 1000,
         maximumInvestment: 40000,
-        investmentDeadline: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDeadline: new Date(
+          Date.now() + 25 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         expectedReturn: 11.8,
         riskLevel: 'Medium',
-        maturityDate: new Date(Date.now() + 300 * 24 * 60 * 60 * 1000).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 300 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         location: {
           country: 'UAE',
           city: 'Abu Dhabi',
           coordinates: { latitude: 24.4539, longitude: 54.3773 },
-          address: 'Abu Dhabi Port, UAE'
+          address: 'Abu Dhabi Port, UAE',
         },
         logistics: {
           shippingCompany: 'COSCO Shipping',
           trackingNumber: 'COSCO987654321',
-          estimatedDelivery: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000).toISOString(),
+          estimatedDelivery: new Date(
+            Date.now() + 18 * 24 * 60 * 60 * 1000
+          ).toISOString(),
           insuranceProvider: 'Allianz Global',
-          insuranceAmount: 38000
+          insuranceAmount: 38000,
         },
         complianceStatus: 'approved',
         legalDocuments: [],
@@ -1049,26 +1205,32 @@ export class DatabaseService {
           averageInvestmentSize: 1900,
           returnRate: 11.8,
           volatility: 7.5,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
         },
         adminApproved: true,
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
-        adminNotes: 'Approved for tokenization'
+        adminApprovedAt: new Date(
+          Date.now() - 20 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        adminNotes: 'Approved for tokenization',
       },
       {
         id: '3',
         name: 'Dubai Property Token',
         type: 'property',
-        description: 'Luxury residential property in Dubai Marina with high rental yields.',
+        description:
+          'Luxury residential property in Dubai Marina with high rental yields.',
         value: '$120,000',
         apr: '15.2%',
         risk: 'Low',
         route: 'Dubai Marina',
         cargo: 'Luxury Residential Property',
         status: 'active',
-        image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=192&fit=crop&crop=center',
-        createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+        image:
+          'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=192&fit=crop&crop=center',
+        createdAt: new Date(
+          Date.now() - 20 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
         issuerId: 'demo-issuer-1',
         tokenStandard: 'ERC-20',
@@ -1076,22 +1238,28 @@ export class DatabaseService {
         availableSupply: 1500,
         minimumInvestment: 5000,
         maximumInvestment: 100000,
-        investmentDeadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDeadline: new Date(
+          Date.now() + 20 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         expectedReturn: 15.2,
         riskLevel: 'Low',
-        maturityDate: new Date(Date.now() + 730 * 24 * 60 * 60 * 1000).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 730 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         location: {
           country: 'UAE',
           city: 'Dubai',
           coordinates: { latitude: 25.0772, longitude: 55.1307 },
-          address: 'Dubai Marina, Dubai, UAE'
+          address: 'Dubai Marina, Dubai, UAE',
         },
         logistics: {
           shippingCompany: 'N/A',
           trackingNumber: 'N/A',
-          estimatedDelivery: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          estimatedDelivery: new Date(
+            Date.now() + 365 * 24 * 60 * 60 * 1000
+          ).toISOString(),
           insuranceProvider: 'Emirates Insurance',
-          insuranceAmount: 120000
+          insuranceAmount: 120000,
         },
         complianceStatus: 'approved',
         legalDocuments: [],
@@ -1101,26 +1269,32 @@ export class DatabaseService {
           averageInvestmentSize: 6000,
           returnRate: 15.2,
           volatility: 5.8,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
         },
         adminApproved: true,
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
-        adminNotes: 'Approved for tokenization'
+        adminApprovedAt: new Date(
+          Date.now() - 15 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        adminNotes: 'Approved for tokenization',
       },
       {
         id: '4',
         name: 'Singapore Warehouse Inventory',
         type: 'inventory',
-        description: 'Electronics and consumer goods inventory in Singapore warehouse.',
+        description:
+          'Electronics and consumer goods inventory in Singapore warehouse.',
         value: '$25,000',
         apr: '9.5%',
         risk: 'High',
         route: 'Singapore Port',
         cargo: 'Electronics & Consumer Goods',
         status: 'active',
-        image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
-        createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+        image:
+          'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=192&fit=crop&crop=center',
+        createdAt: new Date(
+          Date.now() - 15 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
         issuerId: 'demo-issuer-1',
         tokenStandard: 'ERC-20',
@@ -1128,22 +1302,28 @@ export class DatabaseService {
         availableSupply: 400,
         minimumInvestment: 500,
         maximumInvestment: 25000,
-        investmentDeadline: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),
+        investmentDeadline: new Date(
+          Date.now() + 15 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         expectedReturn: 9.5,
         riskLevel: 'High',
-        maturityDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString(),
+        maturityDate: new Date(
+          Date.now() + 180 * 24 * 60 * 60 * 1000
+        ).toISOString(),
         location: {
           country: 'Singapore',
           city: 'Singapore',
           coordinates: { latitude: 1.3521, longitude: 103.8198 },
-          address: 'Singapore Port, Singapore'
+          address: 'Singapore Port, Singapore',
         },
         logistics: {
           shippingCompany: 'PSA International',
           trackingNumber: 'PSA456789123',
-          estimatedDelivery: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+          estimatedDelivery: new Date(
+            Date.now() + 10 * 24 * 60 * 60 * 1000
+          ).toISOString(),
           insuranceProvider: 'Singapore General Insurance',
-          insuranceAmount: 25000
+          insuranceAmount: 25000,
         },
         complianceStatus: 'approved',
         legalDocuments: [],
@@ -1153,26 +1333,34 @@ export class DatabaseService {
           averageInvestmentSize: 2500,
           returnRate: 9.5,
           volatility: 12.3,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
         },
         adminApproved: true,
         adminApprovedBy: 'admin-1',
-        adminApprovedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-        adminNotes: 'Approved for tokenization'
-      }
+        adminApprovedAt: new Date(
+          Date.now() - 10 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        adminNotes: 'Approved for tokenization',
+      },
     ];
 
     // Apply filters to sample data
     let filteredAssets = sampleAssets;
 
     if (options.issuerId) {
-      filteredAssets = filteredAssets.filter(asset => asset.issuerId === options.issuerId);
+      filteredAssets = filteredAssets.filter(
+        asset => asset.issuerId === options.issuerId
+      );
     }
     if (options.type) {
-      filteredAssets = filteredAssets.filter(asset => asset.type === options.type);
+      filteredAssets = filteredAssets.filter(
+        asset => asset.type === options.type
+      );
     }
     if (options.status) {
-      filteredAssets = filteredAssets.filter(asset => asset.status === options.status);
+      filteredAssets = filteredAssets.filter(
+        asset => asset.status === options.status
+      );
     }
 
     return filteredAssets;

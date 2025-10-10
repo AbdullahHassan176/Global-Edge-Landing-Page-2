@@ -16,34 +16,34 @@ export async function POST(request: NextRequest) {
     console.log('Subject:', subject);
     console.log('HTML Content:', html ? 'Present' : 'Not provided');
     console.log('Text Content:', text ? 'Present' : 'Not provided');
-    
+
     // For now, we'll create a simple email file that can be accessed
     // This is a development solution - in production you'd use a real email service
-    
+
     const emailData = {
       to,
       subject,
       html,
       text,
       timestamp: new Date().toISOString(),
-      messageId: `email_${Date.now()}`
+      messageId: `email_${Date.now()}`,
     };
-    
+
     // Store email in a simple file for development access
     try {
       const fs = require('fs');
       const path = require('path');
-      
+
       // Create emails directory if it doesn't exist
       const emailsDir = path.join(process.cwd(), 'emails');
       if (!fs.existsSync(emailsDir)) {
         fs.mkdirSync(emailsDir, { recursive: true });
       }
-      
+
       // Save email to file
       const emailFile = path.join(emailsDir, `email_${Date.now()}.json`);
       fs.writeFileSync(emailFile, JSON.stringify(emailData, null, 2));
-      
+
       console.log('✅ Email saved to:', emailFile);
       console.log('📧 Email content:');
       console.log('To:', to);
@@ -54,21 +54,19 @@ export async function POST(request: NextRequest) {
       if (text) {
         console.log('Text Preview:', text.substring(0, 200) + '...');
       }
-      
     } catch (fileError) {
       console.error('Error saving email file:', fileError);
     }
-    
+
     // Simulate email sending delay
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     return NextResponse.json({
       success: true,
       messageId: emailData.messageId,
       message: 'Email processed successfully',
-      note: 'In development mode - email saved to file. Check console for details.'
+      note: 'In development mode - email saved to file. Check console for details.',
     });
-
   } catch (error) {
     console.error('Email send error:', error);
     return NextResponse.json(

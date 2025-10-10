@@ -9,11 +9,22 @@ export interface User {
   firstName: string;
   lastName: string;
   role: 'issuer' | 'investor';
-  status: 'active' | 'pending' | 'suspended' | 'kyc_pending' | 'kyc_approved' | 'kyc_rejected';
+  status:
+    | 'active'
+    | 'pending'
+    | 'suspended'
+    | 'kyc_pending'
+    | 'kyc_approved'
+    | 'kyc_rejected';
   company?: string;
   phone?: string;
   country?: string;
-  kycStatus: 'not_started' | 'in_progress' | 'pending_review' | 'approved' | 'rejected';
+  kycStatus:
+    | 'not_started'
+    | 'in_progress'
+    | 'pending_review'
+    | 'approved'
+    | 'rejected';
   kycDocuments?: KycDocument[];
   investmentLimit?: number;
   totalInvested?: number;
@@ -31,7 +42,13 @@ export interface User {
 
 export interface KycDocument {
   id: string;
-  type: 'passport' | 'drivers_license' | 'national_id' | 'utility_bill' | 'bank_statement' | 'company_registration';
+  type:
+    | 'passport'
+    | 'drivers_license'
+    | 'national_id'
+    | 'utility_bill'
+    | 'bank_statement'
+    | 'company_registration';
   status: 'pending' | 'approved' | 'rejected';
   uploadedAt: string;
   reviewedAt?: string;
@@ -82,7 +99,11 @@ export interface Investment {
 
 export interface InvestmentDocument {
   id: string;
-  type: 'investment_agreement' | 'kyc_document' | 'proof_of_funds' | 'tax_document';
+  type:
+    | 'investment_agreement'
+    | 'kyc_document'
+    | 'proof_of_funds'
+    | 'tax_document';
   status: 'pending' | 'approved' | 'rejected';
   uploadedAt: string;
   url: string;
@@ -91,7 +112,14 @@ export interface InvestmentDocument {
 export interface Notification {
   id: string;
   userId: string;
-  type: 'investment_update' | 'kyc_required' | 'kyc_approved' | 'kyc_rejected' | 'payment_required' | 'investment_completed' | 'system_alert';
+  type:
+    | 'investment_update'
+    | 'kyc_required'
+    | 'kyc_approved'
+    | 'kyc_rejected'
+    | 'payment_required'
+    | 'investment_completed'
+    | 'system_alert';
   title: string;
   message: string;
   read: boolean;
@@ -124,8 +152,8 @@ const MOCK_USERS: User[] = [
       marketingEmails: false,
       language: 'en',
       timezone: 'Asia/Dubai',
-      currency: 'USD'
-    }
+      currency: 'USD',
+    },
   },
   {
     id: 'demo-investor-1',
@@ -149,8 +177,8 @@ const MOCK_USERS: User[] = [
       marketingEmails: true,
       language: 'en',
       timezone: 'Asia/Dubai',
-      currency: 'USD'
-    }
+      currency: 'USD',
+    },
   },
   {
     id: 'demo-issuer-1',
@@ -175,16 +203,16 @@ const MOCK_USERS: User[] = [
       marketingEmails: false,
       language: 'en',
       timezone: 'Asia/Dubai',
-      currency: 'USD'
+      currency: 'USD',
     },
     branding: {
       primaryColor: '#1e40af',
       secondaryColor: '#3b82f6',
       companyName: 'Global Edge Demo Holdings',
       supportEmail: 'info@theglobaledge.io',
-      supportPhone: '+971501234567'
-    }
-  }
+      supportPhone: '+971501234567',
+    },
+  },
 ];
 
 const MOCK_INVESTMENTS: Investment[] = [
@@ -200,7 +228,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     kycCompleted: true,
     createdAt: '2024-01-15T10:00:00Z',
     updatedAt: '2024-01-18T14:30:00Z',
-    completedAt: '2024-01-18T14:30:00Z'
+    completedAt: '2024-01-18T14:30:00Z',
   },
   {
     id: 'inv-2',
@@ -213,8 +241,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     kycRequired: true,
     kycCompleted: false,
     createdAt: '2024-01-20T09:15:00Z',
-    updatedAt: '2024-01-20T09:15:00Z'
-  }
+    updatedAt: '2024-01-20T09:15:00Z',
+  },
 ];
 
 const MOCK_NOTIFICATIONS: Notification[] = [
@@ -223,23 +251,25 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     userId: 'demo-investor-1',
     type: 'investment_completed',
     title: 'Investment Completed',
-    message: 'Your investment in Dubai Marina Office Tower has been successfully completed.',
+    message:
+      'Your investment in Dubai Marina Office Tower has been successfully completed.',
     read: false,
     createdAt: '2024-01-18T14:30:00Z',
     actionUrl: '/investor/investments/inv-1',
-    priority: 'high'
+    priority: 'high',
   },
   {
     id: 'notif-2',
     userId: 'demo-investor-1',
     type: 'kyc_required',
     title: 'KYC Verification Required',
-    message: 'Please complete your KYC verification to proceed with your investment.',
+    message:
+      'Please complete your KYC verification to proceed with your investment.',
     read: false,
     createdAt: '2024-01-20T09:15:00Z',
     actionUrl: '/investor/kyc',
-    priority: 'urgent'
-  }
+    priority: 'urgent',
+  },
 ];
 
 class UserAuthService {
@@ -247,12 +277,14 @@ class UserAuthService {
   private readonly STORAGE_KEY = 'user_data';
 
   // Password reset methods
-  async requestPasswordReset(email: string): Promise<{ success: boolean; error?: string }> {
+  async requestPasswordReset(
+    email: string
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // Get all users (including newly registered ones)
       const allUsers = this.getAllUsers();
       const user = allUsers.find(u => u.email === email);
-      
+
       if (!user) {
         // For security, don't reveal if email exists or not
         return { success: true };
@@ -260,24 +292,27 @@ class UserAuthService {
 
       // Generate reset token (in production, this would be a secure random token)
       const resetToken = this.generateResetToken();
-      
+
       // Store reset token with expiration (in production, store in database)
       const resetData = {
         token: resetToken,
         email: user.email,
         expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour
-        used: false
+        used: false,
       };
-      
-      localStorage.setItem(`reset_token_${resetToken}`, JSON.stringify(resetData));
-      
+
+      localStorage.setItem(
+        `reset_token_${resetToken}`,
+        JSON.stringify(resetData)
+      );
+
       // Send password reset email
       try {
         const resetUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://theglobaledge.io'}/reset-password?token=${resetToken}`;
-        
+
         // For now, we'll use a simple approach that actually works
         // In production, you would integrate with a real email service like SendGrid, Mailgun, etc.
-        
+
         // Create a simple email notification
         const emailData = {
           to: user.email,
@@ -327,7 +362,7 @@ If you didn't request this password reset, please ignore this email.
 
 Best regards,
 The Global Edge Team
-          `
+          `,
         };
 
         // Try to send via API endpoint
@@ -337,11 +372,14 @@ The Global Edge Team
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(emailData)
+            body: JSON.stringify(emailData),
           });
 
           if (response.ok) {
-            console.log('✅ Password reset email sent successfully to:', user.email);
+            console.log(
+              '✅ Password reset email sent successfully to:',
+              user.email
+            );
           } else {
             throw new Error('Email API failed');
           }
@@ -351,23 +389,33 @@ The Global Edge Team
           console.log('Subject: Reset Your Global Edge Password');
           console.log('Reset Link:', resetUrl);
           console.log('Token:', resetToken);
-          console.log('Note: In production, this would be sent via a real email service');
+          console.log(
+            'Note: In production, this would be sent via a real email service'
+          );
         }
       } catch (emailError) {
         console.error('Email service error:', emailError);
         // Fallback to console log for development
         console.log(`Password reset token for ${email}: ${resetToken}`);
-        console.log(`Reset link: ${typeof window !== 'undefined' ? window.location.origin : 'https://theglobaledge.io'}/reset-password?token=${resetToken}`);
+        console.log(
+          `Reset link: ${typeof window !== 'undefined' ? window.location.origin : 'https://theglobaledge.io'}/reset-password?token=${resetToken}`
+        );
       }
-      
+
       return { success: true };
     } catch (error) {
       console.error('Password reset request error:', error);
-      return { success: false, error: 'Failed to process password reset request' };
+      return {
+        success: false,
+        error: 'Failed to process password reset request',
+      };
     }
   }
 
-  async resetPassword(token: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+  async resetPassword(
+    token: string,
+    newPassword: string
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // Get reset token data
       const resetData = localStorage.getItem(`reset_token_${token}`);
@@ -376,7 +424,7 @@ The Global Edge Team
       }
 
       const tokenData = JSON.parse(resetData);
-      
+
       // Check if token is expired
       if (new Date() > new Date(tokenData.expiresAt)) {
         localStorage.removeItem(`reset_token_${token}`);
@@ -391,36 +439,38 @@ The Global Edge Team
       // Get user and update password
       const allUsers = this.getAllUsers();
       const user = allUsers.find(u => u.email === tokenData.email);
-      
+
       if (!user) {
         return { success: false, error: 'User not found' };
       }
 
       // Update user with new password (in production, hash the password)
       user.updatedAt = new Date().toISOString();
-      
+
       // Store the new password in localStorage for demo purposes
       // In production, you would hash and store the password securely in a database
       const storedPasswords = localStorage.getItem('user_passwords');
-      const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
-        'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
-        'investor@theglobaledge.io': 'DemoInvestor123!',
-        'issuer@theglobaledge.io': 'DemoIssuer123!'
-      };
-      
+      const validPasswords: Record<string, string> = storedPasswords
+        ? JSON.parse(storedPasswords)
+        : {
+            'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
+            'investor@theglobaledge.io': 'DemoInvestor123!',
+            'issuer@theglobaledge.io': 'DemoIssuer123!',
+          };
+
       // Update the password for this user
       validPasswords[user.email] = newPassword;
-      
+
       // Save updated passwords
       localStorage.setItem('user_passwords', JSON.stringify(validPasswords));
-      
+
       // Store updated user
       this.saveUser(user);
-      
+
       // Mark token as used
       tokenData.used = true;
       localStorage.setItem(`reset_token_${token}`, JSON.stringify(tokenData));
-      
+
       return { success: true };
     } catch (error) {
       console.error('Password reset error:', error);
@@ -430,30 +480,41 @@ The Global Edge Team
 
   private generateResetToken(): string {
     // In production, use a cryptographically secure random token
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
   }
 
   // Authentication methods
-  async login(email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> {
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
       // Get all users (including newly registered ones)
       const allUsers = this.getAllUsers();
       const user = allUsers.find(u => u.email === email);
-      
+
       if (!user) {
         return { success: false, error: 'Invalid email or password' };
       }
 
       // Get stored passwords from localStorage
       const storedPasswords = localStorage.getItem('user_passwords');
-      const validPasswords: Record<string, string> = storedPasswords ? JSON.parse(storedPasswords) : {
-        'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
-        'investor@theglobaledge.io': 'DemoInvestor123!',
-        'issuer@theglobaledge.io': 'DemoIssuer123!'
-      };
+      const validPasswords: Record<string, string> = storedPasswords
+        ? JSON.parse(storedPasswords)
+        : {
+            'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
+            'investor@theglobaledge.io': 'DemoInvestor123!',
+            'issuer@theglobaledge.io': 'DemoIssuer123!',
+          };
 
       // For newly registered users, use a default password or check if they have a stored password
-      const expectedPassword = validPasswords[email] || process.env.DEFAULT_USER_PASSWORD || 'Password123!'; // Default password for new users
+      const expectedPassword =
+        validPasswords[email] ||
+        process.env.DEFAULT_USER_PASSWORD ||
+        'Password123!'; // Default password for new users
 
       if (expectedPassword !== password) {
         return { success: false, error: 'Invalid email or password' };
@@ -461,18 +522,20 @@ The Global Edge Team
 
       // Check user status
       if (user.status === 'pending') {
-        return { 
-          success: false, 
-          error: 'Your account is pending admin approval. Please wait for approval or contact support if not approved within 48 hours.',
-          user: user
+        return {
+          success: false,
+          error:
+            'Your account is pending admin approval. Please wait for approval or contact support if not approved within 48 hours.',
+          user: user,
         };
       }
 
       if (user.status === 'suspended') {
-        return { 
-          success: false, 
-          error: 'Your account has been suspended. Please contact support for assistance.',
-          user: user
+        return {
+          success: false,
+          error:
+            'Your account has been suspended. Please contact support for assistance.',
+          user: user,
         };
       }
 
@@ -482,7 +545,7 @@ The Global Edge Team
         email: user.email,
         role: user.role,
         loginTime: new Date().toISOString(),
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours
       };
 
       localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
@@ -499,7 +562,9 @@ The Global Edge Team
     }
   }
 
-  async register(userData: Partial<User>): Promise<{ success: boolean; user?: User; error?: string }> {
+  async register(
+    userData: Partial<User>
+  ): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
       // Check if user already exists
       const existingUser = MOCK_USERS.find(u => u.email === userData.email);
@@ -527,13 +592,13 @@ The Global Edge Team
           marketingEmails: false,
           language: 'en',
           timezone: 'Asia/Dubai',
-          currency: 'USD'
-        }
+          currency: 'USD',
+        },
       };
 
       // Add to mock users for immediate access
       MOCK_USERS.push(newUser);
-      
+
       // Also save to localStorage for persistence
       const storedUsers = localStorage.getItem('registered_users');
       const existingUsers = storedUsers ? JSON.parse(storedUsers) : [];
@@ -543,7 +608,10 @@ The Global Edge Team
       return { success: true, user: newUser };
     } catch (error) {
       console.error('Registration error:', error);
-      return { success: false, error: 'Registration failed. Please try again.' };
+      return {
+        success: false,
+        error: 'Registration failed. Please try again.',
+      };
     }
   }
 
@@ -554,7 +622,7 @@ The Global Edge Team
 
   isAuthenticated(): boolean {
     if (typeof window === 'undefined') return false;
-    
+
     const session = localStorage.getItem(this.SESSION_KEY);
     if (!session) return false;
 
@@ -562,7 +630,7 @@ The Global Edge Team
       const sessionData = JSON.parse(session);
       const now = new Date();
       const expiresAt = new Date(sessionData.expiresAt);
-      
+
       return now < expiresAt;
     } catch {
       return false;
@@ -571,7 +639,7 @@ The Global Edge Team
 
   getCurrentUser(): User | null {
     if (typeof window === 'undefined') return null;
-    
+
     const userData = localStorage.getItem(this.STORAGE_KEY);
     if (!userData) return null;
 
@@ -587,7 +655,10 @@ The Global Edge Team
   }
 
   // User management methods
-  async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
+  async updateUser(
+    userId: string,
+    updates: Partial<User>
+  ): Promise<User | null> {
     try {
       const userIndex = MOCK_USERS.findIndex(u => u.id === userId);
       if (userIndex === -1) return null;
@@ -595,7 +666,7 @@ The Global Edge Team
       MOCK_USERS[userIndex] = {
         ...MOCK_USERS[userIndex],
         ...updates,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
 
       this.saveUsers();
@@ -606,12 +677,16 @@ The Global Edge Team
     }
   }
 
-  async updateKycStatus(userId: string, status: User['kycStatus'], documents?: KycDocument[]): Promise<boolean> {
+  async updateKycStatus(
+    userId: string,
+    status: User['kycStatus'],
+    documents?: KycDocument[]
+  ): Promise<boolean> {
     try {
-      const user = await this.updateUser(userId, { 
-        kycStatus: status, 
+      const user = await this.updateUser(userId, {
+        kycStatus: status,
         kycDocuments: documents,
-        status: status === 'approved' ? 'active' : 'kyc_pending'
+        status: status === 'approved' ? 'active' : 'kyc_pending',
       });
       return user !== null;
     } catch (error) {
@@ -621,12 +696,14 @@ The Global Edge Team
   }
 
   // Investment methods
-  async createInvestment(investment: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>): Promise<Investment> {
+  async createInvestment(
+    investment: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<Investment> {
     const newInvestment: Investment = {
       ...investment,
       id: `inv-${Date.now()}`,
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     MOCK_INVESTMENTS.push(newInvestment);
@@ -639,7 +716,7 @@ The Global Edge Team
       title: 'Investment Created',
       message: `Your investment of $${investment.amount.toLocaleString()} has been created and is pending review.`,
       priority: 'medium',
-      actionUrl: `/investor/investments/${newInvestment.id}`
+      actionUrl: `/investor/investments/${newInvestment.id}`,
     });
 
     return newInvestment;
@@ -659,19 +736,22 @@ The Global Edge Team
     return MOCK_USERS.find(user => user.id === id);
   }
 
-
-  async updateInvestmentStatus(investmentId: string, status: Investment['status'], reason?: string): Promise<boolean> {
+  async updateInvestmentStatus(
+    investmentId: string,
+    status: Investment['status'],
+    reason?: string
+  ): Promise<boolean> {
     try {
       const investment = MOCK_INVESTMENTS.find(inv => inv.id === investmentId);
       if (!investment) return false;
 
       investment.status = status;
       investment.updatedAt = new Date().toISOString();
-      
+
       if (status === 'completed') {
         investment.completedAt = new Date().toISOString();
       }
-      
+
       if (reason) {
         investment.rejectionReason = reason;
       }
@@ -679,16 +759,20 @@ The Global Edge Team
       this.saveInvestments();
 
       // Create notification
-      const notificationType = status === 'completed' ? 'investment_completed' : 
-                              status === 'rejected' ? 'investment_update' : 'investment_update';
-      
+      const notificationType =
+        status === 'completed'
+          ? 'investment_completed'
+          : status === 'rejected'
+            ? 'investment_update'
+            : 'investment_update';
+
       await this.createNotification({
         userId: investment.userId,
         type: notificationType,
         title: `Investment ${status.charAt(0).toUpperCase() + status.slice(1)}`,
         message: `Your investment has been ${status}.${reason ? ` Reason: ${reason}` : ''}`,
         priority: status === 'rejected' ? 'high' : 'medium',
-        actionUrl: `/investor/investments/${investmentId}`
+        actionUrl: `/investor/investments/${investmentId}`,
       });
 
       return true;
@@ -699,12 +783,14 @@ The Global Edge Team
   }
 
   // Notification methods
-  async createNotification(notification: Omit<Notification, 'id' | 'createdAt' | 'read'>): Promise<Notification> {
+  async createNotification(
+    notification: Omit<Notification, 'id' | 'createdAt' | 'read'>
+  ): Promise<Notification> {
     const newNotification: Notification = {
       ...notification,
       id: `notif-${Date.now()}`,
       createdAt: new Date().toISOString(),
-      read: false
+      read: false,
     };
 
     MOCK_NOTIFICATIONS.push(newNotification);
@@ -719,7 +805,9 @@ The Global Edge Team
 
   async markNotificationAsRead(notificationId: string): Promise<boolean> {
     try {
-      const notification = MOCK_NOTIFICATIONS.find(notif => notif.id === notificationId);
+      const notification = MOCK_NOTIFICATIONS.find(
+        notif => notif.id === notificationId
+      );
       if (!notification) return false;
 
       notification.read = true;
@@ -746,17 +834,29 @@ The Global Edge Team
     return {
       totalInvestments: investments.length,
       totalInvested: investments.reduce((sum, inv) => sum + inv.amount, 0),
-      activeInvestments: investments.filter(inv => inv.status === 'pending' || inv.status === 'approved').length,
-      completedInvestments: investments.filter(inv => inv.status === 'completed').length,
+      activeInvestments: investments.filter(
+        inv => inv.status === 'pending' || inv.status === 'approved'
+      ).length,
+      completedInvestments: investments.filter(
+        inv => inv.status === 'completed'
+      ).length,
       kycStatus: user?.kycStatus || 'not_started',
-      lastInvestmentDate: investments.length > 0 ? investments[investments.length - 1].createdAt : undefined
+      lastInvestmentDate:
+        investments.length > 0
+          ? investments[investments.length - 1].createdAt
+          : undefined,
     };
   }
 
   // Whitelabel methods
-  async updateBranding(userId: string, branding: Partial<WhitelabelBranding>): Promise<boolean> {
+  async updateBranding(
+    userId: string,
+    branding: Partial<WhitelabelBranding>
+  ): Promise<boolean> {
     try {
-      const user = await this.updateUser(userId, { branding: branding as WhitelabelBranding });
+      const user = await this.updateUser(userId, {
+        branding: branding as WhitelabelBranding,
+      });
       return user !== null;
     } catch (error) {
       console.error('Update branding error:', error);
@@ -767,11 +867,11 @@ The Global Edge Team
   // Storage methods
   getAllUsers(): User[] {
     if (typeof window === 'undefined') return MOCK_USERS;
-    
+
     // Get registered users from localStorage
     const registeredUsers = localStorage.getItem('registered_users');
     const additionalUsers = registeredUsers ? JSON.parse(registeredUsers) : [];
-    
+
     // Combine mock users with registered users, avoiding duplicates
     const allUsers = [...MOCK_USERS];
     additionalUsers.forEach((user: User) => {
@@ -779,7 +879,7 @@ The Global Edge Team
         allUsers.push(user);
       }
     });
-    
+
     return allUsers;
   }
 
@@ -791,13 +891,19 @@ The Global Edge Team
 
   private saveInvestments(): void {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('mock_investments', JSON.stringify(MOCK_INVESTMENTS));
+      localStorage.setItem(
+        'mock_investments',
+        JSON.stringify(MOCK_INVESTMENTS)
+      );
     }
   }
 
   private saveNotifications(): void {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('mock_notifications', JSON.stringify(MOCK_NOTIFICATIONS));
+      localStorage.setItem(
+        'mock_notifications',
+        JSON.stringify(MOCK_NOTIFICATIONS)
+      );
     }
   }
 

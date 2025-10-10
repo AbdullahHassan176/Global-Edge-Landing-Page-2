@@ -19,15 +19,17 @@ describe('ReportsPanel', () => {
   });
 
   it('renders with asset information', () => {
-    render(<ReportsPanel assetKey="test-asset-123" assetName="Test Asset" />);
-    
+    render(<ReportsPanel assetKey='test-asset-123' assetName='Test Asset' />);
+
     expect(screen.getByText('Reports')).toBeInTheDocument();
     expect(screen.getByText('Provenance Report')).toBeInTheDocument();
     expect(screen.getByText('Download PDF')).toBeInTheDocument();
   });
 
   it('handles successful PDF download', async () => {
-    const mockBlob = new Blob(['mock-pdf-content'], { type: 'application/pdf' });
+    const mockBlob = new Blob(['mock-pdf-content'], {
+      type: 'application/pdf',
+    });
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       blob: () => Promise.resolve(mockBlob),
@@ -44,17 +46,25 @@ describe('ReportsPanel', () => {
       download: '',
       click: jest.fn(),
     };
-    const createElementSpy = jest.spyOn(document, 'createElement').mockReturnValue(mockLink as any);
-    const appendChildSpy = jest.spyOn(document.body, 'appendChild').mockImplementation(() => mockLink as any);
-    const removeChildSpy = jest.spyOn(document.body, 'removeChild').mockImplementation(() => mockLink as any);
+    const createElementSpy = jest
+      .spyOn(document, 'createElement')
+      .mockReturnValue(mockLink as any);
+    const appendChildSpy = jest
+      .spyOn(document.body, 'appendChild')
+      .mockImplementation(() => mockLink as any);
+    const removeChildSpy = jest
+      .spyOn(document.body, 'removeChild')
+      .mockImplementation(() => mockLink as any);
 
-    render(<ReportsPanel assetKey="test-asset-123" />);
-    
+    render(<ReportsPanel assetKey='test-asset-123' />);
+
     const downloadButton = screen.getByText('Download PDF');
     fireEvent.click(downloadButton);
 
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith('/api/reports/provenance?assetKey=test-asset-123');
+      expect(global.fetch).toHaveBeenCalledWith(
+        '/api/reports/provenance?assetKey=test-asset-123'
+      );
     });
 
     expect(createElementSpy).toHaveBeenCalledWith('a');
@@ -73,8 +83,8 @@ describe('ReportsPanel', () => {
       json: () => Promise.resolve({ error: 'PDF generation failed' }),
     });
 
-    render(<ReportsPanel assetKey="test-asset-123" />);
-    
+    render(<ReportsPanel assetKey='test-asset-123' />);
+
     const downloadButton = screen.getByText('Download PDF');
     fireEvent.click(downloadButton);
 
@@ -88,8 +98,8 @@ describe('ReportsPanel', () => {
       () => new Promise(resolve => setTimeout(resolve, 100))
     );
 
-    render(<ReportsPanel assetKey="test-asset-123" />);
-    
+    render(<ReportsPanel assetKey='test-asset-123' />);
+
     const downloadButton = screen.getByText('Download PDF');
     fireEvent.click(downloadButton);
 
@@ -102,8 +112,8 @@ describe('ReportsPanel', () => {
       () => new Promise(resolve => setTimeout(resolve, 100))
     );
 
-    render(<ReportsPanel assetKey="test-asset-123" />);
-    
+    render(<ReportsPanel assetKey='test-asset-123' />);
+
     const downloadButton = screen.getByText('Download PDF');
     fireEvent.click(downloadButton);
     fireEvent.click(downloadButton); // Second click should be ignored

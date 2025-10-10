@@ -6,7 +6,14 @@ export interface SystemSetting {
   name: string;
   description: string;
   value: any;
-  type: 'boolean' | 'string' | 'number' | 'select' | 'password' | 'textarea' | 'json';
+  type:
+    | 'boolean'
+    | 'string'
+    | 'number'
+    | 'select'
+    | 'password'
+    | 'textarea'
+    | 'json';
   options?: string[];
   required?: boolean;
   validation?: {
@@ -23,7 +30,14 @@ export interface SystemSetting {
 export interface Integration {
   id: string;
   name: string;
-  type: 'email' | 'webhook' | 'api' | 'payment' | 'analytics' | 'storage' | 'notification';
+  type:
+    | 'email'
+    | 'webhook'
+    | 'api'
+    | 'payment'
+    | 'analytics'
+    | 'storage'
+    | 'notification';
   status: 'active' | 'inactive' | 'error' | 'pending';
   lastSync: string;
   description: string;
@@ -70,7 +84,7 @@ class SettingsService {
         type: 'string',
         required: true,
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'site_description',
@@ -80,7 +94,7 @@ class SettingsService {
         value: 'Tokenized Asset Investment Platform',
         type: 'textarea',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'site_url',
@@ -91,10 +105,10 @@ class SettingsService {
         type: 'string',
         validation: {
           pattern: '^https?://.+',
-          message: 'Must be a valid URL starting with http:// or https://'
+          message: 'Must be a valid URL starting with http:// or https://',
         },
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'maintenance_mode',
@@ -104,17 +118,18 @@ class SettingsService {
         value: false,
         type: 'boolean',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'maintenance_message',
         category: 'General',
         name: 'Maintenance Message',
         description: 'Message shown to users during maintenance',
-        value: 'We are currently performing scheduled maintenance. Please check back soon.',
+        value:
+          'We are currently performing scheduled maintenance. Please check back soon.',
         type: 'textarea',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'smtp_host',
@@ -124,7 +139,7 @@ class SettingsService {
         value: 'smtp.gmail.com',
         type: 'string',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'smtp_port',
@@ -136,10 +151,10 @@ class SettingsService {
         validation: {
           min: 1,
           max: 65535,
-          message: 'Port must be between 1 and 65535'
+          message: 'Port must be between 1 and 65535',
         },
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'smtp_username',
@@ -149,7 +164,7 @@ class SettingsService {
         value: '',
         type: 'string',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'smtp_password',
@@ -160,7 +175,7 @@ class SettingsService {
         type: 'password',
         sensitive: true,
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'email_notifications',
@@ -170,7 +185,7 @@ class SettingsService {
         value: true,
         type: 'boolean',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'email_from_name',
@@ -180,7 +195,7 @@ class SettingsService {
         value: 'Global Edge',
         type: 'string',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'email_from_address',
@@ -191,10 +206,10 @@ class SettingsService {
         type: 'string',
         validation: {
           pattern: '^[^@]+@[^@]+\\.[^@]+$',
-          message: 'Must be a valid email address'
+          message: 'Must be a valid email address',
         },
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'two_factor_auth',
@@ -204,7 +219,7 @@ class SettingsService {
         value: true,
         type: 'boolean',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'session_timeout',
@@ -215,7 +230,7 @@ class SettingsService {
         type: 'select',
         options: ['15', '30', '60', '120', '240'],
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'password_policy',
@@ -227,11 +242,11 @@ class SettingsService {
           requireUppercase: true,
           requireLowercase: true,
           requireNumbers: true,
-          requireSpecialChars: true
+          requireSpecialChars: true,
         },
         type: 'json',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'ip_whitelist',
@@ -241,7 +256,7 @@ class SettingsService {
         value: '',
         type: 'textarea',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'api_rate_limit',
@@ -253,10 +268,10 @@ class SettingsService {
         validation: {
           min: 1,
           max: 10000,
-          message: 'Rate limit must be between 1 and 10000'
+          message: 'Rate limit must be between 1 and 10000',
         },
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'api_documentation',
@@ -266,7 +281,7 @@ class SettingsService {
         value: false,
         type: 'boolean',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'api_version',
@@ -277,7 +292,7 @@ class SettingsService {
         type: 'select',
         options: ['v1', 'v2', 'v3'],
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
+        modifiedBy: 'system',
       },
       {
         id: 'cors_origins',
@@ -287,8 +302,8 @@ class SettingsService {
         value: 'https://globaledge.com\nhttps://app.globaledge.com',
         type: 'textarea',
         lastModified: new Date().toISOString(),
-        modifiedBy: 'system'
-      }
+        modifiedBy: 'system',
+      },
     ];
   }
 
@@ -305,13 +320,13 @@ class SettingsService {
         configuration: {
           apiKey: process.env.EMAIL_API_KEY || '',
           fromEmail: process.env.EMAIL_FROM_EMAIL || 'noreply@theglobaledge.io',
-          fromName: process.env.EMAIL_FROM_NAME || 'Global Edge'
+          fromName: process.env.EMAIL_FROM_NAME || 'Global Edge',
         },
         healthCheck: {
           status: 'healthy',
           lastCheck: new Date().toISOString(),
-          responseTime: 120
-        }
+          responseTime: 120,
+        },
       },
       {
         id: 'stripe',
@@ -323,13 +338,13 @@ class SettingsService {
         configuration: {
           publishableKey: process.env.NEXT_PUBLIC_PAYMENT_PUBLISHABLE_KEY || '',
           secretKey: process.env.PAYMENT_SECRET_KEY || '',
-          webhookSecret: process.env.PAYMENT_WEBHOOK_SECRET || ''
+          webhookSecret: process.env.PAYMENT_WEBHOOK_SECRET || '',
         },
         healthCheck: {
           status: 'healthy',
           lastCheck: new Date().toISOString(),
-          responseTime: 85
-        }
+          responseTime: 85,
+        },
       },
       {
         id: 'slack',
@@ -341,13 +356,13 @@ class SettingsService {
         configuration: {
           webhookUrl: process.env.SLACK_WEBHOOK_URL || '',
           channel: process.env.SLACK_CHANNEL || '#admin-alerts',
-          username: process.env.SLACK_USERNAME || 'Global Edge Bot'
+          username: process.env.SLACK_USERNAME || 'Global Edge Bot',
         },
         healthCheck: {
           status: 'healthy',
           lastCheck: new Date().toISOString(),
-          responseTime: 200
-        }
+          responseTime: 200,
+        },
       },
       {
         id: 'analytics',
@@ -357,16 +372,18 @@ class SettingsService {
         lastSync: new Date().toISOString(),
         description: 'Website analytics tracking',
         configuration: {
-          trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'G-XXXXXXXXXX',
-          measurementId: process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID || 'G-XXXXXXXXXX',
+          trackingId:
+            process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'G-XXXXXXXXXX',
+          measurementId:
+            process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID || 'G-XXXXXXXXXX',
           propertyId: process.env.GOOGLE_ANALYTICS_PROPERTY_ID || '',
-          apiKey: process.env.GOOGLE_ANALYTICS_API_KEY || ''
+          apiKey: process.env.GOOGLE_ANALYTICS_API_KEY || '',
         },
         healthCheck: {
           status: 'warning',
           lastCheck: new Date().toISOString(),
-          responseTime: 0
-        }
+          responseTime: 0,
+        },
       },
       {
         id: 'aws_s3',
@@ -379,13 +396,13 @@ class SettingsService {
           bucketName: '',
           region: 'us-east-1',
           accessKeyId: '',
-          secretAccessKey: ''
+          secretAccessKey: '',
         },
         healthCheck: {
           status: 'healthy',
           lastCheck: new Date().toISOString(),
-          responseTime: 150
-        }
+          responseTime: 150,
+        },
       },
       {
         id: 'webhook_general',
@@ -398,14 +415,14 @@ class SettingsService {
           url: '',
           method: 'POST',
           headers: {},
-          retryAttempts: 3
+          retryAttempts: 3,
         },
         healthCheck: {
           status: 'warning',
           lastCheck: new Date(Date.now() - 3600000).toISOString(),
-          responseTime: 500
-        }
-      }
+          responseTime: 500,
+        },
+      },
     ];
   }
 
@@ -439,7 +456,7 @@ class SettingsService {
     try {
       const settings = this.getSettings();
       const settingIndex = settings.findIndex(setting => setting.id === id);
-      
+
       if (settingIndex === -1) {
         return false;
       }
@@ -454,7 +471,7 @@ class SettingsService {
         ...settings[settingIndex],
         value,
         lastModified: new Date().toISOString(),
-        modifiedBy
+        modifiedBy,
       };
 
       localStorage.setItem(this.SETTINGS_KEY, JSON.stringify(settings));
@@ -466,8 +483,14 @@ class SettingsService {
   }
 
   // Validate a setting value
-  validateSetting(setting: SystemSetting, value: any): { isValid: boolean; error?: string } {
-    if (setting.required && (value === null || value === undefined || value === '')) {
+  validateSetting(
+    setting: SystemSetting,
+    value: any
+  ): { isValid: boolean; error?: string } {
+    if (
+      setting.required &&
+      (value === null || value === undefined || value === '')
+    ) {
       return { isValid: false, error: `${setting.name} is required` };
     }
 
@@ -476,10 +499,16 @@ class SettingsService {
 
       if (setting.type === 'number' && typeof value === 'number') {
         if (min !== undefined && value < min) {
-          return { isValid: false, error: message || `Value must be at least ${min}` };
+          return {
+            isValid: false,
+            error: message || `Value must be at least ${min}`,
+          };
         }
         if (max !== undefined && value > max) {
-          return { isValid: false, error: message || `Value must be at most ${max}` };
+          return {
+            isValid: false,
+            error: message || `Value must be at most ${max}`,
+          };
         }
       }
 
@@ -518,8 +547,10 @@ class SettingsService {
   updateIntegration(id: string, updates: Partial<Integration>): boolean {
     try {
       const integrations = this.getIntegrations();
-      const integrationIndex = integrations.findIndex(integration => integration.id === id);
-      
+      const integrationIndex = integrations.findIndex(
+        integration => integration.id === id
+      );
+
       if (integrationIndex === -1) {
         return false;
       }
@@ -527,7 +558,7 @@ class SettingsService {
       integrations[integrationIndex] = {
         ...integrations[integrationIndex],
         ...updates,
-        lastSync: new Date().toISOString()
+        lastSync: new Date().toISOString(),
       };
 
       localStorage.setItem(this.INTEGRATIONS_KEY, JSON.stringify(integrations));
@@ -548,62 +579,76 @@ class SettingsService {
   }
 
   // Test integration connection
-  async testIntegration(id: string): Promise<{ success: boolean; error?: string; responseTime?: number }> {
+  async testIntegration(
+    id: string
+  ): Promise<{ success: boolean; error?: string; responseTime?: number }> {
     const integration = this.getIntegration(id);
     if (!integration) {
       return { success: false, error: 'Integration not found' };
     }
 
     const startTime = Date.now();
-    
+
     try {
       // Special validation for Google Analytics
       if (integration.type === 'analytics') {
         const { trackingId, measurementId } = integration.configuration;
-        
+
         // Validate tracking ID format (GA4 format: G-XXXXXXXXXX)
-        if (!trackingId || trackingId === 'G-XXXXXXXXXX' || !trackingId.startsWith('G-')) {
-          return { 
-            success: false, 
-            error: 'Invalid Google Analytics tracking ID. Please enter a valid GA4 tracking ID (format: G-XXXXXXXXXX)' 
+        if (
+          !trackingId ||
+          trackingId === 'G-XXXXXXXXXX' ||
+          !trackingId.startsWith('G-')
+        ) {
+          return {
+            success: false,
+            error:
+              'Invalid Google Analytics tracking ID. Please enter a valid GA4 tracking ID (format: G-XXXXXXXXXX)',
           };
         }
-        
+
         // Validate measurement ID format
-        if (!measurementId || measurementId === 'G-XXXXXXXXXX' || !measurementId.startsWith('G-')) {
-          return { 
-            success: false, 
-            error: 'Invalid Google Analytics measurement ID. Please enter a valid GA4 measurement ID (format: G-XXXXXXXXXX)' 
+        if (
+          !measurementId ||
+          measurementId === 'G-XXXXXXXXXX' ||
+          !measurementId.startsWith('G-')
+        ) {
+          return {
+            success: false,
+            error:
+              'Invalid Google Analytics measurement ID. Please enter a valid GA4 measurement ID (format: G-XXXXXXXXXX)',
           };
         }
-        
+
         // Simulate successful validation
         await new Promise(resolve => setTimeout(resolve, 500));
         const responseTime = Date.now() - startTime;
-        
+
         this.updateIntegration(id, {
           healthCheck: {
             status: 'healthy',
             lastCheck: new Date().toISOString(),
-            responseTime
-          }
+            responseTime,
+          },
         });
         return { success: true, responseTime };
       }
-      
+
       // Simulate API call based on integration type
-      await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 100));
-      
+      await new Promise(resolve =>
+        setTimeout(resolve, Math.random() * 1000 + 100)
+      );
+
       const responseTime = Date.now() - startTime;
       const success = Math.random() > 0.2; // 80% success rate for demo
-      
+
       if (success) {
         this.updateIntegration(id, {
           healthCheck: {
             status: 'healthy',
             lastCheck: new Date().toISOString(),
-            responseTime
-          }
+            responseTime,
+          },
         });
         return { success: true, responseTime };
       } else {
@@ -611,8 +656,8 @@ class SettingsService {
           healthCheck: {
             status: 'error',
             lastCheck: new Date().toISOString(),
-            error: 'Connection failed'
-          }
+            error: 'Connection failed',
+          },
         });
         return { success: false, error: 'Connection failed' };
       }
@@ -622,10 +667,14 @@ class SettingsService {
         healthCheck: {
           status: 'error',
           lastCheck: new Date().toISOString(),
-          error: error instanceof Error ? error.message : 'Unknown error'
-        }
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
       });
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error', responseTime };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        responseTime,
+      };
     }
   }
 
@@ -641,7 +690,7 @@ class SettingsService {
         integrations: this.getIntegrations(),
         createdAt: new Date().toISOString(),
         createdBy,
-        version: '1.0'
+        version: '1.0',
       };
 
       backups.push(backup);
@@ -669,13 +718,16 @@ class SettingsService {
     try {
       const backups = this.getBackups();
       const backup = backups.find(b => b.id === backupId);
-      
+
       if (!backup) {
         return false;
       }
 
       localStorage.setItem(this.SETTINGS_KEY, JSON.stringify(backup.settings));
-      localStorage.setItem(this.INTEGRATIONS_KEY, JSON.stringify(backup.integrations));
+      localStorage.setItem(
+        this.INTEGRATIONS_KEY,
+        JSON.stringify(backup.integrations)
+      );
       return true;
     } catch (error) {
       console.error('Error restoring backup:', error);
@@ -689,7 +741,7 @@ class SettingsService {
       settings: this.getSettings(),
       integrations: this.getIntegrations(),
       exportedAt: new Date().toISOString(),
-      version: '1.0'
+      version: '1.0',
     };
     return JSON.stringify(data, null, 2);
   }
@@ -698,7 +750,7 @@ class SettingsService {
   importSettings(jsonData: string): { success: boolean; error?: string } {
     try {
       const data = JSON.parse(jsonData);
-      
+
       if (!data.settings || !Array.isArray(data.settings)) {
         return { success: false, error: 'Invalid settings format' };
       }
@@ -708,8 +760,11 @@ class SettingsService {
       }
 
       localStorage.setItem(this.SETTINGS_KEY, JSON.stringify(data.settings));
-      localStorage.setItem(this.INTEGRATIONS_KEY, JSON.stringify(data.integrations));
-      
+      localStorage.setItem(
+        this.INTEGRATIONS_KEY,
+        JSON.stringify(data.integrations)
+      );
+
       return { success: true };
     } catch (error) {
       return { success: false, error: 'Invalid JSON format' };
@@ -718,8 +773,14 @@ class SettingsService {
 
   // Reset to defaults
   resetToDefaults(): void {
-    localStorage.setItem(this.SETTINGS_KEY, JSON.stringify(this.getDefaultSettings()));
-    localStorage.setItem(this.INTEGRATIONS_KEY, JSON.stringify(this.getDefaultIntegrations()));
+    localStorage.setItem(
+      this.SETTINGS_KEY,
+      JSON.stringify(this.getDefaultSettings())
+    );
+    localStorage.setItem(
+      this.INTEGRATIONS_KEY,
+      JSON.stringify(this.getDefaultIntegrations())
+    );
   }
 
   // Clear all cache

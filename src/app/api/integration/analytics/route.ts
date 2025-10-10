@@ -1,6 +1,6 @@
 /**
  * Integrated Analytics API Route
- * 
+ *
  * This endpoint provides analytics data with database integration and fallback to mock data
  */
 
@@ -12,9 +12,9 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const useDatabase = searchParams.get('useDatabase') !== 'false';
     const type = searchParams.get('type'); // 'users', 'assets', 'investments', or 'all'
-    
+
     let result;
-    
+
     switch (type) {
       case 'users':
         result = await simpleAnalyticsIntegration.getUserAnalytics();
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
       default:
         result = await simpleAnalyticsIntegration.getAnalyticsData();
     }
-    
+
     if (!result.success) {
       return NextResponse.json(
         { success: false, error: result.error },
@@ -42,17 +42,16 @@ export async function GET(request: NextRequest) {
         analytics: result.data,
         source: useDatabase ? 'database' : 'mock',
         type: type || 'all',
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     });
-
   } catch (error) {
     console.error('Get analytics error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

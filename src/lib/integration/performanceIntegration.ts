@@ -1,6 +1,6 @@
 /**
  * Performance Monitoring Integration
- * 
+ *
  * This service provides system health metrics and performance monitoring
  * while maintaining backward compatibility with mock data.
  */
@@ -65,7 +65,7 @@ export class PerformanceIntegration {
     try {
       // Start performance monitoring
       this.startPerformanceMonitoring();
-      
+
       // Start health checks
       this.startHealthChecks();
 
@@ -73,7 +73,10 @@ export class PerformanceIntegration {
       return { success: true };
     } catch (error) {
       console.error('Performance monitoring initialization error:', error);
-      return { success: false, error: 'Failed to initialize performance monitoring' };
+      return {
+        success: false,
+        error: 'Failed to initialize performance monitoring',
+      };
     }
   }
 
@@ -97,7 +100,7 @@ export class PerformanceIntegration {
         timestamp: new Date().toISOString(),
         category,
         tags,
-        metadata
+        metadata,
       };
 
       // Add to in-memory storage
@@ -123,7 +126,12 @@ export class PerformanceIntegration {
   /**
    * Record API response time
    */
-  async recordApiResponseTime(endpoint: string, method: string, responseTime: number, statusCode: number): Promise<{ success: boolean; error?: string }> {
+  async recordApiResponseTime(
+    endpoint: string,
+    method: string,
+    responseTime: number,
+    statusCode: number
+  ): Promise<{ success: boolean; error?: string }> {
     return await this.recordMetric(
       'api_response_time',
       responseTime,
@@ -132,7 +140,7 @@ export class PerformanceIntegration {
       {
         endpoint,
         method,
-        status_code: statusCode.toString()
+        status_code: statusCode.toString(),
       },
       { statusCode, endpoint, method }
     );
@@ -141,7 +149,11 @@ export class PerformanceIntegration {
   /**
    * Record database query time
    */
-  async recordDatabaseQueryTime(query: string, executionTime: number, rowsAffected: number): Promise<{ success: boolean; error?: string }> {
+  async recordDatabaseQueryTime(
+    query: string,
+    executionTime: number,
+    rowsAffected: number
+  ): Promise<{ success: boolean; error?: string }> {
     return await this.recordMetric(
       'database_query_time',
       executionTime,
@@ -149,7 +161,7 @@ export class PerformanceIntegration {
       'database',
       {
         query_type: this.getQueryType(query),
-        rows_affected: rowsAffected.toString()
+        rows_affected: rowsAffected.toString(),
       },
       { query, rowsAffected }
     );
@@ -158,7 +170,11 @@ export class PerformanceIntegration {
   /**
    * Record user activity
    */
-  async recordUserActivity(userId: string, action: string, duration?: number): Promise<{ success: boolean; error?: string }> {
+  async recordUserActivity(
+    userId: string,
+    action: string,
+    duration?: number
+  ): Promise<{ success: boolean; error?: string }> {
     return await this.recordMetric(
       'user_activity',
       duration || 1,
@@ -166,7 +182,7 @@ export class PerformanceIntegration {
       'user',
       {
         user_id: userId,
-        action
+        action,
       },
       { userId, action, duration }
     );
@@ -175,31 +191,45 @@ export class PerformanceIntegration {
   /**
    * Record business metric
    */
-  async recordBusinessMetric(name: string, value: number, unit: string, tags: Record<string, string> = {}): Promise<{ success: boolean; error?: string }> {
+  async recordBusinessMetric(
+    name: string,
+    value: number,
+    unit: string,
+    tags: Record<string, string> = {}
+  ): Promise<{ success: boolean; error?: string }> {
     return await this.recordMetric(name, value, unit, 'business', tags);
   }
 
   /**
    * Get performance statistics
    */
-  async getPerformanceStats(timeRange: string = '1h'): Promise<{ success: boolean; stats?: PerformanceStats; error?: string }> {
+  async getPerformanceStats(
+    timeRange: string = '1h'
+  ): Promise<{ success: boolean; stats?: PerformanceStats; error?: string }> {
     try {
       const timeRangeMs = this.parseTimeRange(timeRange);
       const cutoffTime = new Date(Date.now() - timeRangeMs).toISOString();
-      
+
       const recentMetrics = this.metrics.filter(m => m.timestamp >= cutoffTime);
-      
+
       const stats: PerformanceStats = {
-        totalRequests: this.getMetricValue(recentMetrics, 'api_response_time', 'count') || 0,
-        averageResponseTime: this.getMetricAverage(recentMetrics, 'api_response_time') || 0,
+        totalRequests:
+          this.getMetricValue(recentMetrics, 'api_response_time', 'count') || 0,
+        averageResponseTime:
+          this.getMetricAverage(recentMetrics, 'api_response_time') || 0,
         errorRate: this.calculateErrorRate(recentMetrics),
         activeUsers: this.getUniqueUsers(recentMetrics),
-        databaseConnections: this.getMetricValue(recentMetrics, 'database_connections', 'count') || 0,
-        memoryUsage: this.getMetricValue(recentMetrics, 'memory_usage', 'percent') || 0,
-        cpuUsage: this.getMetricValue(recentMetrics, 'cpu_usage', 'percent') || 0,
-        diskUsage: this.getMetricValue(recentMetrics, 'disk_usage', 'percent') || 0,
+        databaseConnections:
+          this.getMetricValue(recentMetrics, 'database_connections', 'count') ||
+          0,
+        memoryUsage:
+          this.getMetricValue(recentMetrics, 'memory_usage', 'percent') || 0,
+        cpuUsage:
+          this.getMetricValue(recentMetrics, 'cpu_usage', 'percent') || 0,
+        diskUsage:
+          this.getMetricValue(recentMetrics, 'disk_usage', 'percent') || 0,
         uptime: this.calculateUptime(),
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       };
 
       return { success: true, stats };
@@ -212,7 +242,11 @@ export class PerformanceIntegration {
   /**
    * Get system health
    */
-  async getSystemHealth(): Promise<{ success: boolean; health?: SystemHealth; error?: string }> {
+  async getSystemHealth(): Promise<{
+    success: boolean;
+    health?: SystemHealth;
+    error?: string;
+  }> {
     try {
       const health: SystemHealth = {
         status: 'healthy',
@@ -221,15 +255,15 @@ export class PerformanceIntegration {
           cpu: this.getCurrentCpuUsage(),
           memory: this.getCurrentMemoryUsage(),
           disk: this.getCurrentDiskUsage(),
-          network: this.getCurrentNetworkUsage()
+          network: this.getCurrentNetworkUsage(),
         },
         services: {
           database: this.getDatabaseStatus(),
           api: this.getApiStatus(),
           email: this.getEmailStatus(),
-          storage: this.getStorageStatus()
+          storage: this.getStorageStatus(),
         },
-        alerts: this.getActiveAlerts()
+        alerts: this.getActiveAlerts(),
       };
 
       // Determine overall status
@@ -245,13 +279,20 @@ export class PerformanceIntegration {
   /**
    * Get metrics by category
    */
-  async getMetricsByCategory(category: string, timeRange: string = '1h'): Promise<{ success: boolean; metrics?: PerformanceMetric[]; error?: string }> {
+  async getMetricsByCategory(
+    category: string,
+    timeRange: string = '1h'
+  ): Promise<{
+    success: boolean;
+    metrics?: PerformanceMetric[];
+    error?: string;
+  }> {
     try {
       const timeRangeMs = this.parseTimeRange(timeRange);
       const cutoffTime = new Date(Date.now() - timeRangeMs).toISOString();
-      
-      const filteredMetrics = this.metrics.filter(m => 
-        m.category === category && m.timestamp >= cutoffTime
+
+      const filteredMetrics = this.metrics.filter(
+        m => m.category === category && m.timestamp >= cutoffTime
       );
 
       return { success: true, metrics: filteredMetrics };
@@ -292,16 +333,36 @@ export class PerformanceIntegration {
   private async recordSystemMetrics(): Promise<void> {
     try {
       // Record CPU usage
-      await this.recordMetric('cpu_usage', this.getCurrentCpuUsage(), 'percent', 'system');
-      
+      await this.recordMetric(
+        'cpu_usage',
+        this.getCurrentCpuUsage(),
+        'percent',
+        'system'
+      );
+
       // Record memory usage
-      await this.recordMetric('memory_usage', this.getCurrentMemoryUsage(), 'percent', 'system');
-      
+      await this.recordMetric(
+        'memory_usage',
+        this.getCurrentMemoryUsage(),
+        'percent',
+        'system'
+      );
+
       // Record disk usage
-      await this.recordMetric('disk_usage', this.getCurrentDiskUsage(), 'percent', 'system');
-      
+      await this.recordMetric(
+        'disk_usage',
+        this.getCurrentDiskUsage(),
+        'percent',
+        'system'
+      );
+
       // Record network usage
-      await this.recordMetric('network_usage', this.getCurrentNetworkUsage(), 'percent', 'system');
+      await this.recordMetric(
+        'network_usage',
+        this.getCurrentNetworkUsage(),
+        'percent',
+        'system'
+      );
     } catch (error) {
       console.error('Record system metrics error:', error);
     }
@@ -315,11 +376,16 @@ export class PerformanceIntegration {
       // Record active users
       const activeUsers = this.getActiveUsersCount();
       await this.recordMetric('active_users', activeUsers, 'count', 'business');
-      
+
       // Record total investments
       const totalInvestments = this.getTotalInvestmentsCount();
-      await this.recordMetric('total_investments', totalInvestments, 'count', 'business');
-      
+      await this.recordMetric(
+        'total_investments',
+        totalInvestments,
+        'count',
+        'business'
+      );
+
       // Record total assets
       const totalAssets = this.getTotalAssetsCount();
       await this.recordMetric('total_assets', totalAssets, 'count', 'business');
@@ -336,7 +402,7 @@ export class PerformanceIntegration {
       const health = await this.getSystemHealth();
       if (health.success && health.health) {
         this.healthChecks.unshift(health.health);
-        
+
         // Limit health checks in memory
         if (this.healthChecks.length > 100) {
           this.healthChecks = this.healthChecks.slice(0, 100);
@@ -414,7 +480,12 @@ export class PerformanceIntegration {
   /**
    * Get active alerts
    */
-  private getActiveAlerts(): Array<{ id: string; severity: 'low' | 'medium' | 'high' | 'critical'; message: string; timestamp: string }> {
+  private getActiveAlerts(): Array<{
+    id: string;
+    severity: 'low' | 'medium' | 'high' | 'critical';
+    message: string;
+    timestamp: string;
+  }> {
     // In a real implementation, you would check for actual alerts
     return [];
   }
@@ -422,14 +493,20 @@ export class PerformanceIntegration {
   /**
    * Determine overall system status
    */
-  private determineOverallStatus(health: SystemHealth): 'healthy' | 'warning' | 'critical' {
+  private determineOverallStatus(
+    health: SystemHealth
+  ): 'healthy' | 'warning' | 'critical' {
     // Check for critical issues
     if (health.services.database === 'down' || health.services.api === 'down') {
       return 'critical';
     }
 
     // Check for warning conditions
-    if (health.metrics.cpu > 80 || health.metrics.memory > 80 || health.metrics.disk > 90) {
+    if (
+      health.metrics.cpu > 80 ||
+      health.metrics.memory > 80 ||
+      health.metrics.disk > 90
+    ) {
       return 'warning';
     }
 
@@ -449,17 +526,25 @@ export class PerformanceIntegration {
     const value = parseInt(timeRange.slice(0, -1));
 
     switch (unit) {
-      case 'm': return value * 60 * 1000; // minutes
-      case 'h': return value * 60 * 60 * 1000; // hours
-      case 'd': return value * 24 * 60 * 60 * 1000; // days
-      default: return 60 * 60 * 1000; // default 1 hour
+      case 'm':
+        return value * 60 * 1000; // minutes
+      case 'h':
+        return value * 60 * 60 * 1000; // hours
+      case 'd':
+        return value * 24 * 60 * 60 * 1000; // days
+      default:
+        return 60 * 60 * 1000; // default 1 hour
     }
   }
 
   /**
    * Get metric value
    */
-  private getMetricValue(metrics: PerformanceMetric[], name: string, unit: string): number | null {
+  private getMetricValue(
+    metrics: PerformanceMetric[],
+    name: string,
+    unit: string
+  ): number | null {
     const metric = metrics.find(m => m.name === name && m.unit === unit);
     return metric ? metric.value : null;
   }
@@ -467,10 +552,13 @@ export class PerformanceIntegration {
   /**
    * Get metric average
    */
-  private getMetricAverage(metrics: PerformanceMetric[], name: string): number | null {
+  private getMetricAverage(
+    metrics: PerformanceMetric[],
+    name: string
+  ): number | null {
     const relevantMetrics = metrics.filter(m => m.name === name);
     if (relevantMetrics.length === 0) return null;
-    
+
     const sum = relevantMetrics.reduce((acc, m) => acc + m.value, 0);
     return sum / relevantMetrics.length;
   }
@@ -482,8 +570,8 @@ export class PerformanceIntegration {
     const apiMetrics = metrics.filter(m => m.name === 'api_response_time');
     if (apiMetrics.length === 0) return 0;
 
-    const errorMetrics = apiMetrics.filter(m => 
-      m.tags.status_code && parseInt(m.tags.status_code) >= 400
+    const errorMetrics = apiMetrics.filter(
+      m => m.tags.status_code && parseInt(m.tags.status_code) >= 400
     );
 
     return (errorMetrics.length / apiMetrics.length) * 100;
@@ -542,7 +630,9 @@ export class PerformanceIntegration {
   /**
    * Store metric in database
    */
-  private async storeMetricInDatabase(metric: PerformanceMetric): Promise<{ success: boolean; error?: string }> {
+  private async storeMetricInDatabase(
+    metric: PerformanceMetric
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would store in the database
       console.log(`Storing metric in database: ${metric.id}`);
@@ -558,7 +648,9 @@ export class PerformanceIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`PerformanceIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `PerformanceIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

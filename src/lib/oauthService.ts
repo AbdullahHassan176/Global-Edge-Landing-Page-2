@@ -15,35 +15,46 @@ export interface OAuthConfig {
 
 class OAuthService {
   private githubConfig: OAuthConfig = {
-    clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'Ov23libFA9iThtAUjrFP',
+    clientId:
+      process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || 'Ov23libFA9iThtAUjrFP',
     redirectUri: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://theglobaledge.io'}/auth/github/callback`,
-    scope: 'user:email'
+    scope: 'user:email',
   };
 
   private linkedinConfig: OAuthConfig = {
     clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '77wo1ift9iqifp',
     redirectUri: `${process.env.NEXT_PUBLIC_APP_URL || 'https://theglobaledge.io'}/auth/linkedin/callback`,
-    scope: 'r_liteprofile r_emailaddress'
+    scope: 'r_liteprofile r_emailaddress',
   };
 
   // GitHub OAuth
   initiateGitHubLogin() {
     console.log('Environment variables:');
-    console.log('NEXT_PUBLIC_GITHUB_CLIENT_ID:', process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID);
+    console.log(
+      'NEXT_PUBLIC_GITHUB_CLIENT_ID:',
+      process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID
+    );
     console.log('GITHUB_CLIENT_ID:', process.env.GITHUB_CLIENT_ID);
-    console.log('Initiating GitHub OAuth with client ID:', this.githubConfig.clientId);
-    
+    console.log(
+      'Initiating GitHub OAuth with client ID:',
+      this.githubConfig.clientId
+    );
+
     if (!this.githubConfig.clientId) {
-      alert('GitHub OAuth is not configured. Please contact support or use email/password login.');
-      console.error('GitHub OAuth not configured: NEXT_PUBLIC_GITHUB_CLIENT_ID is missing');
+      alert(
+        'GitHub OAuth is not configured. Please contact support or use email/password login.'
+      );
+      console.error(
+        'GitHub OAuth not configured: NEXT_PUBLIC_GITHUB_CLIENT_ID is missing'
+      );
       return;
     }
-    
+
     const params = new URLSearchParams({
       client_id: this.githubConfig.clientId,
       redirect_uri: this.githubConfig.redirectUri,
       scope: this.githubConfig.scope,
-      state: this.generateState()
+      state: this.generateState(),
     });
 
     const githubAuthUrl = `https://github.com/login/oauth/authorize?${params.toString()}`;
@@ -51,29 +62,35 @@ class OAuthService {
     window.location.href = githubAuthUrl;
   }
 
-
   // LinkedIn OAuth
   initiateLinkedInLogin() {
     console.log('=== LinkedIn OAuth Debug ===');
     console.log('Environment variables:');
-    console.log('NEXT_PUBLIC_LINKEDIN_CLIENT_ID:', process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID);
+    console.log(
+      'NEXT_PUBLIC_LINKEDIN_CLIENT_ID:',
+      process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID
+    );
     console.log('NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL);
     console.log('LinkedIn Config:', this.linkedinConfig);
     console.log('Client ID:', this.linkedinConfig.clientId);
     console.log('Redirect URI:', this.linkedinConfig.redirectUri);
-    
+
     if (!this.linkedinConfig.clientId) {
-      alert('LinkedIn OAuth is not configured. Please contact support or use email/password login.');
-      console.error('LinkedIn OAuth not configured: NEXT_PUBLIC_LINKEDIN_CLIENT_ID is missing');
+      alert(
+        'LinkedIn OAuth is not configured. Please contact support or use email/password login.'
+      );
+      console.error(
+        'LinkedIn OAuth not configured: NEXT_PUBLIC_LINKEDIN_CLIENT_ID is missing'
+      );
       return;
     }
-    
+
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: this.linkedinConfig.clientId,
       redirect_uri: this.linkedinConfig.redirectUri,
       scope: this.linkedinConfig.scope,
-      state: this.generateState()
+      state: this.generateState(),
     });
 
     const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?${params.toString()}`;
@@ -82,15 +99,16 @@ class OAuthService {
     console.log('Parameters:', params.toString());
     console.log('Client ID in URL:', params.get('client_id'));
     console.log('=== End Debug ===');
-    
+
     window.location.href = linkedinAuthUrl;
   }
 
-
   // Generate random state for CSRF protection
   private generateState(): string {
-    return Math.random().toString(36).substring(2, 15) + 
-           Math.random().toString(36).substring(2, 15);
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
   }
 
   // Handle GitHub callback
@@ -103,7 +121,7 @@ class OAuthService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code })
+        body: JSON.stringify({ code }),
       });
 
       if (!response.ok) {
@@ -116,7 +134,7 @@ class OAuthService {
         email: userData.email,
         name: userData.name || userData.login,
         avatar: userData.avatar_url,
-        provider: 'github'
+        provider: 'github',
       };
     } catch (error) {
       console.error('GitHub OAuth error:', error);
@@ -134,7 +152,7 @@ class OAuthService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code })
+        body: JSON.stringify({ code }),
       });
 
       if (!response.ok) {
@@ -147,7 +165,7 @@ class OAuthService {
         email: userData.email,
         name: `${userData.firstName} ${userData.lastName}`,
         avatar: userData.profilePicture,
-        provider: 'linkedin'
+        provider: 'linkedin',
       };
     } catch (error) {
       console.error('LinkedIn OAuth error:', error);
@@ -159,26 +177,27 @@ class OAuthService {
   async mockGitHubAuth(): Promise<OAuthUser> {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     return {
       id: '12345',
       email: 'john.doe@github-demo.com',
       name: 'John Doe',
       avatar: 'https://avatars.githubusercontent.com/u/12345?v=4',
-      provider: 'github'
+      provider: 'github',
     };
   }
 
   async mockLinkedInAuth(): Promise<OAuthUser> {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     return {
       id: '67890',
       email: 'jane.smith@linkedin-demo.com',
       name: 'Jane Smith',
-      avatar: 'https://media.licdn.com/dms/image/C4D03AQHxK8Y2X8Y2Y2/profile-displayphoto-shrink_400_400/0/1234567890',
-      provider: 'linkedin'
+      avatar:
+        'https://media.licdn.com/dms/image/C4D03AQHxK8Y2X8Y2Y2/profile-displayphoto-shrink_400_400/0/1234567890',
+      provider: 'linkedin',
     };
   }
 }

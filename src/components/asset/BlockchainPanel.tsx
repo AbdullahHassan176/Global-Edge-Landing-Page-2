@@ -25,8 +25,13 @@ interface BlockchainPanelProps {
   className?: string;
 }
 
-export default function BlockchainPanel({ assetKey, className = '' }: BlockchainPanelProps) {
-  const [blockchainData, setBlockchainData] = useState<BlockchainData | null>(null);
+export default function BlockchainPanel({
+  assetKey,
+  className = '',
+}: BlockchainPanelProps) {
+  const [blockchainData, setBlockchainData] = useState<BlockchainData | null>(
+    null
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showTechnical, setShowTechnical] = useState(false);
@@ -46,16 +51,20 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
   const loadBlockchainData = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // Use mock data if enabled, otherwise use real API
       const timelineData = await mockGetTimeline(assetKey, { limit: 3 });
-      
+
       // Extract data from timeline
-      const lastEvent = timelineData.timeline.find(item => item.type === 'event');
-      const lastSigner = lastEvent?.event?.signer || '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b';
+      const lastEvent = timelineData.timeline.find(
+        item => item.type === 'event'
+      );
+      const lastSigner =
+        lastEvent?.event?.signer ||
+        '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b';
       const lastNonce = Math.floor(Math.random() * 100000);
-      
+
       const mockData: BlockchainData = {
         lastSigner,
         lastNonce,
@@ -70,13 +79,15 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
           .map(item => ({
             txHash: item.event?.txHash || '',
             timestamp: item.event?.eventTime || new Date().toISOString(),
-            eventType: item.event?.eventType || 'Unknown'
-          }))
+            eventType: item.event?.eventType || 'Unknown',
+          })),
       };
 
       setBlockchainData(mockData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load blockchain data');
+      setError(
+        err instanceof Error ? err.message : 'Failed to load blockchain data'
+      );
     } finally {
       setLoading(false);
     }
@@ -121,12 +132,14 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
 
   if (loading) {
     return (
-      <div className={`bg-white border border-gray-200 rounded-lg p-4 ${className}`}>
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-300 rounded w-1/3 mb-3"></div>
-          <div className="space-y-2">
-            <div className="h-3 bg-gray-300 rounded w-1/2"></div>
-            <div className="h-3 bg-gray-300 rounded w-2/3"></div>
+      <div
+        className={`bg-white border border-gray-200 rounded-lg p-4 ${className}`}
+      >
+        <div className='animate-pulse'>
+          <div className='h-4 bg-gray-300 rounded w-1/3 mb-3'></div>
+          <div className='space-y-2'>
+            <div className='h-3 bg-gray-300 rounded w-1/2'></div>
+            <div className='h-3 bg-gray-300 rounded w-2/3'></div>
           </div>
         </div>
       </div>
@@ -135,10 +148,12 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
 
   if (error) {
     return (
-      <div className={`bg-red-50 border border-red-200 rounded-lg p-4 ${className}`}>
-        <div className="flex items-center">
-          <Icon name="exclamation-triangle" className="text-red-500 mr-2" />
-          <span className="text-red-700 text-sm">{error}</span>
+      <div
+        className={`bg-red-50 border border-red-200 rounded-lg p-4 ${className}`}
+      >
+        <div className='flex items-center'>
+          <Icon name='exclamation-triangle' className='text-red-500 mr-2' />
+          <span className='text-red-700 text-sm'>{error}</span>
         </div>
       </div>
     );
@@ -149,42 +164,54 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
   }
 
   return (
-    <div className={`bg-white border border-gray-200 rounded-lg p-4 ${className}`}>
+    <div
+      className={`bg-white border border-gray-200 rounded-lg p-4 ${className}`}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h4 className="text-sm font-medium text-gray-900">Blockchain Status</h4>
+      <div className='flex items-center justify-between mb-4'>
+        <h4 className='text-sm font-medium text-gray-900'>Blockchain Status</h4>
         <button
           onClick={handleToggleTechnical}
-          className="text-xs text-blue-600 hover:text-blue-800 flex items-center"
+          className='text-xs text-blue-600 hover:text-blue-800 flex items-center'
         >
-          <Icon name={showTechnical ? "eye-slash" : "eye"} className="w-3 h-3 mr-1" />
+          <Icon
+            name={showTechnical ? 'eye-slash' : 'eye'}
+            className='w-3 h-3 mr-1'
+          />
           {showTechnical ? 'Hide' : 'View'} technical
         </button>
       </div>
 
       {/* Basic Status */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Last Signer</span>
-          <span className="font-mono text-gray-900" title={blockchainData.lastSigner}>
+      <div className='space-y-3'>
+        <div className='flex items-center justify-between text-sm'>
+          <span className='text-gray-600'>Last Signer</span>
+          <span
+            className='font-mono text-gray-900'
+            title={blockchainData.lastSigner}
+          >
             {shortenAddress(blockchainData.lastSigner)}
           </span>
         </div>
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Last Nonce</span>
-          <span className="font-mono text-gray-900">{blockchainData.lastNonce}</span>
+        <div className='flex items-center justify-between text-sm'>
+          <span className='text-gray-600'>Last Nonce</span>
+          <span className='font-mono text-gray-900'>
+            {blockchainData.lastNonce}
+          </span>
         </div>
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">Chain</span>
-          <div className="flex items-center">
-            <span className="text-gray-900 mr-2">{blockchainData.chainName}</span>
+        <div className='flex items-center justify-between text-sm'>
+          <span className='text-gray-600'>Chain</span>
+          <div className='flex items-center'>
+            <span className='text-gray-900 mr-2'>
+              {blockchainData.chainName}
+            </span>
             <a
               href={getContractUrl(blockchainData.contractAddress)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800"
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-blue-600 hover:text-blue-800'
             >
-              <Icon name="external-link" className="w-3 h-3" />
+              <Icon name='external-link' className='w-3 h-3' />
             </a>
           </div>
         </div>
@@ -192,72 +219,92 @@ export default function BlockchainPanel({ assetKey, className = '' }: Blockchain
 
       {/* Technical Details */}
       {showTechnical && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <h5 className="text-xs font-medium text-gray-700 mb-3">Technical Details</h5>
-          <div className="space-y-2 text-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">Contract Address</span>
-              <div className="flex items-center">
-                <span className="font-mono text-gray-900 mr-1" title={blockchainData.contractAddress}>
+        <div className='mt-4 pt-4 border-t border-gray-200'>
+          <h5 className='text-xs font-medium text-gray-700 mb-3'>
+            Technical Details
+          </h5>
+          <div className='space-y-2 text-xs'>
+            <div className='flex items-center justify-between'>
+              <span className='text-gray-600'>Contract Address</span>
+              <div className='flex items-center'>
+                <span
+                  className='font-mono text-gray-900 mr-1'
+                  title={blockchainData.contractAddress}
+                >
                   {shortenAddress(blockchainData.contractAddress)}
                 </span>
                 <a
                   href={getContractUrl(blockchainData.contractAddress)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='text-blue-600 hover:text-blue-800'
                 >
-                  <Icon name="external-link" className="w-3 h-3" />
+                  <Icon name='external-link' className='w-3 h-3' />
                 </a>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">Network</span>
-              <span className="text-gray-900">{blockchainData.network}</span>
+            <div className='flex items-center justify-between'>
+              <span className='text-gray-600'>Network</span>
+              <span className='text-gray-900'>{blockchainData.network}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">Confirmations</span>
-              <span className="text-gray-900">{blockchainData.confirmationsPolicy}</span>
+            <div className='flex items-center justify-between'>
+              <span className='text-gray-600'>Confirmations</span>
+              <span className='text-gray-900'>
+                {blockchainData.confirmationsPolicy}
+              </span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-600">Event Registry</span>
-              <div className="flex items-center">
-                <span className="font-mono text-gray-900 mr-1" title={blockchainData.eventRegistryAddress}>
+            <div className='flex items-center justify-between'>
+              <span className='text-gray-600'>Event Registry</span>
+              <div className='flex items-center'>
+                <span
+                  className='font-mono text-gray-900 mr-1'
+                  title={blockchainData.eventRegistryAddress}
+                >
                   {shortenAddress(blockchainData.eventRegistryAddress)}
                 </span>
                 <a
                   href={getContractUrl(blockchainData.eventRegistryAddress)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='text-blue-600 hover:text-blue-800'
                 >
-                  <Icon name="external-link" className="w-3 h-3" />
+                  <Icon name='external-link' className='w-3 h-3' />
                 </a>
               </div>
             </div>
           </div>
 
           {/* Recent Transactions */}
-          <div className="mt-4">
-            <h6 className="text-xs font-medium text-gray-700 mb-2">Last 3 Transactions</h6>
-            <div className="space-y-2">
+          <div className='mt-4'>
+            <h6 className='text-xs font-medium text-gray-700 mb-2'>
+              Last 3 Transactions
+            </h6>
+            <div className='space-y-2'>
               {blockchainData.recentTransactions.map((tx, index) => (
-                <div key={index} className="flex items-center justify-between text-xs">
-                  <div className="flex items-center">
-                    <span className="font-mono text-gray-900 mr-2" title={tx.txHash}>
+                <div
+                  key={index}
+                  className='flex items-center justify-between text-xs'
+                >
+                  <div className='flex items-center'>
+                    <span
+                      className='font-mono text-gray-900 mr-2'
+                      title={tx.txHash}
+                    >
                       {shortenHash(tx.txHash)}
                     </span>
-                    <span className="text-gray-500">({tx.eventType})</span>
+                    <span className='text-gray-500'>({tx.eventType})</span>
                   </div>
-                  <div className="flex items-center">
-                    <span className="text-gray-500 mr-2">{formatRelativeTime(tx.timestamp)}</span>
+                  <div className='flex items-center'>
+                    <span className='text-gray-500 mr-2'>
+                      {formatRelativeTime(tx.timestamp)}
+                    </span>
                     <a
                       href={getExplorerUrl(tx.txHash)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800"
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-600 hover:text-blue-800'
                     >
-                      <Icon name="external-link" className="w-3 h-3" />
+                      <Icon name='external-link' className='w-3 h-3' />
                     </a>
                   </div>
                 </div>

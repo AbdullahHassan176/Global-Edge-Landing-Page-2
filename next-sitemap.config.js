@@ -5,18 +5,9 @@ module.exports = {
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 5000,
-  exclude: [
-    '/404',
-    '/500',
-    '/admin/*',
-    '/api/*',
-  ],
+  exclude: ['/404', '/500', '/admin/*', '/api/*'],
   robotsTxtOptions: {
-    policies: [
-      { userAgent: '*', allow: '/' },
-    ],
-    additionalSitemaps: [
-      'https://theglobaledge.io/sitemap.xml',
-    ],
+    policies: [{ userAgent: '*', allow: '/' }],
+    additionalSitemaps: ['https://theglobaledge.io/sitemap.xml'],
   },
 };

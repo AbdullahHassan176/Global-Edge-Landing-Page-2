@@ -1,6 +1,6 @@
 /**
  * Analytics Integration
- * 
+ *
  * This service integrates analytics data with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -16,7 +16,11 @@ export class AnalyticsIntegration {
   /**
    * Get comprehensive analytics data with database integration
    */
-  async getAnalyticsData(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getAnalyticsData(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       let users: any[] = [];
       let assets: any[] = [];
@@ -25,11 +29,12 @@ export class AnalyticsIntegration {
       if (this.useDatabase) {
         // Try to get data from database
         try {
-          const [usersResult, assetsResult, investmentsResult] = await Promise.all([
-            workingDatabaseService.getUsers(),
-            workingDatabaseService.getAssets(),
-            workingDatabaseService.getInvestments()
-          ]);
+          const [usersResult, assetsResult, investmentsResult] =
+            await Promise.all([
+              workingDatabaseService.getUsers(),
+              workingDatabaseService.getAssets(),
+              workingDatabaseService.getInvestments(),
+            ]);
 
           if (usersResult.success && usersResult.data) {
             users = usersResult.data.items || [];
@@ -48,7 +53,9 @@ export class AnalyticsIntegration {
             throw new Error('No database data available');
           }
         } catch (dbError) {
-          console.log('Analytics: Database unavailable, falling back to mock data');
+          console.log(
+            'Analytics: Database unavailable, falling back to mock data'
+          );
           // Fallback to mock data
           users = userAuthService.getAllUsers();
           assets = await assetService.getAssets();
@@ -67,7 +74,7 @@ export class AnalyticsIntegration {
       const analyticsData = {
         ...this.calculateAnalytics(users, assets, investments),
         metrics: mockMetrics,
-        dataSource: this.useDatabase ? 'database' : 'mock'
+        dataSource: this.useDatabase ? 'database' : 'mock',
       };
 
       return { success: true, data: analyticsData };
@@ -84,7 +91,10 @@ export class AnalyticsIntegration {
     const totalUsers = users.length;
     const totalAssets = assets.length;
     const totalInvestments = investments.length;
-    const totalInvestmentValue = investments.reduce((sum, inv) => sum + (inv.amount || 0), 0);
+    const totalInvestmentValue = investments.reduce(
+      (sum, inv) => sum + (inv.amount || 0),
+      0
+    );
 
     // User analytics
     const userAnalytics = {
@@ -92,18 +102,18 @@ export class AnalyticsIntegration {
       byRole: {
         investors: users.filter(u => u.role === 'investor').length,
         issuers: users.filter(u => u.role === 'issuer').length,
-        admins: users.filter(u => u.role === 'admin').length
+        admins: users.filter(u => u.role === 'admin').length,
       },
       byStatus: {
         active: users.filter(u => u.status === 'active').length,
         pending: users.filter(u => u.status === 'pending').length,
-        suspended: users.filter(u => u.status === 'suspended').length
+        suspended: users.filter(u => u.status === 'suspended').length,
       },
       byKycStatus: {
         approved: users.filter(u => u.kycStatus === 'approved').length,
         pending: users.filter(u => u.kycStatus === 'pending').length,
-        rejected: users.filter(u => u.kycStatus === 'rejected').length
-      }
+        rejected: users.filter(u => u.kycStatus === 'rejected').length,
+      },
     };
 
     // Asset analytics
@@ -113,36 +123,37 @@ export class AnalyticsIntegration {
         containers: assets.filter(a => a.type === 'container').length,
         properties: assets.filter(a => a.type === 'property').length,
         inventory: assets.filter(a => a.type === 'inventory').length,
-        vault: assets.filter(a => a.type === 'vault').length
+        vault: assets.filter(a => a.type === 'vault').length,
       },
       byStatus: {
         active: assets.filter(a => a.status === 'active').length,
         pending: assets.filter(a => a.status === 'pending').length,
-        inactive: assets.filter(a => a.status === 'inactive').length
+        inactive: assets.filter(a => a.status === 'inactive').length,
       },
       totalValue: assets.reduce((sum, asset) => {
         const value = parseFloat(asset.value?.replace(/[$,]/g, '') || '0');
         return sum + value;
-      }, 0)
+      }, 0),
     };
 
     // Investment analytics
     const investmentAnalytics = {
       total: totalInvestments,
       totalValue: totalInvestmentValue,
-      averageInvestment: totalInvestments > 0 ? totalInvestmentValue / totalInvestments : 0,
+      averageInvestment:
+        totalInvestments > 0 ? totalInvestmentValue / totalInvestments : 0,
       byStatus: {
         completed: investments.filter(i => i.status === 'completed').length,
         pending: investments.filter(i => i.status === 'pending').length,
-        cancelled: investments.filter(i => i.status === 'cancelled').length
-      }
+        cancelled: investments.filter(i => i.status === 'cancelled').length,
+      },
     };
 
     // Performance metrics
     const performanceMetrics = {
       userGrowth: this.calculateGrowthRate(users, 'createdAt'),
       investmentGrowth: this.calculateGrowthRate(investments, 'investmentDate'),
-      assetPerformance: this.calculateAssetPerformance(assets, investments)
+      assetPerformance: this.calculateAssetPerformance(assets, investments),
     };
 
     return {
@@ -155,8 +166,9 @@ export class AnalyticsIntegration {
         totalAssets,
         totalInvestments,
         totalValue: totalInvestmentValue,
-        averageInvestmentValue: totalInvestments > 0 ? totalInvestmentValue / totalInvestments : 0
-      }
+        averageInvestmentValue:
+          totalInvestments > 0 ? totalInvestmentValue / totalInvestments : 0,
+      },
     };
   }
 
@@ -165,7 +177,11 @@ export class AnalyticsIntegration {
    */
   private calculateGrowthRate(items: any[], dateField: string) {
     const now = new Date();
-    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    const lastMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() - 1,
+      now.getDate()
+    );
     const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
     const total = items.length;
@@ -182,8 +198,10 @@ export class AnalyticsIntegration {
       total,
       lastMonth: lastMonthCount,
       lastWeek: lastWeekCount,
-      monthlyGrowth: total > 0 ? ((lastMonthCount / total) * 100).toFixed(1) : '0',
-      weeklyGrowth: total > 0 ? ((lastWeekCount / total) * 100).toFixed(1) : '0'
+      monthlyGrowth:
+        total > 0 ? ((lastMonthCount / total) * 100).toFixed(1) : '0',
+      weeklyGrowth:
+        total > 0 ? ((lastWeekCount / total) * 100).toFixed(1) : '0',
     };
   }
 
@@ -192,18 +210,35 @@ export class AnalyticsIntegration {
    */
   private calculateAssetPerformance(assets: any[], investments: any[]) {
     return assets.map(asset => {
-      const assetInvestments = investments.filter(inv => inv.assetId === asset.id);
-      const totalInvested = assetInvestments.reduce((sum, inv) => sum + (inv.amount || 0), 0);
-      const investorCount = new Set(assetInvestments.map(inv => inv.investorId || inv.userId)).size;
+      const assetInvestments = investments.filter(
+        inv => inv.assetId === asset.id
+      );
+      const totalInvested = assetInvestments.reduce(
+        (sum, inv) => sum + (inv.amount || 0),
+        0
+      );
+      const investorCount = new Set(
+        assetInvestments.map(inv => inv.investorId || inv.userId)
+      ).size;
 
       return {
         assetId: asset.id,
         assetName: asset.name,
         totalInvested,
         investorCount,
-        averageInvestment: assetInvestments.length > 0 ? totalInvested / assetInvestments.length : 0,
-        completionRate: assetInvestments.length > 0 ? 
-          (assetInvestments.filter(inv => inv.status === 'completed').length / assetInvestments.length * 100).toFixed(1) : '0'
+        averageInvestment:
+          assetInvestments.length > 0
+            ? totalInvested / assetInvestments.length
+            : 0,
+        completionRate:
+          assetInvestments.length > 0
+            ? (
+                (assetInvestments.filter(inv => inv.status === 'completed')
+                  .length /
+                  assetInvestments.length) *
+                100
+              ).toFixed(1)
+            : '0',
       };
     });
   }
@@ -211,7 +246,11 @@ export class AnalyticsIntegration {
   /**
    * Get user analytics with database integration
    */
-  async getUserAnalytics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getUserAnalytics(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getAnalyticsData();
       if (result.success && result.data) {
@@ -227,7 +266,11 @@ export class AnalyticsIntegration {
   /**
    * Get asset analytics with database integration
    */
-  async getAssetAnalytics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getAssetAnalytics(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getAnalyticsData();
       if (result.success && result.data) {
@@ -243,7 +286,11 @@ export class AnalyticsIntegration {
   /**
    * Get investment analytics with database integration
    */
-  async getInvestmentAnalytics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getInvestmentAnalytics(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getAnalyticsData();
       if (result.success && result.data) {
@@ -261,7 +308,9 @@ export class AnalyticsIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`AnalyticsIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `AnalyticsIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

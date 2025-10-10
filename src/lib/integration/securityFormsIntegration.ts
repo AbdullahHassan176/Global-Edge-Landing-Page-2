@@ -1,6 +1,6 @@
 /**
  * Security Forms & Waitlist Integration
- * 
+ *
  * This service tracks security forms, waitlist applications, and user information
  * with database integration and fallback to mock data.
  */
@@ -11,7 +11,12 @@ import { emailIntegration } from './emailIntegration';
 
 export interface SecurityForm {
   id: string;
-  type: 'kyc' | 'aml' | 'compliance' | 'risk_assessment' | 'identity_verification';
+  type:
+    | 'kyc'
+    | 'aml'
+    | 'compliance'
+    | 'risk_assessment'
+    | 'identity_verification';
   userId: string;
   status: 'pending' | 'in_progress' | 'completed' | 'rejected' | 'expired';
   formData: any;
@@ -52,7 +57,12 @@ export interface UserInfo {
   country: string;
   role: 'investor' | 'issuer' | 'admin' | 'moderator';
   status: 'active' | 'pending' | 'suspended' | 'verified';
-  kycStatus: 'not_started' | 'in_progress' | 'pending_review' | 'approved' | 'rejected';
+  kycStatus:
+    | 'not_started'
+    | 'in_progress'
+    | 'pending_review'
+    | 'approved'
+    | 'rejected';
   createdAt: string;
   lastLogin?: string;
   totalInvestments?: number;
@@ -68,7 +78,11 @@ export class SecurityFormsIntegration {
   /**
    * Get all security forms with database integration
    */
-  async getSecurityForms(): Promise<{ success: boolean; forms?: SecurityForm[]; error?: string }> {
+  async getSecurityForms(): Promise<{
+    success: boolean;
+    forms?: SecurityForm[];
+    error?: string;
+  }> {
     try {
       // Use mock service for now (database integration needs proper security forms container)
       const mockForms = this.getMockSecurityForms();
@@ -82,7 +96,9 @@ export class SecurityFormsIntegration {
   /**
    * Get security forms by user ID
    */
-  async getSecurityFormsByUserId(userId: string): Promise<{ success: boolean; forms?: SecurityForm[]; error?: string }> {
+  async getSecurityFormsByUserId(
+    userId: string
+  ): Promise<{ success: boolean; forms?: SecurityForm[]; error?: string }> {
     try {
       const result = await this.getSecurityForms();
       if (result.success && result.forms) {
@@ -99,12 +115,14 @@ export class SecurityFormsIntegration {
   /**
    * Create new security form
    */
-  async createSecurityForm(formData: Omit<SecurityForm, 'id' | 'submittedAt'>): Promise<{ success: boolean; form?: SecurityForm; error?: string }> {
+  async createSecurityForm(
+    formData: Omit<SecurityForm, 'id' | 'submittedAt'>
+  ): Promise<{ success: boolean; form?: SecurityForm; error?: string }> {
     try {
       const newForm: SecurityForm = {
         ...formData,
         id: `form_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        submittedAt: new Date().toISOString()
+        submittedAt: new Date().toISOString(),
       };
 
       // Send security notification
@@ -122,9 +140,9 @@ export class SecurityFormsIntegration {
    * Update security form status
    */
   async updateSecurityFormStatus(
-    formId: string, 
-    status: SecurityForm['status'], 
-    reviewedBy?: string, 
+    formId: string,
+    status: SecurityForm['status'],
+    reviewedBy?: string,
     reviewNotes?: string
   ): Promise<{ success: boolean; form?: SecurityForm; error?: string }> {
     try {
@@ -140,7 +158,11 @@ export class SecurityFormsIntegration {
   /**
    * Get all waitlist applications
    */
-  async getWaitlistApplications(): Promise<{ success: boolean; applications?: WaitlistApplication[]; error?: string }> {
+  async getWaitlistApplications(): Promise<{
+    success: boolean;
+    applications?: WaitlistApplication[];
+    error?: string;
+  }> {
     try {
       // Use mock service for now (database integration needs proper waitlist container)
       const mockApplications = this.getMockWaitlistApplications();
@@ -154,12 +176,18 @@ export class SecurityFormsIntegration {
   /**
    * Create new waitlist application
    */
-  async createWaitlistApplication(applicationData: Omit<WaitlistApplication, 'id' | 'submittedAt'>): Promise<{ success: boolean; application?: WaitlistApplication; error?: string }> {
+  async createWaitlistApplication(
+    applicationData: Omit<WaitlistApplication, 'id' | 'submittedAt'>
+  ): Promise<{
+    success: boolean;
+    application?: WaitlistApplication;
+    error?: string;
+  }> {
     try {
       const newApplication: WaitlistApplication = {
         ...applicationData,
         id: `waitlist_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        submittedAt: new Date().toISOString()
+        submittedAt: new Date().toISOString(),
       };
 
       // For now, just return success
@@ -174,25 +202,36 @@ export class SecurityFormsIntegration {
    * Update waitlist application status
    */
   async updateWaitlistApplicationStatus(
-    applicationId: string, 
-    status: WaitlistApplication['status'], 
-    approvedBy?: string, 
+    applicationId: string,
+    status: WaitlistApplication['status'],
+    approvedBy?: string,
     notes?: string
-  ): Promise<{ success: boolean; application?: WaitlistApplication; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    application?: WaitlistApplication;
+    error?: string;
+  }> {
     try {
       // In a real implementation, update the application in the database
       // For now, return success
       return { success: true };
     } catch (error) {
       console.error('Update waitlist application status error:', error);
-      return { success: false, error: 'Failed to update waitlist application status' };
+      return {
+        success: false,
+        error: 'Failed to update waitlist application status',
+      };
     }
   }
 
   /**
    * Get comprehensive user information
    */
-  async getUserInfo(): Promise<{ success: boolean; users?: UserInfo[]; error?: string }> {
+  async getUserInfo(): Promise<{
+    success: boolean;
+    users?: UserInfo[];
+    error?: string;
+  }> {
     try {
       // Use mock service for now (database integration needs proper user info container)
       const mockUsers = userAuthService.getAllUsers();
@@ -207,12 +246,16 @@ export class SecurityFormsIntegration {
   /**
    * Get security and compliance statistics
    */
-  async getSecurityStats(): Promise<{ success: boolean; stats?: any; error?: string }> {
+  async getSecurityStats(): Promise<{
+    success: boolean;
+    stats?: any;
+    error?: string;
+  }> {
     try {
       const [formsResult, applicationsResult, usersResult] = await Promise.all([
         this.getSecurityForms(),
         this.getWaitlistApplications(),
-        this.getUserInfo()
+        this.getUserInfo(),
       ]);
 
       const forms = formsResult.forms || [];
@@ -230,9 +273,12 @@ export class SecurityFormsIntegration {
             kyc: forms.filter(f => f.type === 'kyc').length,
             aml: forms.filter(f => f.type === 'aml').length,
             compliance: forms.filter(f => f.type === 'compliance').length,
-            risk_assessment: forms.filter(f => f.type === 'risk_assessment').length,
-            identity_verification: forms.filter(f => f.type === 'identity_verification').length
-          }
+            risk_assessment: forms.filter(f => f.type === 'risk_assessment')
+              .length,
+            identity_verification: forms.filter(
+              f => f.type === 'identity_verification'
+            ).length,
+          },
         },
         waitlistApplications: {
           total: applications.length,
@@ -243,8 +289,8 @@ export class SecurityFormsIntegration {
           byRole: {
             investors: applications.filter(a => a.role === 'investor').length,
             issuers: applications.filter(a => a.role === 'issuer').length,
-            partners: applications.filter(a => a.role === 'partner').length
-          }
+            partners: applications.filter(a => a.role === 'partner').length,
+          },
         },
         users: {
           total: users.length,
@@ -255,11 +301,12 @@ export class SecurityFormsIntegration {
           kycStatus: {
             notStarted: users.filter(u => u.kycStatus === 'not_started').length,
             inProgress: users.filter(u => u.kycStatus === 'in_progress').length,
-            pendingReview: users.filter(u => u.kycStatus === 'pending_review').length,
+            pendingReview: users.filter(u => u.kycStatus === 'pending_review')
+              .length,
             approved: users.filter(u => u.kycStatus === 'approved').length,
-            rejected: users.filter(u => u.kycStatus === 'rejected').length
-          }
-        }
+            rejected: users.filter(u => u.kycStatus === 'rejected').length,
+          },
+        },
       };
 
       return { success: true, stats };
@@ -286,7 +333,7 @@ export class SecurityFormsIntegration {
       attachments: item.attachments || [],
       priority: item.priority || 'medium',
       expiresAt: item.expiresAt,
-      metadata: item.metadata || {}
+      metadata: item.metadata || {},
     };
   }
 
@@ -309,7 +356,7 @@ export class SecurityFormsIntegration {
       priority: item.priority || 'medium',
       source: item.source || 'website',
       notes: item.notes,
-      metadata: item.metadata || {}
+      metadata: item.metadata || {},
     };
   }
 
@@ -333,7 +380,7 @@ export class SecurityFormsIntegration {
       totalAssets: item.totalAssets || 0,
       complianceScore: item.complianceScore || 0,
       riskLevel: item.riskLevel || 'medium',
-      metadata: item.metadata || {}
+      metadata: item.metadata || {},
     };
   }
 
@@ -354,7 +401,7 @@ export class SecurityFormsIntegration {
         reviewNotes: 'All documents verified',
         attachments: ['passport.pdf', 'utility_bill.pdf'],
         priority: 'high',
-        metadata: { source: 'web_form' }
+        metadata: { source: 'web_form' },
       },
       {
         id: 'form_2',
@@ -364,8 +411,8 @@ export class SecurityFormsIntegration {
         formData: { riskAssessment: 'medium' },
         submittedAt: '2024-01-20T09:00:00Z',
         priority: 'medium',
-        metadata: { source: 'mobile_app' }
-      }
+        metadata: { source: 'mobile_app' },
+      },
     ];
   }
 
@@ -388,7 +435,7 @@ export class SecurityFormsIntegration {
         approvedBy: 'admin_1',
         priority: 'high',
         source: 'website',
-        notes: 'High net worth individual'
+        notes: 'High net worth individual',
       },
       {
         id: 'waitlist_2',
@@ -401,8 +448,8 @@ export class SecurityFormsIntegration {
         submittedAt: '2024-01-18T14:00:00Z',
         priority: 'medium',
         source: 'referral',
-        notes: 'Real estate company'
-      }
+        notes: 'Real estate company',
+      },
     ];
   }
 
@@ -412,7 +459,7 @@ export class SecurityFormsIntegration {
   private async sendSecurityNotification(form: SecurityForm): Promise<void> {
     try {
       await emailIntegration.initialize();
-      
+
       const result = await emailIntegration.sendCustomEmail(
         'security@theglobaledge.io',
         `Security Form Submitted - ${form.type.toUpperCase()}`,
@@ -433,10 +480,10 @@ This is an automated security notification.
         `,
         {
           priority: form.priority === 'urgent' ? 'high' : 'normal',
-          isHtml: false
+          isHtml: false,
         }
       );
-      
+
       if (result.success) {
         console.log('✅ Security notification sent successfully');
       } else {

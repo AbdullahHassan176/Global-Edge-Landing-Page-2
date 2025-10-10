@@ -7,7 +7,10 @@ const { execSync } = require('child_process');
 // Get all page.tsx files with Head imports
 function getPagesWithHead() {
   try {
-    const result = execSync('grep -r "import.*Head.*from.*next/head" src/app --include="page.tsx" -l', { encoding: 'utf8' });
+    const result = execSync(
+      'grep -r "import.*Head.*from.*next/head" src/app --include="page.tsx" -l',
+      { encoding: 'utf8' }
+    );
     return result.trim().split('\n').filter(Boolean);
   } catch (error) {
     console.log('No more pages with Head imports found');
@@ -18,15 +21,15 @@ function getPagesWithHead() {
 // Remove Head block from page.tsx
 function removeHeadFromPage(pagePath) {
   console.log(`Removing Head from ${pagePath}...`);
-  
+
   let content = fs.readFileSync(pagePath, 'utf8');
-  
+
   // Remove Head import
   content = content.replace(/import Head from 'next\/head';\n?/g, '');
-  
+
   // Remove Head block (including the opening and closing tags and everything in between)
   content = content.replace(/<Head>[\s\S]*?<\/Head>\s*/g, '');
-  
+
   fs.writeFileSync(pagePath, content);
   console.log(`Updated ${pagePath}`);
 }
@@ -34,7 +37,7 @@ function removeHeadFromPage(pagePath) {
 // Main function
 function main() {
   const pages = getPagesWithHead();
-  
+
   if (pages.length === 0) {
     console.log('No pages with Head imports found. All Head blocks removed!');
     return;
@@ -42,9 +45,9 @@ function main() {
 
   console.log(`Found ${pages.length} pages with Head imports:`);
   pages.forEach(page => console.log(`  - ${page}`));
-  
+
   pages.forEach(removeHeadFromPage);
-  
+
   console.log('\nHead removal complete!');
   console.log('Remaining pages with Head imports:');
   const remaining = getPagesWithHead();
@@ -60,4 +63,3 @@ if (require.main === module) {
 }
 
 module.exports = { removeHeadFromPage };
-

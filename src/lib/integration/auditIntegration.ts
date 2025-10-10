@@ -1,6 +1,6 @@
 /**
  * Audit Logging Integration
- * 
+ *
  * This service provides comprehensive activity tracking and audit logging
  * while maintaining backward compatibility with mock data.
  */
@@ -10,7 +10,15 @@ export interface AuditEvent {
   userId?: string;
   sessionId?: string;
   timestamp: string;
-  event: 'create' | 'read' | 'update' | 'delete' | 'login' | 'logout' | 'access_denied' | 'system_event';
+  event:
+    | 'create'
+    | 'read'
+    | 'update'
+    | 'delete'
+    | 'login'
+    | 'logout'
+    | 'access_denied'
+    | 'system_event';
   entityType: string; // e.g., 'User', 'Asset', 'Investment', 'SystemSetting'
   entityId?: string; // ID of the entity affected
   action: string; // Human-readable description of the action
@@ -29,7 +37,13 @@ export interface AuditEvent {
   }[];
   metadata?: Record<string, any>;
   severity: 'low' | 'medium' | 'high' | 'critical';
-  category: 'authentication' | 'authorization' | 'data_access' | 'data_modification' | 'system' | 'security';
+  category:
+    | 'authentication'
+    | 'authorization'
+    | 'data_access'
+    | 'data_modification'
+    | 'system'
+    | 'security';
 }
 
 export interface AuditFilter {
@@ -77,19 +91,24 @@ export class AuditIntegration {
       return { success: true };
     } catch (error) {
       console.error('Audit integration initialization error:', error);
-      return { success: false, error: 'Failed to initialize audit integration' };
+      return {
+        success: false,
+        error: 'Failed to initialize audit integration',
+      };
     }
   }
 
   /**
    * Log audit event
    */
-  async logEvent(eventData: Omit<AuditEvent, 'id' | 'timestamp'>): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logEvent(
+    eventData: Omit<AuditEvent, 'id' | 'timestamp'>
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     try {
       const event: AuditEvent = {
         ...eventData,
         id: `audit_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       // Add to in-memory storage
@@ -105,7 +124,9 @@ export class AuditIntegration {
         await this.storeAuditEventInDatabase(event);
       }
 
-      console.log(`Audit event logged: ${event.event} - ${event.entityType} - ${event.action}`);
+      console.log(
+        `Audit event logged: ${event.event} - ${event.entityType} - ${event.action}`
+      );
       return { success: true, eventId: event.id };
     } catch (error) {
       console.error('Log audit event error:', error);
@@ -116,26 +137,37 @@ export class AuditIntegration {
   /**
    * Log user login
    */
-  async logLogin(userId: string, ipAddress?: string, userAgent?: string, success: boolean = true): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logLogin(
+    userId: string,
+    ipAddress?: string,
+    userAgent?: string,
+    success: boolean = true
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: success ? 'login' : 'access_denied',
       entityType: 'User',
       entityId: userId,
       action: success ? 'User logged in successfully' : 'Failed login attempt',
-      details: success ? 'User successfully authenticated' : 'Authentication failed',
+      details: success
+        ? 'User successfully authenticated'
+        : 'Authentication failed',
       ipAddress,
       userAgent,
       severity: success ? 'low' : 'medium',
       category: 'authentication',
-      metadata: { success }
+      metadata: { success },
     });
   }
 
   /**
    * Log user logout
    */
-  async logLogout(userId: string, ipAddress?: string, userAgent?: string): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logLogout(
+    userId: string,
+    ipAddress?: string,
+    userAgent?: string
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: 'logout',
@@ -146,14 +178,20 @@ export class AuditIntegration {
       ipAddress,
       userAgent,
       severity: 'low',
-      category: 'authentication'
+      category: 'authentication',
     });
   }
 
   /**
    * Log data creation
    */
-  async logCreate(userId: string, entityType: string, entityId: string, details: string, changes?: any[]): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logCreate(
+    userId: string,
+    entityType: string,
+    entityId: string,
+    details: string,
+    changes?: any[]
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: 'create',
@@ -163,14 +201,20 @@ export class AuditIntegration {
       details,
       changes,
       severity: 'medium',
-      category: 'data_modification'
+      category: 'data_modification',
     });
   }
 
   /**
    * Log data update
    */
-  async logUpdate(userId: string, entityType: string, entityId: string, details: string, changes: any[]): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logUpdate(
+    userId: string,
+    entityType: string,
+    entityId: string,
+    details: string,
+    changes: any[]
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: 'update',
@@ -180,14 +224,19 @@ export class AuditIntegration {
       details,
       changes,
       severity: 'medium',
-      category: 'data_modification'
+      category: 'data_modification',
     });
   }
 
   /**
    * Log data deletion
    */
-  async logDelete(userId: string, entityType: string, entityId: string, details: string): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logDelete(
+    userId: string,
+    entityType: string,
+    entityId: string,
+    details: string
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: 'delete',
@@ -196,14 +245,19 @@ export class AuditIntegration {
       action: `Deleted ${entityType}`,
       details,
       severity: 'high',
-      category: 'data_modification'
+      category: 'data_modification',
     });
   }
 
   /**
    * Log data access
    */
-  async logRead(userId: string, entityType: string, entityId?: string, details: string = 'Data accessed'): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logRead(
+    userId: string,
+    entityType: string,
+    entityId?: string,
+    details: string = 'Data accessed'
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: 'read',
@@ -212,28 +266,37 @@ export class AuditIntegration {
       action: `Accessed ${entityType}`,
       details,
       severity: 'low',
-      category: 'data_access'
+      category: 'data_access',
     });
   }
 
   /**
    * Log system event
    */
-  async logSystemEvent(event: string, details: string, severity: 'low' | 'medium' | 'high' | 'critical' = 'medium'): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logSystemEvent(
+    event: string,
+    details: string,
+    severity: 'low' | 'medium' | 'high' | 'critical' = 'medium'
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       event: 'system_event',
       entityType: 'System',
       action: event,
       details,
       severity,
-      category: 'system'
+      category: 'system',
     });
   }
 
   /**
    * Log security event
    */
-  async logSecurityEvent(event: string, details: string, userId?: string, severity: 'medium' | 'high' | 'critical' = 'high'): Promise<{ success: boolean; eventId?: string; error?: string }> {
+  async logSecurityEvent(
+    event: string,
+    details: string,
+    userId?: string,
+    severity: 'medium' | 'high' | 'critical' = 'high'
+  ): Promise<{ success: boolean; eventId?: string; error?: string }> {
     return await this.logEvent({
       userId,
       event: 'access_denied',
@@ -241,14 +304,19 @@ export class AuditIntegration {
       action: event,
       details,
       severity,
-      category: 'security'
+      category: 'security',
     });
   }
 
   /**
    * Get audit events with filtering
    */
-  async getAuditEvents(filter: AuditFilter = {}): Promise<{ success: boolean; events?: AuditEvent[]; total?: number; error?: string }> {
+  async getAuditEvents(filter: AuditFilter = {}): Promise<{
+    success: boolean;
+    events?: AuditEvent[];
+    total?: number;
+    error?: string;
+  }> {
     try {
       let filteredEvents = [...this.auditEvents];
 
@@ -260,22 +328,34 @@ export class AuditIntegration {
         filteredEvents = filteredEvents.filter(e => e.event === filter.event);
       }
       if (filter.entityType) {
-        filteredEvents = filteredEvents.filter(e => e.entityType === filter.entityType);
+        filteredEvents = filteredEvents.filter(
+          e => e.entityType === filter.entityType
+        );
       }
       if (filter.category) {
-        filteredEvents = filteredEvents.filter(e => e.category === filter.category);
+        filteredEvents = filteredEvents.filter(
+          e => e.category === filter.category
+        );
       }
       if (filter.severity) {
-        filteredEvents = filteredEvents.filter(e => e.severity === filter.severity);
+        filteredEvents = filteredEvents.filter(
+          e => e.severity === filter.severity
+        );
       }
       if (filter.startDate) {
-        filteredEvents = filteredEvents.filter(e => e.timestamp >= filter.startDate!);
+        filteredEvents = filteredEvents.filter(
+          e => e.timestamp >= filter.startDate!
+        );
       }
       if (filter.endDate) {
-        filteredEvents = filteredEvents.filter(e => e.timestamp <= filter.endDate!);
+        filteredEvents = filteredEvents.filter(
+          e => e.timestamp <= filter.endDate!
+        );
       }
       if (filter.ipAddress) {
-        filteredEvents = filteredEvents.filter(e => e.ipAddress === filter.ipAddress);
+        filteredEvents = filteredEvents.filter(
+          e => e.ipAddress === filter.ipAddress
+        );
       }
 
       // Apply pagination
@@ -294,7 +374,9 @@ export class AuditIntegration {
   /**
    * Get audit statistics
    */
-  async getAuditStats(filter: AuditFilter = {}): Promise<{ success: boolean; stats?: AuditStats; error?: string }> {
+  async getAuditStats(
+    filter: AuditFilter = {}
+  ): Promise<{ success: boolean; stats?: AuditStats; error?: string }> {
     try {
       const eventsResult = await this.getAuditEvents(filter);
       if (!eventsResult.success || !eventsResult.events) {
@@ -311,8 +393,12 @@ export class AuditIntegration {
         eventsByDay: this.getEventsByDay(events),
         topEntities: this.getTopEntities(events),
         securityEvents: events.filter(e => e.category === 'security').length,
-        failedLogins: events.filter(e => e.event === 'access_denied' && e.category === 'authentication').length,
-        dataModifications: events.filter(e => ['create', 'update', 'delete'].includes(e.event)).length
+        failedLogins: events.filter(
+          e => e.event === 'access_denied' && e.category === 'authentication'
+        ).length,
+        dataModifications: events.filter(e =>
+          ['create', 'update', 'delete'].includes(e.event)
+        ).length,
       };
 
       return { success: true, stats };
@@ -383,7 +469,9 @@ export class AuditIntegration {
   /**
    * Get top entities
    */
-  private getTopEntities(events: AuditEvent[]): Array<{ entityType: string; count: number }> {
+  private getTopEntities(
+    events: AuditEvent[]
+  ): Array<{ entityType: string; count: number }> {
     const entityStats: Record<string, number> = {};
     events.forEach(event => {
       entityStats[event.entityType] = (entityStats[event.entityType] || 0) + 1;
@@ -411,7 +499,9 @@ export class AuditIntegration {
   /**
    * Store audit event in database
    */
-  private async storeAuditEventInDatabase(event: AuditEvent): Promise<{ success: boolean; error?: string }> {
+  private async storeAuditEventInDatabase(
+    event: AuditEvent
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would store in the database
       // For now, we'll just log it
@@ -419,7 +509,10 @@ export class AuditIntegration {
       return { success: true };
     } catch (error) {
       console.error('Store audit event in database error:', error);
-      return { success: false, error: 'Failed to store audit event in database' };
+      return {
+        success: false,
+        error: 'Failed to store audit event in database',
+      };
     }
   }
 
@@ -438,9 +531,10 @@ export class AuditIntegration {
         action: 'User logged in successfully',
         details: 'User successfully authenticated',
         ipAddress: '192.168.1.100',
-        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         severity: 'low',
-        category: 'authentication'
+        category: 'authentication',
       },
       {
         id: 'audit_2',
@@ -454,10 +548,10 @@ export class AuditIntegration {
         ipAddress: '192.168.1.100',
         changes: [
           { field: 'amount', oldValue: null, newValue: 50000 },
-          { field: 'assetId', oldValue: null, newValue: 'asset-1' }
+          { field: 'assetId', oldValue: null, newValue: 'asset-1' },
         ],
         severity: 'medium',
-        category: 'data_modification'
+        category: 'data_modification',
       },
       {
         id: 'audit_3',
@@ -470,11 +564,11 @@ export class AuditIntegration {
         details: 'Admin updated user KYC status',
         ipAddress: '192.168.1.50',
         changes: [
-          { field: 'kycStatus', oldValue: 'pending', newValue: 'approved' }
+          { field: 'kycStatus', oldValue: 'pending', newValue: 'approved' },
         ],
         severity: 'medium',
-        category: 'data_modification'
-      }
+        category: 'data_modification',
+      },
     ];
 
     this.auditEvents = mockEvents;
@@ -485,7 +579,9 @@ export class AuditIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`AuditIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `AuditIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

@@ -5,29 +5,36 @@ import NotificationCenter from '../NotificationCenter';
 // Mock the exceptions client
 jest.mock('@/lib/exceptions', () => ({
   exceptionsClient: {
-    getExceptions: jest.fn()
+    getExceptions: jest.fn(),
   },
   EXCEPTION_TYPE_MAPPING: {
     SLA_BREACH: {
       title: 'SLA Breach Detected',
       description: 'Service level agreement has been breached for this asset',
-      color: 'red'
+      color: 'red',
     },
     DOC_MISMATCH: {
       title: 'Document Mismatch',
-      description: 'Document verification failed - documents do not match expected format',
-      color: 'orange'
-    }
+      description:
+        'Document verification failed - documents do not match expected format',
+      color: 'orange',
+    },
   },
   SEVERITY_COLORS: {
     HIGH: 'bg-red-100 text-red-800',
-    MEDIUM: 'bg-yellow-100 text-yellow-800'
-  }
+    MEDIUM: 'bg-yellow-100 text-yellow-800',
+  },
 }));
 
 // Mock Icon component
 jest.mock('@/components/ui/Icon', () => {
-  return function MockIcon({ name, className }: { name: string; className?: string }) {
+  return function MockIcon({
+    name,
+    className,
+  }: {
+    name: string;
+    className?: string;
+  }) {
     return <span data-testid={`icon-${name}`} className={className} />;
   };
 });
@@ -49,11 +56,11 @@ describe('NotificationCenter', () => {
           assetName: 'Container GE-2024-001',
           message: 'Delivery deadline exceeded by 3 days',
           occurredAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-          resolved: false
-        }
+          resolved: false,
+        },
       ],
       total: 1,
-      hasMore: false
+      hasMore: false,
     });
 
     render(<NotificationCenter showHighPriority={true} />);
@@ -74,7 +81,9 @@ describe('NotificationCenter', () => {
 
     render(<NotificationCenter showHighPriority={true} />);
 
-    expect(screen.getByText('Loading high priority notifications...')).toBeInTheDocument();
+    expect(
+      screen.getByText('Loading high priority notifications...')
+    ).toBeInTheDocument();
   });
 
   it('shows error state when exceptions fail to load', async () => {
@@ -84,7 +93,9 @@ describe('NotificationCenter', () => {
     render(<NotificationCenter showHighPriority={true} />);
 
     await waitFor(() => {
-      expect(screen.getByText('Failed to load high priority notifications')).toBeInTheDocument();
+      expect(
+        screen.getByText('Failed to load high priority notifications')
+      ).toBeInTheDocument();
     });
   });
 
@@ -93,7 +104,7 @@ describe('NotificationCenter', () => {
     exceptionsClient.getExceptions.mockResolvedValue({
       exceptions: [],
       total: 0,
-      hasMore: false
+      hasMore: false,
     });
 
     render(<NotificationCenter showHighPriority={true} />);
@@ -123,11 +134,11 @@ describe('NotificationCenter', () => {
           assetName: 'Container GE-2024-001',
           message: 'Delivery deadline exceeded',
           occurredAt: new Date().toISOString(),
-          resolved: false
-        }
+          resolved: false,
+        },
       ],
       total: 1,
-      hasMore: false
+      hasMore: false,
     });
 
     render(<NotificationCenter showHighPriority={true} />);
@@ -150,11 +161,11 @@ describe('NotificationCenter', () => {
           assetName: 'Container GE-2024-001',
           message: 'Delivery deadline exceeded',
           occurredAt: new Date().toISOString(),
-          resolved: false
-        }
+          resolved: false,
+        },
       ],
       total: 1,
-      hasMore: false
+      hasMore: false,
     });
 
     render(<NotificationCenter showHighPriority={true} />);

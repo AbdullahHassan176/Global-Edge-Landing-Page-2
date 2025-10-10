@@ -7,25 +7,32 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error('Waitlist API error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const result = await securityFormsIntegration.createWaitlistApplication(body);
+    const result =
+      await securityFormsIntegration.createWaitlistApplication(body);
 
     return NextResponse.json(result);
   } catch (error) {
     console.error('Create waitlist application API error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -35,25 +42,32 @@ export async function PUT(request: NextRequest) {
     const { applicationId, status, approvedBy, notes } = body;
 
     if (!applicationId || !status) {
-      return NextResponse.json({
-        success: false,
-        error: 'Application ID and status are required'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Application ID and status are required',
+        },
+        { status: 400 }
+      );
     }
 
-    const result = await securityFormsIntegration.updateWaitlistApplicationStatus(
-      applicationId, 
-      status, 
-      approvedBy, 
-      notes
-    );
+    const result =
+      await securityFormsIntegration.updateWaitlistApplicationStatus(
+        applicationId,
+        status,
+        approvedBy,
+        notes
+      );
 
     return NextResponse.json(result);
   } catch (error) {
     console.error('Update waitlist application API error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

@@ -1,6 +1,6 @@
 /**
  * Individual User API Route
- * 
+ *
  * This endpoint handles operations for a specific user
  */
 
@@ -32,14 +32,13 @@ export async function GET(
     }
 
     return NextResponse.json(result);
-
   } catch (error) {
     console.error('Get user error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -74,14 +73,13 @@ export async function PUT(
     }
 
     return NextResponse.json(result);
-
   } catch (error) {
     console.error('Update user error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -103,9 +101,9 @@ export async function DELETE(
     }
 
     // For now, we'll just mark the user as suspended instead of deleting
-    const result = await databaseService.updateUser(id, { 
+    const result = await databaseService.updateUser(id, {
       status: 'suspended',
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     });
 
     if (!result.success) {
@@ -117,16 +115,15 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      message: 'User suspended successfully'
+      message: 'User suspended successfully',
     });
-
   } catch (error) {
     console.error('Delete user error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

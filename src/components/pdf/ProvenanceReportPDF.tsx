@@ -119,10 +119,14 @@ interface ProvenanceReportPDFProps {
   generatedAt: string;
 }
 
-export const ProvenanceReportPDF = ({ assetKey, timeline, generatedAt }: ProvenanceReportPDFProps) => {
+export const ProvenanceReportPDF = ({
+  assetKey,
+  timeline,
+  generatedAt,
+}: ProvenanceReportPDFProps) => {
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size='A4' style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.logo}>Global Edge</Text>
@@ -150,10 +154,12 @@ export const ProvenanceReportPDF = ({ assetKey, timeline, generatedAt }: Provena
           {timeline.map((item, index) => (
             <View key={index} style={styles.tableRow}>
               <View style={styles.tableCell}>
-                <Text style={[
-                  styles.typeBadge,
-                  item.type === 'event' ? styles.eventBadge : styles.docBadge
-                ]}>
+                <Text
+                  style={[
+                    styles.typeBadge,
+                    item.type === 'event' ? styles.eventBadge : styles.docBadge,
+                  ]}
+                >
                   {item.type === 'event' ? 'ON-CHAIN' : 'DOC'}
                 </Text>
               </View>
@@ -161,17 +167,22 @@ export const ProvenanceReportPDF = ({ assetKey, timeline, generatedAt }: Provena
                 {item.type === 'event' ? item.event?.eventType : item.doc?.kind}
               </Text>
               <Text style={[styles.tableCell, { flex: 1 }]}>
-                {new Date(item.type === 'event' ? item.event?.eventTime || '' : new Date()).toLocaleString()}
+                {new Date(
+                  item.type === 'event'
+                    ? item.event?.eventTime || ''
+                    : new Date()
+                ).toLocaleString()}
               </Text>
               <Text style={[styles.tableCell, { flex: 1.2 }]}>
-                {item.type === 'event' ? 
-                  `${item.event?.signer?.slice(0, 6)}...${item.event?.signer?.slice(-4)}` : 
-                  'N/A'
-                }
+                {item.type === 'event'
+                  ? `${item.event?.signer?.slice(0, 6)}...${item.event?.signer?.slice(-4)}`
+                  : 'N/A'}
               </Text>
               <Text style={[styles.tableCell, { flex: 2 }]}>
                 <Text style={styles.hashText}>
-                  {item.type === 'event' ? item.event?.txHash : item.doc?.docHash}
+                  {item.type === 'event'
+                    ? item.event?.txHash
+                    : item.doc?.docHash}
                 </Text>
               </Text>
             </View>

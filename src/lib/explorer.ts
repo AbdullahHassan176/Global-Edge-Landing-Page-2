@@ -94,7 +94,7 @@ export function getChainName(chainId: number): string {
     10: 'Optimism',
     420: 'Optimism Goerli',
   };
-  
+
   return chainNames[chainId] || `Chain ${chainId}`;
 }
 

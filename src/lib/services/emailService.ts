@@ -35,18 +35,22 @@ class EmailService {
   /**
    * Send a single email
    */
-  async sendEmail(options: EmailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  async sendEmail(
+    options: EmailOptions
+  ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
+          Authorization: `Bearer ${this.apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           personalizations: [
             {
-              to: Array.isArray(options.to) ? options.to.map(email => ({ email })) : [{ email: options.to }],
+              to: Array.isArray(options.to)
+                ? options.to.map(email => ({ email }))
+                : [{ email: options.to }],
               subject: options.subject,
             },
           ],
@@ -60,10 +64,14 @@ class EmailService {
               type: 'text/html',
               value: options.html,
             },
-            ...(options.text ? [{
-              type: 'text/plain',
-              value: options.text,
-            }] : []),
+            ...(options.text
+              ? [
+                  {
+                    type: 'text/plain',
+                    value: options.text,
+                  },
+                ]
+              : []),
           ],
         }),
       });
@@ -76,9 +84,10 @@ class EmailService {
         return { success: false, error: `SendGrid API error: ${error}` };
       }
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred' 
+      return {
+        success: false,
+        error:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -86,9 +95,13 @@ class EmailService {
   /**
    * Send welcome email to new users
    */
-  async sendWelcomeEmail(userEmail: string, userName: string, userRole: 'issuer' | 'investor'): Promise<{ success: boolean; error?: string }> {
+  async sendWelcomeEmail(
+    userEmail: string,
+    userName: string,
+    userRole: 'issuer' | 'investor'
+  ): Promise<{ success: boolean; error?: string }> {
     const subject = `Welcome to Global Edge - ${userRole === 'issuer' ? 'Asset Issuer' : 'Investor'} Platform`;
-    
+
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #1a365d;">Welcome to Global Edge, ${userName}!</h1>
@@ -96,19 +109,23 @@ class EmailService {
         
         <div style="background-color: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #2d3748; margin-top: 0;">What's Next?</h3>
-          ${userRole === 'issuer' ? `
+          ${
+            userRole === 'issuer'
+              ? `
             <ul>
               <li>Complete your KYC verification</li>
               <li>Create your first asset listing</li>
               <li>Set up your issuer profile</li>
             </ul>
-          ` : `
+          `
+              : `
             <ul>
               <li>Complete your KYC verification</li>
               <li>Browse available investment opportunities</li>
               <li>Set up your investment preferences</li>
             </ul>
-          `}
+          `
+          }
         </div>
         
         <p>If you have any questions, please don't hesitate to contact our support team.</p>
@@ -132,11 +149,14 @@ class EmailService {
   /**
    * Send password reset email
    */
-  async sendPasswordResetEmail(userEmail: string, resetToken: string): Promise<{ success: boolean; error?: string }> {
+  async sendPasswordResetEmail(
+    userEmail: string,
+    resetToken: string
+  ): Promise<{ success: boolean; error?: string }> {
     const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
-    
+
     const subject = 'Reset Your Global Edge Password';
-    
+
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #1a365d;">Password Reset Request</h1>
@@ -174,13 +194,13 @@ class EmailService {
    * Send investment notification email
    */
   async sendInvestmentNotification(
-    userEmail: string, 
-    userName: string, 
-    investmentAmount: number, 
+    userEmail: string,
+    userName: string,
+    investmentAmount: number,
     assetName: string
   ): Promise<{ success: boolean; error?: string }> {
     const subject = `New Investment in ${assetName}`;
-    
+
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #1a365d;">New Investment Received!</h1>

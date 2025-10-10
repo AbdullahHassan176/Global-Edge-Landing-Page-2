@@ -1,15 +1,21 @@
 /**
  * Working Database Service
- * 
+ *
  * This service works with the existing containers that were successfully created
  * and provides a foundation for integration with your existing services.
  */
 
 import { cosmosClient } from './cosmosClient';
-import { 
-  User, Asset, Investment, 
-  ApiResponse, PaginatedResponse,
-  QueryOptions, AssetQueryOptions, InvestmentQueryOptions, UserQueryOptions
+import {
+  User,
+  Asset,
+  Investment,
+  ApiResponse,
+  PaginatedResponse,
+  QueryOptions,
+  AssetQueryOptions,
+  InvestmentQueryOptions,
+  UserQueryOptions,
 } from './models';
 
 export class WorkingDatabaseService {
@@ -30,11 +36,13 @@ export class WorkingDatabaseService {
   // USER OPERATIONS (Using existing 'users' container)
   // ============================================================================
 
-  async createUser(user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<User>> {
+  async createUser(
+    user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponse<User>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       const newUser: User = {
         ...user,
         id: this.generateId(),
@@ -45,7 +53,10 @@ export class WorkingDatabaseService {
       const { resource } = await container.items.create(newUser);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -54,14 +65,17 @@ export class WorkingDatabaseService {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
       const { resource } = await container.item(id, id).read();
-      
+
       if (!resource) {
         return { success: false, error: 'User not found' };
       }
-      
+
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -69,19 +83,19 @@ export class WorkingDatabaseService {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       // Add timeout to prevent hanging
-      const { resources } = await Promise.race([
+      const { resources } = (await Promise.race([
         container.items
           .query({
             query: 'SELECT * FROM c WHERE c.email = @email',
-            parameters: [{ name: '@email', value: email }]
+            parameters: [{ name: '@email', value: email }],
           })
           .fetchAll(),
-        new Promise((_, reject) => 
+        new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Database query timeout')), 3000)
-        )
-      ]) as any;
+        ),
+      ])) as any;
 
       if (resources.length === 0) {
         return { success: false, error: 'User not found' };
@@ -89,15 +103,20 @@ export class WorkingDatabaseService {
 
       return { success: true, data: resources[0] };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getUsers(options: UserQueryOptions = {}): Promise<ApiResponse<PaginatedResponse<User>>> {
+  async getUsers(
+    options: UserQueryOptions = {}
+  ): Promise<ApiResponse<PaginatedResponse<User>>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       let query = 'SELECT * FROM c';
       const parameters: any[] = [];
       const conditions: string[] = [];
@@ -137,7 +156,10 @@ export class WorkingDatabaseService {
 
       return { success: true, data: result };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -145,11 +167,13 @@ export class WorkingDatabaseService {
   // ASSET OPERATIONS (Using existing 'assets' container)
   // ============================================================================
 
-  async createAsset(asset: Omit<Asset, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<Asset>> {
+  async createAsset(
+    asset: Omit<Asset, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponse<Asset>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
-      
+
       const newAsset: Asset = {
         ...asset,
         id: this.generateId(),
@@ -160,7 +184,10 @@ export class WorkingDatabaseService {
       const { resource } = await container.items.create(newAsset);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -169,22 +196,27 @@ export class WorkingDatabaseService {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
       const { resource } = await container.item(id, id).read();
-      
+
       if (!resource) {
         return { success: false, error: 'Asset not found' };
       }
-      
+
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getAssets(options: AssetQueryOptions = {}): Promise<ApiResponse<PaginatedResponse<Asset>>> {
+  async getAssets(
+    options: AssetQueryOptions = {}
+  ): Promise<ApiResponse<PaginatedResponse<Asset>>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('assets');
-      
+
       let query = 'SELECT * FROM c';
       const parameters: any[] = [];
       const conditions: string[] = [];
@@ -224,7 +256,10 @@ export class WorkingDatabaseService {
 
       return { success: true, data: result };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -232,11 +267,13 @@ export class WorkingDatabaseService {
   // INVESTMENT OPERATIONS (Using 'users' container with type field)
   // ============================================================================
 
-  async createInvestment(investment: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<Investment>> {
+  async createInvestment(
+    investment: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<ApiResponse<Investment>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users'); // Using users container for now
-      
+
       const newInvestment = {
         ...investment,
         id: this.generateId(),
@@ -247,19 +284,24 @@ export class WorkingDatabaseService {
       const { resource } = await container.items.create(newInvestment);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async getInvestments(options: InvestmentQueryOptions = {}): Promise<ApiResponse<PaginatedResponse<Investment>>> {
+  async getInvestments(
+    options: InvestmentQueryOptions = {}
+  ): Promise<ApiResponse<PaginatedResponse<Investment>>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       const { resources } = await container.items
         .query({
           query: 'SELECT * FROM c WHERE c.type = @type',
-          parameters: [{ name: '@type', value: 'investment' }]
+          parameters: [{ name: '@type', value: 'investment' }],
         })
         .fetchAll();
 
@@ -280,7 +322,10 @@ export class WorkingDatabaseService {
 
       return { success: true, data: result };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -292,7 +337,7 @@ export class WorkingDatabaseService {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       const waitlistSubmission = {
         ...submission,
         id: this.generateId(),
@@ -304,7 +349,10 @@ export class WorkingDatabaseService {
       const { resource } = await container.items.create(waitlistSubmission);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
@@ -312,21 +360,28 @@ export class WorkingDatabaseService {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
-      const query = 'SELECT * FROM c WHERE c.type = "waitlist_submission" ORDER BY c.createdAt DESC';
+
+      const query =
+        'SELECT * FROM c WHERE c.type = "waitlist_submission" ORDER BY c.createdAt DESC';
       const { resources } = await container.items.query(query).fetchAll();
-      
+
       return { success: true, data: resources };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 
-  async updateWaitlistSubmissionStatus(id: string, status: string): Promise<ApiResponse<any>> {
+  async updateWaitlistSubmissionStatus(
+    id: string,
+    status: string
+  ): Promise<ApiResponse<any>> {
     try {
       await this.initialize();
       const container = cosmosClient.getContainer('users');
-      
+
       const { resource: submission } = await container.item(id).read();
       if (!submission) {
         return { success: false, error: 'Waitlist submission not found' };
@@ -338,7 +393,10 @@ export class WorkingDatabaseService {
       const { resource } = await container.items.upsert(submission);
       return { success: true, data: resource };
     } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      };
     }
   }
 

@@ -1,6 +1,6 @@
 /**
  * Simple Analytics Integration
- * 
+ *
  * This service provides basic analytics with fallback to mock data.
  */
 
@@ -14,7 +14,11 @@ export class SimpleAnalyticsIntegration {
   /**
    * Get basic analytics data
    */
-  async getAnalyticsData(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getAnalyticsData(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       // Use mock data
       const mockUsers = userAuthService.getAllUsers();
@@ -28,13 +32,13 @@ export class SimpleAnalyticsIntegration {
           byRole: {
             investors: mockUsers.filter(u => u.role === 'investor').length,
             issuers: mockUsers.filter(u => u.role === 'issuer').length,
-            admins: 0 // No admin role in userAuthService
+            admins: 0, // No admin role in userAuthService
           },
           byStatus: {
             active: mockUsers.filter(u => u.status === 'active').length,
             pending: mockUsers.filter(u => u.status === 'pending').length,
-            suspended: mockUsers.filter(u => u.status === 'suspended').length
-          }
+            suspended: mockUsers.filter(u => u.status === 'suspended').length,
+          },
         },
         assetAnalytics: {
           total: mockAssets.length,
@@ -42,30 +46,38 @@ export class SimpleAnalyticsIntegration {
             containers: mockAssets.filter(a => a.type === 'container').length,
             properties: mockAssets.filter(a => a.type === 'property').length,
             inventory: mockAssets.filter(a => a.type === 'inventory').length,
-            vault: mockAssets.filter(a => a.type === 'vault').length
+            vault: mockAssets.filter(a => a.type === 'vault').length,
           },
           byStatus: {
             active: mockAssets.filter(a => a.status === 'active').length,
             pending: mockAssets.filter(a => a.status === 'pending').length,
-            inactive: mockAssets.filter(a => a.status === 'inactive').length
-          }
+            inactive: mockAssets.filter(a => a.status === 'inactive').length,
+          },
         },
         investmentAnalytics: {
           total: mockInvestments.length,
-          totalValue: mockInvestments.reduce((sum, inv) => sum + (inv.amount || 0), 0),
+          totalValue: mockInvestments.reduce(
+            (sum, inv) => sum + (inv.amount || 0),
+            0
+          ),
           byStatus: {
-            completed: mockInvestments.filter(i => i.status === 'completed').length,
+            completed: mockInvestments.filter(i => i.status === 'completed')
+              .length,
             pending: mockInvestments.filter(i => i.status === 'pending').length,
-            cancelled: mockInvestments.filter(i => i.status === 'cancelled').length
-          }
+            cancelled: mockInvestments.filter(i => i.status === 'cancelled')
+              .length,
+          },
         },
         metrics: mockMetrics,
         summary: {
           totalUsers: mockUsers.length,
           totalAssets: mockAssets.length,
           totalInvestments: mockInvestments.length,
-          totalValue: mockInvestments.reduce((sum, inv) => sum + (inv.amount || 0), 0)
-        }
+          totalValue: mockInvestments.reduce(
+            (sum, inv) => sum + (inv.amount || 0),
+            0
+          ),
+        },
       };
 
       return { success: true, data: analyticsData };
@@ -78,7 +90,11 @@ export class SimpleAnalyticsIntegration {
   /**
    * Get user analytics
    */
-  async getUserAnalytics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getUserAnalytics(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getAnalyticsData();
       if (result.success && result.data) {
@@ -94,7 +110,11 @@ export class SimpleAnalyticsIntegration {
   /**
    * Get asset analytics
    */
-  async getAssetAnalytics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getAssetAnalytics(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getAnalyticsData();
       if (result.success && result.data) {
@@ -110,7 +130,11 @@ export class SimpleAnalyticsIntegration {
   /**
    * Get investment analytics
    */
-  async getInvestmentAnalytics(): Promise<{ success: boolean; data?: any; error?: string }> {
+  async getInvestmentAnalytics(): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getAnalyticsData();
       if (result.success && result.data) {

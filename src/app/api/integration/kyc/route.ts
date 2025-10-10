@@ -1,6 +1,6 @@
 /**
  * Integrated KYC API Route
- * 
+ *
  * This endpoint demonstrates KYC database integration with fallback to mock data
  */
 
@@ -12,18 +12,18 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const useDatabase = searchParams.get('useDatabase') !== 'false';
     const userId = searchParams.get('userId');
-    
+
     // Set integration mode
     kycIntegration.setUseDatabase(useDatabase);
-    
+
     let result;
-    
+
     if (userId) {
       result = await kycIntegration.getKycApplicationByUserId(userId);
     } else {
       result = await kycIntegration.getKycApplications();
     }
-    
+
     if (!result.success) {
       return NextResponse.json(
         { success: false, error: result.error },
@@ -37,17 +37,16 @@ export async function GET(request: NextRequest) {
         applications: 'applications' in result ? result.applications : [],
         source: useDatabase ? 'database' : 'mock',
         count: 'applications' in result ? result.applications?.length || 0 : 0,
-        filters: { userId }
-      }
+        filters: { userId },
+      },
     });
-
   } catch (error) {
     console.error('Get KYC applications error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -58,10 +57,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { useDatabase = true, ...applicationData } = body;
-    
+
     // Set integration mode
     kycIntegration.setUseDatabase(useDatabase);
-    
+
     // Validate required fields
     const requiredFields = ['userId', 'personalDetails', 'documents'];
     for (const field of requiredFields) {
@@ -83,21 +82,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: {
-        application: result.application,
-        source: useDatabase ? 'database' : 'mock'
-      }
-    }, { status: 201 });
-
+    return NextResponse.json(
+      {
+        success: true,
+        data: {
+          application: result.application,
+          source: useDatabase ? 'database' : 'mock',
+        },
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error('Create KYC application error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

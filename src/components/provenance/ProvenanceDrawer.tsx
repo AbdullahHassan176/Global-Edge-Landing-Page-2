@@ -23,7 +23,11 @@ interface ProvenanceDrawerProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function ProvenanceDrawer({ assetKey, open, onOpenChange }: ProvenanceDrawerProps) {
+export function ProvenanceDrawer({
+  assetKey,
+  open,
+  onOpenChange,
+}: ProvenanceDrawerProps) {
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,9 +41,11 @@ export function ProvenanceDrawer({ assetKey, open, onOpenChange }: ProvenanceDra
   const loadTimeline = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await fetch(`/api/provenance/timeline?assetKey=${encodeURIComponent(assetKey)}`);
+      const response = await fetch(
+        `/api/provenance/timeline?assetKey=${encodeURIComponent(assetKey)}`
+      );
       if (!response.ok) {
         throw new Error('Failed to load timeline');
       }
@@ -95,47 +101,48 @@ export function ProvenanceDrawer({ assetKey, open, onOpenChange }: ProvenanceDra
   return (
     <>
       {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+      <div
+        className='fixed inset-0 bg-black bg-opacity-50 z-40'
         onClick={() => onOpenChange(false)}
       />
-      
+
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-96 bg-white shadow-xl z-50 flex flex-col">
+      <div className='fixed right-0 top-0 h-full w-96 bg-white shadow-xl z-50 flex flex-col'>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className='flex items-center justify-between p-4 border-b border-gray-200'>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Provenance</h3>
-            <p className="text-sm text-gray-500">Asset: {assetKey}</p>
+            <h3 className='text-lg font-semibold text-gray-900'>Provenance</h3>
+            <p className='text-sm text-gray-500'>Asset: {assetKey}</p>
           </div>
           <button
             onClick={() => onOpenChange(false)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            aria-label="Close drawer"
+            className='p-2 hover:bg-gray-100 rounded-lg transition-colors'
+            aria-label='Close drawer'
           >
-            <Icon name="x" className="w-5 h-5" />
+            <Icon name='x' className='w-5 h-5' />
           </button>
         </div>
 
         {/* Summary */}
-        <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-          <p className="text-sm text-gray-600">
-            {timeline.length} most recent · {eventCount} on-chain · {docCount} docs
+        <div className='px-4 py-3 bg-gray-50 border-b border-gray-200'>
+          <p className='text-sm text-gray-600'>
+            {timeline.length} most recent · {eventCount} on-chain · {docCount}{' '}
+            docs
           </p>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className='flex-1 overflow-y-auto'>
           {loading ? (
-            <div className="p-4">
-              <div className="space-y-3">
+            <div className='p-4'>
+              <div className='space-y-3'>
                 {[...Array(3)].map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                      <div className="flex-1 space-y-2">
-                        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                        <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                  <div key={i} className='animate-pulse'>
+                    <div className='flex items-center gap-3'>
+                      <div className='w-2 h-2 bg-gray-300 rounded-full'></div>
+                      <div className='flex-1 space-y-2'>
+                        <div className='h-4 bg-gray-300 rounded w-3/4'></div>
+                        <div className='h-3 bg-gray-300 rounded w-1/2'></div>
                       </div>
                     </div>
                   </div>
@@ -143,53 +150,69 @@ export function ProvenanceDrawer({ assetKey, open, onOpenChange }: ProvenanceDra
               </div>
             </div>
           ) : error ? (
-            <div className="p-4">
-              <div className="text-center py-8">
-                <Icon name="exclamation-triangle" className="w-8 h-8 text-red-500 mx-auto mb-2" />
-                <p className="text-red-600 text-sm">{error}</p>
+            <div className='p-4'>
+              <div className='text-center py-8'>
+                <Icon
+                  name='exclamation-triangle'
+                  className='w-8 h-8 text-red-500 mx-auto mb-2'
+                />
+                <p className='text-red-600 text-sm'>{error}</p>
                 <button
                   onClick={loadTimeline}
-                  className="mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  className='mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium'
                 >
                   Try again
                 </button>
               </div>
             </div>
           ) : timeline.length === 0 ? (
-            <div className="p-4">
-              <div className="text-center py-8">
-                <Icon name="document-text" className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-500 text-sm">No events yet</p>
+            <div className='p-4'>
+              <div className='text-center py-8'>
+                <Icon
+                  name='document-text'
+                  className='w-8 h-8 text-gray-400 mx-auto mb-2'
+                />
+                <p className='text-gray-500 text-sm'>No events yet</p>
               </div>
             </div>
           ) : (
-            <div className="p-4">
-              <div className="space-y-3">
+            <div className='p-4'>
+              <div className='space-y-3'>
                 {timeline.map((item, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                  <div
+                    key={index}
+                    className='flex items-start gap-3 p-3 bg-gray-50 rounded-lg'
+                  >
                     {item.type === 'event' ? (
                       <>
-                        <div className="flex-shrink-0">
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <div className='flex-shrink-0'>
+                          <span className='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800'>
                             on-chain
                           </span>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-medium text-gray-900">
+                        <div className='flex-1 min-w-0'>
+                          <div className='flex items-center gap-2 mb-1'>
+                            <span className='text-sm font-medium text-gray-900'>
                               {item.event?.eventType}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className='text-xs text-gray-500'>
                               {formatRelativeTime(item.event?.eventTime || '')}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 text-xs text-gray-600">
-                            <span>Signer: {shortenAddress(item.event?.signer || '')}</span>
+                          <div className='flex items-center gap-2 text-xs text-gray-600'>
+                            <span>
+                              Signer: {shortenAddress(item.event?.signer || '')}
+                            </span>
                             <button
-                              onClick={() => window.open(getExplorerUrl(item.event?.txHash || ''), '_blank')}
-                              className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                              onClick={() =>
+                                window.open(
+                                  getExplorerUrl(item.event?.txHash || ''),
+                                  '_blank'
+                                )
+                              }
+                              className='text-blue-600 hover:text-blue-800 flex items-center gap-1'
                             >
-                              <Icon name="external-link" className="w-3 h-3" />
+                              <Icon name='external-link' className='w-3 h-3' />
                               View TX
                             </button>
                           </div>
@@ -197,26 +220,28 @@ export function ProvenanceDrawer({ assetKey, open, onOpenChange }: ProvenanceDra
                       </>
                     ) : (
                       <>
-                        <div className="flex-shrink-0">
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <div className='flex-shrink-0'>
+                          <span className='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800'>
                             doc
                           </span>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-medium text-gray-900">
+                        <div className='flex-1 min-w-0'>
+                          <div className='flex items-center gap-2 mb-1'>
+                            <span className='text-sm font-medium text-gray-900'>
                               {item.doc?.kind}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 text-xs text-gray-600">
-                            <span className="font-mono">
+                          <div className='flex items-center gap-2 text-xs text-gray-600'>
+                            <span className='font-mono'>
                               {shortenHash(item.doc?.docHash || '')}
                             </span>
                             <button
-                              onClick={() => copyToClipboard(item.doc?.docHash || '')}
-                              className="text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                              onClick={() =>
+                                copyToClipboard(item.doc?.docHash || '')
+                              }
+                              className='text-blue-600 hover:text-blue-800 flex items-center gap-1'
                             >
-                              <Icon name="clipboard" className="w-3 h-3" />
+                              <Icon name='clipboard' className='w-3 h-3' />
                               Copy
                             </button>
                           </div>

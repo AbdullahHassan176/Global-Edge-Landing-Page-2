@@ -1,6 +1,6 @@
 /**
  * Investment Management Integration
- * 
+ *
  * This service integrates investment tracking with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -14,7 +14,11 @@ export class InvestmentIntegration {
   /**
    * Get all investments with database integration
    */
-  async getInvestments(): Promise<{ success: boolean; investments?: Investment[]; error?: string }> {
+  async getInvestments(): Promise<{
+    success: boolean;
+    investments?: Investment[];
+    error?: string;
+  }> {
     try {
       if (this.useDatabase) {
         // Try database first
@@ -36,18 +40,24 @@ export class InvestmentIntegration {
   /**
    * Get investments by user ID with database integration
    */
-  async getInvestmentsByUserId(userId: string): Promise<{ success: boolean; investments?: Investment[]; error?: string }> {
+  async getInvestmentsByUserId(
+    userId: string
+  ): Promise<{ success: boolean; investments?: Investment[]; error?: string }> {
     try {
       if (this.useDatabase) {
         const dbResult = await workingDatabaseService.getInvestments();
         if (dbResult.success && dbResult.data) {
-          const userInvestments = dbResult.data.items.filter(inv => inv.userId === userId);
+          const userInvestments = dbResult.data.items.filter(
+            inv => inv.userId === userId
+          );
           return { success: true, investments: userInvestments };
         }
       }
 
       // Fallback to mock service
-      const mockInvestments = userAuthService.getAllInvestments().filter(inv => inv.userId === userId);
+      const mockInvestments = userAuthService
+        .getAllInvestments()
+        .filter(inv => inv.userId === userId);
       return { success: true, investments: mockInvestments };
     } catch (error) {
       console.error('Get investments by user error:', error);
@@ -58,18 +68,24 @@ export class InvestmentIntegration {
   /**
    * Get investments by asset ID with database integration
    */
-  async getInvestmentsByAssetId(assetId: string): Promise<{ success: boolean; investments?: Investment[]; error?: string }> {
+  async getInvestmentsByAssetId(
+    assetId: string
+  ): Promise<{ success: boolean; investments?: Investment[]; error?: string }> {
     try {
       if (this.useDatabase) {
         const dbResult = await workingDatabaseService.getInvestments();
         if (dbResult.success && dbResult.data) {
-          const assetInvestments = dbResult.data.items.filter(inv => inv.assetId === assetId);
+          const assetInvestments = dbResult.data.items.filter(
+            inv => inv.assetId === assetId
+          );
           return { success: true, investments: assetInvestments };
         }
       }
 
       // Fallback to mock service
-      const mockInvestments = userAuthService.getAllInvestments().filter(inv => inv.assetId === assetId);
+      const mockInvestments = userAuthService
+        .getAllInvestments()
+        .filter(inv => inv.assetId === assetId);
       return { success: true, investments: mockInvestments };
     } catch (error) {
       console.error('Get investments by asset error:', error);
@@ -80,7 +96,9 @@ export class InvestmentIntegration {
   /**
    * Create investment with database integration
    */
-  async createInvestment(investmentData: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>): Promise<{ success: boolean; investment?: Investment; error?: string }> {
+  async createInvestment(
+    investmentData: Omit<Investment, 'id' | 'createdAt' | 'updatedAt'>
+  ): Promise<{ success: boolean; investment?: Investment; error?: string }> {
     try {
       const investment = await userAuthService.createInvestment(investmentData);
       return { success: true, investment };
@@ -93,7 +111,10 @@ export class InvestmentIntegration {
   /**
    * Update investment status with database integration
    */
-  async updateInvestmentStatus(id: string, status: 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled'): Promise<{ success: boolean; investment?: Investment; error?: string }> {
+  async updateInvestmentStatus(
+    id: string,
+    status: 'pending' | 'approved' | 'rejected' | 'completed' | 'cancelled'
+  ): Promise<{ success: boolean; investment?: Investment; error?: string }> {
     try {
       const mockInvestments = userAuthService.getAllInvestments();
       const investment = mockInvestments.find(inv => inv.id === id);
@@ -111,7 +132,11 @@ export class InvestmentIntegration {
   /**
    * Get investment statistics with database integration
    */
-  async getInvestmentStats(): Promise<{ success: boolean; stats?: any; error?: string }> {
+  async getInvestmentStats(): Promise<{
+    success: boolean;
+    stats?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getInvestments();
       if (!result.success || !result.investments) {
@@ -125,7 +150,11 @@ export class InvestmentIntegration {
         pending: investments.filter(inv => inv.status === 'pending').length,
         cancelled: investments.filter(inv => inv.status === 'cancelled').length,
         totalAmount: investments.reduce((sum, inv) => sum + inv.amount, 0),
-        averageAmount: investments.length > 0 ? investments.reduce((sum, inv) => sum + inv.amount, 0) / investments.length : 0
+        averageAmount:
+          investments.length > 0
+            ? investments.reduce((sum, inv) => sum + inv.amount, 0) /
+              investments.length
+            : 0,
       };
 
       return { success: true, stats };
@@ -140,7 +169,9 @@ export class InvestmentIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`InvestmentIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `InvestmentIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

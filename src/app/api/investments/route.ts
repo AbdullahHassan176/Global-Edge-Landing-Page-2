@@ -1,6 +1,6 @@
 /**
  * Investments API Route
- * 
+ *
  * This endpoint handles CRUD operations for investments
  */
 
@@ -11,16 +11,20 @@ import { Investment, InvestmentQueryOptions } from '@/lib/database/models';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    
+
     // Parse query parameters
     const options: InvestmentQueryOptions = {
-      page: searchParams.get('page') ? parseInt(searchParams.get('page')!) : undefined,
-      pageSize: searchParams.get('pageSize') ? parseInt(searchParams.get('pageSize')!) : undefined,
+      page: searchParams.get('page')
+        ? parseInt(searchParams.get('page')!)
+        : undefined,
+      pageSize: searchParams.get('pageSize')
+        ? parseInt(searchParams.get('pageSize')!)
+        : undefined,
       sortBy: searchParams.get('sortBy') || undefined,
       sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') || undefined,
       userId: searchParams.get('investorId') || undefined,
       assetId: searchParams.get('assetId') || undefined,
-      status: searchParams.get('status') as any || undefined,
+      status: (searchParams.get('status') as any) || undefined,
       dateFrom: searchParams.get('dateFrom') || undefined,
       dateTo: searchParams.get('dateTo') || undefined,
     };
@@ -35,14 +39,13 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(result);
-
   } catch (error) {
     console.error('Get investments error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -52,7 +55,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate required fields
     const requiredFields = ['investorId', 'assetId', 'amount', 'tokens'];
     for (const field of requiredFields) {
@@ -84,7 +87,7 @@ export async function POST(request: NextRequest) {
         platformFee: 0,
         processingFee: 0,
         managementFee: 0,
-        totalFees: 0
+        totalFees: 0,
       },
       investmentDate: body.investmentDate,
       maturityDate: body.maturityDate,
@@ -104,14 +107,13 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(result, { status: 201 });
-
   } catch (error) {
     console.error('Create investment error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error'
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

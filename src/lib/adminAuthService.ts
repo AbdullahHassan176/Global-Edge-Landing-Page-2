@@ -36,7 +36,7 @@ const ADMIN_USERS: AdminUser[] = [
     role: 'super-admin',
     permissions: ['all'],
     lastLogin: new Date().toISOString(),
-    isActive: true
+    isActive: true,
   },
   {
     id: 'admin-1',
@@ -44,19 +44,24 @@ const ADMIN_USERS: AdminUser[] = [
     email: 'mohammed.sidat@globalnext.rocks',
     role: 'admin',
     permissions: [
-      'view_users', 'view_notifications', 'view_analytics', 
-      'view_content', 'view_security', 'view_settings', 'manage_assets'
+      'view_users',
+      'view_notifications',
+      'view_analytics',
+      'view_content',
+      'view_security',
+      'view_settings',
+      'manage_assets',
     ],
     lastLogin: new Date().toISOString(),
-    isActive: true
-  }
+    isActive: true,
+  },
 ];
 
 // Mock passwords (in production, these would be hashed and stored securely)
 // These should be moved to environment variables in production
 const ADMIN_PASSWORDS: Record<string, string> = {
   'abdullah.hassan': 'Abdullah187!',
-  'mohammed.sidat': 'Mohammed187!'
+  'mohammed.sidat': 'Mohammed187!',
 };
 
 class AdminAuthService {
@@ -67,7 +72,9 @@ class AdminAuthService {
   /**
    * Register a new admin user
    */
-  async register(registrationData: AdminRegistrationData): Promise<{ success: boolean; user?: AdminUser; error?: string }> {
+  async register(
+    registrationData: AdminRegistrationData
+  ): Promise<{ success: boolean; user?: AdminUser; error?: string }> {
     try {
       // Validate input
       if (registrationData.password !== registrationData.confirmPassword) {
@@ -75,7 +82,10 @@ class AdminAuthService {
       }
 
       if (registrationData.password.length < 8) {
-        return { success: false, error: 'Password must be at least 8 characters long' };
+        return {
+          success: false,
+          error: 'Password must be at least 8 characters long',
+        };
       }
 
       // Get all admin users (including registered ones)
@@ -99,7 +109,7 @@ class AdminAuthService {
         role: registrationData.role,
         permissions: this.getDefaultPermissions(registrationData.role),
         lastLogin: new Date().toISOString(),
-        isActive: true
+        isActive: true,
       };
 
       // Save to localStorage
@@ -108,21 +118,26 @@ class AdminAuthService {
       return { success: true, user: newAdminUser };
     } catch (error) {
       console.error('Admin registration error:', error);
-      return { success: false, error: 'Registration failed. Please try again.' };
+      return {
+        success: false,
+        error: 'Registration failed. Please try again.',
+      };
     }
   }
 
   /**
    * Authenticate admin user with username and password
    */
-  async login(credentials: AdminLoginCredentials): Promise<{ success: boolean; user?: AdminUser; error?: string }> {
+  async login(
+    credentials: AdminLoginCredentials
+  ): Promise<{ success: boolean; user?: AdminUser; error?: string }> {
     try {
       // Get all admin users (including registered ones)
       const allUsers = this.getAllAdminUsers();
-      
+
       // Find admin user
-      const adminUser = allUsers.find(user => 
-        user.username === credentials.username && user.isActive
+      const adminUser = allUsers.find(
+        user => user.username === credentials.username && user.isActive
       );
 
       if (!adminUser) {
@@ -143,7 +158,7 @@ class AdminAuthService {
       const session = {
         user: adminUser,
         loginTime: new Date().toISOString(),
-        expiresAt: new Date(Date.now() + this.SESSION_TIMEOUT).toISOString()
+        expiresAt: new Date(Date.now() + this.SESSION_TIMEOUT).toISOString(),
       };
 
       // Store session in localStorage
@@ -159,13 +174,17 @@ class AdminAuthService {
   /**
    * Get current admin session
    */
-  getCurrentSession(): { user: AdminUser; loginTime: string; expiresAt: string } | null {
+  getCurrentSession(): {
+    user: AdminUser;
+    loginTime: string;
+    expiresAt: string;
+  } | null {
     try {
       const sessionData = localStorage.getItem(this.SESSION_KEY);
       if (!sessionData) return null;
 
       const session = JSON.parse(sessionData);
-      
+
       // Check if session is expired
       if (new Date() > new Date(session.expiresAt)) {
         this.logout();
@@ -201,10 +220,10 @@ class AdminAuthService {
   hasPermission(permission: string): boolean {
     const user = this.getCurrentUser();
     if (!user) return false;
-    
+
     // Super admin has all permissions
     if (user.permissions.includes('all')) return true;
-    
+
     return user.permissions.includes(permission);
   }
 
@@ -229,7 +248,9 @@ class AdminAuthService {
   extendSession(): void {
     const session = this.getCurrentSession();
     if (session) {
-      session.expiresAt = new Date(Date.now() + this.SESSION_TIMEOUT).toISOString();
+      session.expiresAt = new Date(
+        Date.now() + this.SESSION_TIMEOUT
+      ).toISOString();
       localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
     }
   }
@@ -270,11 +291,11 @@ class AdminAuthService {
    */
   private getAllAdminUsers(): AdminUser[] {
     if (typeof window === 'undefined') return ADMIN_USERS;
-    
+
     // Get registered users from localStorage
     const registeredUsers = localStorage.getItem(this.STORAGE_KEY);
     const additionalUsers = registeredUsers ? JSON.parse(registeredUsers) : [];
-    
+
     // Combine hardcoded users with registered users, avoiding duplicates
     const allUsers = [...ADMIN_USERS];
     additionalUsers.forEach((user: AdminUser) => {
@@ -282,7 +303,7 @@ class AdminAuthService {
         allUsers.push(user);
       }
     });
-    
+
     return allUsers;
   }
 
@@ -316,14 +337,14 @@ class AdminAuthService {
     // Save user data
     const storedUsers = localStorage.getItem(this.STORAGE_KEY);
     const users = storedUsers ? JSON.parse(storedUsers) : [];
-    
+
     const existingIndex = users.findIndex((u: AdminUser) => u.id === user.id);
     if (existingIndex >= 0) {
       users[existingIndex] = user;
     } else {
       users.push(user);
     }
-    
+
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(users));
 
     // Save password
@@ -340,12 +361,20 @@ class AdminAuthService {
     switch (role) {
       case 'admin':
         return [
-          'view_users', 'view_notifications', 'view_analytics', 
-          'view_content', 'view_security', 'view_settings', 'manage_assets'
+          'view_users',
+          'view_notifications',
+          'view_analytics',
+          'view_content',
+          'view_security',
+          'view_settings',
+          'manage_assets',
         ];
       case 'moderator':
         return [
-          'view_users', 'view_notifications', 'view_analytics', 'manage_assets'
+          'view_users',
+          'view_notifications',
+          'view_analytics',
+          'manage_assets',
         ];
       default:
         return ['view_notifications'];
@@ -355,4 +384,3 @@ class AdminAuthService {
 
 // Export singleton instance
 export const adminAuthService = new AdminAuthService();
-

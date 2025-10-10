@@ -1,6 +1,6 @@
 /**
  * Search Integration
- * 
+ *
  * This service provides full-text search across assets, users, and investments
  * with database integration and fallback to mock data.
  */
@@ -47,14 +47,23 @@ export class SearchIntegration {
    * Perform full-text search across all entities
    */
   async search(
-    query: string, 
-    filters: SearchFilters = {}, 
+    query: string,
+    filters: SearchFilters = {},
     options: SearchOptions = {}
-  ): Promise<{ success: boolean; results?: SearchResult[]; total?: number; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    results?: SearchResult[];
+    total?: number;
+    error?: string;
+  }> {
     try {
       if (this.useDatabase) {
         // Try database search first
-        const dbResult = await this.performDatabaseSearch(query, filters, options);
+        const dbResult = await this.performDatabaseSearch(
+          query,
+          filters,
+          options
+        );
         if (dbResult.success) {
           return dbResult;
         }
@@ -72,10 +81,15 @@ export class SearchIntegration {
    * Search assets specifically
    */
   async searchAssets(
-    query: string, 
-    filters: Omit<SearchFilters, 'type'> = {}, 
+    query: string,
+    filters: Omit<SearchFilters, 'type'> = {},
     options: SearchOptions = {}
-  ): Promise<{ success: boolean; results?: SearchResult[]; total?: number; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    results?: SearchResult[];
+    total?: number;
+    error?: string;
+  }> {
     return this.search(query, { ...filters, type: 'asset' }, options);
   }
 
@@ -83,10 +97,15 @@ export class SearchIntegration {
    * Search users specifically
    */
   async searchUsers(
-    query: string, 
-    filters: Omit<SearchFilters, 'type'> = {}, 
+    query: string,
+    filters: Omit<SearchFilters, 'type'> = {},
     options: SearchOptions = {}
-  ): Promise<{ success: boolean; results?: SearchResult[]; total?: number; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    results?: SearchResult[];
+    total?: number;
+    error?: string;
+  }> {
     return this.search(query, { ...filters, type: 'user' }, options);
   }
 
@@ -94,10 +113,15 @@ export class SearchIntegration {
    * Search investments specifically
    */
   async searchInvestments(
-    query: string, 
-    filters: Omit<SearchFilters, 'type'> = {}, 
+    query: string,
+    filters: Omit<SearchFilters, 'type'> = {},
     options: SearchOptions = {}
-  ): Promise<{ success: boolean; results?: SearchResult[]; total?: number; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    results?: SearchResult[];
+    total?: number;
+    error?: string;
+  }> {
     return this.search(query, { ...filters, type: 'investment' }, options);
   }
 
@@ -105,7 +129,7 @@ export class SearchIntegration {
    * Get search suggestions/autocomplete
    */
   async getSearchSuggestions(
-    query: string, 
+    query: string,
     limit: number = 10
   ): Promise<{ success: boolean; suggestions?: string[]; error?: string }> {
     try {
@@ -143,12 +167,12 @@ export class SearchIntegration {
         'UAE properties',
         'logistics assets',
         'blockchain',
-        'tokenized assets'
+        'tokenized assets',
       ];
 
-      return { 
-        success: true, 
-        searches: popularSearches.slice(0, limit) 
+      return {
+        success: true,
+        searches: popularSearches.slice(0, limit),
       };
     } catch (error) {
       console.error('Get popular searches error:', error);
@@ -160,10 +184,15 @@ export class SearchIntegration {
    * Perform database search
    */
   private async performDatabaseSearch(
-    query: string, 
-    filters: SearchFilters, 
+    query: string,
+    filters: SearchFilters,
     options: SearchOptions
-  ): Promise<{ success: boolean; results?: SearchResult[]; total?: number; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    results?: SearchResult[];
+    total?: number;
+    error?: string;
+  }> {
     try {
       const results: SearchResult[] = [];
       let total = 0;
@@ -173,8 +202,8 @@ export class SearchIntegration {
         const assetsResult = await workingDatabaseService.getAssets();
         if (assetsResult.success && assetsResult.data) {
           const assetResults = this.searchAssetsInData(
-            assetsResult.data.items, 
-            query, 
+            assetsResult.data.items,
+            query,
             filters
           );
           results.push(...assetResults);
@@ -191,9 +220,17 @@ export class SearchIntegration {
       }
 
       // Search investments
-      if (!filters.type || filters.type === 'investment' || filters.type === 'all') {
+      if (
+        !filters.type ||
+        filters.type === 'investment' ||
+        filters.type === 'all'
+      ) {
         const mockInvestments = userAuthService.getAllInvestments();
-        const investmentResults = this.searchInvestmentsInData(mockInvestments, query, filters);
+        const investmentResults = this.searchInvestmentsInData(
+          mockInvestments,
+          query,
+          filters
+        );
         results.push(...investmentResults);
         total += investmentResults.length;
       }
@@ -212,17 +249,26 @@ export class SearchIntegration {
    * Perform mock search
    */
   private async performMockSearch(
-    query: string, 
-    filters: SearchFilters, 
+    query: string,
+    filters: SearchFilters,
     options: SearchOptions
-  ): Promise<{ success: boolean; results?: SearchResult[]; total?: number; error?: string }> {
+  ): Promise<{
+    success: boolean;
+    results?: SearchResult[];
+    total?: number;
+    error?: string;
+  }> {
     try {
       const results: SearchResult[] = [];
 
       // Search mock assets
       if (!filters.type || filters.type === 'asset' || filters.type === 'all') {
         const mockAssets = await assetService.getAssets();
-        const assetResults = this.searchAssetsInData(mockAssets, query, filters);
+        const assetResults = this.searchAssetsInData(
+          mockAssets,
+          query,
+          filters
+        );
         results.push(...assetResults);
       }
 
@@ -234,9 +280,17 @@ export class SearchIntegration {
       }
 
       // Search mock investments
-      if (!filters.type || filters.type === 'investment' || filters.type === 'all') {
+      if (
+        !filters.type ||
+        filters.type === 'investment' ||
+        filters.type === 'all'
+      ) {
         const mockInvestments = userAuthService.getAllInvestments();
-        const investmentResults = this.searchInvestmentsInData(mockInvestments, query, filters);
+        const investmentResults = this.searchInvestmentsInData(
+          mockInvestments,
+          query,
+          filters
+        );
         results.push(...investmentResults);
       }
 
@@ -254,16 +308,16 @@ export class SearchIntegration {
    * Search assets in data
    */
   private searchAssetsInData(
-    assets: Asset[], 
-    query: string, 
+    assets: Asset[],
+    query: string,
     filters: SearchFilters
   ): SearchResult[] {
     const queryLower = query.toLowerCase();
-    
+
     return assets
       .filter(asset => {
         // Text search
-        const matchesText = 
+        const matchesText =
           asset.name.toLowerCase().includes(queryLower) ||
           asset.description?.toLowerCase().includes(queryLower) ||
           asset.route?.toLowerCase().includes(queryLower) ||
@@ -271,30 +325,43 @@ export class SearchIntegration {
           asset.type?.toLowerCase().includes(queryLower);
 
         // Category filter
-        const matchesCategory = !filters.category || asset.type === filters.category;
+        const matchesCategory =
+          !filters.category || asset.type === filters.category;
 
         // Status filter
-        const matchesStatus = !filters.status || asset.status === filters.status;
+        const matchesStatus =
+          !filters.status || asset.status === filters.status;
 
         // Value filter
-        const assetValue = parseFloat(asset.value?.replace(/[^0-9.-]+/g, '') || '0');
-        const matchesMinValue = !filters.minValue || assetValue >= filters.minValue;
-        const matchesMaxValue = !filters.maxValue || assetValue <= filters.maxValue;
+        const assetValue = parseFloat(
+          asset.value?.replace(/[^0-9.-]+/g, '') || '0'
+        );
+        const matchesMinValue =
+          !filters.minValue || assetValue >= filters.minValue;
+        const matchesMaxValue =
+          !filters.maxValue || assetValue <= filters.maxValue;
 
         // Date filter
-        const matchesDate = !filters.dateRange || (
-          new Date(asset.createdAt) >= new Date(filters.dateRange.start) &&
-          new Date(asset.createdAt) <= new Date(filters.dateRange.end)
-        );
+        const matchesDate =
+          !filters.dateRange ||
+          (new Date(asset.createdAt) >= new Date(filters.dateRange.start) &&
+            new Date(asset.createdAt) <= new Date(filters.dateRange.end));
 
-        return matchesText && matchesCategory && matchesStatus && 
-               matchesMinValue && matchesMaxValue && matchesDate;
+        return (
+          matchesText &&
+          matchesCategory &&
+          matchesStatus &&
+          matchesMinValue &&
+          matchesMaxValue &&
+          matchesDate
+        );
       })
       .map(asset => ({
         id: asset.id,
         type: 'asset' as const,
         title: asset.name,
-        description: asset.description || `${asset.type} asset on ${asset.route}`,
+        description:
+          asset.description || `${asset.type} asset on ${asset.route}`,
         metadata: {
           value: asset.value,
           apr: asset.apr,
@@ -305,7 +372,7 @@ export class SearchIntegration {
         relevanceScore: this.calculateRelevanceScore(asset.name, query),
         category: asset.type,
         status: asset.status,
-        createdAt: asset.createdAt
+        createdAt: asset.createdAt,
       }));
   }
 
@@ -313,16 +380,16 @@ export class SearchIntegration {
    * Search users in data
    */
   private searchUsersInData(
-    users: User[], 
-    query: string, 
+    users: User[],
+    query: string,
     filters: SearchFilters
   ): SearchResult[] {
     const queryLower = query.toLowerCase();
-    
+
     return users
       .filter(user => {
         // Text search
-        const matchesText = 
+        const matchesText =
           user.firstName?.toLowerCase().includes(queryLower) ||
           user.lastName?.toLowerCase().includes(queryLower) ||
           user.email?.toLowerCase().includes(queryLower) ||
@@ -334,10 +401,10 @@ export class SearchIntegration {
         const matchesStatus = !filters.status || user.status === filters.status;
 
         // Date filter
-        const matchesDate = !filters.dateRange || (
-          new Date(user.createdAt) >= new Date(filters.dateRange.start) &&
-          new Date(user.createdAt) <= new Date(filters.dateRange.end)
-        );
+        const matchesDate =
+          !filters.dateRange ||
+          (new Date(user.createdAt) >= new Date(filters.dateRange.start) &&
+            new Date(user.createdAt) <= new Date(filters.dateRange.end));
 
         return matchesText && matchesStatus && matchesDate;
       })
@@ -351,12 +418,15 @@ export class SearchIntegration {
           phone: user.phone,
           role: user.role,
           country: user.country,
-          kycStatus: user.kycStatus
+          kycStatus: user.kycStatus,
         },
-        relevanceScore: this.calculateRelevanceScore(`${user.firstName} ${user.lastName}`, query),
+        relevanceScore: this.calculateRelevanceScore(
+          `${user.firstName} ${user.lastName}`,
+          query
+        ),
         category: user.role,
         status: user.status,
-        createdAt: user.createdAt
+        createdAt: user.createdAt,
       }));
   }
 
@@ -364,36 +434,45 @@ export class SearchIntegration {
    * Search investments in data
    */
   private searchInvestmentsInData(
-    investments: Investment[], 
-    query: string, 
+    investments: Investment[],
+    query: string,
     filters: SearchFilters
   ): SearchResult[] {
     const queryLower = query.toLowerCase();
-    
+
     return investments
       .filter(investment => {
         // Text search
-        const matchesText = 
+        const matchesText =
           investment.assetId?.toLowerCase().includes(queryLower) ||
           investment.userId?.toLowerCase().includes(queryLower) ||
           investment.status?.toLowerCase().includes(queryLower) ||
           investment.type?.toLowerCase().includes(queryLower);
 
         // Status filter
-        const matchesStatus = !filters.status || investment.status === filters.status;
+        const matchesStatus =
+          !filters.status || investment.status === filters.status;
 
         // Value filter
-        const matchesMinValue = !filters.minValue || investment.amount >= filters.minValue;
-        const matchesMaxValue = !filters.maxValue || investment.amount <= filters.maxValue;
+        const matchesMinValue =
+          !filters.minValue || investment.amount >= filters.minValue;
+        const matchesMaxValue =
+          !filters.maxValue || investment.amount <= filters.maxValue;
 
         // Date filter
-        const matchesDate = !filters.dateRange || (
-          new Date(investment.createdAt) >= new Date(filters.dateRange.start) &&
-          new Date(investment.createdAt) <= new Date(filters.dateRange.end)
-        );
+        const matchesDate =
+          !filters.dateRange ||
+          (new Date(investment.createdAt) >=
+            new Date(filters.dateRange.start) &&
+            new Date(investment.createdAt) <= new Date(filters.dateRange.end));
 
-        return matchesText && matchesStatus && 
-               matchesMinValue && matchesMaxValue && matchesDate;
+        return (
+          matchesText &&
+          matchesStatus &&
+          matchesMinValue &&
+          matchesMaxValue &&
+          matchesDate
+        );
       })
       .map(investment => ({
         id: investment.id,
@@ -406,10 +485,13 @@ export class SearchIntegration {
           assetId: investment.assetId,
           userId: investment.userId,
         },
-        relevanceScore: this.calculateRelevanceScore(investment.assetId || '', query),
+        relevanceScore: this.calculateRelevanceScore(
+          investment.assetId || '',
+          query
+        ),
         category: investment.type,
         status: investment.status,
-        createdAt: investment.createdAt
+        createdAt: investment.createdAt,
       }));
   }
 
@@ -419,23 +501,23 @@ export class SearchIntegration {
   private calculateRelevanceScore(text: string, query: string): number {
     const textLower = text.toLowerCase();
     const queryLower = query.toLowerCase();
-    
+
     // Exact match gets highest score
     if (textLower === queryLower) return 100;
-    
+
     // Starts with query gets high score
     if (textLower.startsWith(queryLower)) return 90;
-    
+
     // Contains query gets medium score
     if (textLower.includes(queryLower)) return 70;
-    
+
     // Word boundary match gets lower score
     const words = textLower.split(/\s+/);
     const queryWords = queryLower.split(/\s+/);
-    const matchingWords = queryWords.filter(qWord => 
+    const matchingWords = queryWords.filter(qWord =>
       words.some(word => word.includes(qWord))
     );
-    
+
     return (matchingWords.length / queryWords.length) * 50;
   }
 
@@ -443,28 +525,38 @@ export class SearchIntegration {
    * Sort and paginate results
    */
   private sortAndPaginateResults(
-    results: SearchResult[], 
+    results: SearchResult[],
     options: SearchOptions
   ): SearchResult[] {
-    const { sortBy = 'relevance', sortOrder = 'desc', limit = 20, offset = 0 } = options;
+    const {
+      sortBy = 'relevance',
+      sortOrder = 'desc',
+      limit = 20,
+      offset = 0,
+    } = options;
 
     // Sort results
     results.sort((a, b) => {
       let comparison = 0;
-      
+
       switch (sortBy) {
         case 'relevance':
           comparison = a.relevanceScore - b.relevanceScore;
           break;
         case 'date':
-          comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          comparison =
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
           break;
         case 'name':
           comparison = a.title.localeCompare(b.title);
           break;
         case 'value':
-          const aValue = parseFloat(a.metadata.value?.replace(/[^0-9.-]+/g, '') || '0');
-          const bValue = parseFloat(b.metadata.value?.replace(/[^0-9.-]+/g, '') || '0');
+          const aValue = parseFloat(
+            a.metadata.value?.replace(/[^0-9.-]+/g, '') || '0'
+          );
+          const bValue = parseFloat(
+            b.metadata.value?.replace(/[^0-9.-]+/g, '') || '0'
+          );
           comparison = aValue - bValue;
           break;
       }
@@ -480,7 +572,7 @@ export class SearchIntegration {
    * Get database suggestions
    */
   private async getDatabaseSuggestions(
-    query: string, 
+    query: string,
     limit: number
   ): Promise<{ success: boolean; suggestions?: string[]; error?: string }> {
     try {
@@ -497,7 +589,7 @@ export class SearchIntegration {
    * Get mock suggestions
    */
   private getMockSuggestions(
-    query: string, 
+    query: string,
     limit: number
   ): { success: boolean; suggestions?: string[]; error?: string } {
     const allSuggestions = [
@@ -514,7 +606,7 @@ export class SearchIntegration {
       'logistics assets',
       'investment opportunities',
       'asset management',
-      'portfolio diversification'
+      'portfolio diversification',
     ];
 
     const queryLower = query.toLowerCase();

@@ -10,12 +10,12 @@ interface TooltipProps {
   className?: string;
 }
 
-export default function Tooltip({ 
-  content, 
-  children, 
-  position = 'top', 
+export default function Tooltip({
+  content,
+  children,
+  position = 'top',
   delay = 200,
-  className = ''
+  className = '',
 }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
@@ -78,7 +78,7 @@ export default function Tooltip({
   };
 
   return (
-    <div 
+    <div
       className={`relative inline-block ${className}`}
       onMouseEnter={showTooltip}
       onMouseLeave={hideTooltip}
@@ -90,10 +90,12 @@ export default function Tooltip({
         <div
           ref={tooltipRef}
           className={`absolute z-50 px-3 py-2 text-sm text-white bg-gray-900 rounded-lg shadow-lg whitespace-nowrap ${getPositionClasses()}`}
-          role="tooltip"
+          role='tooltip'
         >
           {content}
-          <div className={`absolute w-0 h-0 border-4 ${getArrowClasses()}`}></div>
+          <div
+            className={`absolute w-0 h-0 border-4 ${getArrowClasses()}`}
+          ></div>
         </div>
       )}
     </div>

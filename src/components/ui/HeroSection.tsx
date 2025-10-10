@@ -24,40 +24,48 @@ export default function HeroSection({
   secondaryButtonText,
   secondaryButtonHref,
   showArrow = false,
-  backgroundGradient = true
+  backgroundGradient = true,
 }: HeroSectionProps) {
   return (
-    <section className={`${backgroundGradient ? 'gradient-bg' : 'bg-white'} h-[600px] relative overflow-hidden`}>
+    <section
+      className={`${backgroundGradient ? 'gradient-bg' : 'bg-white'} h-[600px] relative overflow-hidden`}
+    >
       {backgroundGradient && (
         <>
-          <div className="absolute inset-0 bg-black bg-opacity-20" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 opacity-10">
-            <div className="w-full h-full bg-gradient-to-tl from-aqua-start to-transparent rounded-full" />
+          <div className='absolute inset-0 bg-black bg-opacity-20' />
+          <div className='absolute bottom-0 right-0 w-96 h-96 opacity-10'>
+            <div className='w-full h-full bg-gradient-to-tl from-aqua-start to-transparent rounded-full' />
           </div>
         </>
       )}
-      
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-        <div className={`max-w-3xl ${backgroundGradient ? 'text-white' : 'text-charcoal'}`}>
+
+      <div className='relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center'>
+        <div
+          className={`max-w-3xl ${backgroundGradient ? 'text-white' : 'text-charcoal'}`}
+        >
           {subtitle && (
-            <div className="flex items-center mb-4">
-              <span className={`text-sm font-medium ${backgroundGradient ? 'bg-white bg-opacity-20' : 'bg-gray-100'} px-3 py-1 rounded-full`}>
+            <div className='flex items-center mb-4'>
+              <span
+                className={`text-sm font-medium ${backgroundGradient ? 'bg-white bg-opacity-20' : 'bg-gray-100'} px-3 py-1 rounded-full`}
+              >
                 {subtitle}
               </span>
             </div>
           )}
-          
-          <h1 className="text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight">
+
+          <h1 className='text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight'>
             {title}
           </h1>
-          
+
           {description && (
-            <p className={`text-xl lg:text-2xl mb-8 font-inter font-light ${backgroundGradient ? 'opacity-90' : 'text-gray-600'}`}>
+            <p
+              className={`text-xl lg:text-2xl mb-8 font-inter font-light ${backgroundGradient ? 'opacity-90' : 'text-gray-600'}`}
+            >
               {description}
             </p>
           )}
-          
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+
+          <div className='flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6'>
             <Link
               href={primaryButtonHref}
               className={`px-8 py-4 rounded-full font-poppins font-semibold text-lg transition-colors flex items-center justify-center ${
@@ -67,11 +75,9 @@ export default function HeroSection({
               }`}
             >
               {primaryButtonText}
-              {showArrow && (
-                <Icon name="arrow-right" className="ml-2"  />
-              )}
+              {showArrow && <Icon name='arrow-right' className='ml-2' />}
             </Link>
-            
+
             {secondaryButtonText && secondaryButtonHref && (
               <Link
                 href={secondaryButtonHref}

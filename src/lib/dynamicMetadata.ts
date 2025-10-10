@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 const SITE = {
   name: 'The Global Edge',
   url: 'https://theglobaledge.io',
-  description: 'Tokenizing logistics and real-world assets to unlock global opportunities.',
+  description:
+    'Tokenizing logistics and real-world assets to unlock global opportunities.',
   ogImage: '/og-image.jpg',
 };
 
@@ -209,16 +210,18 @@ export async function generateDynamicMetadata({
   defaultTitle?: string;
   defaultDescription?: string;
 }): Promise<Metadata> {
-  const resolvedRobots = robots || (isPrivatePath(path) ? 'noindex, nofollow' : 'index, follow');
+  const resolvedRobots =
+    robots || (isPrivatePath(path) ? 'noindex, nofollow' : 'index, follow');
   const humanize = (p: string) => {
     const seg = p.split('/').filter(Boolean).pop() || '';
     if (!seg) return 'Home';
     return seg
       .replace(/\[|\]/g, '')
       .replace(/-/g, ' ')
-      .replace(/\b\w/g, (m) => m.toUpperCase());
+      .replace(/\b\w/g, m => m.toUpperCase());
   };
-  const computedTitle = title || defaultTitle || `${humanize(path)} | ${SITE.name}`;
+  const computedTitle =
+    title || defaultTitle || `${humanize(path)} | ${SITE.name}`;
   const pageTitle = computedTitle;
   const pageDescription = description || defaultDescription || SITE.description;
   const fullUrl = `${SITE.url}${path}`;
@@ -250,5 +253,3 @@ export async function generateDynamicMetadata({
     metadataBase: new URL(SITE.url),
   };
 }
-
-

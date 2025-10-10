@@ -20,16 +20,20 @@ export class ReportGenerator {
   // Generate CSV content
   static generateCSV(data: any[], headers: string[]): string {
     const csvHeaders = headers.join(',');
-    const csvRows = data.map(row => 
-      headers.map(header => {
-        const value = row[header.toLowerCase().replace(/\s+/g, '_')] || row[header] || '';
-        // Escape commas and quotes in CSV
-        return typeof value === 'string' && (value.includes(',') || value.includes('"')) 
-          ? `"${value.replace(/"/g, '""')}"` 
-          : value;
-      }).join(',')
+    const csvRows = data.map(row =>
+      headers
+        .map(header => {
+          const value =
+            row[header.toLowerCase().replace(/\s+/g, '_')] || row[header] || '';
+          // Escape commas and quotes in CSV
+          return typeof value === 'string' &&
+            (value.includes(',') || value.includes('"'))
+            ? `"${value.replace(/"/g, '""')}"`
+            : value;
+        })
+        .join(',')
     );
-    
+
     return [csvHeaders, ...csvRows].join('\n');
   }
 
@@ -197,85 +201,124 @@ export class ReportGenerator {
         <div class="container">
           <div class="header">
             <div class="title">${data.title}</div>
-            <div class="subtitle">Generated on ${new Date(data.generatedAt).toLocaleDateString('en-US', { 
-              year: 'numeric', 
-              month: 'long', 
+            <div class="subtitle">Generated on ${new Date(
+              data.generatedAt
+            ).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
               day: 'numeric',
               hour: '2-digit',
-              minute: '2-digit'
+              minute: '2-digit',
             })}</div>
           </div>
           
-          ${data.summary ? `
+          ${
+            data.summary
+              ? `
           <div class="summary">
             <div class="summary-title">📊 Executive Summary</div>
             <div class="summary-grid">
-              ${data.summary.totalValue ? `
+              ${
+                data.summary.totalValue
+                  ? `
                 <div class="summary-item">
                   <div class="summary-label">💰 Total Portfolio Value</div>
                   <div class="summary-value">$${data.summary.totalValue.toLocaleString()}</div>
                 </div>
-              ` : ''}
-              ${data.summary.totalInvestments ? `
+              `
+                  : ''
+              }
+              ${
+                data.summary.totalInvestments
+                  ? `
                 <div class="summary-item">
                   <div class="summary-label">📈 Total Investments</div>
                   <div class="summary-value">${data.summary.totalInvestments}</div>
                 </div>
-              ` : ''}
-              ${data.summary.averageReturn ? `
+              `
+                  : ''
+              }
+              ${
+                data.summary.averageReturn
+                  ? `
                 <div class="summary-item">
                   <div class="summary-label">📊 Average Return</div>
                   <div class="summary-value positive">${data.summary.averageReturn}%</div>
                 </div>
-              ` : ''}
-              ${data.summary.riskLevel ? `
+              `
+                  : ''
+              }
+              ${
+                data.summary.riskLevel
+                  ? `
                 <div class="summary-item">
                   <div class="summary-label">⚠️ Risk Level</div>
                   <div class="summary-value ${data.summary.riskLevel.toLowerCase() === 'low' ? 'positive' : data.summary.riskLevel.toLowerCase() === 'high' ? 'negative' : 'neutral'}">${data.summary.riskLevel}</div>
                 </div>
-              ` : ''}
-              ${data.summary.diversificationScore ? `
+              `
+                  : ''
+              }
+              ${
+                data.summary.diversificationScore
+                  ? `
                 <div class="summary-item">
                   <div class="summary-label">🎯 Diversification Score</div>
                   <div class="summary-value">${data.summary.diversificationScore}/100</div>
                 </div>
-              ` : ''}
-              ${data.summary.volatilityIndex ? `
+              `
+                  : ''
+              }
+              ${
+                data.summary.volatilityIndex
+                  ? `
                 <div class="summary-item">
                   <div class="summary-label">📉 Volatility Index</div>
                   <div class="summary-value">${data.summary.volatilityIndex}%</div>
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
           </div>
-          ` : ''}
+          `
+              : ''
+          }
           
           ${charts}
           
           <table class="data-table">
             <thead>
               <tr>
-                ${Object.keys(data.data[0] || {}).map(key => 
-                  `<th>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`
-                ).join('')}
+                ${Object.keys(data.data[0] || {})
+                  .map(
+                    key =>
+                      `<th>${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</th>`
+                  )
+                  .join('')}
               </tr>
             </thead>
             <tbody>
-              ${data.data.map(row => `
+              ${data.data
+                .map(
+                  row => `
                 <tr>
-                  ${Object.values(row).map(value => {
-                    const val = String(value);
-                    if (val.includes('%') && val.includes('+')) {
-                      return `<td class="positive">${value}</td>`;
-                    } else if (val.includes('%') && val.includes('-')) {
-                      return `<td class="negative">${value}</td>`;
-                    } else if (val.includes('$')) {
-                      return `<td class="neutral">${value}</td>`;
-                    }
-                    return `<td>${value}</td>`;
-                  }).join('')}
+                  ${Object.values(row)
+                    .map(value => {
+                      const val = String(value);
+                      if (val.includes('%') && val.includes('+')) {
+                        return `<td class="positive">${value}</td>`;
+                      } else if (val.includes('%') && val.includes('-')) {
+                        return `<td class="negative">${value}</td>`;
+                      } else if (val.includes('$')) {
+                        return `<td class="neutral">${value}</td>`;
+                      }
+                      return `<td>${value}</td>`;
+                    })
+                    .join('')}
                 </tr>
-              `).join('')}
+              `
+                )
+                .join('')}
             </tbody>
           </table>
           
@@ -289,7 +332,7 @@ export class ReportGenerator {
       </body>
       </html>
     `;
-    
+
     return html;
   }
 
@@ -305,11 +348,15 @@ export class ReportGenerator {
     const labels = data.data.map(item => item.asset || item.name || 'Item');
     const values = data.data.map(item => {
       const val = item.value || item.current_value || item.amount || 0;
-      return typeof val === 'string' ? parseFloat(val.replace(/[$,%]/g, '')) || 0 : val;
+      return typeof val === 'string'
+        ? parseFloat(val.replace(/[$,%]/g, '')) || 0
+        : val;
     });
     const returns = data.data.map(item => {
       const ret = item.return || item.gains || 0;
-      return typeof ret === 'string' ? parseFloat(ret.replace(/[$,%]/g, '')) || 0 : ret;
+      return typeof ret === 'string'
+        ? parseFloat(ret.replace(/[$,%]/g, '')) || 0
+        : ret;
     });
 
     return `
@@ -370,8 +417,8 @@ export class ReportGenerator {
             datasets: [{
               label: 'Performance (%)',
               data: ${JSON.stringify(returns)},
-              backgroundColor: ${JSON.stringify(returns.map(r => r >= 0 ? '#10b981' : '#ef4444'))},
-              borderColor: ${JSON.stringify(returns.map(r => r >= 0 ? '#059669' : '#dc2626'))},
+              backgroundColor: ${JSON.stringify(returns.map(r => (r >= 0 ? '#10b981' : '#ef4444')))},
+              borderColor: ${JSON.stringify(returns.map(r => (r >= 0 ? '#059669' : '#dc2626')))},
               borderWidth: 1
             }]
           },
@@ -400,10 +447,14 @@ export class ReportGenerator {
 
         // Risk vs Return Scatter Plot
         const ctx3 = document.getElementById('${chartId3}').getContext('2d');
-        const riskData = ${JSON.stringify(data.data.map(item => ({
-          x: item.volatility || Math.random() * 20 + 5,
-          y: item.return ? parseFloat(String(item.return).replace(/[%,]/g, '')) : Math.random() * 20 - 5
-        })))};
+        const riskData = ${JSON.stringify(
+          data.data.map(item => ({
+            x: item.volatility || Math.random() * 20 + 5,
+            y: item.return
+              ? parseFloat(String(item.return).replace(/[%,]/g, ''))
+              : Math.random() * 20 - 5,
+          }))
+        )};
         
         new Chart(ctx3, {
           type: 'scatter',
@@ -486,14 +537,38 @@ export const mockReportData = {
       totalValue: 125000,
       totalInvestments: 8,
       averageReturn: 12.5,
-      riskLevel: 'Medium'
+      riskLevel: 'Medium',
     },
     data: [
-      { asset: 'Shanghai-LA Container', value: 45000, return: '12.5%', risk: 'Medium', status: 'Active' },
-      { asset: 'Miami Office Building', value: 35000, return: '8.2%', risk: 'Low', status: 'Active' },
-      { asset: 'Electronics Inventory', value: 25000, return: '15.1%', risk: 'High', status: 'Active' },
-      { asset: 'Gold Vault Storage', value: 20000, return: '6.8%', risk: 'Low', status: 'Active' }
-    ]
+      {
+        asset: 'Shanghai-LA Container',
+        value: 45000,
+        return: '12.5%',
+        risk: 'Medium',
+        status: 'Active',
+      },
+      {
+        asset: 'Miami Office Building',
+        value: 35000,
+        return: '8.2%',
+        risk: 'Low',
+        status: 'Active',
+      },
+      {
+        asset: 'Electronics Inventory',
+        value: 25000,
+        return: '15.1%',
+        risk: 'High',
+        status: 'Active',
+      },
+      {
+        asset: 'Gold Vault Storage',
+        value: 20000,
+        return: '6.8%',
+        risk: 'Low',
+        status: 'Active',
+      },
+    ],
   },
 
   assetPerformance: {
@@ -503,26 +578,80 @@ export const mockReportData = {
       totalValue: 125000,
       averageReturn: 10.65,
       bestPerformer: 'Electronics Inventory',
-      worstPerformer: 'Gold Vault Storage'
+      worstPerformer: 'Gold Vault Storage',
     },
     data: [
-      { asset: 'Electronics Inventory', current_value: 25000, initial_value: 22000, return: '15.1%', period: '6 months' },
-      { asset: 'Shanghai-LA Container', current_value: 45000, initial_value: 42000, return: '12.5%', period: '4 months' },
-      { asset: 'Miami Office Building', current_value: 35000, initial_value: 34000, return: '8.2%', period: '8 months' },
-      { asset: 'Gold Vault Storage', current_value: 20000, initial_value: 19800, return: '6.8%', period: '3 months' }
-    ]
+      {
+        asset: 'Electronics Inventory',
+        current_value: 25000,
+        initial_value: 22000,
+        return: '15.1%',
+        period: '6 months',
+      },
+      {
+        asset: 'Shanghai-LA Container',
+        current_value: 45000,
+        initial_value: 42000,
+        return: '12.5%',
+        period: '4 months',
+      },
+      {
+        asset: 'Miami Office Building',
+        current_value: 35000,
+        initial_value: 34000,
+        return: '8.2%',
+        period: '8 months',
+      },
+      {
+        asset: 'Gold Vault Storage',
+        current_value: 20000,
+        initial_value: 19800,
+        return: '6.8%',
+        period: '3 months',
+      },
+    ],
   },
 
   transactionHistory: {
     title: 'Transaction History Report',
     generatedAt: new Date().toISOString(),
     data: [
-      { date: '2024-12-15', type: 'Investment', asset: 'Shanghai-LA Container', amount: 5000, status: 'Completed' },
-      { date: '2024-12-14', type: 'Dividend', asset: 'Miami Office Building', amount: 250, status: 'Completed' },
-      { date: '2024-12-13', type: 'Investment', asset: 'Electronics Inventory', amount: 3000, status: 'Completed' },
-      { date: '2024-12-12', type: 'Withdrawal', asset: 'Gold Vault Storage', amount: 1000, status: 'Completed' },
-      { date: '2024-12-11', type: 'Investment', asset: 'Shanghai-LA Container', amount: 2000, status: 'Completed' }
-    ]
+      {
+        date: '2024-12-15',
+        type: 'Investment',
+        asset: 'Shanghai-LA Container',
+        amount: 5000,
+        status: 'Completed',
+      },
+      {
+        date: '2024-12-14',
+        type: 'Dividend',
+        asset: 'Miami Office Building',
+        amount: 250,
+        status: 'Completed',
+      },
+      {
+        date: '2024-12-13',
+        type: 'Investment',
+        asset: 'Electronics Inventory',
+        amount: 3000,
+        status: 'Completed',
+      },
+      {
+        date: '2024-12-12',
+        type: 'Withdrawal',
+        asset: 'Gold Vault Storage',
+        amount: 1000,
+        status: 'Completed',
+      },
+      {
+        date: '2024-12-11',
+        type: 'Investment',
+        asset: 'Shanghai-LA Container',
+        amount: 2000,
+        status: 'Completed',
+      },
+    ],
   },
 
   riskAnalysis: {
@@ -531,14 +660,38 @@ export const mockReportData = {
     summary: {
       overallRisk: 'Medium',
       diversificationScore: 75,
-      volatilityIndex: 12.3
+      volatilityIndex: 12.3,
     },
     data: [
-      { asset: 'Electronics Inventory', risk_level: 'High', volatility: 18.5, correlation: 0.7, recommendation: 'Monitor closely' },
-      { asset: 'Shanghai-LA Container', risk_level: 'Medium', volatility: 12.3, correlation: 0.4, recommendation: 'Stable' },
-      { asset: 'Miami Office Building', risk_level: 'Low', volatility: 6.8, correlation: 0.2, recommendation: 'Safe' },
-      { asset: 'Gold Vault Storage', risk_level: 'Low', volatility: 4.2, correlation: -0.1, recommendation: 'Hedge asset' }
-    ]
+      {
+        asset: 'Electronics Inventory',
+        risk_level: 'High',
+        volatility: 18.5,
+        correlation: 0.7,
+        recommendation: 'Monitor closely',
+      },
+      {
+        asset: 'Shanghai-LA Container',
+        risk_level: 'Medium',
+        volatility: 12.3,
+        correlation: 0.4,
+        recommendation: 'Stable',
+      },
+      {
+        asset: 'Miami Office Building',
+        risk_level: 'Low',
+        volatility: 6.8,
+        correlation: 0.2,
+        recommendation: 'Safe',
+      },
+      {
+        asset: 'Gold Vault Storage',
+        risk_level: 'Low',
+        volatility: 4.2,
+        correlation: -0.1,
+        recommendation: 'Hedge asset',
+      },
+    ],
   },
 
   taxReport: {
@@ -548,14 +701,44 @@ export const mockReportData = {
       totalGains: 8500,
       totalLosses: 1200,
       netGains: 7300,
-      estimatedTax: 1825
+      estimatedTax: 1825,
     },
     data: [
-      { asset: 'Shanghai-LA Container', gains: 3000, losses: 0, holding_period: '4 months', tax_rate: '25%' },
-      { asset: 'Miami Office Building', gains: 2800, losses: 0, holding_period: '8 months', tax_rate: '20%' },
-      { asset: 'Electronics Inventory', gains: 3000, losses: 0, holding_period: '6 months', tax_rate: '25%' },
-      { asset: 'Gold Vault Storage', gains: 200, losses: 0, holding_period: '3 months', tax_rate: '25%' },
-      { asset: 'Failed Investment', gains: 0, losses: 1200, holding_period: '2 months', tax_rate: '25%' }
-    ]
-  }
+      {
+        asset: 'Shanghai-LA Container',
+        gains: 3000,
+        losses: 0,
+        holding_period: '4 months',
+        tax_rate: '25%',
+      },
+      {
+        asset: 'Miami Office Building',
+        gains: 2800,
+        losses: 0,
+        holding_period: '8 months',
+        tax_rate: '20%',
+      },
+      {
+        asset: 'Electronics Inventory',
+        gains: 3000,
+        losses: 0,
+        holding_period: '6 months',
+        tax_rate: '25%',
+      },
+      {
+        asset: 'Gold Vault Storage',
+        gains: 200,
+        losses: 0,
+        holding_period: '3 months',
+        tax_rate: '25%',
+      },
+      {
+        asset: 'Failed Investment',
+        gains: 0,
+        losses: 1200,
+        holding_period: '2 months',
+        tax_rate: '25%',
+      },
+    ],
+  },
 };

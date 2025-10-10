@@ -1,6 +1,6 @@
 /**
  * KYC Process Integration
- * 
+ *
  * This service integrates the KYC workflow with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -15,7 +15,11 @@ export class KYCIntegration {
   /**
    * Get all KYC applications with database integration
    */
-  async getKycApplications(): Promise<{ success: boolean; applications?: KYCApplication[]; error?: string }> {
+  async getKycApplications(): Promise<{
+    success: boolean;
+    applications?: KYCApplication[];
+    error?: string;
+  }> {
     try {
       // Use mock service for now (database integration needs proper KYC container)
       const mockApplications = this.getMockKycApplications();
@@ -29,7 +33,11 @@ export class KYCIntegration {
   /**
    * Get KYC application by user ID with database integration
    */
-  async getKycApplicationByUserId(userId: string): Promise<{ success: boolean; application?: KYCApplication; error?: string }> {
+  async getKycApplicationByUserId(userId: string): Promise<{
+    success: boolean;
+    application?: KYCApplication;
+    error?: string;
+  }> {
     try {
       const mockApplications = this.getMockKycApplications();
       const application = mockApplications.find(app => app.userId === userId);
@@ -46,12 +54,18 @@ export class KYCIntegration {
   /**
    * Create KYC application with database integration
    */
-  async createKycApplication(applicationData: Omit<KYCApplication, 'id' | 'submittedAt'>): Promise<{ success: boolean; application?: KYCApplication; error?: string }> {
+  async createKycApplication(
+    applicationData: Omit<KYCApplication, 'id' | 'submittedAt'>
+  ): Promise<{
+    success: boolean;
+    application?: KYCApplication;
+    error?: string;
+  }> {
     try {
       const mockApplication = {
         ...applicationData,
         id: `kyc-${Date.now()}`,
-        submittedAt: new Date().toISOString()
+        submittedAt: new Date().toISOString(),
       };
       return { success: true, application: mockApplication };
     } catch (error) {
@@ -63,7 +77,16 @@ export class KYCIntegration {
   /**
    * Update KYC application status with database integration
    */
-  async updateKycApplicationStatus(id: string, status: 'pending' | 'approved' | 'rejected', reviewerId?: string, rejectionReason?: string): Promise<{ success: boolean; application?: KYCApplication; error?: string }> {
+  async updateKycApplicationStatus(
+    id: string,
+    status: 'pending' | 'approved' | 'rejected',
+    reviewerId?: string,
+    rejectionReason?: string
+  ): Promise<{
+    success: boolean;
+    application?: KYCApplication;
+    error?: string;
+  }> {
     try {
       const mockApplications = this.getMockKycApplications();
       const application = mockApplications.find(app => app.id === id);
@@ -86,11 +109,18 @@ export class KYCIntegration {
   /**
    * Get KYC statistics with database integration
    */
-  async getKycStats(): Promise<{ success: boolean; stats?: any; error?: string }> {
+  async getKycStats(): Promise<{
+    success: boolean;
+    stats?: any;
+    error?: string;
+  }> {
     try {
       const result = await this.getKycApplications();
       if (!result.success || !result.applications) {
-        return { success: false, error: 'Failed to get KYC applications for stats' };
+        return {
+          success: false,
+          error: 'Failed to get KYC applications for stats',
+        };
       }
 
       const applications = result.applications;
@@ -99,8 +129,11 @@ export class KYCIntegration {
         pending: applications.filter(app => app.status === 'pending').length,
         approved: applications.filter(app => app.status === 'approved').length,
         rejected: applications.filter(app => app.status === 'rejected').length,
-        pendingReview: applications.filter(app => app.status === 'pending' && !app.reviewedAt).length,
-        averageProcessingTime: this.calculateAverageProcessingTime(applications)
+        pendingReview: applications.filter(
+          app => app.status === 'pending' && !app.reviewedAt
+        ).length,
+        averageProcessingTime:
+          this.calculateAverageProcessingTime(applications),
       };
 
       return { success: true, stats };
@@ -113,7 +146,9 @@ export class KYCIntegration {
   /**
    * Calculate average processing time for KYC applications
    */
-  private calculateAverageProcessingTime(applications: KYCApplication[]): number {
+  private calculateAverageProcessingTime(
+    applications: KYCApplication[]
+  ): number {
     const reviewedApplications = applications.filter(app => app.reviewedAt);
     if (reviewedApplications.length === 0) return 0;
 
@@ -123,7 +158,9 @@ export class KYCIntegration {
       return sum + (reviewed - submitted);
     }, 0);
 
-    return Math.round(totalTime / reviewedApplications.length / (1000 * 60 * 60 * 24)); // Days
+    return Math.round(
+      totalTime / reviewedApplications.length / (1000 * 60 * 60 * 24)
+    ); // Days
   }
 
   /**
@@ -146,15 +183,15 @@ export class KYCIntegration {
             expiryDate: '2029-01-15',
             documentUrl: '/documents/passport-1.pdf',
             verified: true,
-          }
+          },
         ],
         addressDocuments: [
           {
             type: 'utility_bill',
             documentUrl: '/documents/utility-1.pdf',
             issueDate: '2024-01-01',
-            verified: true
-          }
+            verified: true,
+          },
         ],
         personalInfo: {
           firstName: 'Alice',
@@ -164,7 +201,7 @@ export class KYCIntegration {
           occupation: 'Software Engineer',
           employer: 'Tech Corp',
           annualIncome: 120000,
-          sourceOfFunds: 'Employment'
+          sourceOfFunds: 'Employment',
         },
         financialInfo: {
           bankName: 'Chase Bank',
@@ -172,7 +209,7 @@ export class KYCIntegration {
           routingNumber: '021000021',
           bankCountry: 'US',
           investmentExperience: 'intermediate',
-          riskTolerance: 'moderate'
+          riskTolerance: 'moderate',
         },
         riskScore: 75,
         riskFactors: ['High income', 'Stable employment'],
@@ -181,9 +218,9 @@ export class KYCIntegration {
             checkType: 'identity_verification',
             status: 'passed',
             details: 'Identity documents verified successfully',
-            checkedAt: '2024-01-16T10:00:00Z'
-          }
-        ]
+            checkedAt: '2024-01-16T10:00:00Z',
+          },
+        ],
       },
       {
         id: 'kyc-2',
@@ -197,16 +234,16 @@ export class KYCIntegration {
             country: 'CA',
             expiryDate: '2029-12-10',
             documentUrl: '/documents/id-2.pdf',
-            verified: false
-          }
+            verified: false,
+          },
         ],
         addressDocuments: [
           {
             type: 'bank_statement',
             documentUrl: '/documents/statement-2.pdf',
             issueDate: '2024-01-15',
-            verified: false
-          }
+            verified: false,
+          },
         ],
         personalInfo: {
           firstName: 'Bob',
@@ -216,7 +253,7 @@ export class KYCIntegration {
           occupation: 'Business Owner',
           employer: 'Smith Enterprises',
           annualIncome: 200000,
-          sourceOfFunds: 'Business'
+          sourceOfFunds: 'Business',
         },
         financialInfo: {
           bankName: 'Royal Bank of Canada',
@@ -224,7 +261,7 @@ export class KYCIntegration {
           routingNumber: '000300002',
           bankCountry: 'CA',
           investmentExperience: 'advanced',
-          riskTolerance: 'aggressive'
+          riskTolerance: 'aggressive',
         },
         riskScore: 85,
         riskFactors: ['High net worth', 'Business ownership'],
@@ -233,10 +270,10 @@ export class KYCIntegration {
             checkType: 'identity_verification',
             status: 'pending',
             details: 'Identity documents under review',
-            checkedAt: '2024-01-20T09:20:00Z'
-          }
-        ]
-      }
+            checkedAt: '2024-01-20T09:20:00Z',
+          },
+        ],
+      },
     ];
   }
 
@@ -245,7 +282,9 @@ export class KYCIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`KYCIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `KYCIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

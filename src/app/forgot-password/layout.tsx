@@ -7,26 +7,33 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     ...baseMeta,
     title: 'Forgot Password | Reset Your Account | The Global Edge',
-    description: 'Reset your password for The Global Edge platform. Enter your email to receive password reset instructions.',
+    description:
+      'Reset your password for The Global Edge platform. Enter your email to receive password reset instructions.',
     robots: { index: false, follow: false },
     alternates: {
-      canonical: 'https://theglobaledge.io/forgot-password'
+      canonical: 'https://theglobaledge.io/forgot-password',
     },
     openGraph: {
       ...baseMeta.openGraph,
       title: 'Forgot Password | Reset Your Account | The Global Edge',
-      description: 'Reset your password for The Global Edge platform. Enter your email to receive password reset instructions.',
+      description:
+        'Reset your password for The Global Edge platform. Enter your email to receive password reset instructions.',
       url: 'https://theglobaledge.io/forgot-password',
-      type: 'website'
+      type: 'website',
     },
     twitter: {
       ...baseMeta.twitter,
       title: 'Forgot Password | Reset Your Account | The Global Edge',
-      description: 'Reset your password for The Global Edge platform. Enter your email to receive password reset instructions.'
-    }
+      description:
+        'Reset your password for The Global Edge platform. Enter your email to receive password reset instructions.',
+    },
   };
 }
 
-export default function ForgotPasswordLayout({ children }: { children: React.ReactNode }) {
+export default function ForgotPasswordLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }

@@ -5,8 +5,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return generateDynamicMetadata({ path: '/issuer' });
 }
 
-export default function IssuerSectionLayout({ children }: { children: React.ReactNode }) {
+export default function IssuerSectionLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }
-
-

@@ -5,8 +5,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return generateDynamicMetadata({ path: '/investor' });
 }
 
-export default function InvestorSectionLayout({ children }: { children: React.ReactNode }) {
+export default function InvestorSectionLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return children;
 }
-
-

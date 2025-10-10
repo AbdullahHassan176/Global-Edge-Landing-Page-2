@@ -1,6 +1,6 @@
 /**
  * File Upload Integration
- * 
+ *
  * This service integrates file upload with Azure Blob Storage
  * while maintaining backward compatibility with mock data.
  */
@@ -43,7 +43,10 @@ export class FileUploadIntegration {
   async initialize(): Promise<{ success: boolean; error?: string }> {
     try {
       // Check for Azure Blob Storage configuration
-      if (process.env.AZURE_STORAGE_CONNECTION_STRING && process.env.AZURE_STORAGE_CONTAINER_NAME) {
+      if (
+        process.env.AZURE_STORAGE_CONNECTION_STRING &&
+        process.env.AZURE_STORAGE_CONTAINER_NAME
+      ) {
         this.azureBlobEnabled = true;
         console.log('Azure Blob Storage integration enabled');
       }
@@ -51,7 +54,10 @@ export class FileUploadIntegration {
       return { success: true };
     } catch (error) {
       console.error('File upload integration initialization error:', error);
-      return { success: false, error: 'Failed to initialize file upload integration' };
+      return {
+        success: false,
+        error: 'Failed to initialize file upload integration',
+      };
     }
   }
 
@@ -68,14 +74,26 @@ export class FileUploadIntegration {
     try {
       if (this.useDatabase && this.azureBlobEnabled) {
         // Upload to Azure Blob Storage
-        const uploadResult = await this.uploadToAzureBlob(file, category, uploadedBy, entityId, entityType);
+        const uploadResult = await this.uploadToAzureBlob(
+          file,
+          category,
+          uploadedBy,
+          entityId,
+          entityType
+        );
         if (uploadResult.success) {
           return { success: true, result: uploadResult };
         }
       }
 
       // Fallback to mock upload
-      const mockResult = await this.uploadMockFile(file, category, uploadedBy, entityId, entityType);
+      const mockResult = await this.uploadMockFile(
+        file,
+        category,
+        uploadedBy,
+        entityId,
+        entityType
+      );
       return { success: true, result: mockResult };
     } catch (error) {
       console.error('Upload file error:', error);
@@ -119,9 +137,9 @@ export class FileUploadIntegration {
           category: category as any,
           entityId,
           entityType,
-          tags: [category, entityType].filter(Boolean) as string[]
+          tags: [category, entityType].filter(Boolean) as string[],
         },
-        status: 'uploaded'
+        status: 'uploaded',
       };
 
       // Store file metadata in database
@@ -129,13 +147,13 @@ export class FileUploadIntegration {
 
       return {
         success: true,
-        file: uploadedFile
+        file: uploadedFile,
       };
     } catch (error) {
       console.error('Azure Blob upload error:', error);
       return {
         success: false,
-        error: 'Failed to upload to Azure Blob Storage'
+        error: 'Failed to upload to Azure Blob Storage',
       };
     }
   }
@@ -172,9 +190,9 @@ export class FileUploadIntegration {
           category: category as any,
           entityId,
           entityType,
-          tags: [category, entityType].filter(Boolean) as string[]
+          tags: [category, entityType].filter(Boolean) as string[],
         },
-        status: 'uploaded'
+        status: 'uploaded',
       };
 
       // Store file metadata in database
@@ -182,13 +200,13 @@ export class FileUploadIntegration {
 
       return {
         success: true,
-        file: uploadedFile
+        file: uploadedFile,
       };
     } catch (error) {
       console.error('Mock upload error:', error);
       return {
         success: false,
-        error: 'Failed to upload mock file'
+        error: 'Failed to upload mock file',
       };
     }
   }
@@ -221,11 +239,17 @@ export class FileUploadIntegration {
   /**
    * Get files by user with database integration
    */
-  async getFilesByUser(userId: string): Promise<{ success: boolean; files?: UploadedFile[]; error?: string }> {
+  async getFilesByUser(
+    userId: string
+  ): Promise<{ success: boolean; files?: UploadedFile[]; error?: string }> {
     try {
       if (this.useDatabase) {
         // Get files from database
-        const dbResult = await this.getFilesFromDatabase(undefined, undefined, userId);
+        const dbResult = await this.getFilesFromDatabase(
+          undefined,
+          undefined,
+          userId
+        );
         if (dbResult.success) {
           return { success: true, files: dbResult.files };
         }
@@ -243,7 +267,9 @@ export class FileUploadIntegration {
   /**
    * Delete file with database integration
    */
-  async deleteFile(fileId: string): Promise<{ success: boolean; error?: string }> {
+  async deleteFile(
+    fileId: string
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       if (this.useDatabase) {
         // Delete from Azure Blob Storage
@@ -265,7 +291,9 @@ export class FileUploadIntegration {
   /**
    * Get file by ID with database integration
    */
-  async getFileById(fileId: string): Promise<{ success: boolean; file?: UploadedFile; error?: string }> {
+  async getFileById(
+    fileId: string
+  ): Promise<{ success: boolean; file?: UploadedFile; error?: string }> {
     try {
       if (this.useDatabase) {
         // Get file from database
@@ -288,13 +316,15 @@ export class FileUploadIntegration {
   /**
    * Store file metadata in database
    */
-  private async storeFileMetadata(file: UploadedFile): Promise<{ success: boolean; error?: string }> {
+  private async storeFileMetadata(
+    file: UploadedFile
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would store this in a dedicated files container
       // For now, we'll use the users container with a type field
       const fileData = {
         ...file,
-        type: 'uploaded_file'
+        type: 'uploaded_file',
       };
 
       // This would be implemented with the actual database service
@@ -327,7 +357,9 @@ export class FileUploadIntegration {
   /**
    * Get file from database
    */
-  private async getFileFromDatabase(fileId: string): Promise<{ success: boolean; file?: UploadedFile; error?: string }> {
+  private async getFileFromDatabase(
+    fileId: string
+  ): Promise<{ success: boolean; file?: UploadedFile; error?: string }> {
     try {
       // In a real implementation, you would query the database
       // For now, return mock data
@@ -343,20 +375,27 @@ export class FileUploadIntegration {
   /**
    * Delete from Azure Blob Storage
    */
-  private async deleteFromAzureBlob(fileId: string): Promise<{ success: boolean; error?: string }> {
+  private async deleteFromAzureBlob(
+    fileId: string
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would delete from Azure Blob Storage
       return { success: true };
     } catch (error) {
       console.error('Delete from Azure Blob error:', error);
-      return { success: false, error: 'Failed to delete from Azure Blob Storage' };
+      return {
+        success: false,
+        error: 'Failed to delete from Azure Blob Storage',
+      };
     }
   }
 
   /**
    * Delete file metadata from database
    */
-  private async deleteFileMetadata(fileId: string): Promise<{ success: boolean; error?: string }> {
+  private async deleteFileMetadata(
+    fileId: string
+  ): Promise<{ success: boolean; error?: string }> {
     try {
       // In a real implementation, you would delete from the database
       return { success: true };
@@ -390,9 +429,9 @@ export class FileUploadIntegration {
           category: 'kyc',
           entityId: 'user-1',
           entityType: 'user',
-          tags: ['kyc', 'user', 'passport']
+          tags: ['kyc', 'user', 'passport'],
         },
-        status: 'uploaded'
+        status: 'uploaded',
       },
       {
         id: 'file_2',
@@ -409,10 +448,10 @@ export class FileUploadIntegration {
           category: 'asset',
           entityId: 'asset-1',
           entityType: 'asset',
-          tags: ['asset', 'property', 'deed']
+          tags: ['asset', 'property', 'deed'],
         },
-        status: 'uploaded'
-      }
+        status: 'uploaded',
+      },
     ];
 
     // Filter by category if specified
@@ -438,7 +477,9 @@ export class FileUploadIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`FileUploadIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `FileUploadIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**

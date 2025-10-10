@@ -5,11 +5,13 @@ Thank you for your interest in contributing to the Global Edge Landing Page! Thi
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ and npm
 - Git
 - Basic knowledge of React, Next.js, and TypeScript
 
 ### Development Setup
+
 1. Fork the repository
 2. Clone your fork: `git clone https://github.com/your-username/Global-Edge-Landing-Page-2.git`
 3. Install dependencies: `npm install`
@@ -19,18 +21,21 @@ Thank you for your interest in contributing to the Global Edge Landing Page! Thi
 ## 📋 Development Guidelines
 
 ### Code Style
+
 - Follow the existing code style and patterns
 - Use TypeScript for all new code
 - Follow the ESLint and Prettier configurations
 - Write meaningful commit messages
 
 ### Component Guidelines
+
 - Use functional components with hooks
 - Implement proper TypeScript types
 - Add JSDoc comments for complex functions
 - Follow the established component structure
 
 ### File Organization
+
 ```
 src/
 ├── app/                 # Next.js App Router pages
@@ -46,6 +51,7 @@ src/
 ## 🧪 Testing
 
 ### Running Tests
+
 ```bash
 npm run test          # Run all tests
 npm run test:watch    # Run tests in watch mode
@@ -53,6 +59,7 @@ npm run test:coverage # Run tests with coverage
 ```
 
 ### Writing Tests
+
 - Write unit tests for utility functions
 - Write integration tests for API routes
 - Write component tests for React components
@@ -61,6 +68,7 @@ npm run test:coverage # Run tests with coverage
 ## 🐛 Bug Reports
 
 When reporting bugs, please include:
+
 - Clear description of the issue
 - Steps to reproduce
 - Expected vs actual behavior
@@ -70,6 +78,7 @@ When reporting bugs, please include:
 ## ✨ Feature Requests
 
 When requesting features, please include:
+
 - Clear description of the feature
 - Use cases and benefits
 - Mockups or examples if applicable
@@ -78,6 +87,7 @@ When requesting features, please include:
 ## 🔄 Pull Request Process
 
 1. **Create a feature branch** from `main`
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -85,6 +95,7 @@ When requesting features, please include:
 2. **Make your changes** following the guidelines above
 
 3. **Test your changes**
+
    ```bash
    npm run lint        # Check code style
    npm run type-check  # Check TypeScript
@@ -93,12 +104,14 @@ When requesting features, please include:
    ```
 
 4. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "feat: add your feature description"
    ```
 
 5. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -109,6 +122,7 @@ When requesting features, please include:
    - Request review from maintainers
 
 ### Pull Request Guidelines
+
 - Keep PRs focused and small
 - Include tests for new features
 - Update documentation if needed
@@ -127,6 +141,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 ```
 
 ### Types
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -136,6 +151,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 - `chore`: Maintenance tasks
 
 ### Examples
+
 ```
 feat(auth): add OAuth login functionality
 fix(api): resolve user authentication issue
@@ -145,6 +161,7 @@ docs(readme): update installation instructions
 ## 🏷️ Release Process
 
 Releases are managed through GitHub and follow semantic versioning:
+
 - `MAJOR`: Breaking changes
 - `MINOR`: New features (backward compatible)
 - `PATCH`: Bug fixes (backward compatible)

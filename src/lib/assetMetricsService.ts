@@ -42,7 +42,7 @@ const mockAssets: AssetData[] = [
     risk: 'Medium',
     value: '$45,000',
     route: 'Jebel Ali Port → Dubai',
-    cargo: 'Electronics & Luxury Goods'
+    cargo: 'Electronics & Luxury Goods',
   },
   {
     id: '2',
@@ -52,7 +52,7 @@ const mockAssets: AssetData[] = [
     risk: 'Medium',
     value: '$38,000',
     route: 'Abu Dhabi → Rotterdam',
-    cargo: 'Petrochemicals & Oil Products'
+    cargo: 'Petrochemicals & Oil Products',
   },
   {
     id: '9',
@@ -62,7 +62,7 @@ const mockAssets: AssetData[] = [
     risk: 'Medium',
     value: '$42,000',
     route: 'Singapore → Rotterdam',
-    cargo: 'Industrial Machinery'
+    cargo: 'Industrial Machinery',
   },
   // Properties (89 total)
   {
@@ -73,7 +73,7 @@ const mockAssets: AssetData[] = [
     risk: 'Low',
     value: '$350,000',
     route: 'Dubai Marina, UAE',
-    cargo: 'Commercial Real Estate'
+    cargo: 'Commercial Real Estate',
   },
   {
     id: '4',
@@ -83,7 +83,7 @@ const mockAssets: AssetData[] = [
     risk: 'Low',
     value: '$280,000',
     route: 'Abu Dhabi Corniche, UAE',
-    cargo: 'Residential Real Estate'
+    cargo: 'Residential Real Estate',
   },
   {
     id: '10',
@@ -93,7 +93,7 @@ const mockAssets: AssetData[] = [
     risk: 'Low',
     value: '$420,000',
     route: 'Seattle, WA',
-    cargo: 'Industrial Real Estate'
+    cargo: 'Industrial Real Estate',
   },
   // TradeTokens/Inventory (156 total)
   {
@@ -104,7 +104,7 @@ const mockAssets: AssetData[] = [
     risk: 'High',
     value: '$25,000',
     route: 'Dubai Gold Souk, UAE',
-    cargo: 'Gold & Precious Metals'
+    cargo: 'Gold & Precious Metals',
   },
   {
     id: '6',
@@ -114,7 +114,7 @@ const mockAssets: AssetData[] = [
     risk: 'Medium',
     value: '$18,000',
     route: 'Sharjah, UAE',
-    cargo: 'Traditional Textiles & Fabrics'
+    cargo: 'Traditional Textiles & Fabrics',
   },
   {
     id: '11',
@@ -124,7 +124,7 @@ const mockAssets: AssetData[] = [
     risk: 'High',
     value: '$32,000',
     route: 'Midwest Distribution',
-    cargo: 'Grain & Soybeans'
+    cargo: 'Grain & Soybeans',
   },
   // Vault (34 total)
   {
@@ -135,7 +135,7 @@ const mockAssets: AssetData[] = [
     risk: 'Low',
     value: '$20,000',
     route: 'Dubai International Financial Centre',
-    cargo: 'Gold & Precious Metals'
+    cargo: 'Gold & Precious Metals',
   },
   {
     id: '8',
@@ -145,7 +145,7 @@ const mockAssets: AssetData[] = [
     risk: 'Low',
     value: '$15,000',
     route: 'Abu Dhabi Global Market',
-    cargo: 'Diamonds & Precious Stones'
+    cargo: 'Diamonds & Precious Stones',
   },
   {
     id: '12',
@@ -155,8 +155,8 @@ const mockAssets: AssetData[] = [
     risk: 'Low',
     value: '$12,000',
     route: 'London, UK',
-    cargo: 'Precious Metals'
-  }
+    cargo: 'Precious Metals',
+  },
 ];
 
 export class AssetMetricsService {
@@ -173,13 +173,13 @@ export class AssetMetricsService {
     } catch (error) {
       console.log('Using fallback calculation for assets under management');
     }
-    
+
     // Fallback calculation using mock data
     const containerValue = 247 * 40000; // Average container value
     const propertyValue = 89 * 350000; // Average property value
     const inventoryValue = 156 * 25000; // Average inventory value
     const vaultValue = 34 * 15000; // Average vault value
-    
+
     return containerValue + propertyValue + inventoryValue + vaultValue;
   }
 
@@ -193,7 +193,7 @@ export class AssetMetricsService {
     } catch (error) {
       console.log('Using fallback calculation for assets tokenized');
     }
-    
+
     // Fallback calculation
     return 247 + 89 + 156 + 34; // Total from all categories
   }
@@ -218,10 +218,13 @@ export class AssetMetricsService {
     } catch (error) {
       console.log('Using fallback calculation for average APR');
     }
-    
+
     // Fallback calculation
-    const sampleAPRs = [12.5, 11.8, 13.8, 8.2, 9.5, 7.8, 15.1, 13.2, 14.5, 6.8, 7.5, 6.2];
-    const average = sampleAPRs.reduce((sum, apr) => sum + apr, 0) / sampleAPRs.length;
+    const sampleAPRs = [
+      12.5, 11.8, 13.8, 8.2, 9.5, 7.8, 15.1, 13.2, 14.5, 6.8, 7.5, 6.2,
+    ];
+    const average =
+      sampleAPRs.reduce((sum, apr) => sum + apr, 0) / sampleAPRs.length;
     return Math.round(average * 10) / 10; // Round to 1 decimal place
   }
 
@@ -239,28 +242,28 @@ export class AssetMetricsService {
           containers: 0,
           property: 0,
           tradetokens: 0,
-          vault: 0
+          vault: 0,
         };
-        
+
         result.assets.forEach(asset => {
           if (asset.type === 'container') breakdown.containers++;
           else if (asset.type === 'property') breakdown.property++;
           else if (asset.type === 'inventory') breakdown.tradetokens++;
           else if (asset.type === 'vault') breakdown.vault++;
         });
-        
+
         return breakdown;
       }
     } catch (error) {
       console.log('Using fallback category breakdown');
     }
-    
+
     // Fallback breakdown
     return {
       containers: 247,
       property: 89,
       tradetokens: 156,
-      vault: 34
+      vault: 34,
     };
   }
 
@@ -270,25 +273,25 @@ export class AssetMetricsService {
       const result = await assetIntegration.getAssets();
       if (result.success && result.assets) {
         const distribution = { low: 0, medium: 0, high: 0 };
-        
+
         result.assets.forEach(asset => {
           const risk = asset.risk.toLowerCase();
           if (risk === 'low') distribution.low++;
           else if (risk === 'medium') distribution.medium++;
           else if (risk === 'high') distribution.high++;
         });
-        
+
         return distribution;
       }
     } catch (error) {
       console.log('Using fallback risk distribution');
     }
-    
+
     // Fallback distribution
     return {
       low: 45, // Properties and vaults are typically low risk
       medium: 40, // Most containers and some inventory
-      high: 15 // Some high-risk inventory and volatile assets
+      high: 15, // Some high-risk inventory and volatile assets
     };
   }
 
@@ -302,7 +305,7 @@ export class AssetMetricsService {
         this.calculateAverageAPR(),
         this.calculateTotalValue(),
         this.getCategoryBreakdown(),
-        this.getRiskDistribution()
+        this.getRiskDistribution(),
       ]);
 
       const [
@@ -311,13 +314,16 @@ export class AssetMetricsService {
         averageAPR,
         totalValue,
         categoryBreakdown,
-        riskDistribution
-      ] = await Promise.race([
+        riskDistribution,
+      ] = (await Promise.race([
         metricsPromise,
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Metrics calculation timeout')), 2000)
-        )
-      ]) as any;
+        new Promise((_, reject) =>
+          setTimeout(
+            () => reject(new Error('Metrics calculation timeout')),
+            2000
+          )
+        ),
+      ])) as any;
 
       return {
         totalAssetsUnderManagement,
@@ -326,7 +332,7 @@ export class AssetMetricsService {
         averageAPR,
         totalValue,
         categoryBreakdown,
-        riskDistribution
+        riskDistribution,
       };
     } catch (error) {
       console.log('Metrics calculation failed, using fallback:', error);
@@ -337,8 +343,13 @@ export class AssetMetricsService {
         onTimeDeliveryRate: 98.7,
         averageAPR: 10.6,
         totalValue: 45400000,
-        categoryBreakdown: { containers: 247, property: 89, tradetokens: 156, vault: 34 },
-        riskDistribution: { low: 45, medium: 40, high: 15 }
+        categoryBreakdown: {
+          containers: 247,
+          property: 89,
+          tradetokens: 156,
+          vault: 34,
+        },
+        riskDistribution: { low: 45, medium: 40, high: 15 },
       };
     }
   }
@@ -366,14 +377,16 @@ export class AssetMetricsService {
   }
 
   // Get assets by category
-  static getAssetsByCategory(category: 'containers' | 'property' | 'tradetokens' | 'vault'): AssetData[] {
+  static getAssetsByCategory(
+    category: 'containers' | 'property' | 'tradetokens' | 'vault'
+  ): AssetData[] {
     const typeMap = {
       containers: 'container',
       property: 'property',
       tradetokens: 'inventory',
-      vault: 'vault'
+      vault: 'vault',
     };
-    
+
     return mockAssets.filter(asset => asset.type === typeMap[category]);
   }
 }

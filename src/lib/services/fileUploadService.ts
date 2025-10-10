@@ -38,7 +38,11 @@ class FileUploadService {
   async uploadFile(options: FileUploadOptions): Promise<UploadResult> {
     try {
       // Validate file
-      const validation = this.validateFile(options.file, options.allowedTypes, options.maxSize);
+      const validation = this.validateFile(
+        options.file,
+        options.allowedTypes,
+        options.maxSize
+      );
       if (!validation.isValid) {
         return { success: false, error: validation.error };
       }
@@ -78,7 +82,6 @@ class FileUploadService {
         const error = await response.json();
         return { success: false, error: error.message || 'Upload failed' };
       }
-
     } catch (error) {
       return {
         success: false,
@@ -91,8 +94,8 @@ class FileUploadService {
    * Validate file before upload
    */
   private validateFile(
-    file: File, 
-    allowedTypes?: string[], 
+    file: File,
+    allowedTypes?: string[],
     maxSize?: number
   ): { isValid: boolean; error?: string } {
     // Check file size
@@ -130,26 +133,23 @@ class FileUploadService {
    */
   private formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
-    
+
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
+
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
   /**
    * Get allowed file types for different document categories
    */
-  getDocumentTypes(category: 'kyc' | 'investment' | 'asset' | 'general'): string[] {
+  getDocumentTypes(
+    category: 'kyc' | 'investment' | 'asset' | 'general'
+  ): string[] {
     switch (category) {
       case 'kyc':
-        return [
-          'image/jpeg',
-          'image/png',
-          'image/gif',
-          'application/pdf',
-        ];
+        return ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
       case 'investment':
         return [
           'application/pdf',

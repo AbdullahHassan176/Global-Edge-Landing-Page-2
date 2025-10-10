@@ -16,10 +16,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error('Security forms API error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -31,10 +34,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error('Create security form API error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -44,25 +50,31 @@ export async function PUT(request: NextRequest) {
     const { formId, status, reviewedBy, reviewNotes } = body;
 
     if (!formId || !status) {
-      return NextResponse.json({
-        success: false,
-        error: 'Form ID and status are required'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Form ID and status are required',
+        },
+        { status: 400 }
+      );
     }
 
     const result = await securityFormsIntegration.updateSecurityFormStatus(
-      formId, 
-      status, 
-      reviewedBy, 
+      formId,
+      status,
+      reviewedBy,
       reviewNotes
     );
 
     return NextResponse.json(result);
   } catch (error) {
     console.error('Update security form API error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

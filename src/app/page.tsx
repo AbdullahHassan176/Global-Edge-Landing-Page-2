@@ -19,7 +19,7 @@ QA Summary:
 */
 export default function HomePage() {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
-  
+
   // Get partners for landing page
   const landingPagePartners = getPartnersForLandingPage();
 
@@ -32,186 +32,366 @@ export default function HomePage() {
 
   return (
     <>
-      
-      
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">
-        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-          <div className="max-w-6xl px-4 text-white text-balance leading-relaxed text-left">
-            <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-6 leading-tight break-words max-w-5xl">
+      <section className='bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden'>
+        <div className='absolute inset-0 bg-black bg-opacity-20'></div>
+        <div className='relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center'>
+          <div className='max-w-6xl px-4 text-white text-balance leading-relaxed text-left'>
+            <h1 className='text-4xl md:text-5xl font-poppins font-bold mb-6 leading-tight break-words max-w-5xl'>
               Tokenizing Real-World Assets with Confidence
             </h1>
-            <h2 className="text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-5xl">
+            <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-5xl'>
               Backed by Compliance. Powered by Innovation.
             </h2>
-            <p className="text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed">
-              Invest in asset-backed tokens with complete transparency. Own fractions of <Link href="/assets?category=containers" className="underline hover:text-global-teal transition-colors">shipping containers</Link>, <Link href="/assets?category=property" className="underline hover:text-global-teal transition-colors">real estate</Link>, and <Link href="/assets?category=tradetokens" className="underline hover:text-global-teal transition-colors">trade inventory</Link> with blockchain-verified provenance.
-            </p>
-            <p className="text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed">
-              The Global Edge leads asset tokenization UAE with our comprehensive VARA platform, transforming traditional investments into digital opportunities with regulatory compliance and institutional-grade security.
-            </p>
-            <ul className="text-base md:text-lg space-y-2 mt-4 md:mt-6 font-inter font-light opacity-90 max-w-5xl">
-              <li>• Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and VARA compliance framework</li>
-              <li>• Explore our <Link href="/assets" className="underline hover:text-global-teal transition-colors">diverse asset portfolio</Link> with real-time performance tracking</li>
-              <li>• Join thousands of <Link href="/investors" className="underline hover:text-global-teal transition-colors">investors earning returns</Link> from tokenized real-world assets</li>
-            </ul>
-            <div className="flex flex-wrap gap-3 justify-center md:justify-start mt-6">
-              <Link href="/assets" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
-                Explore Assets
-                <Icon name="arrow-right" className="ml-2" size={8} />
+            <p className='text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed'>
+              Invest in asset-backed tokens with complete transparency. Own
+              fractions of{' '}
+              <Link
+                href='/assets?category=containers'
+                className='underline hover:text-global-teal transition-colors'
+              >
+                shipping containers
               </Link>
-              <Link href="/how-it-works" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+              ,{' '}
+              <Link
+                href='/assets?category=property'
+                className='underline hover:text-global-teal transition-colors'
+              >
+                real estate
+              </Link>
+              , and{' '}
+              <Link
+                href='/assets?category=tradetokens'
+                className='underline hover:text-global-teal transition-colors'
+              >
+                trade inventory
+              </Link>{' '}
+              with blockchain-verified provenance.
+            </p>
+            <p className='text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed'>
+              The Global Edge leads asset tokenization UAE with our
+              comprehensive VARA platform, transforming traditional investments
+              into digital opportunities with regulatory compliance and
+              institutional-grade security.
+            </p>
+            <ul className='text-base md:text-lg space-y-2 mt-4 md:mt-6 font-inter font-light opacity-90 max-w-5xl'>
+              <li>
+                • Learn about our{' '}
+                <Link
+                  href='/how-it-works'
+                  className='underline hover:text-global-teal transition-colors'
+                >
+                  tokenization process
+                </Link>{' '}
+                and VARA compliance framework
+              </li>
+              <li>
+                • Explore our{' '}
+                <Link
+                  href='/assets'
+                  className='underline hover:text-global-teal transition-colors'
+                >
+                  diverse asset portfolio
+                </Link>{' '}
+                with real-time performance tracking
+              </li>
+              <li>
+                • Join thousands of{' '}
+                <Link
+                  href='/investors'
+                  className='underline hover:text-global-teal transition-colors'
+                >
+                  investors earning returns
+                </Link>{' '}
+                from tokenized real-world assets
+              </li>
+            </ul>
+            <div className='flex flex-wrap gap-3 justify-center md:justify-start mt-6'>
+              <Link
+                href='/assets'
+                className='bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center'
+              >
+                Explore Assets
+                <Icon name='arrow-right' className='ml-2' size={8} />
+              </Link>
+              <Link
+                href='/how-it-works'
+                className='border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors'
+              >
                 How It Works
               </Link>
-              <Link href="/investors" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+              <Link
+                href='/investors'
+                className='border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors'
+              >
                 For Investors
               </Link>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 opacity-10">
-          <div className="w-full h-full bg-gradient-to-tl from-aqua-start to-transparent rounded-full"></div>
+        <div className='absolute bottom-0 right-0 w-96 h-96 opacity-10'>
+          <div className='w-full h-full bg-gradient-to-tl from-aqua-start to-transparent rounded-full'></div>
         </div>
       </section>
 
       {/* KPI Stripe */}
-      <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+      <section className='bg-white border-b border-gray-200'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8 py-8'>
+          <div className='grid grid-cols-2 lg:grid-cols-4 gap-8'>
+            <div className='text-center'>
+              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
                 $45.4M
               </div>
-              <div className="text-sm text-gray-600 font-medium">Assets Under Management</div>
+              <div className='text-sm text-gray-600 font-medium'>
+                Assets Under Management
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+            <div className='text-center'>
+              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
                 526
               </div>
-              <div className="text-sm text-gray-600 font-medium">Assets Tokenized</div>
+              <div className='text-sm text-gray-600 font-medium'>
+                Assets Tokenized
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+            <div className='text-center'>
+              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
                 98.7%
               </div>
-              <div className="text-sm text-gray-600 font-medium">On-Time Deliveries</div>
+              <div className='text-sm text-gray-600 font-medium'>
+                On-Time Deliveries
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+            <div className='text-center'>
+              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
                 10.6%
               </div>
-              <div className="text-sm text-gray-600 font-medium">Average APR</div>
+              <div className='text-sm text-gray-600 font-medium'>
+                Average APR
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">How It Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to start investing in <Link href="/assets" className="text-global-teal hover:text-edge-purple transition-colors">tokenized real-world assets</Link>. Learn more about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">VARA-compliant process</Link> and <Link href="/investors" className="text-global-teal hover:text-edge-purple transition-colors">investment opportunities</Link>.</p>
+      <section className='py-20'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+              How It Works
+            </h2>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              Simple steps to start investing in{' '}
+              <Link
+                href='/assets'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                tokenized real-world assets
+              </Link>
+              . Learn more about our{' '}
+              <Link
+                href='/how-it-works'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                VARA-compliant process
+              </Link>{' '}
+              and{' '}
+              <Link
+                href='/investors'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                investment opportunities
+              </Link>
+              .
+            </p>
           </div>
-          <div className="grid md:grid-cols-5 gap-8">
-            <Link href="/register" className="text-center group cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="user-check" className="text-white text-lg" size={12} />
+          <div className='grid md:grid-cols-5 gap-8'>
+            <Link href='/register' className='text-center group cursor-pointer'>
+              <div className='w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
+                <Icon
+                  name='user-check'
+                  className='text-white text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Verify Identity</h3>
-              <p className="text-sm text-gray-600">Complete KYC/KYB verification to access tokenized assets</p>
+              <h3 className='text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors'>
+                Verify Identity
+              </h3>
+              <p className='text-sm text-gray-600'>
+                Complete KYC/KYB verification to access tokenized assets
+              </p>
             </Link>
-            <Link href="/assets" className="text-center group cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="search" className="text-white text-lg" size={8} />
+            <Link href='/assets' className='text-center group cursor-pointer'>
+              <div className='w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
+                <Icon name='search' className='text-white text-lg' size={8} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Browse Assets</h3>
-              <p className="text-sm text-gray-600">Explore containers, real estate, and trade inventory tokens</p>
+              <h3 className='text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors'>
+                Browse Assets
+              </h3>
+              <p className='text-sm text-gray-600'>
+                Explore containers, real estate, and trade inventory tokens
+              </p>
             </Link>
-            <Link href="/reports" className="text-center group cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="chart-line" className="text-white text-lg" size={12} />
+            <Link href='/reports' className='text-center group cursor-pointer'>
+              <div className='w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
+                <Icon
+                  name='chart-line'
+                  className='text-white text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Review Performance</h3>
-              <p className="text-sm text-gray-600">Analyze yields, risk profiles, and asset provenance</p>
+              <h3 className='text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors'>
+                Review Performance
+              </h3>
+              <p className='text-sm text-gray-600'>
+                Analyze yields, risk profiles, and asset provenance
+              </p>
             </Link>
-            <Link href="/get-started" className="text-center group cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="coins" className="text-white text-lg" size={12} />
+            <Link
+              href='/get-started'
+              className='text-center group cursor-pointer'
+            >
+              <div className='w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
+                <Icon name='coins' className='text-white text-lg' size={12} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Invest</h3>
-              <p className="text-sm text-gray-600">Purchase fractional ownership through blockchain tokens</p>
+              <h3 className='text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors'>
+                Invest
+              </h3>
+              <p className='text-sm text-gray-600'>
+                Purchase fractional ownership through blockchain tokens
+              </p>
             </Link>
-            <Link href="/dashboard" className="text-center group cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="trophy" className="text-white text-lg" size={12} />
+            <Link
+              href='/dashboard'
+              className='text-center group cursor-pointer'
+            >
+              <div className='w-12 h-12 bg-gradient-to-br from-aqua-start to-aqua-end rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300'>
+                <Icon name='trophy' className='text-white text-lg' size={12} />
               </div>
-              <h3 className="text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors">Earn Returns</h3>
-              <p className="text-sm text-gray-600">Receive payouts as assets generate revenue</p>
+              <h3 className='text-lg font-poppins font-semibold text-charcoal mb-2 group-hover:text-global-teal transition-colors'>
+                Earn Returns
+              </h3>
+              <p className='text-sm text-gray-600'>
+                Receive payouts as assets generate revenue
+              </p>
             </Link>
           </div>
         </div>
       </section>
 
       {/* Asset Categories */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Investment Categories</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Diversify across multiple <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">real-world asset classes</Link></p>
+      <section className='py-20 bg-gray-50'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+              Investment Categories
+            </h2>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              Diversify across multiple{' '}
+              <Link
+                href='/how-it-works'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                real-world asset classes
+              </Link>
+            </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Link href="/assets?category=containers" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
-                <Icon name="ship" className="text-blue-600 text-lg" size={12} />
+          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+            <Link
+              href='/assets?category=containers'
+              className='bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group'
+            >
+              <div className='w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors'>
+                <Icon name='ship' className='text-blue-600 text-lg' size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Containers</h3>
-              <p className="text-gray-600 mb-4">Shipping containers with GPS tracking and verified cargo</p>
-              <div className="space-y-2">
-                <div className="text-sm text-global-teal font-semibold">Avg. 8-15% APR</div>
-                <div className="text-xs text-gray-500">
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                Containers
+              </h3>
+              <p className='text-gray-600 mb-4'>
+                Shipping containers with GPS tracking and verified cargo
+              </p>
+              <div className='space-y-2'>
+                <div className='text-sm text-global-teal font-semibold'>
+                  Avg. 8-15% APR
+                </div>
+                <div className='text-xs text-gray-500'>
                   247 assets available
                 </div>
               </div>
             </Link>
-            <Link href="/assets?category=property" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
-                <Icon name="building" className="text-green-600 text-lg" size={12} />
+            <Link
+              href='/assets?category=property'
+              className='bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group'
+            >
+              <div className='w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors'>
+                <Icon
+                  name='building'
+                  className='text-green-600 text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Property</h3>
-              <p className="text-gray-600 mb-4">Commercial and residential real estate with rental income</p>
-              <div className="space-y-2">
-                <div className="text-sm text-global-teal font-semibold">Avg. 6-12% APR</div>
-                <div className="text-xs text-gray-500">
-                  89 assets available
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                Property
+              </h3>
+              <p className='text-gray-600 mb-4'>
+                Commercial and residential real estate with rental income
+              </p>
+              <div className='space-y-2'>
+                <div className='text-sm text-global-teal font-semibold'>
+                  Avg. 6-12% APR
                 </div>
+                <div className='text-xs text-gray-500'>89 assets available</div>
               </div>
             </Link>
-            <Link href="/assets?category=tradetokens" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors">
-                <Icon name="boxes-stacked" className="text-purple-600 text-lg" size={12} />
+            <Link
+              href='/assets?category=tradetokens'
+              className='bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group'
+            >
+              <div className='w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors'>
+                <Icon
+                  name='boxes-stacked'
+                  className='text-purple-600 text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">TradeTokens</h3>
-              <p className="text-gray-600 mb-4">Commodity inventory with verified supply chain data</p>
-              <div className="space-y-2">
-                <div className="text-sm text-global-teal font-semibold">Avg. 10-18% APR</div>
-                <div className="text-xs text-gray-500">
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                TradeTokens
+              </h3>
+              <p className='text-gray-600 mb-4'>
+                Commodity inventory with verified supply chain data
+              </p>
+              <div className='space-y-2'>
+                <div className='text-sm text-global-teal font-semibold'>
+                  Avg. 10-18% APR
+                </div>
+                <div className='text-xs text-gray-500'>
                   156 assets available
                 </div>
               </div>
             </Link>
-            <Link href="/assets?category=vault" className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors">
-                <Icon name="vault" className="text-orange-600 text-lg" size={12} />
+            <Link
+              href='/assets?category=vault'
+              className='bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer group'
+            >
+              <div className='w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors'>
+                <Icon
+                  name='vault'
+                  className='text-orange-600 text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Vault</h3>
-              <p className="text-gray-600 mb-4">Precious metals and secure storage with insurance coverage</p>
-              <div className="space-y-2">
-                <div className="text-sm text-global-teal font-semibold">Avg. 4-8% APR</div>
-                <div className="text-xs text-gray-500">
-                  34 assets available
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                Vault
+              </h3>
+              <p className='text-gray-600 mb-4'>
+                Precious metals and secure storage with insurance coverage
+              </p>
+              <div className='space-y-2'>
+                <div className='text-sm text-global-teal font-semibold'>
+                  Avg. 4-8% APR
                 </div>
+                <div className='text-xs text-gray-500'>34 assets available</div>
               </div>
             </Link>
           </div>
@@ -219,156 +399,312 @@ export default function HomePage() {
       </section>
 
       {/* Live Asset Data */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Asset Performance</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Key metrics from our tokenized asset portfolio</p>
+      <section className='py-20'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+              Asset Performance
+            </h2>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              Key metrics from our tokenized asset portfolio
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-global-teal">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-poppins font-semibold text-charcoal">Portfolio Value</h3>
-                <Icon name="chart-line-up" className="text-green-600" size={12} />
+          <div className='grid md:grid-cols-3 gap-8 mb-12'>
+            <div className='bg-white rounded-2xl p-8 shadow-lg border-l-4 border-global-teal'>
+              <div className='flex items-center justify-between mb-4'>
+                <h3 className='text-lg font-poppins font-semibold text-charcoal'>
+                  Portfolio Value
+                </h3>
+                <Icon
+                  name='chart-line-up'
+                  className='text-green-600'
+                  size={12}
+                />
               </div>
-              <div className="text-3xl font-poppins font-bold text-global-teal mb-2">
+              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
                 $45.4M
               </div>
-              <div className="text-sm text-gray-600">Total assets under management</div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-edge-purple">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-poppins font-semibold text-charcoal">Active Assets</h3>
-                <Icon name="layer-group" className="text-purple-600" size={12} />
+              <div className='text-sm text-gray-600'>
+                Total assets under management
               </div>
-              <div className="text-3xl font-poppins font-bold text-edge-purple mb-2">
+            </div>
+            <div className='bg-white rounded-2xl p-8 shadow-lg border-l-4 border-edge-purple'>
+              <div className='flex items-center justify-between mb-4'>
+                <h3 className='text-lg font-poppins font-semibold text-charcoal'>
+                  Active Assets
+                </h3>
+                <Icon
+                  name='layer-group'
+                  className='text-purple-600'
+                  size={12}
+                />
+              </div>
+              <div className='text-3xl font-poppins font-bold text-edge-purple mb-2'>
                 526
               </div>
-              <div className="text-sm text-gray-600">Assets currently tokenized</div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-green-500">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-poppins font-semibold text-charcoal">Average Return</h3>
-                <Icon name="trophy" className="text-green-600" size={12} />
+              <div className='text-sm text-gray-600'>
+                Assets currently tokenized
               </div>
-              <div className="text-3xl font-poppins font-bold text-green-600 mb-2">
+            </div>
+            <div className='bg-white rounded-2xl p-8 shadow-lg border-l-4 border-green-500'>
+              <div className='flex items-center justify-between mb-4'>
+                <h3 className='text-lg font-poppins font-semibold text-charcoal'>
+                  Average Return
+                </h3>
+                <Icon name='trophy' className='text-green-600' size={12} />
+              </div>
+              <div className='text-3xl font-poppins font-bold text-green-600 mb-2'>
                 10.6%
               </div>
-              <div className="text-sm text-gray-600">Annual percentage return</div>
+              <div className='text-sm text-gray-600'>
+                Annual percentage return
+              </div>
             </div>
           </div>
-          <div className="text-center">
-            <Link href="/assets" className="bg-global-teal text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors inline-flex items-center">
+          <div className='text-center'>
+            <Link
+              href='/assets'
+              className='bg-global-teal text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors inline-flex items-center'
+            >
               View All Assets
-              <Icon name="arrow-right" className="ml-2" size={8} />
+              <Icon name='arrow-right' className='ml-2' size={8} />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Security & Compliance */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Security & Compliance</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Built with <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">institutional-grade security</Link> and <Link href="/security" className="text-global-teal hover:text-edge-purple transition-colors">regulatory compliance</Link></p>
+      <section className='py-20 bg-gray-50'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+              Security & Compliance
+            </h2>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              Built with{' '}
+              <Link
+                href='/security'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                institutional-grade security
+              </Link>{' '}
+              and{' '}
+              <Link
+                href='/security'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                regulatory compliance
+              </Link>
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Link href="/security" className="text-center group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="shield-halved" className="text-white text-lg" size={12} />
+          <div className='grid md:grid-cols-3 gap-8'>
+            <Link href='/security' className='text-center group cursor-pointer'>
+              <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300'>
+                <Icon
+                  name='shield-halved'
+                  className='text-white text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">KYC/KYB Verification</h3>
-              <p className="text-gray-600">Comprehensive identity verification for all participants using industry-leading providers</p>
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                KYC/KYB Verification
+              </h3>
+              <p className='text-gray-600'>
+                Comprehensive identity verification for all participants using
+                industry-leading providers
+              </p>
             </Link>
-            <Link href="/security" className="text-center group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="lock" className="text-white text-lg" size={12} />
+            <Link href='/security' className='text-center group cursor-pointer'>
+              <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300'>
+                <Icon name='lock' className='text-white text-lg' size={12} />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Secure Custody</h3>
-              <p className="text-gray-600">Multi-signature wallets and cold storage with institutional-grade security protocols</p>
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                Secure Custody
+              </h3>
+              <p className='text-gray-600'>
+                Multi-signature wallets and cold storage with
+                institutional-grade security protocols
+              </p>
             </Link>
-            <Link href="/security" className="text-center group cursor-pointer">
-              <div className="w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Icon name="certificate" className="text-white text-lg" size={12} />
+            <Link href='/security' className='text-center group cursor-pointer'>
+              <div className='w-16 h-16 bg-gradient-to-br from-global-teal to-edge-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300'>
+                <Icon
+                  name='certificate'
+                  className='text-white text-lg'
+                  size={12}
+                />
               </div>
-              <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors">Oracle Attestations</h3>
-              <p className="text-gray-600">Third-party verification of asset condition, location, and performance metrics</p>
+              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3 group-hover:text-global-teal transition-colors'>
+                Oracle Attestations
+              </h3>
+              <p className='text-gray-600'>
+                Third-party verification of asset condition, location, and
+                performance metrics
+              </p>
             </Link>
           </div>
         </div>
       </section>
 
       {/* UAE Tokenization Market Overview */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Leading Real-World Asset Tokenization in the UAE</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">The Global Edge is at the forefront of VARA-compliant asset tokenization, transforming traditional investments into digital opportunities. Our platform enables fractional ownership of <Link href="/assets?category=containers" className="text-global-teal hover:text-edge-purple transition-colors">shipping containers</Link>, <Link href="/assets?category=property" className="text-global-teal hover:text-edge-purple transition-colors">real estate properties</Link>, and <Link href="/assets?category=tradetokens" className="text-global-teal hover:text-edge-purple transition-colors">trade inventory</Link> with complete transparency and regulatory compliance.</p>
+      <section className='py-20 bg-white'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+              Leading Real-World Asset Tokenization in the UAE
+            </h2>
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+              The Global Edge is at the forefront of VARA-compliant asset
+              tokenization, transforming traditional investments into digital
+              opportunities. Our platform enables fractional ownership of{' '}
+              <Link
+                href='/assets?category=containers'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                shipping containers
+              </Link>
+              ,{' '}
+              <Link
+                href='/assets?category=property'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                real estate properties
+              </Link>
+              , and{' '}
+              <Link
+                href='/assets?category=tradetokens'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                trade inventory
+              </Link>{' '}
+              with complete transparency and regulatory compliance.
+            </p>
           </div>
-          
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="building" className="text-white text-xl" size={20} />
+
+          <div className='grid md:grid-cols-3 gap-8 mb-12'>
+            <div className='bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center'>
+              <div className='w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6'>
+                <Icon
+                  name='building'
+                  className='text-white text-xl'
+                  size={20}
+                />
               </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">VARA Compliance</h3>
-              <p className="text-gray-600 mb-6">Fully compliant with UAE's Virtual Assets Regulatory Authority (VARA) framework, ensuring all tokenized assets meet the highest regulatory standards.</p>
-              <ul className="text-left space-y-2 text-sm text-gray-700">
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+              <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4'>
+                VARA Compliance
+              </h3>
+              <p className='text-gray-600 mb-6'>
+                Fully compliant with UAE's Virtual Assets Regulatory Authority
+                (VARA) framework, ensuring all tokenized assets meet the highest
+                regulatory standards.
+              </p>
+              <ul className='text-left space-y-2 text-sm text-gray-700'>
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Regulatory approval for all asset classes
                 </li>
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Transparent reporting and documentation
                 </li>
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Investor protection mechanisms
                 </li>
               </ul>
             </div>
-            
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="link" className="text-white text-xl" size={20} />
+
+            <div className='bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center'>
+              <div className='w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6'>
+                <Icon name='link' className='text-white text-xl' size={20} />
               </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">Blockchain Technology</h3>
-              <p className="text-gray-600 mb-6">Advanced blockchain infrastructure ensures immutable records, real-time tracking, and secure ownership verification for all tokenized assets.</p>
-              <ul className="text-left space-y-2 text-sm text-gray-700">
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+              <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4'>
+                Blockchain Technology
+              </h3>
+              <p className='text-gray-600 mb-6'>
+                Advanced blockchain infrastructure ensures immutable records,
+                real-time tracking, and secure ownership verification for all
+                tokenized assets.
+              </p>
+              <ul className='text-left space-y-2 text-sm text-gray-700'>
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Immutable ownership records
                 </li>
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Real-time asset tracking
                 </li>
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Smart contract automation
                 </li>
               </ul>
             </div>
-            
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Icon name="chart-line-up" className="text-white text-xl" size={20} />
+
+            <div className='bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center'>
+              <div className='w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6'>
+                <Icon
+                  name='chart-line-up'
+                  className='text-white text-xl'
+                  size={20}
+                />
               </div>
-              <h3 className="text-2xl font-poppins font-bold text-charcoal mb-4">Proven Returns</h3>
-              <p className="text-gray-600 mb-6">Our tokenized assets have consistently delivered competitive returns, with average APRs ranging from 6-18% across different asset classes.</p>
-              <ul className="text-left space-y-2 text-sm text-gray-700">
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+              <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4'>
+                Proven Returns
+              </h3>
+              <p className='text-gray-600 mb-6'>
+                Our tokenized assets have consistently delivered competitive
+                returns, with average APRs ranging from 6-18% across different
+                asset classes.
+              </p>
+              <ul className='text-left space-y-2 text-sm text-gray-700'>
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Diversified asset portfolio
                 </li>
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Regular income distributions
                 </li>
-                <li className="flex items-center">
-                  <Icon name="check-circle" className="text-green-600 mr-2" size={12} />
+                <li className='flex items-center'>
+                  <Icon
+                    name='check-circle'
+                    className='text-green-600 mr-2'
+                    size={12}
+                  />
                   Capital appreciation potential
                 </li>
               </ul>
@@ -378,22 +714,24 @@ export default function HomePage() {
       </section>
 
       {/* Partner Logos */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h3 className="text-lg font-poppins font-medium text-gray-600 mb-8">Trusted by leading logistics and financial partners</h3>
+      <section className='py-16 bg-gray-50'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='text-center mb-12'>
+            <h3 className='text-lg font-poppins font-medium text-gray-600 mb-8'>
+              Trusted by leading logistics and financial partners
+            </h3>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60">
-            {landingPagePartners.map((partner) => (
-              <div key={partner.id} className="flex justify-center">
-                <a 
-                  href={partner.website} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group transition-all duration-300 hover:opacity-100 hover:scale-105"
+          <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60'>
+            {landingPagePartners.map(partner => (
+              <div key={partner.id} className='flex justify-center'>
+                <a
+                  href={partner.website}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='group transition-all duration-300 hover:opacity-100 hover:scale-105'
                   title={partner.description}
                 >
-                  <span className="text-gray-600 font-medium text-sm group-hover:text-global-teal transition-colors">
+                  <span className='text-gray-600 font-medium text-sm group-hover:text-global-teal transition-colors'>
                     {partner.name}
                   </span>
                 </a>
@@ -404,54 +742,100 @@ export default function HomePage() {
       </section>
 
       {/* Insights Teaser */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
+      <section className='py-20'>
+        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+          <div className='flex justify-between items-center mb-12'>
             <div>
-              <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Latest Insights</h2>
-              <p className="text-xl text-gray-600">Stay informed about <Link href="/insights" className="text-global-teal hover:text-edge-purple transition-colors">market trends and opportunities</Link></p>
+              <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
+                Latest Insights
+              </h2>
+              <p className='text-xl text-gray-600'>
+                Stay informed about{' '}
+                <Link
+                  href='/insights'
+                  className='text-global-teal hover:text-edge-purple transition-colors'
+                >
+                  market trends and opportunities
+                </Link>
+              </p>
             </div>
-            <Link href="/insights" className="text-global-teal font-medium hover:text-edge-purple transition-colors">
+            <Link
+              href='/insights'
+              className='text-global-teal font-medium hover:text-edge-purple transition-colors'
+            >
               View All Articles
-              <Icon name="arrow-right" className="ml-2" size={8} />
+              <Icon name='arrow-right' className='ml-2' size={8} />
             </Link>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <article className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img className="w-full h-48 object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8e8f5f1206-41f8ac9516fc7c159218.png" alt="global shipping containers at port with sunset, modern logistics, professional photography" />
-              <div className="p-6">
-                <div className="text-sm text-global-teal font-medium mb-2">CONTAINERS</div>
-                <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Global Container Demand Surges 23% in Q4</h3>
-                <p className="text-gray-600 mb-4">Supply chain disruptions drive increased demand for container investments as shipping rates reach record highs.</p>
-                <div className="flex items-center text-sm text-gray-500">
+          <div className='grid md:grid-cols-3 gap-8'>
+            <article className='bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow'>
+              <img
+                className='w-full h-48 object-cover'
+                src='https://storage.googleapis.com/uxpilot-auth.appspot.com/8e8f5f1206-41f8ac9516fc7c159218.png'
+                alt='global shipping containers at port with sunset, modern logistics, professional photography'
+              />
+              <div className='p-6'>
+                <div className='text-sm text-global-teal font-medium mb-2'>
+                  CONTAINERS
+                </div>
+                <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3'>
+                  Global Container Demand Surges 23% in Q4
+                </h3>
+                <p className='text-gray-600 mb-4'>
+                  Supply chain disruptions drive increased demand for container
+                  investments as shipping rates reach record highs.
+                </p>
+                <div className='flex items-center text-sm text-gray-500'>
                   <span>Dec 15, 2024</span>
-                  <span className="mx-2">•</span>
+                  <span className='mx-2'>•</span>
                   <span>5 min read</span>
                 </div>
               </div>
             </article>
-            <article className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img className="w-full h-48 object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b3863df69d-7dea45524a67663901de.png" alt="modern commercial real estate building with glass facade, urban architecture, professional photography" />
-              <div className="p-6">
-                <div className="text-sm text-green-600 font-medium mb-2">PROPERTY</div>
-                <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Commercial Real Estate Tokenization Trends</h3>
-                <p className="text-gray-600 mb-4">How blockchain technology is transforming property investment accessibility and liquidity.</p>
-                <div className="flex items-center text-sm text-gray-500">
+            <article className='bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow'>
+              <img
+                className='w-full h-48 object-cover'
+                src='https://storage.googleapis.com/uxpilot-auth.appspot.com/b3863df69d-7dea45524a67663901de.png'
+                alt='modern commercial real estate building with glass facade, urban architecture, professional photography'
+              />
+              <div className='p-6'>
+                <div className='text-sm text-green-600 font-medium mb-2'>
+                  PROPERTY
+                </div>
+                <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3'>
+                  Commercial Real Estate Tokenization Trends
+                </h3>
+                <p className='text-gray-600 mb-4'>
+                  How blockchain technology is transforming property investment
+                  accessibility and liquidity.
+                </p>
+                <div className='flex items-center text-sm text-gray-500'>
                   <span>Dec 12, 2024</span>
-                  <span className="mx-2">•</span>
+                  <span className='mx-2'>•</span>
                   <span>7 min read</span>
                 </div>
               </div>
             </article>
-            <article className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <img className="w-full h-48 object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/ccb48f0bea-8f317986dc05f173e4bb.png" alt="commodity trading floor with gold bars and precious metals, financial markets, professional photography" />
-              <div className="p-6">
-                <div className="text-sm text-orange-600 font-medium mb-2">VAULT</div>
-                <h3 className="text-xl font-poppins font-semibold text-charcoal mb-3">Precious Metals as Portfolio Diversification</h3>
-                <p className="text-gray-600 mb-4">Strategic allocation to gold and silver tokens provides inflation hedge for modern portfolios.</p>
-                <div className="flex items-center text-sm text-gray-500">
+            <article className='bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow'>
+              <img
+                className='w-full h-48 object-cover'
+                src='https://storage.googleapis.com/uxpilot-auth.appspot.com/ccb48f0bea-8f317986dc05f173e4bb.png'
+                alt='commodity trading floor with gold bars and precious metals, financial markets, professional photography'
+              />
+              <div className='p-6'>
+                <div className='text-sm text-orange-600 font-medium mb-2'>
+                  VAULT
+                </div>
+                <h3 className='text-xl font-poppins font-semibold text-charcoal mb-3'>
+                  Precious Metals as Portfolio Diversification
+                </h3>
+                <p className='text-gray-600 mb-4'>
+                  Strategic allocation to gold and silver tokens provides
+                  inflation hedge for modern portfolios.
+                </p>
+                <div className='flex items-center text-sm text-gray-500'>
                   <span>Dec 10, 2024</span>
-                  <span className="mx-2">•</span>
+                  <span className='mx-2'>•</span>
                   <span>6 min read</span>
                 </div>
               </div>
@@ -461,19 +845,28 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-global-teal to-edge-purple">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl lg:text-5xl font-poppins font-bold text-white mb-6">
+      <section className='py-20 bg-gradient-to-br from-global-teal to-edge-purple'>
+        <div className='max-w-4xl mx-auto px-6 lg:px-8 text-center'>
+          <h2 className='text-4xl lg:text-5xl font-poppins font-bold text-white mb-6'>
             Ready to Own the Edge of the World?
           </h2>
-          <p className="text-xl text-white opacity-90 mb-8">
-            Join thousands of investors already earning returns from tokenized real-world assets
+          <p className='text-xl text-white opacity-90 mb-8'>
+            Join thousands of investors already earning returns from tokenized
+            real-world assets
           </p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link href="/get-started" className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
+          <div className='flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6'>
+            <Link
+              href='/get-started'
+              className='bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors'
+            >
               Start Investing Today
             </Link>
-            <a href="https://calendly.com/mohammed-sidat-/global-next-global-edge" target="_blank" rel="noopener noreferrer" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">
+            <a
+              href='https://calendly.com/mohammed-sidat-/global-next-global-edge'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors'
+            >
               Become a Partner
             </a>
           </div>
@@ -481,9 +874,9 @@ export default function HomePage() {
       </section>
 
       {/* Waitlist Modal */}
-      <WaitlistModal 
-        isOpen={showWaitlistModal} 
-        onClose={() => setShowWaitlistModal(false)} 
+      <WaitlistModal
+        isOpen={showWaitlistModal}
+        onClose={() => setShowWaitlistModal(false)}
       />
     </>
   );

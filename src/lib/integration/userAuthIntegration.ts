@@ -1,6 +1,6 @@
 /**
  * User Authentication Integration
- * 
+ *
  * This service integrates the existing userAuthService with the database
  * while maintaining backward compatibility with mock data.
  */
@@ -14,7 +14,10 @@ export class UserAuthIntegration {
   /**
    * Login user with database integration
    */
-  async login(email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> {
+  async login(
+    email: string,
+    password: string
+  ): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
       // Use mock service first for faster login
       const mockResult = await userAuthService.login(email, password);
@@ -32,18 +35,20 @@ export class UserAuthIntegration {
       if (!mockResult.success) {
         return {
           success: false,
-          error: mockResult.error
+          error: mockResult.error,
         };
       }
 
       // If mock login fails, try database (but with timeout)
       if (this.useDatabase) {
         try {
-          const dbResult = await Promise.race([
+          const dbResult = (await Promise.race([
             workingDatabaseService.getUserByEmail(email),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Database timeout')), 2000))
-          ]) as any;
-          
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('Database timeout')), 2000)
+            ),
+          ])) as any;
+
           if (dbResult.success && dbResult.data) {
             // Verify password with mock service
             const passwordCheck = await userAuthService.login(email, password);
@@ -97,7 +102,9 @@ export class UserAuthIntegration {
   /**
    * Get user by ID with database integration
    */
-  async getUserById(id: string): Promise<{ success: boolean; user?: User; error?: string }> {
+  async getUserById(
+    id: string
+  ): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
       const mockUser = await userAuthService.getUserById(id);
       if (mockUser) {
@@ -114,7 +121,11 @@ export class UserAuthIntegration {
   /**
    * Get all users with database integration
    */
-  async getAllUsers(): Promise<{ success: boolean; users?: User[]; error?: string }> {
+  async getAllUsers(): Promise<{
+    success: boolean;
+    users?: User[];
+    error?: string;
+  }> {
     try {
       const mockUsers = userAuthService.getAllUsers();
       return { success: true, users: mockUsers };
@@ -142,7 +153,7 @@ export class UserAuthIntegration {
         investmentLimit: mockUser.investmentLimit || 100000,
         permissions: mockUser.permissions || ['view_dashboard'],
         twoFactorEnabled: mockUser.twoFactorEnabled || false,
-        emailVerified: mockUser.emailVerified || false
+        emailVerified: mockUser.emailVerified || false,
       });
 
       if (dbResult.success) {
@@ -158,13 +169,18 @@ export class UserAuthIntegration {
    */
   setUseDatabase(useDatabase: boolean): void {
     this.useDatabase = useDatabase;
-    console.log(`UserAuthIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`);
+    console.log(
+      `UserAuthIntegration: ${useDatabase ? 'Using database' : 'Using mock data'}`
+    );
   }
 
   /**
    * Update user with database integration
    */
-  async updateUser(userId: string, updates: Partial<User>): Promise<{ success: boolean; user?: User; error?: string }> {
+  async updateUser(
+    userId: string,
+    updates: Partial<User>
+  ): Promise<{ success: boolean; user?: User; error?: string }> {
     try {
       // Use mock service
       const mockResult = await userAuthService.updateUser(userId, updates);

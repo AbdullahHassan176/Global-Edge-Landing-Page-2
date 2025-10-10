@@ -72,31 +72,40 @@ class OAuthService {
   /**
    * Exchange GitHub authorization code for access token
    */
-  async exchangeGitHubCode(code: string): Promise<{ success: boolean; accessToken?: string; error?: string }> {
+  async exchangeGitHubCode(
+    code: string
+  ): Promise<{ success: boolean; accessToken?: string; error?: string }> {
     try {
-      const response = await fetch('https://github.com/login/oauth/access_token', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          client_id: this.githubConfig.clientId,
-          client_secret: this.githubConfig.clientSecret,
-          code,
-        }),
-      });
+      const response = await fetch(
+        'https://github.com/login/oauth/access_token',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            client_id: this.githubConfig.clientId,
+            client_secret: this.githubConfig.clientSecret,
+            code,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         return { success: true, accessToken: data.access_token };
       } else {
-        return { success: false, error: 'Failed to exchange authorization code' };
+        return {
+          success: false,
+          error: 'Failed to exchange authorization code',
+        };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -104,32 +113,41 @@ class OAuthService {
   /**
    * Exchange LinkedIn authorization code for access token
    */
-  async exchangeLinkedInCode(code: string): Promise<{ success: boolean; accessToken?: string; error?: string }> {
+  async exchangeLinkedInCode(
+    code: string
+  ): Promise<{ success: boolean; accessToken?: string; error?: string }> {
     try {
-      const response = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          grant_type: 'authorization_code',
-          code,
-          redirect_uri: this.linkedinConfig.redirectUri,
-          client_id: this.linkedinConfig.clientId,
-          client_secret: this.linkedinConfig.clientSecret,
-        }),
-      });
+      const response = await fetch(
+        'https://www.linkedin.com/oauth/v2/accessToken',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            grant_type: 'authorization_code',
+            code,
+            redirect_uri: this.linkedinConfig.redirectUri,
+            client_id: this.linkedinConfig.clientId,
+            client_secret: this.linkedinConfig.clientSecret,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         return { success: true, accessToken: data.access_token };
       } else {
-        return { success: false, error: 'Failed to exchange authorization code' };
+        return {
+          success: false,
+          error: 'Failed to exchange authorization code',
+        };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -137,28 +155,33 @@ class OAuthService {
   /**
    * Get GitHub user information
    */
-  async getGitHubUser(accessToken: string): Promise<{ success: boolean; user?: OAuthUser; error?: string }> {
+  async getGitHubUser(
+    accessToken: string
+  ): Promise<{ success: boolean; user?: OAuthUser; error?: string }> {
     try {
       const response = await fetch('https://api.github.com/user', {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Accept': 'application/vnd.github.v3+json',
+          Authorization: `Bearer ${accessToken}`,
+          Accept: 'application/vnd.github.v3+json',
         },
       });
 
       if (response.ok) {
         const data = await response.json();
-        
+
         // Get user email if not public
         let email = data.email;
         if (!email) {
-          const emailResponse = await fetch('https://api.github.com/user/emails', {
-            headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Accept': 'application/vnd.github.v3+json',
-            },
-          });
-          
+          const emailResponse = await fetch(
+            'https://api.github.com/user/emails',
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                Accept: 'application/vnd.github.v3+json',
+              },
+            }
+          );
+
           if (emailResponse.ok) {
             const emails = await emailResponse.json();
             const primaryEmail = emails.find((e: any) => e.primary);
@@ -177,12 +200,16 @@ class OAuthService {
           },
         };
       } else {
-        return { success: false, error: 'Failed to get GitHub user information' };
+        return {
+          success: false,
+          error: 'Failed to get GitHub user information',
+        };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -190,23 +217,31 @@ class OAuthService {
   /**
    * Get LinkedIn user information
    */
-  async getLinkedInUser(accessToken: string): Promise<{ success: boolean; user?: OAuthUser; error?: string }> {
+  async getLinkedInUser(
+    accessToken: string
+  ): Promise<{ success: boolean; user?: OAuthUser; error?: string }> {
     try {
-      const response = await fetch('https://api.linkedin.com/v2/people/~:(id,firstName,lastName,profilePicture(displayImage~:playableStreams))', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      });
+      const response = await fetch(
+        'https://api.linkedin.com/v2/people/~:(id,firstName,lastName,profilePicture(displayImage~:playableStreams))',
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
-        
+
         // Get user email
-        const emailResponse = await fetch('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          },
-        });
+        const emailResponse = await fetch(
+          'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))',
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
         let email = '';
         if (emailResponse.ok) {
@@ -220,17 +255,23 @@ class OAuthService {
             id: data.id,
             email,
             name: `${data.firstName?.localized?.en_US || ''} ${data.lastName?.localized?.en_US || ''}`.trim(),
-            avatar: data.profilePicture?.['displayImage~']?.elements?.[0]?.identifiers?.[0]?.identifier,
+            avatar:
+              data.profilePicture?.['displayImage~']?.elements?.[0]
+                ?.identifiers?.[0]?.identifier,
             provider: 'linkedin',
           },
         };
       } else {
-        return { success: false, error: 'Failed to get LinkedIn user information' };
+        return {
+          success: false,
+          error: 'Failed to get LinkedIn user information',
+        };
       }
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error:
+          error instanceof Error ? error.message : 'Unknown error occurred',
       };
     }
   }
@@ -239,7 +280,10 @@ class OAuthService {
    * Generate random state for OAuth security
    */
   private generateState(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
   }
 
   /**
@@ -251,7 +295,8 @@ class OAuthService {
     if (!this.githubConfig.clientId) missing.push('GITHUB_CLIENT_ID');
     if (!this.githubConfig.clientSecret) missing.push('GITHUB_CLIENT_SECRET');
     if (!this.linkedinConfig.clientId) missing.push('LINKEDIN_CLIENT_ID');
-    if (!this.linkedinConfig.clientSecret) missing.push('LINKEDIN_CLIENT_SECRET');
+    if (!this.linkedinConfig.clientSecret)
+      missing.push('LINKEDIN_CLIENT_SECRET');
 
     return {
       isValid: missing.length === 0,

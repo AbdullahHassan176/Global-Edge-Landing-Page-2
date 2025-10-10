@@ -23,7 +23,11 @@ export default function StripePaymentForm({
 }: StripePaymentFormProps) {
   const [loading, setLoading] = useState(false);
   const [paymentIntent, setPaymentIntent] = useState<any>(null);
-  const [fees, setFees] = useState({ totalFees: 0, platformFee: 0, processingFee: 0 });
+  const [fees, setFees] = useState({
+    totalFees: 0,
+    platformFee: 0,
+    processingFee: 0,
+  });
 
   useEffect(() => {
     // Calculate fees
@@ -69,7 +73,6 @@ export default function StripePaymentForm({
       } else {
         onError('Payment intent not created');
       }
-
     } catch (error) {
       onError(error instanceof Error ? error.message : 'Payment failed');
     } finally {
@@ -80,31 +83,35 @@ export default function StripePaymentForm({
   const totalAmount = amount + fees.totalFees;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto">
-      <div className="text-center mb-6">
-        <h3 className="text-xl font-semibold text-gray-900">Complete Investment</h3>
-        <p className="text-gray-600 mt-2">Invest in {assetName}</p>
+    <div className='bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto'>
+      <div className='text-center mb-6'>
+        <h3 className='text-xl font-semibold text-gray-900'>
+          Complete Investment
+        </h3>
+        <p className='text-gray-600 mt-2'>Invest in {assetName}</p>
       </div>
 
       {/* Investment Summary */}
-      <div className="space-y-3 mb-6">
-        <div className="flex justify-between">
-          <span className="text-gray-600">Investment Amount</span>
-          <span className="font-medium">{paymentService.formatAmount(amount)}</span>
+      <div className='space-y-3 mb-6'>
+        <div className='flex justify-between'>
+          <span className='text-gray-600'>Investment Amount</span>
+          <span className='font-medium'>
+            {paymentService.formatAmount(amount)}
+          </span>
         </div>
-        
-        <div className="flex justify-between text-sm text-gray-500">
+
+        <div className='flex justify-between text-sm text-gray-500'>
           <span>Platform Fee (2.5%)</span>
           <span>{paymentService.formatAmount(fees.platformFee)}</span>
         </div>
-        
-        <div className="flex justify-between text-sm text-gray-500">
+
+        <div className='flex justify-between text-sm text-gray-500'>
           <span>Processing Fee</span>
           <span>{paymentService.formatAmount(fees.processingFee)}</span>
         </div>
-        
-        <div className="border-t pt-3">
-          <div className="flex justify-between font-semibold text-lg">
+
+        <div className='border-t pt-3'>
+          <div className='flex justify-between font-semibold text-lg'>
             <span>Total Amount</span>
             <span>{paymentService.formatAmount(totalAmount)}</span>
           </div>
@@ -112,53 +119,53 @@ export default function StripePaymentForm({
       </div>
 
       {/* Payment Method Selection */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+      <div className='mb-6'>
+        <label className='block text-sm font-medium text-gray-700 mb-3'>
           Payment Method
         </label>
-        <div className="space-y-2">
-          <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+        <div className='space-y-2'>
+          <label className='flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50'>
             <input
-              type="radio"
-              name="paymentMethod"
-              value="card"
+              type='radio'
+              name='paymentMethod'
+              value='card'
               defaultChecked
-              className="mr-3"
+              className='mr-3'
             />
-            <Icon name="credit-card" className="mr-2 text-gray-600" />
+            <Icon name='credit-card' className='mr-2 text-gray-600' />
             <span>Credit/Debit Card</span>
           </label>
-          
-          <label className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+
+          <label className='flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50'>
             <input
-              type="radio"
-              name="paymentMethod"
-              value="bank"
-              className="mr-3"
+              type='radio'
+              name='paymentMethod'
+              value='bank'
+              className='mr-3'
             />
-            <Icon name="bank" className="mr-2 text-gray-600" />
+            <Icon name='bank' className='mr-2 text-gray-600' />
             <span>Bank Transfer</span>
           </label>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex space-x-3">
+      <div className='flex space-x-3'>
         <button
           onClick={onCancel}
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+          className='flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors'
         >
           Cancel
         </button>
-        
+
         <button
           onClick={handlePayment}
           disabled={loading}
-          className="flex-1 px-4 py-2 bg-global-teal text-white rounded-lg hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className='flex-1 px-4 py-2 bg-global-teal text-white rounded-lg hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
         >
           {loading ? (
-            <div className="flex items-center justify-center">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+            <div className='flex items-center justify-center'>
+              <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2'></div>
               Processing...
             </div>
           ) : (
@@ -168,8 +175,8 @@ export default function StripePaymentForm({
       </div>
 
       {/* Security Notice */}
-      <div className="mt-4 text-xs text-gray-500 text-center">
-        <Icon name="shield-check" className="inline mr-1" />
+      <div className='mt-4 text-xs text-gray-500 text-center'>
+        <Icon name='shield-check' className='inline mr-1' />
         Your payment is secured by Stripe
       </div>
     </div>

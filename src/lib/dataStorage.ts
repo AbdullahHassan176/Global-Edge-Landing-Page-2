@@ -106,7 +106,10 @@ export interface DatabaseService {
   // Investment operations
   createInvestment(investment: Omit<Investment, 'id'>): Promise<Investment>;
   getInvestment(id: string): Promise<Investment | null>;
-  updateInvestment(id: string, updates: Partial<Investment>): Promise<Investment>;
+  updateInvestment(
+    id: string,
+    updates: Partial<Investment>
+  ): Promise<Investment>;
   deleteInvestment(id: string): Promise<void>;
   listInvestments(userId?: string): Promise<Investment[]>;
 
@@ -118,9 +121,14 @@ export interface DatabaseService {
   listAssets(filters?: any): Promise<Asset[]>;
 
   // Notification operations
-  createNotification(notification: Omit<Notification, 'id' | 'timestamp'>): Promise<Notification>;
+  createNotification(
+    notification: Omit<Notification, 'id' | 'timestamp'>
+  ): Promise<Notification>;
   getNotification(id: string): Promise<Notification | null>;
-  updateNotification(id: string, updates: Partial<Notification>): Promise<Notification>;
+  updateNotification(
+    id: string,
+    updates: Partial<Notification>
+  ): Promise<Notification>;
   deleteNotification(id: string): Promise<void>;
   listNotifications(filters?: any): Promise<Notification[]>;
 }
@@ -149,7 +157,7 @@ export class MockDatabaseService implements DatabaseService {
         accountType: 'individual',
         kycStatus: 'approved',
         createdAt: '2023-01-15T10:00:00Z',
-        lastLogin: '2024-12-15T14:30:00Z'
+        lastLogin: '2024-12-15T14:30:00Z',
       },
       {
         id: 'user-2',
@@ -160,8 +168,8 @@ export class MockDatabaseService implements DatabaseService {
         accountType: 'corporate',
         kycStatus: 'pending',
         createdAt: '2023-03-20T09:15:00Z',
-        lastLogin: '2024-12-14T16:45:00Z'
-      }
+        lastLogin: '2024-12-14T16:45:00Z',
+      },
     ];
 
     // Mock assets
@@ -178,7 +186,7 @@ export class MockDatabaseService implements DatabaseService {
         status: 'active',
         description: 'High-value electronics and textiles container',
         location: 'Shanghai → Los Angeles',
-        createdAt: '2024-01-15T00:00:00Z'
+        createdAt: '2024-01-15T00:00:00Z',
       },
       {
         id: 'asset-2',
@@ -192,8 +200,8 @@ export class MockDatabaseService implements DatabaseService {
         status: 'active',
         description: 'Prime office space in downtown Miami',
         location: 'Miami, FL',
-        createdAt: '2024-02-01T00:00:00Z'
-      }
+        createdAt: '2024-02-01T00:00:00Z',
+      },
     ];
 
     // Mock investments
@@ -205,7 +213,7 @@ export class MockDatabaseService implements DatabaseService {
         amount: 2250,
         shares: 50,
         purchaseDate: '2024-11-15T10:00:00Z',
-        status: 'active'
+        status: 'active',
       },
       {
         id: 'inv-2',
@@ -214,8 +222,8 @@ export class MockDatabaseService implements DatabaseService {
         amount: 1400,
         shares: 20,
         purchaseDate: '2024-10-20T14:30:00Z',
-        status: 'active'
-      }
+        status: 'active',
+      },
     ];
 
     // Mock notifications
@@ -226,7 +234,7 @@ export class MockDatabaseService implements DatabaseService {
         title: 'New User Registration',
         message: 'Alice Johnson has registered for an individual account',
         timestamp: '2024-12-15T10:30:00Z',
-        status: 'sent'
+        status: 'sent',
       },
       {
         id: 'notif-2',
@@ -234,18 +242,20 @@ export class MockDatabaseService implements DatabaseService {
         title: 'Welcome Email Sent',
         message: 'Welcome email sent to alice@example.com',
         timestamp: '2024-12-15T10:31:00Z',
-        status: 'sent'
-      }
+        status: 'sent',
+      },
     ];
   }
 
   // User operations
-  async createUser(user: Omit<User, 'id' | 'createdAt' | 'lastLogin'>): Promise<User> {
+  async createUser(
+    user: Omit<User, 'id' | 'createdAt' | 'lastLogin'>
+  ): Promise<User> {
     const newUser: User = {
       ...user,
       id: `user-${Date.now()}`,
       createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString()
+      lastLogin: new Date().toISOString(),
     };
     this.users.push(newUser);
     return newUser;
@@ -271,10 +281,12 @@ export class MockDatabaseService implements DatabaseService {
   }
 
   // Investment operations
-  async createInvestment(investment: Omit<Investment, 'id'>): Promise<Investment> {
+  async createInvestment(
+    investment: Omit<Investment, 'id'>
+  ): Promise<Investment> {
     const newInvestment: Investment = {
       ...investment,
-      id: `inv-${Date.now()}`
+      id: `inv-${Date.now()}`,
     };
     this.investments.push(newInvestment);
     return newInvestment;
@@ -284,7 +296,10 @@ export class MockDatabaseService implements DatabaseService {
     return this.investments.find(inv => inv.id === id) || null;
   }
 
-  async updateInvestment(id: string, updates: Partial<Investment>): Promise<Investment> {
+  async updateInvestment(
+    id: string,
+    updates: Partial<Investment>
+  ): Promise<Investment> {
     const index = this.investments.findIndex(inv => inv.id === id);
     if (index === -1) throw new Error('Investment not found');
     this.investments[index] = { ...this.investments[index], ...updates };
@@ -307,7 +322,7 @@ export class MockDatabaseService implements DatabaseService {
     const newAsset: Asset = {
       ...asset,
       id: `asset-${Date.now()}`,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
     this.assets.push(newAsset);
     return newAsset;
@@ -333,11 +348,13 @@ export class MockDatabaseService implements DatabaseService {
   }
 
   // Notification operations
-  async createNotification(notification: Omit<Notification, 'id' | 'timestamp'>): Promise<Notification> {
+  async createNotification(
+    notification: Omit<Notification, 'id' | 'timestamp'>
+  ): Promise<Notification> {
     const newNotification: Notification = {
       ...notification,
       id: `notif-${Date.now()}`,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
     this.notifications.push(newNotification);
     return newNotification;
@@ -347,7 +364,10 @@ export class MockDatabaseService implements DatabaseService {
     return this.notifications.find(notif => notif.id === id) || null;
   }
 
-  async updateNotification(id: string, updates: Partial<Notification>): Promise<Notification> {
+  async updateNotification(
+    id: string,
+    updates: Partial<Notification>
+  ): Promise<Notification> {
     const index = this.notifications.findIndex(notif => notif.id === id);
     if (index === -1) throw new Error('Notification not found');
     this.notifications[index] = { ...this.notifications[index], ...updates };
@@ -402,7 +422,7 @@ export const getDatabase = (): DatabaseService => {
     // For now, use mock database
     // In production, this would read from environment variables
     const config: DatabaseConfig = {
-      type: 'local'
+      type: 'local',
     };
     dbService = DatabaseFactory.createService(config);
   }
@@ -420,7 +440,7 @@ export const dataUtils = {
   formatCurrency: (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
     }).format(amount);
   },
 
@@ -431,12 +451,12 @@ export const dataUtils = {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   },
 
   // Calculate percentage
   calculatePercentage: (value: number, total: number): number => {
     return total > 0 ? (value / total) * 100 : 0;
-  }
+  },
 };

@@ -15,7 +15,11 @@ class LoginStorageService {
   /**
    * Save login credentials securely
    */
-  saveCredentials(credentials: Omit<SavedLoginCredentials, 'lastLogin' | 'loginType'> & { loginType: 'user' | 'admin' }): void {
+  saveCredentials(
+    credentials: Omit<SavedLoginCredentials, 'lastLogin' | 'loginType'> & {
+      loginType: 'user' | 'admin';
+    }
+  ): void {
     try {
       const savedCredentials: SavedLoginCredentials = {
         ...credentials,
@@ -40,12 +44,12 @@ class LoginStorageService {
 
       const decrypted = this.deobfuscate(obfuscated);
       const credentials = JSON.parse(decrypted) as SavedLoginCredentials;
-      
+
       // Check if credentials are not too old (30 days)
       const lastLogin = new Date(credentials.lastLogin);
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      
+
       if (lastLogin < thirtyDaysAgo) {
         this.clearSavedCredentials();
         return null;
@@ -75,7 +79,11 @@ class LoginStorageService {
    */
   hasSavedCredentials(loginType: 'user' | 'admin'): boolean {
     const credentials = this.getSavedCredentials();
-    return credentials !== null && credentials.loginType === loginType && credentials.rememberMe;
+    return (
+      credentials !== null &&
+      credentials.loginType === loginType &&
+      credentials.rememberMe
+    );
   }
 
   /**
@@ -86,7 +94,9 @@ class LoginStorageService {
     let result = '';
     for (let i = 0; i < text.length; i++) {
       const char = text.charCodeAt(i);
-      const keyChar = this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
+      const keyChar = this.ENCRYPTION_KEY.charCodeAt(
+        i % this.ENCRYPTION_KEY.length
+      );
       result += String.fromCharCode(char ^ keyChar);
     }
     return btoa(result);
@@ -101,7 +111,9 @@ class LoginStorageService {
       let result = '';
       for (let i = 0; i < text.length; i++) {
         const char = text.charCodeAt(i);
-        const keyChar = this.ENCRYPTION_KEY.charCodeAt(i % this.ENCRYPTION_KEY.length);
+        const keyChar = this.ENCRYPTION_KEY.charCodeAt(
+          i % this.ENCRYPTION_KEY.length
+        );
         result += String.fromCharCode(char ^ keyChar);
       }
       return result;
@@ -113,9 +125,15 @@ class LoginStorageService {
   /**
    * Get auto-fill data for login forms
    */
-  getAutoFillData(loginType: 'user' | 'admin'): { username?: string; email?: string } | null {
+  getAutoFillData(
+    loginType: 'user' | 'admin'
+  ): { username?: string; email?: string } | null {
     const credentials = this.getSavedCredentials();
-    if (credentials && credentials.loginType === loginType && credentials.rememberMe) {
+    if (
+      credentials &&
+      credentials.loginType === loginType &&
+      credentials.rememberMe
+    ) {
       return {
         username: credentials.username,
         email: credentials.email,

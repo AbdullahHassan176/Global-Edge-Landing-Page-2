@@ -3,7 +3,10 @@
  * Provides comprehensive validation and improvement suggestions for each step
  */
 
-import { AssetCreationRequest, AssetCreationStep } from './assetCreationService';
+import {
+  AssetCreationRequest,
+  AssetCreationStep,
+} from './assetCreationService';
 
 export interface ValidationResult {
   isValid: boolean;
@@ -66,20 +69,38 @@ class AssetValidationService {
     const investorValidation = this.validateInvestorCriteria(request);
 
     // Combine all validation results
-    errors.push(...basicInfoValidation.errors, ...tokenizationValidation.errors, 
-                ...legalValidation.errors, ...financialValidation.errors,
-                ...technicalValidation.errors, ...documentValidation.errors,
-                ...kycValidation.errors, ...investorValidation.errors);
+    errors.push(
+      ...basicInfoValidation.errors,
+      ...tokenizationValidation.errors,
+      ...legalValidation.errors,
+      ...financialValidation.errors,
+      ...technicalValidation.errors,
+      ...documentValidation.errors,
+      ...kycValidation.errors,
+      ...investorValidation.errors
+    );
 
-    warnings.push(...basicInfoValidation.warnings, ...tokenizationValidation.warnings,
-                  ...legalValidation.warnings, ...financialValidation.warnings,
-                  ...technicalValidation.warnings, ...documentValidation.warnings,
-                  ...kycValidation.warnings, ...investorValidation.warnings);
+    warnings.push(
+      ...basicInfoValidation.warnings,
+      ...tokenizationValidation.warnings,
+      ...legalValidation.warnings,
+      ...financialValidation.warnings,
+      ...technicalValidation.warnings,
+      ...documentValidation.warnings,
+      ...kycValidation.warnings,
+      ...investorValidation.warnings
+    );
 
-    suggestions.push(...basicInfoValidation.suggestions, ...tokenizationValidation.suggestions,
-                     ...legalValidation.suggestions, ...financialValidation.suggestions,
-                     ...technicalValidation.suggestions, ...documentValidation.suggestions,
-                     ...kycValidation.suggestions, ...investorValidation.suggestions);
+    suggestions.push(
+      ...basicInfoValidation.suggestions,
+      ...tokenizationValidation.suggestions,
+      ...legalValidation.suggestions,
+      ...financialValidation.suggestions,
+      ...technicalValidation.suggestions,
+      ...documentValidation.suggestions,
+      ...kycValidation.suggestions,
+      ...investorValidation.suggestions
+    );
 
     // Calculate overall score
     const stepScores = [
@@ -90,10 +111,12 @@ class AssetValidationService {
       technicalValidation.score,
       documentValidation.score,
       kycValidation.score,
-      investorValidation.score
+      investorValidation.score,
     ];
 
-    const overallScore = Math.round(stepScores.reduce((sum, score) => sum + score, 0) / stepScores.length);
+    const overallScore = Math.round(
+      stepScores.reduce((sum, score) => sum + score, 0) / stepScores.length
+    );
     const completionPercentage = this.calculateCompletionPercentage(request);
 
     return {
@@ -102,14 +125,17 @@ class AssetValidationService {
       warnings,
       suggestions,
       score: overallScore,
-      completionPercentage
+      completionPercentage,
     };
   }
 
   /**
    * Validate specific step
    */
-  validateStep(request: AssetCreationRequest, step: AssetCreationStep): StepValidationResult {
+  validateStep(
+    request: AssetCreationRequest,
+    step: AssetCreationStep
+  ): StepValidationResult {
     let validation: ValidationResult;
 
     switch (step) {
@@ -138,7 +164,14 @@ class AssetValidationService {
         validation = this.validateInvestorCriteria(request);
         break;
       default:
-        validation = { isValid: true, errors: [], warnings: [], suggestions: [], score: 0, completionPercentage: 0 };
+        validation = {
+          isValid: true,
+          errors: [],
+          warnings: [],
+          suggestions: [],
+          score: 0,
+          completionPercentage: 0,
+        };
     }
 
     return {
@@ -149,8 +182,9 @@ class AssetValidationService {
       errors: validation.errors,
       warnings: validation.warnings,
       suggestions: validation.suggestions,
-      canProceed: validation.errors.filter(e => e.severity === 'error').length === 0,
-      nextSteps: this.getNextSteps(step, validation)
+      canProceed:
+        validation.errors.filter(e => e.severity === 'error').length === 0,
+      nextSteps: this.getNextSteps(step, validation),
     };
   }
 
@@ -171,7 +205,7 @@ class AssetValidationService {
         field: 'name',
         message: 'Asset name is required and must be at least 3 characters',
         severity: 'error',
-        suggestion: 'Use a descriptive name that clearly identifies your asset'
+        suggestion: 'Use a descriptive name that clearly identifies your asset',
       });
     } else {
       score += 20;
@@ -182,7 +216,8 @@ class AssetValidationService {
         field: 'description',
         message: 'Description is required and should be at least 50 characters',
         severity: 'error',
-        suggestion: 'Provide a detailed description including key features, location, and unique selling points'
+        suggestion:
+          'Provide a detailed description including key features, location, and unique selling points',
       });
     } else {
       score += 20;
@@ -193,7 +228,7 @@ class AssetValidationService {
         field: 'location',
         message: 'Location is required',
         severity: 'error',
-        suggestion: 'Specify the exact location including city and country'
+        suggestion: 'Specify the exact location including city and country',
       });
     } else {
       score += 15;
@@ -204,7 +239,7 @@ class AssetValidationService {
         field: 'country',
         message: 'Country is required',
         severity: 'error',
-        suggestion: 'Select the country where the asset is located'
+        suggestion: 'Select the country where the asset is located',
       });
     } else {
       score += 10;
@@ -216,7 +251,7 @@ class AssetValidationService {
         field: 'images',
         message: 'At least one image is required',
         severity: 'error',
-        suggestion: 'Upload high-quality images that showcase your asset'
+        suggestion: 'Upload high-quality images that showcase your asset',
       });
     } else {
       score += 15;
@@ -224,7 +259,7 @@ class AssetValidationService {
         warnings.push({
           field: 'images',
           message: 'Consider adding more images for better presentation',
-          suggestion: 'Upload 3-5 high-quality images from different angles'
+          suggestion: 'Upload 3-5 high-quality images from different angles',
         });
       }
     }
@@ -235,7 +270,7 @@ class AssetValidationService {
         field: 'category',
         message: 'Category is required',
         severity: 'error',
-        suggestion: 'Select the most appropriate category for your asset'
+        suggestion: 'Select the most appropriate category for your asset',
       });
     } else {
       score += 10;
@@ -246,7 +281,7 @@ class AssetValidationService {
       warnings.push({
         field: 'tags',
         message: 'Tags help with discoverability',
-        suggestion: 'Add relevant tags like location, type, features, etc.'
+        suggestion: 'Add relevant tags like location, type, features, etc.',
       });
     } else {
       score += 10;
@@ -258,16 +293,17 @@ class AssetValidationService {
         field: 'description',
         message: 'Enhance your description for better investor appeal',
         priority: 'medium',
-        category: 'marketing'
+        category: 'marketing',
       });
     }
 
     if (!basicInfo.virtualTour) {
       suggestions.push({
         field: 'virtualTour',
-        message: 'Consider adding a virtual tour for better investor engagement',
+        message:
+          'Consider adding a virtual tour for better investor engagement',
         priority: 'low',
-        category: 'marketing'
+        category: 'marketing',
       });
     }
 
@@ -277,14 +313,16 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
   /**
    * Validate Tokenization Details step
    */
-  private validateTokenization(request: AssetCreationRequest): ValidationResult {
+  private validateTokenization(
+    request: AssetCreationRequest
+  ): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
     const suggestions: ValidationSuggestion[] = [];
@@ -293,12 +331,16 @@ class AssetValidationService {
     const { tokenizationDetails } = request;
 
     // Token validation
-    if (!tokenizationDetails.totalTokens || tokenizationDetails.totalTokens <= 0) {
+    if (
+      !tokenizationDetails.totalTokens ||
+      tokenizationDetails.totalTokens <= 0
+    ) {
       errors.push({
         field: 'totalTokens',
         message: 'Total tokens must be greater than 0',
         severity: 'error',
-        suggestion: 'Set a reasonable number of tokens based on your asset value'
+        suggestion:
+          'Set a reasonable number of tokens based on your asset value',
       });
     } else {
       score += 15;
@@ -306,50 +348,64 @@ class AssetValidationService {
         warnings.push({
           field: 'totalTokens',
           message: 'Very high token count may affect liquidity',
-          suggestion: 'Consider if this many tokens are necessary for your use case'
+          suggestion:
+            'Consider if this many tokens are necessary for your use case',
         });
       }
     }
 
-    if (!tokenizationDetails.tokenPrice || tokenizationDetails.tokenPrice <= 0) {
+    if (
+      !tokenizationDetails.tokenPrice ||
+      tokenizationDetails.tokenPrice <= 0
+    ) {
       errors.push({
         field: 'tokenPrice',
         message: 'Token price must be greater than 0',
         severity: 'error',
-        suggestion: 'Set a price that reflects the asset value divided by total tokens'
+        suggestion:
+          'Set a price that reflects the asset value divided by total tokens',
       });
     } else {
       score += 15;
     }
 
-    if (!tokenizationDetails.minimumInvestment || tokenizationDetails.minimumInvestment <= 0) {
+    if (
+      !tokenizationDetails.minimumInvestment ||
+      tokenizationDetails.minimumInvestment <= 0
+    ) {
       errors.push({
         field: 'minimumInvestment',
         message: 'Minimum investment must be greater than 0',
         severity: 'error',
-        suggestion: 'Set a reasonable minimum that allows broad participation'
+        suggestion: 'Set a reasonable minimum that allows broad participation',
       });
     } else {
       score += 15;
     }
 
-    if (!tokenizationDetails.tokenSymbol || tokenizationDetails.tokenSymbol.length < 2) {
+    if (
+      !tokenizationDetails.tokenSymbol ||
+      tokenizationDetails.tokenSymbol.length < 2
+    ) {
       errors.push({
         field: 'tokenSymbol',
         message: 'Token symbol is required (2-10 characters)',
         severity: 'error',
-        suggestion: 'Use a clear, memorable symbol (e.g., PROP, GOLD, SHIP)'
+        suggestion: 'Use a clear, memorable symbol (e.g., PROP, GOLD, SHIP)',
       });
     } else {
       score += 10;
     }
 
-    if (!tokenizationDetails.tokenName || tokenizationDetails.tokenName.length < 3) {
+    if (
+      !tokenizationDetails.tokenName ||
+      tokenizationDetails.tokenName.length < 3
+    ) {
       errors.push({
         field: 'tokenName',
         message: 'Token name is required',
         severity: 'error',
-        suggestion: 'Use a descriptive name for your token'
+        suggestion: 'Use a descriptive name for your token',
       });
     } else {
       score += 10;
@@ -362,7 +418,7 @@ class AssetValidationService {
         field: 'totalSupply',
         message: 'Total supply must match total tokens',
         severity: 'error',
-        suggestion: 'Ensure tokenomics total supply equals total tokens'
+        suggestion: 'Ensure tokenomics total supply equals total tokens',
       });
     } else {
       score += 15;
@@ -373,7 +429,7 @@ class AssetValidationService {
         field: 'investorTokens',
         message: 'Investor tokens must be greater than 0',
         severity: 'error',
-        suggestion: 'Allocate a reasonable percentage for investors'
+        suggestion: 'Allocate a reasonable percentage for investors',
       });
     } else {
       score += 10;
@@ -384,7 +440,7 @@ class AssetValidationService {
       warnings.push({
         field: 'primaryMarket',
         message: 'Primary market trading is recommended',
-        suggestion: 'Enable primary market for better liquidity'
+        suggestion: 'Enable primary market for better liquidity',
       });
     } else {
       score += 10;
@@ -394,9 +450,10 @@ class AssetValidationService {
     if (tokenizationDetails.minimumInvestment > 10000) {
       suggestions.push({
         field: 'minimumInvestment',
-        message: 'Consider lowering minimum investment for broader participation',
+        message:
+          'Consider lowering minimum investment for broader participation',
         priority: 'medium',
-        category: 'financial'
+        category: 'financial',
       });
     }
 
@@ -405,7 +462,7 @@ class AssetValidationService {
         field: 'secondaryMarket',
         message: 'Enable secondary market trading for better liquidity',
         priority: 'high',
-        category: 'financial'
+        category: 'financial',
       });
     }
 
@@ -415,14 +472,16 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
   /**
    * Validate Legal Compliance step
    */
-  private validateLegalCompliance(request: AssetCreationRequest): ValidationResult {
+  private validateLegalCompliance(
+    request: AssetCreationRequest
+  ): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
     const suggestions: ValidationSuggestion[] = [];
@@ -431,12 +490,15 @@ class AssetValidationService {
     const { legalCompliance } = request;
 
     // Jurisdiction validation
-    if (!legalCompliance.jurisdiction || legalCompliance.jurisdiction.trim().length < 2) {
+    if (
+      !legalCompliance.jurisdiction ||
+      legalCompliance.jurisdiction.trim().length < 2
+    ) {
       errors.push({
         field: 'jurisdiction',
         message: 'Jurisdiction is required',
         severity: 'error',
-        suggestion: 'Specify the legal jurisdiction for your asset'
+        suggestion: 'Specify the legal jurisdiction for your asset',
       });
     } else {
       score += 20;
@@ -448,7 +510,7 @@ class AssetValidationService {
         field: 'legalOpinion',
         message: 'Legal opinion is required',
         severity: 'error',
-        suggestion: 'Obtain a legal opinion from a qualified law firm'
+        suggestion: 'Obtain a legal opinion from a qualified law firm',
       });
     } else {
       score += 25;
@@ -456,7 +518,7 @@ class AssetValidationService {
         warnings.push({
           field: 'lawFirm',
           message: 'Law firm information is recommended',
-          suggestion: 'Specify the law firm that provided the legal opinion'
+          suggestion: 'Specify the law firm that provided the legal opinion',
         });
       }
     }
@@ -466,7 +528,7 @@ class AssetValidationService {
       warnings.push({
         field: 'insurance',
         message: 'Insurance is highly recommended',
-        suggestion: 'Consider obtaining comprehensive insurance coverage'
+        suggestion: 'Consider obtaining comprehensive insurance coverage',
       });
     } else {
       score += 20;
@@ -475,7 +537,7 @@ class AssetValidationService {
           field: 'insuranceProvider',
           message: 'Insurance provider is required',
           severity: 'error',
-          suggestion: 'Specify the insurance provider'
+          suggestion: 'Specify the insurance provider',
         });
       }
     }
@@ -485,7 +547,7 @@ class AssetValidationService {
       warnings.push({
         field: 'escrowAgent',
         message: 'Escrow agent is recommended for investor protection',
-        suggestion: 'Appoint a qualified escrow agent'
+        suggestion: 'Appoint a qualified escrow agent',
       });
     } else {
       score += 15;
@@ -495,18 +557,21 @@ class AssetValidationService {
       warnings.push({
         field: 'custodian',
         message: 'Custodian is recommended for asset security',
-        suggestion: 'Appoint a qualified custodian'
+        suggestion: 'Appoint a qualified custodian',
       });
     } else {
       score += 15;
     }
 
     // Compliance requirements validation
-    if (!legalCompliance.complianceRequirements || legalCompliance.complianceRequirements.length === 0) {
+    if (
+      !legalCompliance.complianceRequirements ||
+      legalCompliance.complianceRequirements.length === 0
+    ) {
       warnings.push({
         field: 'complianceRequirements',
         message: 'Compliance requirements should be specified',
-        suggestion: 'List all relevant compliance requirements'
+        suggestion: 'List all relevant compliance requirements',
       });
     } else {
       score += 5;
@@ -518,14 +583,16 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
   /**
    * Validate Financial Details step
    */
-  private validateFinancialDetails(request: AssetCreationRequest): ValidationResult {
+  private validateFinancialDetails(
+    request: AssetCreationRequest
+  ): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
     const suggestions: ValidationSuggestion[] = [];
@@ -534,12 +601,15 @@ class AssetValidationService {
     const { financialDetails } = request;
 
     // Valuation validation
-    if (!financialDetails.valuation.valuationAmount || financialDetails.valuation.valuationAmount <= 0) {
+    if (
+      !financialDetails.valuation.valuationAmount ||
+      financialDetails.valuation.valuationAmount <= 0
+    ) {
       errors.push({
         field: 'valuationAmount',
         message: 'Valuation amount is required and must be greater than 0',
         severity: 'error',
-        suggestion: 'Obtain a professional valuation of your asset'
+        suggestion: 'Obtain a professional valuation of your asset',
       });
     } else {
       score += 25;
@@ -550,7 +620,7 @@ class AssetValidationService {
         field: 'valuator',
         message: 'Valuator is required',
         severity: 'error',
-        suggestion: 'Specify the professional valuator'
+        suggestion: 'Specify the professional valuator',
       });
     } else {
       score += 15;
@@ -560,7 +630,7 @@ class AssetValidationService {
       warnings.push({
         field: 'valuationDate',
         message: 'Valuation date is recommended',
-        suggestion: 'Specify when the valuation was performed'
+        suggestion: 'Specify when the valuation was performed',
       });
     } else {
       score += 10;
@@ -571,7 +641,7 @@ class AssetValidationService {
       warnings.push({
         field: 'expectedReturn',
         message: 'Expected return should be specified',
-        suggestion: 'Provide realistic expected returns based on market data'
+        suggestion: 'Provide realistic expected returns based on market data',
       });
     } else {
       score += 15;
@@ -579,17 +649,20 @@ class AssetValidationService {
         warnings.push({
           field: 'expectedReturn',
           message: 'Very high expected return may be unrealistic',
-          suggestion: 'Ensure expected returns are realistic and achievable'
+          suggestion: 'Ensure expected returns are realistic and achievable',
         });
       }
     }
 
     // Financial projections validation
-    if (!financialDetails.financialProjections || financialDetails.financialProjections.length === 0) {
+    if (
+      !financialDetails.financialProjections ||
+      financialDetails.financialProjections.length === 0
+    ) {
       warnings.push({
         field: 'financialProjections',
         message: 'Financial projections are recommended',
-        suggestion: 'Provide 3-5 year financial projections'
+        suggestion: 'Provide 3-5 year financial projections',
       });
     } else {
       score += 15;
@@ -600,7 +673,7 @@ class AssetValidationService {
       warnings.push({
         field: 'taxJurisdiction',
         message: 'Tax jurisdiction should be specified',
-        suggestion: 'Specify the tax jurisdiction for compliance'
+        suggestion: 'Specify the tax jurisdiction for compliance',
       });
     } else {
       score += 10;
@@ -611,7 +684,7 @@ class AssetValidationService {
         field: 'taxStatus',
         message: 'Tax compliance is required',
         severity: 'error',
-        suggestion: 'Ensure tax compliance before proceeding'
+        suggestion: 'Ensure tax compliance before proceeding',
       });
     } else {
       score += 10;
@@ -623,14 +696,16 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
   /**
    * Validate Technical Specifications step
    */
-  private validateTechnicalSpecs(request: AssetCreationRequest): ValidationResult {
+  private validateTechnicalSpecs(
+    request: AssetCreationRequest
+  ): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
     const suggestions: ValidationSuggestion[] = [];
@@ -644,7 +719,7 @@ class AssetValidationService {
         field: 'blockchain',
         message: 'Blockchain selection is required',
         severity: 'error',
-        suggestion: 'Select the blockchain for your token'
+        suggestion: 'Select the blockchain for your token',
       });
     } else {
       score += 20;
@@ -656,7 +731,7 @@ class AssetValidationService {
         field: 'securityAudit',
         message: 'Security audit is required',
         severity: 'error',
-        suggestion: 'Complete a security audit before deployment'
+        suggestion: 'Complete a security audit before deployment',
       });
     } else {
       score += 30;
@@ -664,7 +739,7 @@ class AssetValidationService {
         warnings.push({
           field: 'auditor',
           message: 'Auditor information is recommended',
-          suggestion: 'Specify the security audit firm'
+          suggestion: 'Specify the security audit firm',
         });
       }
     }
@@ -674,29 +749,36 @@ class AssetValidationService {
       warnings.push({
         field: 'contractVersion',
         message: 'Contract version is recommended',
-        suggestion: 'Specify the smart contract version'
+        suggestion: 'Specify the smart contract version',
       });
     } else {
       score += 15;
     }
 
     // Oracle integration validation
-    if (technicalSpecs.oracleIntegration.required && !technicalSpecs.oracleIntegration.provider) {
+    if (
+      technicalSpecs.oracleIntegration.required &&
+      !technicalSpecs.oracleIntegration.provider
+    ) {
       warnings.push({
         field: 'oracleProvider',
-        message: 'Oracle provider is required when oracle integration is enabled',
-        suggestion: 'Specify the oracle provider'
+        message:
+          'Oracle provider is required when oracle integration is enabled',
+        suggestion: 'Specify the oracle provider',
       });
     } else {
       score += 15;
     }
 
     // Metadata validation
-    if (!technicalSpecs.metadata.attributes || technicalSpecs.metadata.attributes.length === 0) {
+    if (
+      !technicalSpecs.metadata.attributes ||
+      technicalSpecs.metadata.attributes.length === 0
+    ) {
       warnings.push({
         field: 'metadata',
         message: 'Asset metadata is recommended',
-        suggestion: 'Add relevant metadata attributes'
+        suggestion: 'Add relevant metadata attributes',
       });
     } else {
       score += 20;
@@ -708,7 +790,7 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
@@ -726,14 +808,17 @@ class AssetValidationService {
     // Get required documents for this asset type and token standard
     const requiredDocs = this.getRequiredDocuments(assetType, tokenStandard);
     const uploadedDocs = documents.map(doc => doc.type);
-    const missingDocs = requiredDocs.filter(doc => !uploadedDocs.includes(doc as any));
+    const missingDocs = requiredDocs.filter(
+      doc => !uploadedDocs.includes(doc as any)
+    );
 
     if (missingDocs.length > 0) {
       errors.push({
         field: 'documents',
         message: `Missing required documents: ${missingDocs.join(', ')}`,
         severity: 'error',
-        suggestion: 'Upload all required documents for your asset type and token standard'
+        suggestion:
+          'Upload all required documents for your asset type and token standard',
       });
     } else {
       score += 50;
@@ -748,7 +833,7 @@ class AssetValidationService {
         field: 'rejectedDocuments',
         message: `${rejectedDocs.length} document(s) have been rejected`,
         severity: 'error',
-        suggestion: 'Address the issues with rejected documents and re-upload'
+        suggestion: 'Address the issues with rejected documents and re-upload',
       });
     }
 
@@ -756,7 +841,8 @@ class AssetValidationService {
       warnings.push({
         field: 'pendingDocuments',
         message: `${pendingDocs.length} document(s) are pending review`,
-        suggestion: 'Wait for document review or contact support if taking too long'
+        suggestion:
+          'Wait for document review or contact support if taking too long',
       });
     }
 
@@ -766,7 +852,7 @@ class AssetValidationService {
         field: 'documentCompleteness',
         message: 'Consider uploading additional supporting documents',
         priority: 'medium',
-        category: 'compliance'
+        category: 'compliance',
       });
     }
 
@@ -778,14 +864,16 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
   /**
    * Validate KYC Requirements step
    */
-  private validateKYCRequirements(request: AssetCreationRequest): ValidationResult {
+  private validateKYCRequirements(
+    request: AssetCreationRequest
+  ): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
     const suggestions: ValidationSuggestion[] = [];
@@ -794,57 +882,73 @@ class AssetValidationService {
     const { kycRequirements } = request;
 
     // Minimum investment validation
-    if (!kycRequirements.minimumInvestment || kycRequirements.minimumInvestment <= 0) {
+    if (
+      !kycRequirements.minimumInvestment ||
+      kycRequirements.minimumInvestment <= 0
+    ) {
       errors.push({
         field: 'minimumInvestment',
         message: 'Minimum investment is required',
         severity: 'error',
-        suggestion: 'Set a reasonable minimum investment amount'
+        suggestion: 'Set a reasonable minimum investment amount',
       });
     } else {
       score += 25;
     }
 
     // Investor types validation
-    if (!kycRequirements.investorTypes || kycRequirements.investorTypes.length === 0) {
+    if (
+      !kycRequirements.investorTypes ||
+      kycRequirements.investorTypes.length === 0
+    ) {
       warnings.push({
         field: 'investorTypes',
         message: 'Investor types should be specified',
-        suggestion: 'Define which types of investors can participate'
+        suggestion: 'Define which types of investors can participate',
       });
     } else {
       score += 20;
     }
 
     // Geographic restrictions validation
-    if (!kycRequirements.geographicRestrictions || kycRequirements.geographicRestrictions.length === 0) {
+    if (
+      !kycRequirements.geographicRestrictions ||
+      kycRequirements.geographicRestrictions.length === 0
+    ) {
       warnings.push({
         field: 'geographicRestrictions',
         message: 'Geographic restrictions should be considered',
-        suggestion: 'Define geographic restrictions based on regulations'
+        suggestion: 'Define geographic restrictions based on regulations',
       });
     } else {
       score += 15;
     }
 
     // Additional requirements validation
-    if (!kycRequirements.additionalRequirements || kycRequirements.additionalRequirements.length === 0) {
+    if (
+      !kycRequirements.additionalRequirements ||
+      kycRequirements.additionalRequirements.length === 0
+    ) {
       warnings.push({
         field: 'additionalRequirements',
         message: 'Additional KYC requirements may be needed',
-        suggestion: 'Consider additional verification requirements'
+        suggestion: 'Consider additional verification requirements',
       });
     } else {
       score += 20;
     }
 
     // Accreditation validation
-    if (kycRequirements.accreditationRequired && kycRequirements.minimumInvestment < 100000) {
+    if (
+      kycRequirements.accreditationRequired &&
+      kycRequirements.minimumInvestment < 100000
+    ) {
       suggestions.push({
         field: 'accreditation',
-        message: 'Consider if accreditation requirement aligns with minimum investment',
+        message:
+          'Consider if accreditation requirement aligns with minimum investment',
         priority: 'medium',
-        category: 'compliance'
+        category: 'compliance',
       });
     }
 
@@ -856,14 +960,16 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
   /**
    * Validate Investor Criteria step
    */
-  private validateInvestorCriteria(request: AssetCreationRequest): ValidationResult {
+  private validateInvestorCriteria(
+    request: AssetCreationRequest
+  ): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
     const suggestions: ValidationSuggestion[] = [];
@@ -872,43 +978,55 @@ class AssetValidationService {
     const { investorCriteria } = request;
 
     // Transfer restrictions validation
-    if (!investorCriteria.transferRestrictions || investorCriteria.transferRestrictions.length === 0) {
+    if (
+      !investorCriteria.transferRestrictions ||
+      investorCriteria.transferRestrictions.length === 0
+    ) {
       warnings.push({
         field: 'transferRestrictions',
         message: 'Transfer restrictions should be considered',
-        suggestion: 'Define transfer restrictions to comply with regulations'
+        suggestion: 'Define transfer restrictions to comply with regulations',
       });
     } else {
       score += 30;
     }
 
     // Investment limits validation
-    if (investorCriteria.minimumNetWorth && investorCriteria.minimumNetWorth < 100000) {
+    if (
+      investorCriteria.minimumNetWorth &&
+      investorCriteria.minimumNetWorth < 100000
+    ) {
       warnings.push({
         field: 'minimumNetWorth',
         message: 'Very low minimum net worth may not be appropriate',
-        suggestion: 'Consider if minimum net worth aligns with risk profile'
+        suggestion: 'Consider if minimum net worth aligns with risk profile',
       });
     } else {
       score += 20;
     }
 
-    if (investorCriteria.minimumIncome && investorCriteria.minimumIncome < 50000) {
+    if (
+      investorCriteria.minimumIncome &&
+      investorCriteria.minimumIncome < 50000
+    ) {
       warnings.push({
         field: 'minimumIncome',
         message: 'Very low minimum income may not be appropriate',
-        suggestion: 'Consider if minimum income aligns with investment risk'
+        suggestion: 'Consider if minimum income aligns with investment risk',
       });
     } else {
       score += 20;
     }
 
     // Maximum investors validation
-    if (investorCriteria.maximumInvestors && investorCriteria.maximumInvestors < 10) {
+    if (
+      investorCriteria.maximumInvestors &&
+      investorCriteria.maximumInvestors < 10
+    ) {
       warnings.push({
         field: 'maximumInvestors',
         message: 'Very low maximum investors may limit participation',
-        suggestion: 'Consider if maximum investor limit is appropriate'
+        suggestion: 'Consider if maximum investor limit is appropriate',
       });
     } else {
       score += 15;
@@ -919,7 +1037,8 @@ class AssetValidationService {
       warnings.push({
         field: 'lockupPeriod',
         message: 'Very long lockup period may deter investors',
-        suggestion: 'Consider if lockup period is reasonable for your asset type'
+        suggestion:
+          'Consider if lockup period is reasonable for your asset type',
       });
     } else {
       score += 15;
@@ -931,7 +1050,7 @@ class AssetValidationService {
       warnings,
       suggestions,
       score,
-      completionPercentage: Math.round((score / 100) * 100)
+      completionPercentage: Math.round((score / 100) * 100),
     };
   }
 
@@ -940,9 +1059,14 @@ class AssetValidationService {
    */
   private calculateCompletionPercentage(request: AssetCreationRequest): number {
     const steps = [
-      'basic_info', 'tokenization_details', 'legal_compliance', 
-      'financial_details', 'technical_specs', 'documents', 
-      'kyc_requirements', 'investor_criteria'
+      'basic_info',
+      'tokenization_details',
+      'legal_compliance',
+      'financial_details',
+      'technical_specs',
+      'documents',
+      'kyc_requirements',
+      'investor_criteria',
     ];
 
     let completedSteps = 0;
@@ -959,7 +1083,10 @@ class AssetValidationService {
   /**
    * Get next steps based on current validation
    */
-  private getNextSteps(step: AssetCreationStep, validation: ValidationResult): string[] {
+  private getNextSteps(
+    step: AssetCreationStep,
+    validation: ValidationResult
+  ): string[] {
     const nextSteps: string[] = [];
 
     if (validation.errors.length > 0) {
@@ -984,20 +1111,53 @@ class AssetValidationService {
   /**
    * Get required documents for asset type and token standard
    */
-  private getRequiredDocuments(assetType: string, tokenStandard: string): string[] {
+  private getRequiredDocuments(
+    assetType: string,
+    tokenStandard: string
+  ): string[] {
     // This would typically come from the assetCreationService
     // For now, return a basic list
     const documentMap: Record<string, Record<string, string[]>> = {
-      'property': {
-        'ERC-20': ['title_deed', 'property_survey', 'valuation_report', 'insurance_policy'],
-        'ERC-721': ['title_deed', 'property_survey', 'valuation_report', 'insurance_policy'],
-        'ERC-1155': ['title_deed', 'property_survey', 'valuation_report', 'insurance_policy']
+      property: {
+        'ERC-20': [
+          'title_deed',
+          'property_survey',
+          'valuation_report',
+          'insurance_policy',
+        ],
+        'ERC-721': [
+          'title_deed',
+          'property_survey',
+          'valuation_report',
+          'insurance_policy',
+        ],
+        'ERC-1155': [
+          'title_deed',
+          'property_survey',
+          'valuation_report',
+          'insurance_policy',
+        ],
       },
-      'container': {
-        'ERC-20': ['warehouse_receipt', 'quality_certificate', 'origin_certificate', 'insurance_policy'],
-        'ERC-721': ['warehouse_receipt', 'quality_certificate', 'origin_certificate', 'insurance_policy'],
-        'ERC-1155': ['warehouse_receipt', 'quality_certificate', 'origin_certificate', 'insurance_policy']
-      }
+      container: {
+        'ERC-20': [
+          'warehouse_receipt',
+          'quality_certificate',
+          'origin_certificate',
+          'insurance_policy',
+        ],
+        'ERC-721': [
+          'warehouse_receipt',
+          'quality_certificate',
+          'origin_certificate',
+          'insurance_policy',
+        ],
+        'ERC-1155': [
+          'warehouse_receipt',
+          'quality_certificate',
+          'origin_certificate',
+          'insurance_policy',
+        ],
+      },
     };
 
     return documentMap[assetType]?.[tokenStandard] || [];
