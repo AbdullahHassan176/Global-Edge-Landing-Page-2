@@ -88,3 +88,44 @@ global.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
 };
+
+// Mock Next.js Response for API routes
+global.Response = class Response {
+  constructor(body, init) {
+    this.body = body;
+    this.status = init?.status || 200;
+    this.headers = new Map(Object.entries(init?.headers || {}));
+  }
+  json() {
+    return Promise.resolve(JSON.parse(this.body));
+  }
+  text() {
+    return Promise.resolve(this.body);
+  }
+};
+
+// Mock window.location for OAuth tests
+Object.defineProperty(window, 'location', {
+  value: {
+    href: 'https://theglobaledge.io',
+    origin: 'https://theglobaledge.io',
+    pathname: '/',
+    search: '',
+    hash: '',
+    assign: jest.fn(),
+    replace: jest.fn(),
+    reload: jest.fn(),
+  },
+  writable: true,
+});
+
+// Mock document.createElement for React testing
+const originalCreateElement = document.createElement;
+document.createElement = function(tagName) {
+  const element = originalCreateElement.call(this, tagName);
+  if (tagName === 'div') {
+    element.appendChild = jest.fn();
+    element.removeChild = jest.fn();
+  }
+  return element;
+};
