@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
@@ -64,60 +63,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <Head>
-        <title>Dashboard | Asset Management & Investor Portal | The Global Edge</title>
-        <meta name="description" content="Access your investor dashboard — monitor tokenized assets, portfolio performance, and compliance documentation on The Global Edge platform." />
-        <meta name="keywords" content="investor dashboard, asset management, portfolio tracking, tokenized assets, investment portal, compliance documentation, RWA dashboard" />
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://theglobaledge.io/dashboard" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Dashboard | Asset Management & Investor Portal | The Global Edge" />
-        <meta property="og:description" content="Access your investor dashboard — monitor tokenized assets, portfolio performance, and compliance documentation on The Global Edge platform." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/dashboard" />
-        <meta property="og:image" content="https://theglobaledge.io/og-dashboard.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Dashboard | Asset Management & Investor Portal | The Global Edge" />
-        <meta name="twitter:description" content="Access your investor dashboard — monitor tokenized assets, portfolio performance, and compliance documentation on The Global Edge platform." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-dashboard.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              "name": "The Global Edge Dashboard",
-              "description": "Asset management and investor portal for monitoring tokenized assets, portfolio performance, and compliance documentation",
-              "url": "https://theglobaledge.io/dashboard",
-              "applicationCategory": "FinanceApplication",
-              "operatingSystem": "Web Browser",
-              "offers": {
-                "@type": "Offer",
-                "name": "Asset Management Dashboard",
-                "description": "Monitor tokenized assets, portfolio performance, and compliance documentation"
-              },
-              "featureList": [
-                "Portfolio Analytics",
-                "Investment Tracking", 
-                "Asset Management",
-                "Compliance Documentation",
-                "Performance Monitoring",
-                "Transaction History"
-              ],
-              "provider": {
-                "@type": "Organization",
-                "name": "The Global Edge",
-                "url": "https://theglobaledge.io"
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Header */}

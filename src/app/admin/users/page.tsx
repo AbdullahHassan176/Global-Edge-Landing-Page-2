@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -360,11 +359,7 @@ function UserManagementDashboard() {
 
   return (
     <>
-      <Head>
-        <title>Admin Users | The Global Edge</title>
-        <meta name="description" content="User management and administration for The Global Edge platform." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Notification System */}
         <NotificationSystem
@@ -906,6 +901,7 @@ function UserManagementDashboard() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

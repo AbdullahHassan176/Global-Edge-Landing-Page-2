@@ -16,18 +16,168 @@ const globalKeywords = [
   'UAE VARA compliance',
 ];
 
+// 🟢 Homepage — broad, authority-building keywords
+const homeKeywords = [
+  'The Global Edge',
+  'asset tokenization UAE',
+  'VARA platform',
+  'VARA licensed blockchain platform',
+  'rwa',
+  'onchain',
+  'tokenization of assets',
+  'tokenizing',
+  'digital asset tokenization',
+  'real world assets',
+  'asset tokenization platform',
+  'blockchain tokenization',
+  'tokenization companies',
+  ...globalKeywords,
+];
+
+// 🟣 Assets page — product-level & investment keywords
+const assetsKeywords = [
+  'tokenized assets',
+  'container tokens',
+  'real estate tokens',
+  'real estate tokenization',
+  'tokenized real world assets',
+  'tokenized securities',
+  'rwa tokens',
+  'rwa tokenization',
+  'asset tokenization blockchain',
+  'tokenization platform',
+  'asset tokenization platform development',
+  'tokenized asset',
+  'tokenisation company',
+  'tokenization of real world assets',
+  'real-world asset marketplace',
+  'compliant rwa platform',
+  'security token',
+  'security tokens',
+  ...globalKeywords,
+];
+
+// 🟠 Investors page — transactional / investing intent
+const investorKeywords = [
+  'invest in tokenized assets',
+  'fractional ownership',
+  'fractional blockchain ownership',
+  'rwa investment opportunities',
+  'real world asset investing',
+  'tokenized investment UAE',
+  'tokenized real estate',
+  'tokenized assets Dubai',
+  'how to invest in tokenized assets UAE',
+  'digital asset platform',
+  ...globalKeywords,
+];
+
+// 🔵 Issuer page — business-facing, onboarding intent
+const issuerKeywords = [
+  'issuer portal',
+  'tokenize assets',
+  'compliance onboarding',
+  'VARA compliance documentation',
+  'asset tokenization platform',
+  'asset tokenization platforms',
+  'real estate tokenization company',
+  'real estate tokenization solution',
+  'tokenization of real estate',
+  'tokenization real estate',
+  'tokenization website',
+  'tokenization tool',
+  'blockchain custody UAE',
+  'onchain workshop',
+  'regulated token offerings',
+  'token issuance UAE',
+  ...globalKeywords,
+];
+
+// 🧭 Dashboard — user experience & tracking
+const dashboardKeywords = [
+  'portfolio dashboard',
+  'asset performance',
+  'investor analytics',
+  'investment tracking',
+  'portfolio management UAE',
+  ...globalKeywords,
+];
+
+// ⚙️ Admin — operational and compliance keywords
+const adminKeywords = [
+  'admin console',
+  'platform administration',
+  'rwa assets',
+  'compliant rwa platform',
+  'blockchain regulation UAE',
+  'crypto asset compliance',
+  'blockchain capital llc',
+  ...globalKeywords,
+];
+
+// 📰 Insights — informational, SEO-education focus
+const insightsKeywords = [
+  'tokenization news',
+  'RWA insights',
+  'what is rwa',
+  'what is onchain',
+  'what is asset tokenization',
+  'ai tokenization',
+  'tokenizing real world assets',
+  'tokenizing real estate',
+  'tokenized real world assets',
+  'tokenisation company',
+  'digital twin blockchain',
+  'security tokens explained',
+  ...globalKeywords,
+];
+
+// 📡 Status — system trust signals
+const statusKeywords = [
+  'platform status',
+  'uptime',
+  'maintenance',
+  'system monitoring',
+  'service reliability',
+  ...globalKeywords,
+];
+
+// 🍪 Legal pages
+const cookieKeywords = [
+  'cookies policy',
+  'analytics cookies',
+  'cookie management UAE',
+  ...globalKeywords,
+];
+
+const privacyKeywords = [
+  'privacy policy',
+  'data protection',
+  'UAE privacy compliance',
+  'GDPR equivalent UAE',
+  ...globalKeywords,
+];
+
+const termsKeywords = [
+  'terms and conditions',
+  'user agreement',
+  'legal terms UAE',
+  ...globalKeywords,
+];
+
+// 🗺️ Final route map
 const keywordMap: Record<string, string[]> = {
-  '/': ['The Global Edge', 'asset tokenization UAE', 'VARA platform', 'VARA licensed blockchain platform', ...globalKeywords],
-  '/assets': ['tokenized assets', 'container tokens', 'real estate tokens', ...globalKeywords],
-  '/investors': ['invest in tokenized assets', 'fractional ownership', ...globalKeywords],
-  '/issuer': ['issuer portal', 'tokenize assets', 'compliance onboarding', ...globalKeywords],
-  '/dashboard': ['portfolio dashboard', 'asset performance', ...globalKeywords],
-  '/admin': ['admin console', 'platform administration', ...globalKeywords],
-  '/insights': ['tokenization news', 'RWA insights', ...globalKeywords],
-  '/status': ['platform status', 'uptime', 'maintenance', ...globalKeywords],
-  '/cookies': ['cookies policy', 'analytics cookies', ...globalKeywords],
-  '/privacy': ['privacy policy', 'data protection', ...globalKeywords],
-  '/terms': ['terms and conditions', 'user agreement', ...globalKeywords],
+  '/': homeKeywords,
+  '/assets': assetsKeywords,
+  '/investors': investorKeywords,
+  '/issuer': issuerKeywords,
+  '/dashboard': dashboardKeywords,
+  '/admin': adminKeywords,
+  '/insights': insightsKeywords,
+  '/status': statusKeywords,
+  '/cookies': cookieKeywords,
+  '/privacy': privacyKeywords,
+  '/terms': termsKeywords,
 };
 
 function isPrivatePath(path: string): boolean {
@@ -68,8 +218,8 @@ export async function generateDynamicMetadata({
       .replace(/-/g, ' ')
       .replace(/\b\w/g, (m) => m.toUpperCase());
   };
-  const computedTitle = `${humanize(path)} | ${SITE.name}`;
-  const pageTitle = title || defaultTitle || computedTitle;
+  const computedTitle = title || defaultTitle || `${humanize(path)} | ${SITE.name}`;
+  const pageTitle = computedTitle;
   const pageDescription = description || defaultDescription || SITE.description;
   const fullUrl = `${SITE.url}${path}`;
   const ogImage = image || SITE.ogImage;
@@ -78,8 +228,12 @@ export async function generateDynamicMetadata({
   return {
     title: pageTitle,
     description: pageDescription,
-    robots: resolvedRobots,
-    keywords,
+    robots:
+      resolvedRobots === 'noindex, nofollow'
+        ? { index: false, follow: false }
+        : { index: true, follow: true },
+    keywords: keywords.join(', '),
+    alternates: { canonical: fullUrl },
     openGraph: {
       title: pageTitle,
       description: pageDescription,

@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -18,11 +17,7 @@ export default function InvestmentGuidePage() {
 
   return (
     <>
-      <Head>
-        <title>User Guide – Navigating The Global Edge Platform | The Global Edge</title>
-        <meta name="description" content="Complete user guide for The Global Edge tokenization platform — learn how to invest, manage assets, and navigate our VARA-compliant ecosystem." />
-        <meta name="robots" content="index, follow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -454,5 +449,6 @@ export default function InvestmentGuidePage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

@@ -1,12 +1,11 @@
+'use client';
+
 /*
 Layout Rollback Continuation:
 - Applied hero text width expansion to secondary pages
 - Preserved all text, links, and styling
 */
 
-'use client';
-
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -44,74 +43,7 @@ export default function StatusPage() {
   };
   return (
     <>
-      <Head>
-        <title>Platform Status | Uptime & Maintenance | The Global Edge</title>
-        <meta name="description" content="Check real-time uptime and system maintenance updates for The Global Edge tokenization platform." />
-        <meta name="keywords" content="platform status, uptime, maintenance, system status, tokenization platform, real-time status, service monitoring, system updates, platform health" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/status" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Platform Status | Uptime & Maintenance | The Global Edge" />
-        <meta property="og:description" content="Check real-time uptime and system maintenance updates for The Global Edge tokenization platform." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/status" />
-        <meta property="og:image" content="https://theglobaledge.io/og-status.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Platform Status | Uptime & Maintenance | The Global Edge" />
-        <meta name="twitter:description" content="Check real-time uptime and system maintenance updates for The Global Edge tokenization platform." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-status.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Platform Status - Uptime & Maintenance",
-              "description": "Check real-time uptime and system maintenance updates for The Global Edge tokenization platform",
-              "url": "https://theglobaledge.io/status",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Platform Status",
-                "description": "System uptime and service announcements for The Global Edge platform",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Technical Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-12-20",
-                "dateModified": "2024-12-20",
-                "articleSection": "System Status"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Platform Status",
-                    "item": "https://theglobaledge.io/status"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* COMPONENT: Status Hero */}
       <section id="status-hero" className="bg-gradient-to-br from-green-500 via-blue-500 to-purple-500 h-[350px] relative overflow-hidden">

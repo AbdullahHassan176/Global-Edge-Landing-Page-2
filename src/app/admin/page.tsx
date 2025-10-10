@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -54,11 +53,7 @@ function AdminDashboard() {
 
   return (
     <>
-      <Head>
-        <title>Admin Dashboard | The Global Edge</title>
-        <meta name="description" content="Admin dashboard for managing The Global Edge platform." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Header */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -455,6 +450,7 @@ function AdminDashboard() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 

@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -153,11 +152,7 @@ export default function WaitlistManagementPage() {
   if (isLoading) {
     return (
       <>
-        <Head>
-          <title>Admin Waitlist | The Global Edge</title>
-          <meta name="description" content="Waitlist management and monitoring for The Global Edge platform." />
-          <meta name="robots" content="noindex, nofollow" />
-        </Head>
+        
         <div className="min-h-screen bg-soft-white flex items-center justify-center">
           <div className="text-center">
             <Icon name="spinner" className="animate-spin text-global-teal text-4xl mb-4" />
@@ -171,11 +166,7 @@ export default function WaitlistManagementPage() {
   return (
     <AdminAuthGuard>
       <>
-        <Head>
-          <title>Admin Waitlist | The Global Edge</title>
-          <meta name="description" content="Waitlist management and monitoring for The Global Edge platform." />
-          <meta name="robots" content="noindex, nofollow" />
-        </Head>
+        
         <div className="min-h-screen bg-soft-white">
           <NotificationSystem
             notifications={notifications}
@@ -378,6 +369,7 @@ export default function WaitlistManagementPage() {
           </div>
         )}
       </div>
+      </>
     </AdminAuthGuard>
   );
 }

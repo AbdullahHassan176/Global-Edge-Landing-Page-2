@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -18,11 +17,7 @@ export default function AssetDetailsPage() {
 
   return (
     <>
-      <Head>
-        <title>Asset Details – Tokenized Real-World Asset | The Global Edge</title>
-        <meta name="description" content="Detailed view of tokenized assets on The Global Edge — explore asset documents, compliance data, and performance." />
-        <meta name="robots" content="index, follow" />
-      </Head>
+      
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">

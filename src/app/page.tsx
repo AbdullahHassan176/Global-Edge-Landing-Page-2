@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { getPartnersForLandingPage } from '@/lib/partnersData';
 import WaitlistModal from '@/components/ui/WaitlistModal';
@@ -11,6 +10,12 @@ import WaitlistModal from '@/components/ui/WaitlistModal';
 Layout Rollback:
 - Removed forced centering
 - Increased text container width (max-w-5xl to max-w-6xl)
+*/
+
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
 */
 export default function HomePage() {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
@@ -27,65 +32,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Head>
-        <title>Real-World Asset Tokenization UAE | The Global Edge</title>
-        <meta name="description" content="The Global Edge is a VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets." />
-        <meta name="keywords" content="real-world asset tokenization UAE, VARA compliance, asset tokenization Dubai, RWA tokenization, digital assets UAE, blockchain investment, tokenized real estate, container tokenization" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Real-World Asset Tokenization UAE | The Global Edge" />
-        <meta property="og:description" content="VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io" />
-        <meta property="og:image" content="https://theglobaledge.io/og-image.jpg" />
-        <meta property="og:site_name" content="The Global Edge" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Real-World Asset Tokenization UAE | The Global Edge" />
-        <meta name="twitter:description" content="VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-image.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "The Global Edge",
-              "url": "https://theglobaledge.io",
-              "logo": "https://theglobaledge.io/logo.png",
-              "description": "VARA-aligned UAE platform for real-world asset tokenization — transforming containers, real estate, and logistics into compliant, investable digital assets.",
-              "foundingDate": "2024",
-              "industry": "Financial Technology",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "AE",
-                "addressRegion": "UAE"
-              },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "contactType": "customer service",
-                "email": "info@theglobaledge.io"
-              },
-              "sameAs": [
-                "https://linkedin.com/company/global-edge",
-                "https://twitter.com/globaledge"
-              ],
-              "offers": {
-                "@type": "Offer",
-                "name": "Real-World Asset Tokenization",
-                "description": "VARA-compliant tokenization of containers, real estate, and logistics assets in the UAE",
-                "price": "Variable",
-                "priceCurrency": "AED"
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">

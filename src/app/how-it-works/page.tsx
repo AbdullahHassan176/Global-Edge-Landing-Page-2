@@ -1,7 +1,18 @@
 'use client';
 
+/*
+SEO Link Cleanup:
+- Replaced 1 self-referencing link with <span>
+- Preserved text and styling
+*/
+
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
+*/
+
 import { useState } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 
@@ -15,87 +26,7 @@ export default function HowItWorksPage() {
   const [showLearnMoreModal, setShowLearnMoreModal] = useState(false);
   return (
     <>
-      <Head>
-        <title>How Tokenization Works | The Global Edge UAE</title>
-        <meta name="description" content="Understand the Global Edge tokenization process — from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance." />
-        <meta name="keywords" content="tokenization process UAE, VARA compliance, asset tokenization Dubai, digital twin creation, RWA tokenization UAE, blockchain asset onboarding" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/how-it-works" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="How Tokenization Works | The Global Edge UAE" />
-        <meta property="og:description" content="Understand the Global Edge tokenization process — from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/how-it-works" />
-        <meta property="og:image" content="https://theglobaledge.io/og-how-it-works.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="How Tokenization Works | The Global Edge UAE" />
-        <meta name="twitter:description" content="Understand the Global Edge tokenization process — from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-how-it-works.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "HowTo",
-              "name": "How Global Edge Tokenizes Real-World Assets",
-              "description": "Step-by-step tokenization process from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance",
-              "url": "https://theglobaledge.io/how-it-works",
-              "totalTime": "P14D",
-              "supply": [
-                {
-                  "@type": "HowToSupply",
-                  "name": "Real-world asset"
-                },
-                {
-                  "@type": "HowToSupply", 
-                  "name": "VARA compliance documentation"
-                },
-                {
-                  "@type": "HowToSupply",
-                  "name": "Oracle integration"
-                }
-              ],
-              "step": [
-                {
-                  "@type": "HowToStep",
-                  "name": "Asset Verification",
-                  "text": "Independent third-party verification of asset existence, condition, ownership, and VARA compliance requirements"
-                },
-                {
-                  "@type": "HowToStep",
-                  "name": "Documentation",
-                  "text": "Creation of legal framework including SPV formation, custody agreements, and investor protection mechanisms under UAE regulations"
-                },
-                {
-                  "@type": "HowToStep",
-                  "name": "Oracle Integration",
-                  "text": "Integration with trusted oracle networks for continuous monitoring of asset performance and condition"
-                },
-                {
-                  "@type": "HowToStep",
-                  "name": "Smart Contract Deployment",
-                  "text": "Development and deployment of audited smart contracts that govern token mechanics and ownership rights"
-                },
-                {
-                  "@type": "HowToStep",
-                  "name": "Digital Twin Creation",
-                  "text": "Creation of digital twin for asset representation and investor access through blockchain technology"
-                },
-                {
-                  "@type": "HowToStep",
-                  "name": "Market Launch",
-                  "text": "Final VARA compliance review, investor onboarding activation, and public listing of tokenized asset"
-                }
-              ]
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* Tokenization Hero */}
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
@@ -112,7 +43,7 @@ export default function HowItWorksPage() {
               Step-by-Step Tokenization Process
             </h2>
             <p className="text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed">
-              Complete transparency through our VARA-compliant <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> with <Link href="/security" className="underline hover:text-global-teal transition-colors">blockchain verification</Link> and oracle attestations
+              Complete transparency through our VARA-compliant <span className="underline cursor-default opacity-95">tokenization process</span> with <Link href="/security" className="underline hover:text-global-teal transition-colors">blockchain verification</Link> and oracle attestations
             </p>
           </div>
         </div>

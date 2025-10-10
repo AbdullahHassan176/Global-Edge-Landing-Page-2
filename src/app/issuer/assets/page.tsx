@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User } from '@/lib/userAuthService';
@@ -183,11 +182,7 @@ export default function IssuerAssetsPage() {
 
   return (
     <>
-      <Head>
-        <title>Issuer Assets Management | The Global Edge</title>
-        <meta name="description" content="View and update your issued tokenized assets." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-white shadow-sm border-b">
@@ -698,5 +693,6 @@ export default function IssuerAssetsPage() {
         </div>
       )}
     </div>
+    </>
   );
 }

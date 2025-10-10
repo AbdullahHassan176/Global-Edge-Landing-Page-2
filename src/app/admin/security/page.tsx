@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -210,11 +209,7 @@ function SecurityCenterDashboard() {
 
   return (
     <>
-      <Head>
-        <title>Admin Security | The Global Edge</title>
-        <meta name="description" content="Admin security dashboard for monitoring platform security." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Header */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -677,6 +672,7 @@ function SecurityCenterDashboard() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

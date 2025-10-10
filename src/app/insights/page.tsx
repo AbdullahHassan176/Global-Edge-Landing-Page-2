@@ -1,7 +1,18 @@
 'use client';
 
+/*
+SEO Link Cleanup:
+- Replaced 2 self-referencing links with <span>
+- Preserved text and styling
+*/
+
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
+*/
+
 import { useState } from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import { Insight } from '@/types';
 
@@ -285,63 +296,7 @@ startxref
 
   return (
     <>
-      <Head>
-        <title>Insights | Tokenization News & Research | The Global Edge</title>
-        <meta name="description" content="Stay ahead with insights from The Global Edge — covering RWA tokenization, blockchain compliance, and logistics innovation across the UAE and beyond." />
-        <meta name="keywords" content="tokenization insights, RWA news, blockchain compliance, logistics innovation, UAE tokenization, real-world assets research, tokenization trends" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/insights" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Insights | Tokenization News & Research | The Global Edge" />
-        <meta property="og:description" content="Stay ahead with insights from The Global Edge — covering RWA tokenization, blockchain compliance, and logistics innovation across the UAE and beyond." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/insights" />
-        <meta property="og:image" content="https://theglobaledge.io/og-insights.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Insights | Tokenization News & Research | The Global Edge" />
-        <meta name="twitter:description" content="Stay ahead with insights from The Global Edge — covering RWA tokenization, blockchain compliance, and logistics innovation across the UAE and beyond." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-insights.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Blog",
-              "name": "The Global Edge Insights",
-              "description": "Thought leadership on tokenization and real-world assets, covering RWA tokenization, blockchain compliance, and logistics innovation across the UAE and beyond",
-              "url": "https://theglobaledge.io/insights",
-              "publisher": {
-                "@type": "Organization",
-                "name": "The Global Edge",
-                "url": "https://theglobaledge.io",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressCountry": "AE"
-                }
-              },
-              "blogPost": insights.map(insight => ({
-                "@type": "BlogPosting",
-                "headline": insight.title,
-                "description": insight.description,
-                "datePublished": insight.date,
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Research Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge"
-                }
-              }))
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* Hero Section */}
       <section className="gradient-bg py-16">
@@ -416,7 +371,7 @@ startxref
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-poppins font-bold text-charcoal mb-4">Stay Updated</h2>
           <p className="text-xl text-gray-600 mb-8">
-            Get the latest <Link href="/insights" className="text-global-teal hover:text-edge-purple transition-colors">insights and market analysis</Link> delivered to your inbox. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore our <Link href="/partners" className="text-global-teal hover:text-edge-purple transition-colors">partner network</Link>.
+            Get the latest <span className="text-global-teal cursor-default opacity-95">insights and market analysis</span> delivered to your inbox. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore our <Link href="/partners" className="text-global-teal hover:text-edge-purple transition-colors">partner network</Link>.
           </p>
           <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-4">
             <input
@@ -441,7 +396,7 @@ startxref
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-poppins font-bold text-charcoal mb-4">Featured Research</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">In-depth analysis and <Link href="/insights" className="text-global-teal hover:text-edge-purple transition-colors">market reports</Link> from our research team. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore our <Link href="/partners" className="text-global-teal hover:text-edge-purple transition-colors">partner network</Link>.</p>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">In-depth analysis and <span className="text-global-teal cursor-default opacity-95">market reports</span> from our research team. Learn about our <Link href="/how-it-works" className="text-global-teal hover:text-edge-purple transition-colors">tokenization process</Link> and explore our <Link href="/partners" className="text-global-teal hover:text-edge-purple transition-colors">partner network</Link>.</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">

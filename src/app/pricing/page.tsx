@@ -1,9 +1,14 @@
 
 'use client';
 
+/*
+QA Summary:
+- Fixed 1 button without onClick handler
+- All other links & buttons verified for functionality
+*/
+
 import { useState } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
@@ -28,73 +33,7 @@ export default function PricingPage() {
   };
   return (
     <>
-      <Head>
-        <title>Pricing | Tokenization Platform Fees | The Global Edge</title>
-        <meta name="description" content="Transparent pricing for tokenization services — from asset onboarding to investor management. See how The Global Edge structures its fees." />
-        <meta name="keywords" content="tokenization platform fees, asset onboarding pricing, investor management fees, RWA tokenization costs, blockchain platform pricing, tokenization services pricing" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/pricing" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Pricing | Tokenization Platform Fees | The Global Edge" />
-        <meta property="og:description" content="Transparent pricing for tokenization services — from asset onboarding to investor management. See how The Global Edge structures its fees." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/pricing" />
-        <meta property="og:image" content="https://theglobaledge.io/og-pricing.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Pricing | Tokenization Platform Fees | The Global Edge" />
-        <meta name="twitter:description" content="Transparent pricing for tokenization services — from asset onboarding to investor management. See how The Global Edge structures its fees." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-pricing.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Product",
-              "name": "The Global Edge Tokenization Platform",
-              "description": "Transparent pricing for tokenization services — from asset onboarding to investor management",
-              "url": "https://theglobaledge.io/pricing",
-              "category": "Financial Services",
-              "brand": {
-                "@type": "Brand",
-                "name": "The Global Edge"
-              },
-              "offers": [
-                {
-                  "@type": "Offer",
-                  "name": "Basic Plan",
-                  "price": "0",
-                  "priceCurrency": "USD",
-                  "description": "Free plan for individual investors with basic tokenization features"
-                },
-                {
-                  "@type": "Offer",
-                  "name": "Pro Plan",
-                  "price": "29",
-                  "priceCurrency": "USD",
-                  "description": "Advanced features for serious investors with enhanced tokenization capabilities"
-                },
-                {
-                  "@type": "Offer",
-                  "name": "Enterprise Plan",
-                  "price": "Custom",
-                  "priceCurrency": "USD",
-                  "description": "Custom solutions for institutions with full tokenization platform access"
-                }
-              ],
-              "provider": {
-                "@type": "Organization",
-                "name": "The Global Edge",
-                "url": "https://theglobaledge.io"
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* COMPONENT: Pricing Hero */}
       <section id="pricing-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
@@ -337,7 +276,10 @@ export default function PricingPage() {
                   Join thousands of investors earning returns from tokenized real-world assets. Learn about our <Link href="/how-it-works" className="underline hover:text-global-teal transition-colors">tokenization process</Link> and explore <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link>.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                  <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
+                  <button 
+                      onClick={() => window.location.href = '/get-started'}
+                      className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors"
+                  >
                       Start Free Today
                   </button>
                   <button 

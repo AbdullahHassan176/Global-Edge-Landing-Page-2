@@ -1,11 +1,11 @@
+'use client';
+
 /*
 Layout Rollback Continuation:
 - Applied hero text width expansion to secondary pages
 - Preserved all text, links, and styling
 */
-'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
@@ -157,74 +157,7 @@ export default function CookiesPage() {
   
   return (
     <>
-      <Head>
-        <title>Cookies Policy | Analytics & Performance | The Global Edge</title>
-        <meta name="description" content="Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience." />
-        <meta name="keywords" content="cookies policy, analytics, performance, site performance, user experience, cookie management, browser preferences, tracking cookies, analytics cookies" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/cookies" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Cookies Policy | Analytics & Performance | The Global Edge" />
-        <meta property="og:description" content="Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/cookies" />
-        <meta property="og:image" content="https://theglobaledge.io/og-cookies.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Cookies Policy | Analytics & Performance | The Global Edge" />
-        <meta name="twitter:description" content="Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-cookies.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Cookies Policy - Analytics & Performance",
-              "description": "Details on how The Global Edge uses cookies and analytics to enhance site performance and user experience",
-              "url": "https://theglobaledge.io/cookies",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Cookies Policy",
-                "description": "Managing your browser preferences for cookies and analytics",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Privacy Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-12-20",
-                "dateModified": "2024-12-20",
-                "articleSection": "Privacy & Cookies"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Cookies Policy",
-                    "item": "https://theglobaledge.io/cookies"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       <NotificationSystem
         notifications={notifications}

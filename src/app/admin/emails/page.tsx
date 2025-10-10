@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -56,11 +55,6 @@ export default function EmailsPage() {
 
   return (
     <>
-      <Head>
-        <title>Admin Email Management | The Global Edge</title>
-        <meta name="description" content="Admin email management for monitoring and managing platform emails." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
       <div className="min-h-screen bg-soft-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
           {/* Header */}
@@ -192,5 +186,6 @@ export default function EmailsPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

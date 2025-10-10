@@ -3,7 +3,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
 
@@ -28,90 +27,7 @@ export default function FAQPage() {
   };
   return (
     <>
-      <Head>
-        <title>FAQs | Tokenization Platform Questions | The Global Edge</title>
-        <meta name="description" content="Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding." />
-        <meta name="keywords" content="FAQs, tokenization platform questions, VARA compliance, asset tokenization, investor onboarding, platform questions, tokenization FAQ, RWA questions" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/faq" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="FAQs | Tokenization Platform Questions | The Global Edge" />
-        <meta property="og:description" content="Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/faq" />
-        <meta property="og:image" content="https://theglobaledge.io/og-faq.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="FAQs | Tokenization Platform Questions | The Global Edge" />
-        <meta name="twitter:description" content="Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-faq.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "name": "Frequently Asked Questions - The Global Edge Platform",
-              "description": "Frequently asked questions about The Global Edge platform, VARA compliance, asset tokenization, and investor onboarding",
-              "url": "https://theglobaledge.io/faq",
-              "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "What is The Global Edge platform?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The Global Edge is a VARA-compliant platform that tokenizes real-world assets like shipping containers, real estate, and trade inventory, allowing investors to own fractional shares of these assets through blockchain technology."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "How does asset tokenization work?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Asset tokenization involves converting ownership rights of physical assets into digital tokens on a blockchain. Each token represents a fractional ownership stake in the underlying asset, with full VARA compliance."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "What is VARA compliance?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "VARA (Virtual Asset Regulatory Authority) compliance ensures that our platform meets UAE regulatory standards for virtual asset operations, providing investor protection and regulatory oversight."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "What is the minimum investment amount?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The minimum investment varies by asset type, but most assets can be invested in with as little as $50. Some premium assets may have higher minimums, typically ranging from $100 to $1,000."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "How are my assets protected?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Your assets are protected by multiple layers of security including cold storage, multi-signature wallets, comprehensive insurance coverage, and VARA regulatory compliance."
-                  }
-                },
-                {
-                  "@type": "Question",
-                  "name": "How do I get started as an investor?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "To get started, create an account, complete KYC verification, and fund your account. You can then browse available tokenized assets and make your first investment."
-                  }
-                }
-              ]
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* COMPONENT: FAQ Hero */}
       <section id="faq-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">

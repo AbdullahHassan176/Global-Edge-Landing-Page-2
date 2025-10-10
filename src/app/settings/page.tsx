@@ -1,7 +1,6 @@
 'use client';
 
-import Head from 'next/head';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
@@ -36,13 +35,7 @@ export default function SettingsPage() {
     alert('Preferences saved successfully!');
   };
   return (
-    <>
-      <Head>
-        <title>Account Settings | The Global Edge</title>
-        <meta name="description" content="Update your profile, notifications, and platform preferences." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
-      <div className="min-h-screen bg-soft-white">
+    <div className="min-h-screen bg-soft-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">

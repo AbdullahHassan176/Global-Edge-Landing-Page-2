@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService } from '@/lib/userAuthService';
@@ -126,11 +125,7 @@ export default function InvestorManagementPage() {
 
   return (
     <>
-      <Head>
-        <title>Manage Issuer Investors | The Global Edge</title>
-        <meta name="description" content="Monitor and engage your investor base across tokenized projects." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
       <div className="bg-white shadow-sm border-b">
@@ -490,5 +485,6 @@ export default function InvestorManagementPage() {
         </div>
       )}
     </div>
+    </>
   );
 }

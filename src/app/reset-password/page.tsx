@@ -1,7 +1,6 @@
 'use client';
 
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -63,13 +62,7 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <>
-        <Head>
-          <title>Reset Your Password | The Global Edge</title>
-          <meta name="description" content="Set a new password to access your Global Edge account." />
-          <meta name="robots" content="noindex, nofollow" />
-        </Head>
-        <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full space-y-8">
             <div className="text-center">
               <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
@@ -100,13 +93,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <>
-      <Head>
-        <title>Reset Your Password | The Global Edge</title>
-        <meta name="description" content="Set a new password to access your Global Edge account." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
-      <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
             <div className="mx-auto h-12 w-12 bg-global-teal rounded-full flex items-center justify-center mb-4">

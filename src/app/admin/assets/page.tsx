@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
@@ -258,11 +257,6 @@ export default function AdminAssetsPage() {
   return (
     <AdminAuthGuard requiredPermissions={['manage_assets', 'approve_assets']}>
       <>
-        <Head>
-          <title>Admin Asset Management | The Global Edge</title>
-          <meta name="description" content="Admin asset management dashboard for reviewing and approving tokenized assets." />
-          <meta name="robots" content="noindex, nofollow" />
-        </Head>
         <div className="min-h-screen bg-soft-white">
           {/* Notification System */}
           <NotificationSystem
@@ -675,6 +669,7 @@ export default function AdminAssetsPage() {
           </div>
         )}
       </div>
+      </>
     </AdminAuthGuard>
   );
 }

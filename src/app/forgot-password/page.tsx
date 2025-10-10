@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -73,11 +72,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <>
-      <Head>
-        <title>Forgot Password | The Global Edge</title>
-        <meta name="description" content="Reset your Global Edge account password securely." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -154,5 +149,6 @@ export default function ForgotPasswordPage() {
         </form>
       </div>
     </div>
+    </>
   );
 }

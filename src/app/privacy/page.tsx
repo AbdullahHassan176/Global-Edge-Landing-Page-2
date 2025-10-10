@@ -4,7 +4,6 @@ Layout Rollback Continuation:
 - Preserved all text, links, and styling
 */
 
-import Head from 'next/head';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
 
@@ -20,74 +19,7 @@ export default function PrivacyPage() {
   
   return (
     <>
-      <Head>
-        <title>Privacy Policy | Data Protection | The Global Edge</title>
-        <meta name="description" content="Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations." />
-        <meta name="keywords" content="privacy policy, data protection, personal data, UAE data protection, data collection, data storage, data usage, privacy rights, data security" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/privacy" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Privacy Policy | Data Protection | The Global Edge" />
-        <meta property="og:description" content="Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/privacy" />
-        <meta property="og:image" content="https://theglobaledge.io/og-privacy.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Privacy Policy | Data Protection | The Global Edge" />
-        <meta name="twitter:description" content="Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-privacy.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Privacy Policy - Data Protection",
-              "description": "Learn how The Global Edge collects, stores, and uses your personal data in accordance with UAE data protection regulations",
-              "url": "https://theglobaledge.io/privacy",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Privacy Policy",
-                "description": "Protecting your personal information in accordance with UAE data protection regulations",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Privacy Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-12-20",
-                "dateModified": "2024-12-20",
-                "articleSection": "Privacy & Data Protection"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Privacy Policy",
-                    "item": "https://theglobaledge.io/privacy"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       {/* COMPONENT: Privacy Hero */}
       <section id="privacy-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>

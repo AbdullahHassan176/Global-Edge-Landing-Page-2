@@ -1,15 +1,11 @@
-import Head from 'next/head';
+'use client';
+
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
 export default function ActivityPage() {
   return (
     <>
-      <Head>
-        <title>Activity & Transaction History | The Global Edge</title>
-        <meta name="description" content="View your transaction activity and tokenized asset history on The Global Edge platform." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
       <div className="min-h-screen bg-soft-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -91,5 +87,6 @@ export default function ActivityPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

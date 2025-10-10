@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -155,11 +154,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Head>
-        <title>Your Profile – The Global Edge</title>
-        <meta name="description" content="Manage your account details, KYC documents, and preferences." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         <NotificationSystem
           notifications={notifications}
@@ -434,5 +429,6 @@ export default function ProfilePage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

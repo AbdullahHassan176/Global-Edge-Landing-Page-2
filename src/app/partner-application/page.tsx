@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -104,11 +103,7 @@ export default function PartnerApplicationPage() {
 
   return (
     <>
-      <Head>
-        <title>Apply to Become a Partner | The Global Edge</title>
-        <meta name="description" content="Join The Global Edge tokenization ecosystem — apply to become an official VARA-aligned partner." />
-        <meta name="robots" content="index, follow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -348,5 +343,6 @@ export default function PartnerApplicationPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

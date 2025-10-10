@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
@@ -211,11 +210,7 @@ export default function IssuerDashboard() {
 
   return (
     <>
-      <Head>
-        <title>Issuer Dashboard | The Global Edge</title>
-        <meta name="description" content="Manage your tokenized asset listings and performance reports." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Notification System */}
         <NotificationSystem

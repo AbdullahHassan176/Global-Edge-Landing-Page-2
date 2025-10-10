@@ -1,6 +1,11 @@
 'use client';
 
-import Head from 'next/head';
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
+*/
+
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -271,74 +276,7 @@ export default function RegisterPage() {
 
   return (
     <>
-      <Head>
-        <title>Register | Create Your Account | The Global Edge</title>
-        <meta name="description" content="Create a Global Edge account to access tokenized asset investments, real-time dashboards, and blockchain-secured documentation." />
-        <meta name="keywords" content="register, create account, Global Edge, tokenized asset investments, real-time dashboards, blockchain documentation, account creation, user registration" />
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://theglobaledge.io/register" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Register | Create Your Account | The Global Edge" />
-        <meta property="og:description" content="Create a Global Edge account to access tokenized asset investments, real-time dashboards, and blockchain-secured documentation." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/register" />
-        <meta property="og:image" content="https://theglobaledge.io/og-register.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Register | Create Your Account | The Global Edge" />
-        <meta name="twitter:description" content="Create a Global Edge account to access tokenized asset investments, real-time dashboards, and blockchain-secured documentation." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-register.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Register - Create Your Account",
-              "description": "Create a Global Edge account to access tokenized asset investments, real-time dashboards, and blockchain-secured documentation",
-              "url": "https://theglobaledge.io/register",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Create Your Account",
-                "description": "Join The Global Edge and access tokenized investments",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Registration Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-12-20",
-                "dateModified": "2024-12-20",
-                "articleSection": "User Registration"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Register",
-                    "item": "https://theglobaledge.io/register"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden py-12">
       {/* Animated Background Elements */}

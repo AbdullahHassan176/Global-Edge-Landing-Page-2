@@ -3,6 +3,7 @@ import { Inter, Poppins } from 'next/font/google';
 import '@/styles/globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -22,28 +23,15 @@ export const viewport = {
   initialScale: 1,
 };
 
-export const metadata = {
-  title: 'The Global Edge',
-  description:
-    'Empowering global trade through tokenization. Manage, track, and invest in logistics assets securely and transparently.',
-  robots: 'index, follow',
-  openGraph: {
+export async function generateMetadata() {
+  return generateDynamicMetadata({
+    path: '/',
     title: 'The Global Edge',
-    description:
-      'Tokenizing logistics and real-world assets to unlock global opportunities.',
-    url: 'https://theglobaledge.io',
-    siteName: 'The Global Edge',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'The Global Edge' }],
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'The Global Edge',
-    description:
-      'Tokenizing logistics and real-world assets to unlock global opportunities.',
-    images: ['/og-image.jpg'],
-  },
-} as const;
+    description: 'Empowering global trade through tokenization. Manage, track, and invest in logistics assets securely and transparently.',
+    defaultTitle: 'The Global Edge',
+    defaultDescription: 'Empowering global trade through tokenization. Manage, track, and invest in logistics assets securely and transparently.',
+  });
+}
 
 export default function RootLayout({
   children,

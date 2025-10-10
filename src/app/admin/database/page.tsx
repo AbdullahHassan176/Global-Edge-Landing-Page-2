@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 
@@ -103,11 +102,6 @@ export default function DatabasePage() {
 
   return (
     <>
-      <Head>
-        <title>Admin Database Management | The Global Edge</title>
-        <meta name="description" content="Admin database management for monitoring Azure Cosmos DB." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -281,5 +275,6 @@ export default function DatabasePage() {
         )}
       </div>
     </div>
+    </>
   );
 }

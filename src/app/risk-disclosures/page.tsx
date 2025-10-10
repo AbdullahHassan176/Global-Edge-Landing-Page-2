@@ -1,5 +1,4 @@
 
-import Head from 'next/head';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { configService } from '@/lib/configService';
@@ -10,74 +9,7 @@ export default function RiskDisclosuresPage() {
   
   return (
     <>
-      <Head>
-        <title>Risk Disclosures | Investment Risk Awareness | The Global Edge</title>
-        <meta name="description" content="Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education." />
-        <meta name="keywords" content="risk disclosures, investment risk awareness, tokenized asset risks, investment transparency, investor education, risk management, investment warnings" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/risk-disclosures" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Risk Disclosures | Investment Risk Awareness | The Global Edge" />
-        <meta property="og:description" content="Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/risk-disclosures" />
-        <meta property="og:image" content="https://theglobaledge.io/og-risk-disclosures.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Risk Disclosures | Investment Risk Awareness | The Global Edge" />
-        <meta name="twitter:description" content="Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-risk-disclosures.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Risk Disclosures - Investment Risk Awareness",
-              "description": "Understand the risks associated with tokenized asset investments. The Global Edge promotes transparency and investor education.",
-              "url": "https://theglobaledge.io/risk-disclosures",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Investment Risk Disclosure",
-                "description": "Comprehensive risk disclosures for tokenized asset investments",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Risk Management Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-01-01",
-                "dateModified": "2024-01-01",
-                "articleSection": "Risk Management"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Risk Disclosures",
-                    "item": "https://theglobaledge.io/risk-disclosures"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       {/* COMPONENT: Risk Disclosures Hero */}
       <section id="risk-disclosures-hero" className="bg-gradient-to-br from-red-600 via-orange-500 to-yellow-500 h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-30"></div>

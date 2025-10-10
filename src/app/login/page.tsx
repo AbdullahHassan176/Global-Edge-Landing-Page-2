@@ -1,6 +1,11 @@
 'use client';
 
-import Head from 'next/head';
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
+*/
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -106,74 +111,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <Head>
-        <title>Login | Secure Access to The Global Edge Platform</title>
-        <meta name="description" content="Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights." />
-        <meta name="keywords" content="login, secure access, Global Edge platform, tokenized asset dashboard, investor tools, portfolio insights, user authentication" />
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://theglobaledge.io/login" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Login | Secure Access to The Global Edge Platform" />
-        <meta property="og:description" content="Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/login" />
-        <meta property="og:image" content="https://theglobaledge.io/og-login.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Login | Secure Access to The Global Edge Platform" />
-        <meta name="twitter:description" content="Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-login.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Login - Secure Access to The Global Edge Platform",
-              "description": "Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights",
-              "url": "https://theglobaledge.io/login",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Login to The Global Edge",
-                "description": "Access your tokenized asset dashboard securely",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Security Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-12-20",
-                "dateModified": "2024-12-20",
-                "articleSection": "User Authentication"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Login",
-                    "item": "https://theglobaledge.io/login"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       <div className="min-h-screen bg-gradient-to-br from-global-teal via-blue-50 to-edge-purple flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Pattern */}

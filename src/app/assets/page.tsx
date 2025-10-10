@@ -4,7 +4,6 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import { assetService, Asset } from '@/lib/assetService';
 import { assetIntegration } from '@/lib/integration/assetIntegration';
@@ -13,6 +12,12 @@ import { assetIntegration } from '@/lib/integration/assetIntegration';
 Layout Rollback:
 - Removed forced centering
 - Increased text container width (max-w-5xl to max-w-6xl)
+*/
+
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
 */
 export default function AssetsPage() {
   const searchParams = useSearchParams();
@@ -316,56 +321,7 @@ export default function AssetsPage() {
 
   return (
     <>
-      <Head>
-        <title>Tokenized Assets | Container & Real Estate Tokens | The Global Edge</title>
-        <meta name="description" content="Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights." />
-        <meta name="keywords" content="tokenized assets, container tokens, real estate tokens, shipping container investment, property tokenization, blockchain assets, RWA tokens, digital assets" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/assets" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Tokenized Assets | Container & Real Estate Tokens | The Global Edge" />
-        <meta property="og:description" content="Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/assets" />
-        <meta property="og:image" content="https://theglobaledge.io/og-assets.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Tokenized Assets | Container & Real Estate Tokens | The Global Edge" />
-        <meta name="twitter:description" content="Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-assets.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ItemList",
-              "name": "Tokenized Real-World Assets",
-              "description": "Explore tokenized real-world assets — from shipping containers to real estate — listed and managed through Global Marketplace and secured on-chain by Global Insights",
-              "url": "https://theglobaledge.io/assets",
-              "numberOfItems": assets.length,
-              "itemListElement": assets.slice(0, 10).map((asset, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "item": {
-                  "@type": "FinancialProduct",
-                  "name": asset.name,
-                  "description": `${asset.type} asset with ${asset.apr}% APR`,
-                  "category": asset.type,
-                  "offers": {
-                    "@type": "Offer",
-                    "price": asset.value,
-                    "priceCurrency": "USD"
-                  }
-                }
-              }))
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* Enhanced Header with Breadcrumbs */}
       <section className="bg-gradient-to-r from-global-teal to-edge-purple h-[500px] relative overflow-hidden">

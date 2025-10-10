@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User, KycDocument } from '@/lib/userAuthService';
@@ -142,11 +141,7 @@ export default function KYCPage() {
 
   return (
     <>
-      <Head>
-        <title>KYC Verification | The Global Edge</title>
-        <meta name="description" content="Submit or update your KYC documents to comply with VARA standards." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-white shadow-sm border-b">
@@ -331,5 +326,6 @@ export default function KYCPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { notificationService } from '@/lib/notificationService';
@@ -158,11 +157,7 @@ function NotificationsDashboard() {
 
   return (
     <>
-      <Head>
-        <title>Admin Notifications | The Global Edge</title>
-        <meta name="description" content="Admin notifications dashboard for monitoring platform activity." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-soft-white">
         {/* Header */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
@@ -607,104 +602,7 @@ function NotificationsDashboard() {
                       newWindow.document.write(`
                         <!DOCTYPE html>
                         <html lang="en">
-                          <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <title>${selectedEmail.subject}</title>
-                            <style>
-                              * { margin: 0; padding: 0; box-sizing: border-box; }
-                              body { 
-                                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-                                line-height: 1.6; 
-                                color: #333; 
-                                background: #f8fafc;
-                                padding: 20px;
-                              }
-                              .email-container { 
-                                max-width: 600px; 
-                                margin: 0 auto; 
-                                background: white;
-                                border-radius: 12px;
-                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                                overflow: hidden;
-                              }
-                              .email-header {
-                                background: linear-gradient(135deg, #0d9488, #7c3aed);
-                                color: white;
-                                padding: 30px;
-                                text-align: center;
-                              }
-                              .email-header h1 {
-                                font-size: 24px;
-                                font-weight: 600;
-                                margin-bottom: 10px;
-                              }
-                              .email-content { 
-                                padding: 30px; 
-                              }
-                              .email-content h2 {
-                                color: #1f2937;
-                                margin-bottom: 15px;
-                                font-size: 20px;
-                              }
-                              .email-content h3 {
-                                color: #374151;
-                                margin: 20px 0 10px 0;
-                                font-size: 16px;
-                              }
-                              .email-content p {
-                                margin-bottom: 15px;
-                                color: #4b5563;
-                              }
-                              .email-content ul, .email-content ol {
-                                margin: 15px 0;
-                                padding-left: 20px;
-                              }
-                              .email-content li {
-                                margin-bottom: 8px;
-                                color: #4b5563;
-                              }
-                              .email-content strong {
-                                color: #1f2937;
-                                font-weight: 600;
-                              }
-                              .button { 
-                                display: inline-block; 
-                                background: #0d9488; 
-                                color: white; 
-                                padding: 12px 24px; 
-                                text-decoration: none; 
-                                border-radius: 8px; 
-                                margin: 20px 0;
-                                font-weight: 500;
-                                transition: background-color 0.2s;
-                              }
-                              .button:hover { 
-                                background: #0f766e; 
-                              }
-                              .email-footer { 
-                                background: #f9fafb; 
-                                padding: 20px 30px; 
-                                text-align: center; 
-                                font-size: 14px; 
-                                color: #6b7280;
-                                border-top: 1px solid #e5e7eb;
-                              }
-                              .email-meta {
-                                background: #f3f4f6;
-                                padding: 15px 30px;
-                                border-bottom: 1px solid #e5e7eb;
-                                font-size: 12px;
-                                color: #6b7280;
-                              }
-                              .email-meta div {
-                                margin-bottom: 5px;
-                              }
-                              .email-meta strong {
-                                color: #374151;
-                              }
-                            </style>
-                          </head>
+                          
                           <body>
                             <div class="email-container">
                               <div class="email-meta">
@@ -738,6 +636,7 @@ function NotificationsDashboard() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

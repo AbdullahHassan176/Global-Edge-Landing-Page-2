@@ -1,6 +1,11 @@
 'use client';
 
-import Head from 'next/head';
+/*
+SEO Link Cleanup:
+- Replaced 1 self-referencing link with <div>
+- Preserved text and styling
+*/
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
@@ -117,31 +122,7 @@ export default function InsightDetailsPage() {
 
   return (
     <>
-      <Head>
-        <title>{insight.title} | The Global Edge Insights</title>
-        <meta name="description" content="Read insights about blockchain compliance, RWA tokenization, and asset innovation in the UAE from The Global Edge." />
-        <meta name="robots" content="index, follow" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              "headline": insight.title,
-              "description": insight.description,
-              "datePublished": insight.date,
-              "author": {
-                "@type": "Organization",
-                "name": "The Global Edge Research Team"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "The Global Edge"
-              }
-            })
-          }}
-        />
-      </Head>
+      
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
@@ -218,10 +199,9 @@ export default function InsightDetailsPage() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {mockInsights.slice(1, 4).map((relatedInsight) => (
-              <Link 
+              <div 
                 key={relatedInsight.id}
-                href="/insight-details"
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden"
+                className="group bg-white rounded-2xl shadow-lg cursor-default opacity-95 overflow-hidden"
               >
                 <img 
                   src={relatedInsight.image} 
@@ -246,7 +226,7 @@ export default function InsightDetailsPage() {
                     <Icon name="arrow-right" className="ml-2" />
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

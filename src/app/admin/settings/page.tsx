@@ -1,7 +1,6 @@
 'use client';
 
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import IntegrationConfigModal from '@/components/admin/IntegrationConfigModal';
@@ -390,15 +389,9 @@ function SettingsDashboard() {
 
   return (
     <AdminAuthGuard>
-      <>
-        <Head>
-          <title>Admin Settings | The Global Edge</title>
-          <meta name="description" content="System settings and configuration management for The Global Edge platform." />
-          <meta name="robots" content="noindex, nofollow" />
-        </Head>
-        <div className="min-h-screen bg-soft-white">
-        {/* Notification System */}
-        <NotificationSystem
+      <div className="min-h-screen bg-soft-white">
+          {/* Notification System */}
+          <NotificationSystem
           notifications={notifications}
           onRemove={removeNotification}
         />
@@ -850,6 +843,7 @@ function SettingsDashboard() {
         </div>
       </section>
     </div>
+    </AdminAuthGuard>
   );
 }
 

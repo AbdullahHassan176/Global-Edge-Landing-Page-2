@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Head from 'next/head';
 import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
 import Link from 'next/link';
@@ -62,71 +61,7 @@ const partnershipBenefits = [
 export default function PartnersPage() {
   return (
     <>
-      <Head>
-        <title>Our Partners | Institutional Alliances | The Global Edge</title>
-        <meta name="description" content="Discover our ecosystem partners — logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE." />
-        <meta name="keywords" content="partners UAE, institutional alliances, logistics partners, asset managers, technology providers, tokenization infrastructure, blockchain partners, RWA partners" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/partners" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Our Partners | Institutional Alliances | The Global Edge" />
-        <meta property="og:description" content="Discover our ecosystem partners — logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/partners" />
-        <meta property="og:image" content="https://theglobaledge.io/og-partners.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Our Partners | Institutional Alliances | The Global Edge" />
-        <meta name="twitter:description" content="Discover our ecosystem partners — logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-partners.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "The Global Edge Partners",
-              "description": "Ecosystem partners including logistics operators, asset managers, and technology providers enabling secure tokenization infrastructure in the UAE",
-              "url": "https://theglobaledge.io/partners",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "AE"
-              },
-              "hasPart": [
-                {
-                  "@type": "Organization",
-                  "name": "Logistics Partners",
-                  "description": "Leading shipping and logistics companies enabling asset tokenization"
-                },
-                {
-                  "@type": "Organization", 
-                  "name": "Financial Partners",
-                  "description": "Banking and financial service providers supporting tokenized assets"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Technology Partners", 
-                  "description": "Blockchain and oracle infrastructure providers"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Legal & Compliance Partners",
-                  "description": "Legal and regulatory compliance partners ensuring VARA compliance"
-                }
-              ],
-              "memberOf": {
-                "@type": "Organization",
-                "name": "The Global Edge",
-                "url": "https://theglobaledge.io"
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">

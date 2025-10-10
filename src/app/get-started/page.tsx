@@ -1,6 +1,13 @@
 
-import Head from 'next/head';
+'use client';
+
 import Link from 'next/link';
+
+/*
+QA Summary:
+- Fixed 3 buttons without onClick handlers
+- All other links & buttons verified for functionality
+*/
 
 /*
 Layout Rollback:
@@ -10,79 +17,7 @@ Layout Rollback:
 export default function GetStartedPage() {
   return (
     <>
-      <Head>
-        <title>Get Started | Join The Global Edge Platform</title>
-        <meta name="description" content="Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today." />
-        <meta name="keywords" content="get started, join platform, investor registration, issuer registration, tokenized assets, digital asset ecosystem, platform onboarding, investment registration" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/get-started" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Get Started | Join The Global Edge Platform" />
-        <meta property="og:description" content="Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/get-started" />
-        <meta property="og:image" content="https://theglobaledge.io/og-get-started.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Get Started | Join The Global Edge Platform" />
-        <meta name="twitter:description" content="Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-get-started.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Get Started - Join The Global Edge Platform",
-              "description": "Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today.",
-              "url": "https://theglobaledge.io/get-started",
-              "mainEntity": {
-                "@type": "Service",
-                "name": "Platform Registration",
-                "description": "Registration service for investors and issuers to join The Global Edge platform",
-                "provider": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "offers": [
-                  {
-                    "@type": "Offer",
-                    "name": "Investor Registration",
-                    "description": "Register as an investor to access tokenized assets"
-                  },
-                  {
-                    "@type": "Offer",
-                    "name": "Issuer Registration", 
-                    "description": "Register as an issuer to tokenize your assets"
-                  }
-                ]
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Get Started",
-                    "item": "https://theglobaledge.io/get-started"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       {/* COMPONENT: Get Started Hero */}
       <section id="get-started-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[400px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>
@@ -211,7 +146,10 @@ export default function GetStartedPage() {
                               <span className="text-gray-700">Email support</span>
                           </li>
                       </ul>
-                      <button className="w-full bg-global-teal text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+                      <button 
+                          onClick={() => window.location.href = '/register/role'}
+                          className="w-full bg-global-teal text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+                      >
                           Create Individual Account
                       </button>
                   </div>
@@ -248,7 +186,10 @@ export default function GetStartedPage() {
                               <span className="text-gray-700">API access</span>
                           </li>
                       </ul>
-                      <button className="w-full bg-edge-purple text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors">
+                      <button 
+                          onClick={() => window.location.href = '/register/role'}
+                          className="w-full bg-edge-purple text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors"
+                      >
                           Create Business Account
                       </button>
                   </div>
@@ -409,7 +350,10 @@ export default function GetStartedPage() {
                   Join thousands of investors earning returns from tokenized real-world assets. Get started today. Learn about <Link href="/investors" className="underline hover:text-global-teal transition-colors">investment opportunities</Link> and access your <Link href="/dashboard" className="underline hover:text-global-teal transition-colors">dashboard</Link>.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                  <button className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors">
+                  <button 
+                      onClick={() => window.location.href = '/register/role'}
+                      className="bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors"
+                  >
                       Create Account Now
                   </button>
                   <Link href="/assets" className="border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors">

@@ -4,7 +4,6 @@ Layout Rollback Continuation:
 - Preserved all text, links, and styling
 */
 
-import Head from 'next/head';
 import Link from 'next/link';
 import { configService } from '@/lib/configService';
 
@@ -20,74 +19,7 @@ export default function TermsPage() {
   
   return (
     <>
-      <Head>
-        <title>Terms & Conditions | The Global Edge UAE</title>
-        <meta name="description" content="Review the terms governing your use of The Global Edge platform and tokenization services." />
-        <meta name="keywords" content="terms and conditions, Global Edge UAE, platform terms, tokenization services, user agreement, legal terms, platform governance, service terms" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/terms" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Terms & Conditions | The Global Edge UAE" />
-        <meta property="og:description" content="Review the terms governing your use of The Global Edge platform and tokenization services." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/terms" />
-        <meta property="og:image" content="https://theglobaledge.io/og-terms.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Terms & Conditions | The Global Edge UAE" />
-        <meta name="twitter:description" content="Review the terms governing your use of The Global Edge platform and tokenization services." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-terms.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "Terms & Conditions - The Global Edge UAE",
-              "description": "Review the terms governing your use of The Global Edge platform and tokenization services",
-              "url": "https://theglobaledge.io/terms",
-              "mainEntity": {
-                "@type": "Article",
-                "headline": "Terms & Conditions",
-                "description": "Your agreement with The Global Edge platform and tokenization services",
-                "author": {
-                  "@type": "Organization",
-                  "name": "The Global Edge Legal Team"
-                },
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "The Global Edge",
-                  "url": "https://theglobaledge.io"
-                },
-                "datePublished": "2024-12-20",
-                "dateModified": "2024-12-20",
-                "articleSection": "Legal Terms"
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://theglobaledge.io"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Terms & Conditions",
-                    "item": "https://theglobaledge.io/terms"
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       {/* COMPONENT: Terms Hero */}
       <section id="terms-hero" className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[300px] relative overflow-hidden">
           <div className="absolute inset-0 bg-black bg-opacity-20"></div>

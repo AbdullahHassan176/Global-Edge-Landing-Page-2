@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/Icon';
 import { userAuthService, User, WhitelabelBranding } from '@/lib/userAuthService';
@@ -155,11 +154,7 @@ ${branding.customCss}
 
   return (
     <>
-      <Head>
-        <title>Issuer Branding | The Global Edge</title>
-        <meta name="description" content="Customize your brand presence within The Global Edge ecosystem." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <div className="bg-white shadow-sm border-b">
@@ -468,5 +463,6 @@ ${branding.customCss}
         </div>
       </div>
     </div>
+    </>
   );
 }

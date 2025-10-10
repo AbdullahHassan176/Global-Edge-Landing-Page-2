@@ -1,16 +1,12 @@
-import Head from 'next/head';
+'use client';
+
+import React from 'react';
 import Icon from '@/components/ui/Icon';
 import Link from 'next/link';
 
 export default function WithdrawPage() {
   return (
-    <>
-      <Head>
-        <title>Withdraw Funds | The Global Edge</title>
-        <meta name="description" content="Withdraw returns or liquidate tokenized asset holdings securely." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
-      <div className="min-h-screen bg-soft-white">
+    <div className="min-h-screen bg-soft-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-global-teal to-edge-purple text-white py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">

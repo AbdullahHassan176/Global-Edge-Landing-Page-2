@@ -1,7 +1,6 @@
 'use client';
 
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import ValidationPanel from '@/components/asset/ValidationPanel';
@@ -242,13 +241,7 @@ export default function CreateAssetPage() {
   }
 
   return (
-    <>
-      <Head>
-        <title>Create New Tokenized Asset | The Global Edge</title>
-        <meta name="description" content="Onboard a new real-world asset for tokenization." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
-      <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
         {/* Notification System */}
         <NotificationSystem
           notifications={notifications}

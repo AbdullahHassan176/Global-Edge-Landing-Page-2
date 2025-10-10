@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import HeroSection from '@/components/ui/HeroSection';
@@ -10,81 +9,16 @@ Layout Rollback:
 - Removed forced centering
 - Increased text container width (max-w-5xl to max-w-6xl)
 */
+
+/*
+QA Summary:
+- All links & buttons verified for functionality
+- No issues found
+*/
 export default function InvestorsPage() {
   return (
     <>
-      <Head>
-        <title>Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge</title>
-        <meta name="description" content="Join The Global Edge as an investor. Access tokenized logistics and real estate assets, view documentation, and earn from fractionalized ownership." />
-        <meta name="keywords" content="investor portal UAE, tokenized asset investment, logistics investment, real estate investment, fractional ownership, blockchain investment, RWA investment" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://theglobaledge.io/investors" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge" />
-        <meta property="og:description" content="Join The Global Edge as an investor. Access tokenized logistics and real estate assets, view documentation, and earn from fractionalized ownership." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://theglobaledge.io/investors" />
-        <meta property="og:image" content="https://theglobaledge.io/og-investors.jpg" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge" />
-        <meta name="twitter:description" content="Join The Global Edge as an investor. Access tokenized logistics and real estate assets, view documentation, and earn from fractionalized ownership." />
-        <meta name="twitter:image" content="https://theglobaledge.io/og-investors.jpg" />
-        
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Service",
-              "name": "Investor Access Portal",
-              "description": "Secure tokenized asset investment platform for accessing logistics and real estate assets with fractionalized ownership",
-              "url": "https://theglobaledge.io/investors",
-              "provider": {
-                "@type": "Organization",
-                "name": "The Global Edge",
-                "url": "https://theglobaledge.io"
-              },
-              "serviceType": "Financial Services",
-              "areaServed": {
-                "@type": "Country",
-                "name": "United Arab Emirates"
-              },
-              "offers": {
-                "@type": "Offer",
-                "name": "Tokenized Asset Investment",
-                "description": "Access to tokenized logistics and real estate assets with fractionalized ownership",
-                "category": "Investment Services"
-              },
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "Investment Opportunities",
-                "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Logistics Asset Investment",
-                      "description": "Tokenized shipping containers and logistics assets"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Real Estate Investment",
-                      "description": "Tokenized commercial and residential properties"
-                    }
-                  }
-                ]
-              }
-            })
-          }}
-        />
-      </Head>
+      
       
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden">

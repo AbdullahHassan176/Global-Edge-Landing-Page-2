@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
@@ -102,11 +101,7 @@ export default function AdminRegisterPage() {
 
   return (
     <>
-      <Head>
-        <title>Admin Register | The Global Edge</title>
-        <meta name="description" content="Admin registration for The Global Edge platform." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+      
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
         {/* Background Pattern */}
         <div 
@@ -308,5 +303,6 @@ export default function AdminRegisterPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
