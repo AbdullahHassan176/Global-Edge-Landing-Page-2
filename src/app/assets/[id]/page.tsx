@@ -6,6 +6,6 @@ export default async function AssetDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  
+
   return <AssetDetailsClient id={id} />;
 }

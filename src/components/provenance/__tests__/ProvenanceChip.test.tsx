@@ -18,30 +18,56 @@ describe.skip('ProvenanceChip', () => {
   });
 
   it('renders with asset key', () => {
-    render(<ProvenanceChip assetKey="test-asset-123" onOpenDrawer={mockOnOpenDrawer} />);
+    render(
+      <ProvenanceChip
+        assetKey='test-asset-123'
+        onOpenDrawer={mockOnOpenDrawer}
+      />
+    );
     expect(screen.getByText('Provenance')).toBeInTheDocument();
-    expect(screen.getByLabelText('View provenance for asset test-asset-123')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('View provenance for asset test-asset-123')
+    ).toBeInTheDocument();
   });
 
   it('calls onOpenDrawer when clicked', () => {
-    render(<ProvenanceChip assetKey="test-asset-123" onOpenDrawer={mockOnOpenDrawer} />);
-    
+    render(
+      <ProvenanceChip
+        assetKey='test-asset-123'
+        onOpenDrawer={mockOnOpenDrawer}
+      />
+    );
+
     const button = screen.getByText('Provenance');
     fireEvent.click(button);
-    
+
     expect(mockOnOpenDrawer).toHaveBeenCalledWith('test-asset-123');
   });
 
   it('renders with correct styling', () => {
-    render(<ProvenanceChip assetKey="test-asset-123" onOpenDrawer={mockOnOpenDrawer} />);
-    
+    render(
+      <ProvenanceChip
+        assetKey='test-asset-123'
+        onOpenDrawer={mockOnOpenDrawer}
+      />
+    );
+
     const button = screen.getByText('Provenance');
-    expect(button).toHaveClass('bg-blue-50', 'hover:bg-blue-100', 'text-blue-700');
+    expect(button).toHaveClass(
+      'bg-blue-50',
+      'hover:bg-blue-100',
+      'text-blue-700'
+    );
   });
 
   it('renders icon', () => {
-    render(<ProvenanceChip assetKey="test-asset-123" onOpenDrawer={mockOnOpenDrawer} />);
-    
+    render(
+      <ProvenanceChip
+        assetKey='test-asset-123'
+        onOpenDrawer={mockOnOpenDrawer}
+      />
+    );
+
     expect(screen.getByTestId('icon-link')).toBeInTheDocument();
   });
 });

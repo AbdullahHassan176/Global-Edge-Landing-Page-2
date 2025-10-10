@@ -48,7 +48,8 @@ export default function AssetDetailsClient({ id }: { id: string }) {
           route: 'Global Route',
           status: 'active',
           cargo: 'Dubai Port',
-          description: 'High-quality container asset with excellent performance metrics.',
+          description:
+            'High-quality container asset with excellent performance metrics.',
           image: '/api/placeholder/400/300',
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
@@ -158,8 +159,13 @@ export default function AssetDetailsClient({ id }: { id: string }) {
     return (
       <div className='min-h-screen bg-soft-white flex items-center justify-center'>
         <div className='text-center'>
-          <Icon name='AlertCircle' className='h-12 w-12 text-red-500 mx-auto mb-4' />
-          <h2 className='text-xl font-semibold text-gray-900 mb-2'>Error Loading Asset</h2>
+          <Icon
+            name='AlertCircle'
+            className='h-12 w-12 text-red-500 mx-auto mb-4'
+          />
+          <h2 className='text-xl font-semibold text-gray-900 mb-2'>
+            Error Loading Asset
+          </h2>
           <p className='text-gray-600 mb-4'>{error}</p>
           <button
             onClick={loadAssetData}
@@ -176,9 +182,16 @@ export default function AssetDetailsClient({ id }: { id: string }) {
     return (
       <div className='min-h-screen bg-soft-white flex items-center justify-center'>
         <div className='text-center'>
-          <Icon name='Package' className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-          <h2 className='text-xl font-semibold text-gray-900 mb-2'>Asset Not Found</h2>
-          <p className='text-gray-600'>The requested asset could not be found.</p>
+          <Icon
+            name='Package'
+            className='h-12 w-12 text-gray-400 mx-auto mb-4'
+          />
+          <h2 className='text-xl font-semibold text-gray-900 mb-2'>
+            Asset Not Found
+          </h2>
+          <p className='text-gray-600'>
+            The requested asset could not be found.
+          </p>
         </div>
       </div>
     );
@@ -200,7 +213,9 @@ export default function AssetDetailsClient({ id }: { id: string }) {
               </button>
               <div className='h-6 w-px bg-gray-300'></div>
               <div>
-                <h1 className='text-2xl font-bold text-gray-900'>{asset.name}</h1>
+                <h1 className='text-2xl font-bold text-gray-900'>
+                  {asset.name}
+                </h1>
                 <p className='text-sm text-gray-600'>Asset ID: {asset.id}</p>
               </div>
             </div>
@@ -213,7 +228,10 @@ export default function AssetDetailsClient({ id }: { id: string }) {
                     : 'bg-white text-gray-700 border-gray-300 hover:border-global-teal'
                 }`}
               >
-                <Icon name={isInWatchlist ? 'Heart' : 'HeartOutline'} className='h-4 w-4 mr-2' />
+                <Icon
+                  name={isInWatchlist ? 'Heart' : 'HeartOutline'}
+                  className='h-4 w-4 mr-2'
+                />
                 {isInWatchlist ? 'In Watchlist' : 'Add to Watchlist'}
               </button>
               <button
@@ -246,34 +264,48 @@ export default function AssetDetailsClient({ id }: { id: string }) {
 
             {/* Asset Details */}
             <div className='bg-white rounded-2xl shadow-sm border border-gray-200 p-6'>
-              <h2 className='text-xl font-semibold text-gray-900 mb-4'>Asset Details</h2>
+              <h2 className='text-xl font-semibold text-gray-900 mb-4'>
+                Asset Details
+              </h2>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Type</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Type
+                  </label>
                   <p className='text-gray-900'>{asset.type}</p>
                 </div>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Status</label>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    asset.status === 'active' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Status
+                  </label>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      asset.status === 'active'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}
+                  >
                     {asset.status}
                   </span>
                 </div>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Cargo</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Cargo
+                  </label>
                   <p className='text-gray-900'>{asset.cargo}</p>
                 </div>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Route</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Route
+                  </label>
                   <p className='text-gray-900'>{asset.route}</p>
                 </div>
               </div>
               {asset.description && (
                 <div className='mt-4'>
-                  <label className='text-sm font-medium text-gray-500'>Description</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Description
+                  </label>
                   <p className='text-gray-900 mt-1'>{asset.description}</p>
                 </div>
               )}
@@ -283,19 +315,21 @@ export default function AssetDetailsClient({ id }: { id: string }) {
             <div className='bg-white rounded-2xl shadow-sm border border-gray-200'>
               <div className='border-b border-gray-200'>
                 <nav className='flex space-x-8 px-6'>
-                  {['overview', 'documents', 'timeline', 'blockchain'].map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`py-4 px-1 border-b-2 font-medium text-sm capitalize ${
-                        activeTab === tab
-                          ? 'border-global-teal text-global-teal'
-                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
+                  {['overview', 'documents', 'timeline', 'blockchain'].map(
+                    tab => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm capitalize ${
+                          activeTab === tab
+                            ? 'border-global-teal text-global-teal'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        }`}
+                      >
+                        {tab}
+                      </button>
+                    )
+                  )}
                 </nav>
               </div>
 
@@ -303,33 +337,52 @@ export default function AssetDetailsClient({ id }: { id: string }) {
                 {activeTab === 'overview' && (
                   <div className='space-y-6'>
                     <div>
-                      <h3 className='text-lg font-semibold text-gray-900 mb-4'>Performance Metrics</h3>
+                      <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                        Performance Metrics
+                      </h3>
                       <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                         <div className='bg-gray-50 rounded-lg p-4'>
                           <div className='flex items-center justify-between'>
                             <div>
                               <p className='text-sm text-gray-600'>APR</p>
-                              <p className='text-2xl font-bold text-gray-900'>{asset.apr}</p>
+                              <p className='text-2xl font-bold text-gray-900'>
+                                {asset.apr}
+                              </p>
                             </div>
-                            <Icon name='TrendingUp' className='h-8 w-8 text-green-500' />
+                            <Icon
+                              name='TrendingUp'
+                              className='h-8 w-8 text-green-500'
+                            />
                           </div>
                         </div>
                         <div className='bg-gray-50 rounded-lg p-4'>
                           <div className='flex items-center justify-between'>
                             <div>
-                              <p className='text-sm text-gray-600'>Risk Level</p>
-                              <p className='text-2xl font-bold text-gray-900'>{asset.risk}</p>
+                              <p className='text-sm text-gray-600'>
+                                Risk Level
+                              </p>
+                              <p className='text-2xl font-bold text-gray-900'>
+                                {asset.risk}
+                              </p>
                             </div>
-                            <Icon name='Shield' className='h-8 w-8 text-blue-500' />
+                            <Icon
+                              name='Shield'
+                              className='h-8 w-8 text-blue-500'
+                            />
                           </div>
                         </div>
                         <div className='bg-gray-50 rounded-lg p-4'>
                           <div className='flex items-center justify-between'>
                             <div>
                               <p className='text-sm text-gray-600'>Value</p>
-                              <p className='text-2xl font-bold text-gray-900'>{asset.value}</p>
+                              <p className='text-2xl font-bold text-gray-900'>
+                                {asset.value}
+                              </p>
                             </div>
-                            <Icon name='DollarSign' className='h-8 w-8 text-green-500' />
+                            <Icon
+                              name='DollarSign'
+                              className='h-8 w-8 text-green-500'
+                            />
                           </div>
                         </div>
                       </div>
@@ -339,37 +392,57 @@ export default function AssetDetailsClient({ id }: { id: string }) {
 
                 {activeTab === 'documents' && (
                   <div>
-                    <h3 className='text-lg font-semibold text-gray-900 mb-4'>Documents</h3>
+                    <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                      Documents
+                    </h3>
                     <p className='text-gray-500'>No documents available</p>
                   </div>
                 )}
 
                 {activeTab === 'timeline' && (
                   <div>
-                    <h3 className='text-lg font-semibold text-gray-900 mb-4'>Activity Timeline</h3>
-                    <p className='text-gray-500'>No timeline events available</p>
+                    <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                      Activity Timeline
+                    </h3>
+                    <p className='text-gray-500'>
+                      No timeline events available
+                    </p>
                   </div>
                 )}
 
                 {activeTab === 'blockchain' && (
                   <div>
-                    <h3 className='text-lg font-semibold text-gray-900 mb-4'>Blockchain Information</h3>
+                    <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                      Blockchain Information
+                    </h3>
                     <div className='space-y-4'>
                       <div>
-                        <label className='text-sm font-medium text-gray-500'>Contract Address</label>
-                        <p className='text-sm text-gray-900 font-mono'>0x0000000000000000000000000000000000000000</p>
+                        <label className='text-sm font-medium text-gray-500'>
+                          Contract Address
+                        </label>
+                        <p className='text-sm text-gray-900 font-mono'>
+                          0x0000000000000000000000000000000000000000
+                        </p>
                       </div>
                       <div>
-                        <label className='text-sm font-medium text-gray-500'>Token ID</label>
+                        <label className='text-sm font-medium text-gray-500'>
+                          Token ID
+                        </label>
                         <p className='text-sm text-gray-900'>N/A</p>
                       </div>
                       <div>
-                        <label className='text-sm font-medium text-gray-500'>Network</label>
+                        <label className='text-sm font-medium text-gray-500'>
+                          Network
+                        </label>
                         <p className='text-sm text-gray-900'>Ethereum</p>
                       </div>
                       <div>
-                        <label className='text-sm font-medium text-gray-500'>Last Update</label>
-                        <p className='text-sm text-gray-900'>{new Date().toLocaleString()}</p>
+                        <label className='text-sm font-medium text-gray-500'>
+                          Last Update
+                        </label>
+                        <p className='text-sm text-gray-900'>
+                          {new Date().toLocaleString()}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -382,18 +455,26 @@ export default function AssetDetailsClient({ id }: { id: string }) {
           <div className='space-y-6'>
             {/* Investment Card */}
             <div className='bg-white rounded-2xl shadow-sm border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Investment Details</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                Investment Details
+              </h3>
               <div className='space-y-4'>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Minimum Investment</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Minimum Investment
+                  </label>
                   <p className='text-2xl font-bold text-gray-900'>$1,000</p>
                 </div>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Available for Investment</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Available for Investment
+                  </label>
                   <p className='text-lg text-gray-900'>$2,500,000</p>
                 </div>
                 <div>
-                  <label className='text-sm font-medium text-gray-500'>Total Value</label>
+                  <label className='text-sm font-medium text-gray-500'>
+                    Total Value
+                  </label>
                   <p className='text-lg text-gray-900'>{asset.value}</p>
                 </div>
                 <button className='w-full bg-global-teal text-white py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors'>
@@ -404,7 +485,9 @@ export default function AssetDetailsClient({ id }: { id: string }) {
 
             {/* Quick Actions */}
             <div className='bg-white rounded-2xl shadow-sm border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Quick Actions</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                Quick Actions
+              </h3>
               <div className='space-y-3'>
                 <button className='w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:border-global-teal transition-colors'>
                   <Icon name='Download' className='h-4 w-4 mr-2' />
@@ -414,7 +497,7 @@ export default function AssetDetailsClient({ id }: { id: string }) {
                   <Icon name='MessageCircle' className='h-4 w-4 mr-2' />
                   Contact Support
                 </button>
-                <button 
+                <button
                   onClick={() => setShowReturnsModal(true)}
                   className='w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:border-global-teal transition-colors'
                 >
@@ -426,19 +509,27 @@ export default function AssetDetailsClient({ id }: { id: string }) {
 
             {/* Technical Details */}
             <div className='bg-white rounded-2xl shadow-sm border border-gray-200 p-6'>
-              <h3 className='text-lg font-semibold text-gray-900 mb-4'>Technical Details</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-4'>
+                Technical Details
+              </h3>
               <div className='space-y-3'>
                 <div className='flex items-center justify-between'>
                   <span className='text-sm text-gray-600'>Asset Health</span>
-                  <span className='text-sm font-medium text-green-600'>Excellent</span>
+                  <span className='text-sm font-medium text-green-600'>
+                    Excellent
+                  </span>
                 </div>
                 <div className='flex items-center justify-between'>
                   <span className='text-sm text-gray-600'>Compliance</span>
-                  <span className='text-sm font-medium text-green-600'>VARA Approved</span>
+                  <span className='text-sm font-medium text-green-600'>
+                    VARA Approved
+                  </span>
                 </div>
                 <div className='flex items-center justify-between'>
                   <span className='text-sm text-gray-600'>Verification</span>
-                  <span className='text-sm font-medium text-green-600'>Verified</span>
+                  <span className='text-sm font-medium text-green-600'>
+                    Verified
+                  </span>
                 </div>
               </div>
             </div>
@@ -451,7 +542,9 @@ export default function AssetDetailsClient({ id }: { id: string }) {
         <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-2xl p-6 max-w-md w-full mx-4'>
             <div className='flex items-center justify-between mb-4'>
-              <h3 className='text-lg font-semibold text-gray-900'>Share Asset</h3>
+              <h3 className='text-lg font-semibold text-gray-900'>
+                Share Asset
+              </h3>
               <button
                 onClick={handleCloseShareModal}
                 className='text-gray-400 hover:text-gray-600 transition-colors'
@@ -473,9 +566,7 @@ export default function AssetDetailsClient({ id }: { id: string }) {
                   />
                   <button
                     onClick={() =>
-                      copyToClipboard(
-                        `${window.location.origin}/assets/${id}`
-                      )
+                      copyToClipboard(`${window.location.origin}/assets/${id}`)
                     }
                     className='px-4 py-2 bg-global-teal text-white rounded-r-lg hover:bg-opacity-90 transition-colors'
                   >
@@ -503,7 +594,9 @@ export default function AssetDetailsClient({ id }: { id: string }) {
         <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-2xl p-6 max-w-md w-full mx-4'>
             <div className='flex items-center justify-between mb-4'>
-              <h3 className='text-lg font-semibold text-gray-900'>Calculate Returns</h3>
+              <h3 className='text-lg font-semibold text-gray-900'>
+                Calculate Returns
+              </h3>
               <button
                 onClick={() => setShowReturnsModal(false)}
                 className='text-gray-400 hover:text-gray-600 transition-colors'
@@ -519,7 +612,7 @@ export default function AssetDetailsClient({ id }: { id: string }) {
                 <input
                   type='number'
                   value={investmentAmount}
-                  onChange={(e) => setInvestmentAmount(Number(e.target.value))}
+                  onChange={e => setInvestmentAmount(Number(e.target.value))}
                   className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-global-teal'
                   placeholder='Enter amount'
                 />
@@ -537,15 +630,21 @@ export default function AssetDetailsClient({ id }: { id: string }) {
               </div>
               {investmentAmount > 0 && (
                 <div className='bg-gray-50 rounded-lg p-4'>
-                  <h4 className='font-medium text-gray-900 mb-2'>Projected Returns</h4>
+                  <h4 className='font-medium text-gray-900 mb-2'>
+                    Projected Returns
+                  </h4>
                   <div className='space-y-2 text-sm'>
                     <div className='flex justify-between'>
                       <span className='text-gray-600'>Annual Return:</span>
-                      <span className='font-medium'>${(investmentAmount * 0.085).toLocaleString()}</span>
+                      <span className='font-medium'>
+                        ${(investmentAmount * 0.085).toLocaleString()}
+                      </span>
                     </div>
                     <div className='flex justify-between'>
                       <span className='text-gray-600'>Total Return:</span>
-                      <span className='font-medium'>${(investmentAmount * 1.085).toLocaleString()}</span>
+                      <span className='font-medium'>
+                        ${(investmentAmount * 1.085).toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 </div>

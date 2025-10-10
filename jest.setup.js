@@ -121,7 +121,7 @@ Object.defineProperty(window, 'location', {
 
 // Mock document.createElement for React testing
 const originalCreateElement = document.createElement;
-document.createElement = function(tagName) {
+document.createElement = function (tagName) {
   const element = originalCreateElement.call(this, tagName);
   if (tagName === 'div') {
     element.appendChild = jest.fn();

@@ -2,14 +2,16 @@
 jest.mock('../oauthService', () => {
   const mockOAuthService = {
     initiateGitHubLogin: jest.fn(() => {
-      window.location.href = 'https://github.com/login/oauth/authorize?client_id=test-github-client-id&redirect_uri=https%3A%2F%2Ftest.example.com%2Fauth%2Fgithub%2Fcallback&scope=user%3Aemail&state=test-state';
+      window.location.href =
+        'https://github.com/login/oauth/authorize?client_id=test-github-client-id&redirect_uri=https%3A%2F%2Ftest.example.com%2Fauth%2Fgithub%2Fcallback&scope=user%3Aemail&state=test-state';
     }),
     initiateLinkedInLogin: jest.fn(() => {
-      window.location.href = 'https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=test-linkedin-client-id&redirect_uri=https%3A%2F%2Ftest.example.com%2Fauth%2Flinkedin%2Fcallback&scope=r_liteprofile%20r_emailaddress&state=test-state';
+      window.location.href =
+        'https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=test-linkedin-client-id&redirect_uri=https%3A%2F%2Ftest.example.com%2Fauth%2Flinkedin%2Fcallback&scope=r_liteprofile%20r_emailaddress&state=test-state';
     }),
     generateState: jest.fn(() => 'test-state'),
   };
-  
+
   return {
     oauthService: mockOAuthService,
   };

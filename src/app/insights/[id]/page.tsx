@@ -6,6 +6,6 @@ export default async function InsightDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  
+
   return <InsightDetailClient id={id} />;
 }

@@ -50,9 +50,16 @@ export default function InsightDetailClient({ id }: { id: string }) {
     return (
       <div className='min-h-screen bg-soft-white flex items-center justify-center'>
         <div className='text-center'>
-          <Icon name='FileText' className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-          <h2 className='text-xl font-semibold text-gray-900 mb-2'>Insight Not Found</h2>
-          <p className='text-gray-600'>The requested insight could not be found.</p>
+          <Icon
+            name='FileText'
+            className='h-12 w-12 text-gray-400 mx-auto mb-4'
+          />
+          <h2 className='text-xl font-semibold text-gray-900 mb-2'>
+            Insight Not Found
+          </h2>
+          <p className='text-gray-600'>
+            The requested insight could not be found.
+          </p>
         </div>
       </div>
     );
@@ -74,8 +81,12 @@ export default function InsightDetailClient({ id }: { id: string }) {
               </button>
               <div className='h-6 w-px bg-gray-300'></div>
               <div>
-                <span className='text-sm text-global-teal font-medium'>{insight.category}</span>
-                <h1 className='text-2xl font-bold text-gray-900 mt-1'>{insight.title}</h1>
+                <span className='text-sm text-global-teal font-medium'>
+                  {insight.category}
+                </span>
+                <h1 className='text-2xl font-bold text-gray-900 mt-1'>
+                  {insight.title}
+                </h1>
               </div>
             </div>
             <div className='flex items-center space-x-3'>
@@ -106,7 +117,9 @@ export default function InsightDetailClient({ id }: { id: string }) {
               <div className='flex items-center space-x-4'>
                 <div>
                   <p className='text-sm text-gray-600'>By {insight.author}</p>
-                  <p className='text-sm text-gray-500'>{new Date(insight.date).toLocaleDateString()}</p>
+                  <p className='text-sm text-gray-500'>
+                    {new Date(insight.date).toLocaleDateString()}
+                  </p>
                 </div>
               </div>
             </div>
