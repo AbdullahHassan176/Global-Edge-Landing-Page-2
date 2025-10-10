@@ -213,7 +213,7 @@ export default function AssetsPage() {
       };
     }
 
-    let filteredAssets = assets.filter(asset => {
+    const filteredAssets = assets.filter(asset => {
       // Category filter
       if (activeCategory !== 'all') {
         if (activeCategory === 'tradetokens' && asset.type !== 'inventory') return false;

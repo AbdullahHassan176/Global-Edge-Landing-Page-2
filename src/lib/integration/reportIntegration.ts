@@ -261,7 +261,7 @@ export class ReportIntegration {
    * Apply filters to data
    */
   private applyFilters(data: any, filters: any) {
-    let filteredData = { ...data };
+    const filteredData = { ...data };
 
     // Apply date filters
     if (filters.startDate || filters.endDate) {

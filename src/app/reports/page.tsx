@@ -15,7 +15,7 @@ export default function ReportsPage() {
     setTimeout(() => {
       try {
         let reportData;
-        let filename = reportType.toLowerCase().replace(/\s+/g, '_');
+        const filename = reportType.toLowerCase().replace(/\s+/g, '_');
         
         // Get the appropriate report data
         switch (reportType) {
