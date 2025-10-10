@@ -34,9 +34,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@react-pdf/renderer'],
-  },
+  serverExternalPackages: ['@react-pdf/renderer'],
   webpack: config => {
     // Handle PDF generation
     config.resolve.alias.canvas = false;

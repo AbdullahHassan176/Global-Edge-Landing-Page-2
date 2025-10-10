@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -19,7 +19,8 @@ QA Summary:
 - All links & buttons verified for functionality
 - No issues found
 */
-export default function AssetsPage() {
+
+function AssetsPageContent() {
   const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState('containers');
   const [searchTerm, setSearchTerm] = useState('');
@@ -1731,5 +1732,13 @@ export default function AssetsPage() {
         </div>
       )}
     </>
+  );
+}
+
+export default function AssetsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AssetsPageContent />
+    </Suspense>
   );
 }

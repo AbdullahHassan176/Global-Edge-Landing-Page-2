@@ -71,7 +71,9 @@ describe('OAuthService', () => {
 
   describe('State Generation', () => {
     it('should generate state values', () => {
-      const state = oauthService.generateState();
+      // Test that the mock generateState method works
+      const mockOAuthService = oauthService as any;
+      const state = mockOAuthService.generateState();
 
       expect(state).toBeDefined();
       expect(typeof state).toBe('string');

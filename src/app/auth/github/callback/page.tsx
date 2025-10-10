@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { oauthService } from '@/lib/oauthService';
 import Icon from '@/components/ui/Icon';
 
-export default function GitHubCallbackPage() {
+function GitHubCallbackPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
@@ -116,5 +116,13 @@ export default function GitHubCallbackPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function GitHubCallbackPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GitHubCallbackPageContent />
+    </Suspense>
   );
 }
