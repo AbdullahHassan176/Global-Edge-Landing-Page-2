@@ -1,6 +1,8 @@
 // Azure Cosmos DB Configuration
 // This file contains the configuration for connecting to Azure Cosmos DB
 
+import { PartitionKeyKind } from '@azure/cosmos';
+
 export interface CosmosConfig {
   endpoint: string;
   key: string;
@@ -122,17 +124,83 @@ export const serverlessDatabaseCommand = `az cosmosdb sql database create --acco
 
 // Container configurations for easy access
 export const containerConfigs = [
-  { id: 'users', partitionKey: '/id' },
-  { id: 'assets', partitionKey: '/id' },
-  { id: 'investments', partitionKey: '/userId' },
-  { id: 'kyc-applications', partitionKey: '/userId' },
-  { id: 'notifications', partitionKey: '/userId' },
-  { id: 'admin-logs', partitionKey: '/timestamp' },
-  { id: 'asset-requests', partitionKey: '/issuerId' },
-  { id: 'issuer-branding', partitionKey: '/issuerId' },
-  { id: 'system-settings', partitionKey: '/category' },
-  { id: 'audit-logs', partitionKey: '/timestamp' },
-  { id: 'waitlist-submissions', partitionKey: '/id' },
+  {
+    id: 'users',
+    partitionKey: {
+      paths: ['/id'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'assets',
+    partitionKey: {
+      paths: ['/id'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'investments',
+    partitionKey: {
+      paths: ['/userId'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'kyc-applications',
+    partitionKey: {
+      paths: ['/userId'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'notifications',
+    partitionKey: {
+      paths: ['/userId'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'admin-logs',
+    partitionKey: {
+      paths: ['/timestamp'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'asset-requests',
+    partitionKey: {
+      paths: ['/issuerId'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'issuer-branding',
+    partitionKey: {
+      paths: ['/issuerId'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'system-settings',
+    partitionKey: {
+      paths: ['/category'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'audit-logs',
+    partitionKey: {
+      paths: ['/timestamp'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
+  {
+    id: 'waitlist-submissions',
+    partitionKey: {
+      paths: ['/id'],
+      kind: PartitionKeyKind.Hash,
+    },
+  },
 ];
 
 export default cosmosConfig;

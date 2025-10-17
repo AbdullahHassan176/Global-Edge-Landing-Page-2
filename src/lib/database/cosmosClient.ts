@@ -32,12 +32,12 @@ class CosmosDBClient {
       this.database = database;
 
       // Initialize all containers
-      for (const [containerName, config] of Object.entries(containerConfigs)) {
+      for (const config of containerConfigs) {
         const { container } = await this.database.containers.createIfNotExists({
-          id: containerName,
+          id: config.id,
           partitionKey: config.partitionKey,
         });
-        this.containers.set(containerName, container);
+        this.containers.set(config.id, container);
       }
 
       console.log('✅ Cosmos DB initialized successfully');
