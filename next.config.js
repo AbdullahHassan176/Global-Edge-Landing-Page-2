@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/api/assets',
+        destination: '/api/marketplace-assets',
+      },
+    ];
+  },
   env: {
     NEXT_PUBLIC_API_BASE: process.env.NEXT_PUBLIC_API_BASE || 'mock',
     NEXT_PUBLIC_FEATURE_FINANCING:

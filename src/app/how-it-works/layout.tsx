@@ -8,9 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
     ...baseMeta,
     title: 'How Tokenization Works | The Global Edge UAE',
     description:
-      'Understand the Global Edge tokenization process — from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance.',
+      'Intended issuance workflow for Africa–UAE trade-backed assets: verification, documentation, optional data feeds, contracts, and listing—designed for VARA-aligned distribution in the UAE (pilot in progress).',
     keywords:
-      'tokenization process UAE, VARA compliance, asset tokenization Dubai, digital twin creation, RWA tokenization UAE, blockchain asset onboarding',
+      'RWA tokenization UAE, trade finance tokenization, VARA-aligned issuance, Africa UAE corridor, FMCG inventory tokens, blockchain asset onboarding',
     robots: { index: true, follow: true },
     alternates: {
       canonical: 'https://theglobaledge.io/how-it-works',
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ...baseMeta.openGraph,
       title: 'How Tokenization Works | The Global Edge UAE',
       description:
-        'Understand the Global Edge tokenization process — from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance.',
+        'Intended issuance workflow for Africa–UAE trade-backed assets: verification, documentation, optional data feeds, contracts, and listing—designed for VARA-aligned distribution in the UAE (pilot in progress).',
       url: 'https://theglobaledge.io/how-it-works',
       type: 'website',
       images: [
@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ...baseMeta.twitter,
       title: 'How Tokenization Works | The Global Edge UAE',
       description:
-        'Understand the Global Edge tokenization process — from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance.',
+        'Intended issuance workflow for Africa–UAE trade-backed assets: verification, documentation, optional data feeds, contracts, and listing—designed for VARA-aligned distribution in the UAE (pilot in progress).',
       images: ['https://theglobaledge.io/og-how-it-works.jpg'],
     },
   };
@@ -49,11 +49,11 @@ export default function HowItWorksLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'How Global Edge Tokenizes Real-World Assets',
+    name: 'How Global Edge intends to tokenize real-world trade assets',
     description:
-      'Step-by-step tokenization process from asset onboarding to digital twin creation and investor access, built under UAE VARA compliance',
+      'Target path from verification through controlled listing; VARA-aligned issuance is a design goal—not a claim that every step is live for all products today.',
     url: 'https://theglobaledge.io/how-it-works',
-    totalTime: 'P14D',
+    totalTime: 'P60D',
     supply: [
       {
         '@type': 'HowToSupply',
@@ -61,7 +61,7 @@ export default function HowItWorksLayout({
       },
       {
         '@type': 'HowToSupply',
-        name: 'VARA compliance documentation',
+        name: 'Legal and compliance documentation (instrument-specific)',
       },
       {
         '@type': 'HowToSupply',
@@ -72,7 +72,7 @@ export default function HowItWorksLayout({
       {
         '@type': 'HowToStep',
         name: 'Asset Verification',
-        text: 'Independent third-party verification of asset existence, condition, ownership, and VARA compliance requirements',
+        text: 'Independent verification of asset existence, condition, and ownership where required for the instrument',
       },
       {
         '@type': 'HowToStep',
@@ -82,7 +82,7 @@ export default function HowItWorksLayout({
       {
         '@type': 'HowToStep',
         name: 'Oracle Integration',
-        text: 'Integration with trusted oracle networks for continuous monitoring of asset performance and condition',
+        text: 'Optional data feeds and attestations scoped per instrument—not implied as universally live',
       },
       {
         '@type': 'HowToStep',
@@ -92,12 +92,12 @@ export default function HowItWorksLayout({
       {
         '@type': 'HowToStep',
         name: 'Digital Twin Creation',
-        text: 'Creation of digital twin for asset representation and investor access through blockchain technology',
+        text: 'Instrument records and investor access paths appropriate to the product—not a claim that every asset has a live digital twin today',
       },
       {
         '@type': 'HowToStep',
         name: 'Market Launch',
-        text: 'Final VARA compliance review, investor onboarding activation, and public listing of tokenized asset',
+        text: 'Final reviews, investor onboarding where required, and controlled listing after offering documentation is in place',
       },
     ],
   };

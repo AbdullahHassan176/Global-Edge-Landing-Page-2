@@ -266,8 +266,8 @@ export default function InsightDetailsPage() {
             Ready to Start Investing?
           </h2>
           <p className='text-xl opacity-90 mb-8'>
-            Join thousands of investors who are already benefiting from
-            tokenized trade assets.
+            Follow our first trade-backed pilots as they approach issuance—not
+            generic performance marketing.
           </p>
           <div className='flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6'>
             <Link

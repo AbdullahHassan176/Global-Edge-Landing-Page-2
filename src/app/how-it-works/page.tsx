@@ -37,24 +37,27 @@ export default function HowItWorksPage() {
               </span>
             </div>
             <h1 className='text-4xl lg:text-5xl font-poppins font-bold mb-4 leading-tight break-words max-w-6xl'>
-              How Global Edge Tokenizes Real-World Assets
+              How we intend to tokenize real-world trade assets
             </h1>
             <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl'>
-              Step-by-Step Tokenization Process
+              End-to-end workflow (pilot in progress)
             </h2>
             <p className='text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
-              Complete transparency through our VARA-compliant{' '}
+              This is the target path for Africa–UAE FMCG flows: verification,
+              documentation, optional data feeds, smart contracts, and a
+              controlled listing—designed for{' '}
               <span className='underline cursor-default opacity-95'>
-                tokenization process
+                VARA-aligned issuance
               </span>{' '}
-              with{' '}
+              in the UAE. Today we are in build on a prototype; timings below are
+              illustrative, not a promise for every deal. See{' '}
               <Link
                 href='/security'
                 className='underline hover:text-global-teal transition-colors'
               >
-                blockchain verification
+                security
               </Link>{' '}
-              and oracle attestations
+              for how we think about custody and data.
             </p>
           </div>
         </div>
@@ -65,51 +68,45 @@ export default function HowItWorksPage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-3xl font-poppins font-bold text-charcoal mb-4 break-words'>
-              Transparent Asset Tokenization
+              From physical cargo to an instrument
             </h2>
             <p className='text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mb-6 leading-relaxed text-balance'>
-              Real-world asset tokenization in the UAE transforms physical
-              assets like shipping containers, real estate, and trade inventory
-              into digital tokens that can be traded on blockchain networks. Our
-              VARA-compliant platform ensures all tokenized assets meet UAE
-              regulatory standards while providing fractional ownership
-              opportunities to investors worldwide.
+              We focus first on FMCG inventory and receivables tied to real
+              shipments—today one South Africa → UAE container in motion and a
+              tokenization prototype, not a live marketplace of hundreds of
+              issued tokens. The goal is VARA-aligned distribution in the UAE
+              when legal and technical closing conditions are met.
             </p>
             <p className='text-base sm:text-lg text-gray-600 max-w-3xl mx-auto mb-6 leading-relaxed text-balance'>
-              Every asset goes through rigorous{' '}
+              Each future offering is expected to go through{' '}
               <Link
                 href='/security'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
                 verification
               </Link>
-              , documentation, and{' '}
+              , documentation, and (where appropriate) on-chain references—not a
+              generic “always on-chain everything” claim. When programs list on{' '}
               <Link
                 href='/assets'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                blockchain registration
-              </Link>{' '}
-              to ensure complete transparency and{' '}
+                assets
+              </Link>
+              , disclosures will match that specific instrument. Qualified parties
+              can start via{' '}
               <Link
                 href='/investors'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                investor protection
-              </Link>
-              .{' '}
-              <Link
-                href='/assets'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                Explore tokenized assets
+                investors
               </Link>{' '}
-              available for investment and learn more in our{' '}
+              and our{' '}
               <Link
                 href='/faq'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                FAQ section
+                FAQ
               </Link>
               .
             </p>
@@ -121,24 +118,26 @@ export default function HowItWorksPage() {
                 <Icon name='shield' className='text-white text-lg' size={12} />
               </div>
               <h3 className='text-xl font-poppins font-semibold text-charcoal mb-2'>
-                Verified Assets
+                Issued instruments
               </h3>
               <div className='text-3xl font-poppins font-bold text-blue-600 mb-1'>
-                1,247
+                0
               </div>
-              <p className='text-sm text-gray-600'>Successfully tokenized</p>
+              <p className='text-sm text-gray-600'>Marketed to date (pilot)</p>
             </div>
             <div className='bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 text-center'>
               <div className='w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4'>
                 <Icon name='clock' className='text-white text-lg' size={12} />
               </div>
               <h3 className='text-xl font-poppins font-semibold text-charcoal mb-2'>
-                Avg. Processing
+                Timeline
               </h3>
               <div className='text-3xl font-poppins font-bold text-green-600 mb-1'>
-                7-14
+                TBD
               </div>
-              <p className='text-sm text-gray-600'>Business days</p>
+              <p className='text-sm text-gray-600'>
+                Per deal—depends on counsel, counterparties, and VARA path
+              </p>
             </div>
             <div className='bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 text-center'>
               <div className='w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4'>
@@ -149,12 +148,14 @@ export default function HowItWorksPage() {
                 />
               </div>
               <h3 className='text-xl font-poppins font-semibold text-charcoal mb-2'>
-                Oracle Partners
+                Attestations
               </h3>
               <div className='text-3xl font-poppins font-bold text-purple-600 mb-1'>
-                12+
+                As needed
               </div>
-              <p className='text-sm text-gray-600'>Verification providers</p>
+              <p className='text-sm text-gray-600'>
+                Third-party checks scoped per offering—not a fixed vendor count
+              </p>
             </div>
           </div>
         </div>
@@ -168,22 +169,24 @@ export default function HowItWorksPage() {
               5-Step Tokenization Process
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              From asset verification to blockchain deployment, every step is
-              documented and verified by third-party oracles. Explore our{' '}
+              From verification through listing, the intent is a documented
+              trail suitable for diligence—some steps on-chain, some in regulated
+              repositories, depending on the instrument. Nothing here implies
+              every milestone is already live for the first pilot. Explore{' '}
               <Link
                 href='/assets'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                tokenized assets
+                asset programs
               </Link>{' '}
-              and learn about{' '}
+              or reach the team via{' '}
               <Link
                 href='/investors'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                investment opportunities
+                investors
               </Link>
-              . Have questions? Check our{' '}
+              . Questions:{' '}
               <Link
                 href='/faq'
                 className='text-global-teal hover:text-edge-purple transition-colors'
@@ -473,10 +476,10 @@ export default function HowItWorksPage() {
                       </div>
                     </div>
                     <p className='text-gray-600 mb-6'>
-                      Integration with trusted oracle networks for continuous
-                      monitoring of asset performance, location tracking,
-                      condition updates, and market valuation with automated
-                      reporting systems.
+                      Where it helps diligence, we connect logistics, pricing, or
+                      condition signals to on-chain or off-chain controls. The
+                      mix is chosen per instrument—this is not a claim that all
+                      feeds are live for the current prototype.
                     </p>
                     <div className='space-y-3'>
                       <div className='flex items-center'>
@@ -728,10 +731,10 @@ export default function HowItWorksPage() {
                       </div>
                     </div>
                     <p className='text-gray-600 mb-6'>
-                      Final compliance review, investor onboarding systems
-                      activation, and public listing of tokenized asset with
-                      full transparency dashboard and ongoing monitoring
-                      capabilities.
+                      Final compliance review, investor onboarding where
+                      required, and a controlled listing only after offering
+                      documents are approved for that product—not a generic
+                      “go live” for the whole platform at once.
                     </p>
                     <div className='space-y-3'>
                       <div className='flex items-center'>
@@ -842,25 +845,26 @@ export default function HowItWorksPage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              VARA-Compliant Tokenization Framework
+              VARA-aligned issuance (target)
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Our tokenization process is built on UAE's Virtual Assets
-              Regulatory Authority (VARA) framework, ensuring complete
-              regulatory compliance and investor protection. Learn more about
-              our{' '}
+              We design processes against the Virtual Assets Regulatory
+              Authority (VARA) framework in Dubai. That is a target posture for
+              distribution—not a claim that every product or entity is licensed
+              today. Each instrument will ship with its own legal stack and
+              disclosures. Context on programs:{' '}
               <Link
                 href='/assets'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                tokenized assets
-              </Link>{' '}
-              and{' '}
+                assets
+              </Link>
+              ; introductions:{' '}
               <Link
                 href='/investors'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                investment opportunities
+                investors
               </Link>
               .
             </p>
@@ -882,11 +886,13 @@ export default function HowItWorksPage() {
                   </div>
                   <div>
                     <h4 className='font-semibold text-charcoal mb-2'>
-                      VARA License Compliance
+                      VARA pathway
                     </h4>
                     <p className='text-gray-600 text-sm'>
-                      All tokenized assets operate under VARA-approved
-                      frameworks with proper licensing and regulatory oversight.
+                      Workstreams are structured so each offering can map to
+                      applicable VARA requirements. We do not state blanket
+                      “VARA-approved” status for assets that have not closed and
+                      listed.
                     </p>
                   </div>
                 </div>
@@ -939,8 +945,10 @@ export default function HowItWorksPage() {
                       Blockchain Security
                     </h4>
                     <p className='text-gray-600 text-sm'>
-                      Enterprise-grade blockchain infrastructure with
-                      multi-signature wallets and cold storage protocols.
+                      Architecture choices favor strong key management and
+                      separation of duties; exact custody stack is specified per
+                      offering and vendor—not marketed generically as live for
+                      all products.
                     </p>
                   </div>
                 </div>
@@ -957,8 +965,10 @@ export default function HowItWorksPage() {
                       Oracle Integration
                     </h4>
                     <p className='text-gray-600 text-sm'>
-                      Real-time data feeds from trusted oracle networks for
-                      continuous asset monitoring and verification.
+                      Where useful, external data (e.g. logistics milestones) can
+                      anchor on-chain state. Scope and vendor are chosen per
+                      instrument—not implied as a fleet of twelve live oracle
+                      networks today.
                     </p>
                   </div>
                 </div>
@@ -971,8 +981,9 @@ export default function HowItWorksPage() {
                       Transparency Dashboard
                     </h4>
                     <p className='text-gray-600 text-sm'>
-                      Complete visibility into asset performance, location
-                      tracking, and financial metrics for all investors.
+                      Investors should receive reporting that matches the
+                      offering documents—dashboards grow as live instruments and
+                      data contracts exist, not ahead of them.
                     </p>
                   </div>
                 </div>
@@ -990,8 +1001,9 @@ export default function HowItWorksPage() {
               Transparency & Clarity
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Every step is documented and verifiable on the blockchain with
-              real-time updates
+              Critical milestones should be evidenced in ways investors can
+              audit—on-chain where it adds real assurance, and in legal /
+              operational records where that is the right tool.
             </p>
           </div>
 
@@ -1043,8 +1055,8 @@ export default function HowItWorksPage() {
                 Third-Party Validation
               </h3>
               <p className='text-gray-600'>
-                Independent verification by certified oracles and compliance
-                partners
+                Independent checks where the instrument requires them—scoped,
+                named, and disclosed for that deal
               </p>
             </div>
 
@@ -1073,8 +1085,8 @@ export default function HowItWorksPage() {
                 Performance Tracking
               </h3>
               <p className='text-gray-600'>
-                Continuous monitoring of asset performance with oracle-verified
-                data feeds
+                Performance reporting tied to the economics in the offering—not
+                platform-wide marketing APRs
               </p>
             </div>
           </div>
@@ -1088,27 +1100,28 @@ export default function HowItWorksPage() {
             Ready to Tokenize Your Assets?
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Join our transparent tokenization platform and unlock liquidity for
-            your real-world assets. Explore our{' '}
+            If you originate Africa–UAE FMCG trade or support issuance
+            infrastructure, we are building the first pilots openly—no inflated
+            metrics. Browse{' '}
             <Link
               href='/assets'
               className='underline hover:text-global-teal transition-colors'
             >
-              available assets
-            </Link>{' '}
-            and learn about{' '}
+              programs
+            </Link>
+            , talk to{' '}
             <Link
               href='/investors'
               className='underline hover:text-global-teal transition-colors'
             >
-              investment opportunities
+              investors
             </Link>
-            . Have questions? Visit our{' '}
+            , or read the{' '}
             <Link
               href='/faq'
               className='underline hover:text-global-teal transition-colors'
             >
-              FAQ section
+              FAQ
             </Link>
             .
           </p>

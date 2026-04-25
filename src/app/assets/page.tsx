@@ -226,7 +226,8 @@ function AssetsPageContent() {
     if (!Array.isArray(assets)) {
       return {
         title: 'All Assets',
-        description: 'All assets available for investment',
+        description:
+          'All program rows in this catalog (may include dev/demo samples)',
         icon: 'layer-group',
         color: 'gray',
         count: 0,
@@ -321,31 +322,36 @@ function AssetsPageContent() {
     const categoryMap = {
       containers: {
         title: 'Container Assets',
-        description: 'Shipping containers available for investment',
+        description:
+          'Logistics layer for trade flows—sample rows may appear in development',
         icon: 'ship',
         color: 'blue',
       },
       property: {
         title: 'Property Assets',
-        description: 'Real estate properties available for investment',
+        description:
+          'Future program—not part of the first Africa–UAE FMCG pilot',
         icon: 'building',
         color: 'green',
       },
       tradetokens: {
         title: 'TradeToken Assets',
-        description: 'Trade inventory tokens available for investment',
+        description:
+          'FMCG inventory & receivables—first issuance pilot category',
         icon: 'boxes',
         color: 'purple',
       },
       vault: {
         title: 'Vault Assets',
-        description: 'Secure vault storage assets available for investment',
+        description:
+          'Planned structures for vaulted commodities as the roadmap expands',
         icon: 'vault',
         color: 'orange',
       },
       all: {
         title: 'All Assets',
-        description: 'All assets available for investment',
+        description:
+          'All program rows in this catalog (may include dev/demo samples)',
         icon: 'layer-group',
         color: 'gray',
       },
@@ -407,80 +413,83 @@ function AssetsPageContent() {
             {/* Breadcrumbs removed for cleaner header */}
 
             <h1 className='text-4xl lg:text-6xl font-poppins font-bold mb-6 leading-tight break-words max-w-6xl'>
-              Explore Tokenized Assets
+              Asset programs & pilots
             </h1>
             <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-4 leading-tight break-words max-w-6xl'>
-              Invest in Tokenized Containers & Properties
+              Africa–UAE trade first — nothing marketed as live AUM until issuance
             </h2>
             <p className='text-base sm:text-lg md:text-xl lg:text-2xl font-inter font-light opacity-90 max-w-6xl mb-6 leading-relaxed'>
-              Invest in verified real-world assets with{' '}
+              This catalog may include development samples. Treat any figures as
+              illustrative until an offering posts legal disclosures. Read{' '}
               <Link
                 href='/how-it-works'
                 className='underline hover:text-global-teal transition-colors'
               >
-                transparent blockchain tracking
+                how issuance is intended to work
               </Link>
-              , competitive returns, and{' '}
+              , review{' '}
               <Link
                 href='/security'
                 className='underline hover:text-global-teal transition-colors'
               >
-                institutional-grade security
+                security posture
               </Link>
-              . Learn about our{' '}
+              , and connect via{' '}
               <Link
                 href='/investors'
                 className='underline hover:text-global-teal transition-colors'
               >
-                investment opportunities
+                investors
               </Link>{' '}
-              and{' '}
+              or{' '}
               <Link
                 href='/partners'
                 className='underline hover:text-global-teal transition-colors'
               >
-                partner network
-              </Link>
-              .
+                partnerships
+              </Link>{' '}
+              if you diligence the pilot.
             </p>
             <p className='text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl mb-6 leading-relaxed'>
-              Our tokenized assets in Dubai include shipping containers with GPS
-              tracking and verified cargo, plus commercial and residential real
-              estate properties with rental income streams. Each asset is backed
-              by physical collateral and secured through our{' '}
+              Operational focus today: one physical container on the South Africa
+              → United Arab Emirates lane; first tokenization is in prototype—not
+              yet a marketed instrument. Broader categories (containers, property,
+              vault) describe where the roadmap can go after the first trade-backed
+              programs list under{' '}
               <Link
                 href='/how-it-works'
                 className='underline hover:text-global-teal transition-colors'
               >
-                VARA-compliant tokenization process
+                VARA-aligned issuance targets
               </Link>
-              , providing{' '}
-              <Link
-                href='/investors'
-                className='underline hover:text-global-teal transition-colors'
-              >
-                investors with fractional ownership
-              </Link>{' '}
-              opportunities in premium Dubai assets.
+              .
             </p>
 
-            {/* Quick Stats */}
+            {/* Snapshot — honest pilot facts + catalog size */}
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
               <div className='bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4'>
                 <div className='text-2xl font-bold'>{assets.length}</div>
-                <div className='text-sm opacity-80'>Total Assets</div>
+                <div className='text-sm opacity-80'>
+                  Rows in this catalog (may include samples)
+                </div>
               </div>
               <div className='bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4'>
-                <div className='text-2xl font-bold'>8.5%</div>
-                <div className='text-sm opacity-80'>Avg. APR</div>
+                <div className='text-2xl font-bold'>0</div>
+                <div className='text-sm opacity-80'>
+                  Issued instruments marketed to date
+                </div>
               </div>
               <div className='bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4'>
-                <div className='text-2xl font-bold'>$2.4M</div>
-                <div className='text-sm opacity-80'>Total Value</div>
+                <div className='text-2xl font-bold'>1</div>
+                <div className='text-sm opacity-80'>
+                  Active physical shipment (SA → UAE)
+                </div>
               </div>
               <div className='bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4'>
-                <div className='text-2xl font-bold'>1,247</div>
-                <div className='text-sm opacity-80'>Active Investors</div>
+                <div className='text-2xl font-bold'>—</div>
+                <div className='text-sm opacity-80'>
+                  Platform APR (only per offering when live)
+                </div>
               </div>
             </div>
           </div>
@@ -861,7 +870,7 @@ function AssetsPageContent() {
                 onClick={() => {
                   if (activeCategory === 'all') {
                     alert(
-                      'You are already viewing all available assets! For the complete catalog with all 526 assets, please contact our investment team.'
+                      'You are already viewing all listed programs. As pilots mature, new offerings will appear here—contact the team for diligence materials.'
                     );
                   } else {
                     setActiveCategory('all');
@@ -1055,7 +1064,7 @@ function AssetsPageContent() {
                         onClick={() => handleViewAsset(asset)}
                         className='flex-1 bg-global-teal text-white px-6 py-3 rounded-xl font-semibold hover:bg-global-teal-dark transition-all duration-200 hover:shadow-lg'
                       >
-                        Invest Now
+                        View details
                       </button>
                       <button
                         onClick={() => handleViewAsset(asset)}
@@ -1249,7 +1258,7 @@ function AssetsPageContent() {
                             onClick={() => handleViewAsset(asset)}
                             className='bg-global-teal text-white px-8 py-3 rounded-xl font-semibold hover:bg-global-teal-dark transition-all duration-200 hover:shadow-lg'
                           >
-                            Invest Now
+                            View details
                           </button>
                           <button
                             onClick={() => handleViewAsset(asset)}
@@ -1273,24 +1282,24 @@ function AssetsPageContent() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Why Invest in Tokenized Real-World Assets?
+              Why trade-backed RWAs—when documented honestly
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Tokenized assets offer unique advantages over traditional
-              investments, combining the stability of real-world assets with the
-              liquidity and accessibility of digital tokens. Learn about our{' '}
+              The thesis is straightforward collateral: goods and receivables
+              investors can diligence, issued only with offering documents—not
+              homepage APR ranges. Learn the intended workflow in{' '}
               <Link
                 href='/how-it-works'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                tokenization process
+                how it works
               </Link>{' '}
-              and explore{' '}
+              and reach the team via{' '}
               <Link
                 href='/investors'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                investment opportunities
+                investors
               </Link>
               .
             </p>
@@ -1306,12 +1315,12 @@ function AssetsPageContent() {
                 />
               </div>
               <h3 className='text-xl font-poppins font-bold text-charcoal mb-4'>
-                Diversified Returns
+                Economics from the instrument
               </h3>
               <p className='text-gray-600 mb-4'>
-                Access multiple asset classes with competitive yields ranging
-                from 6-18% APR across containers, real estate, and trade
-                inventory.
+                Yields, if any, are defined in each offering’s legal and financial
+                package—not as a site-wide marketing band. Read the pilot’s docs
+                when they publish.
               </p>
               <ul className='space-y-2 text-sm text-gray-700'>
                 <li className='flex items-center'>
@@ -1320,7 +1329,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Regular income distributions
+                  Cash flows tied to verified trade events where applicable
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -1328,7 +1337,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Capital appreciation potential
+                  Waterfalls and triggers spelled out per deal
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -1336,7 +1345,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Inflation hedge benefits
+                  No implied performance across unrelated asset rows
                 </li>
               </ul>
             </div>
@@ -1349,8 +1358,9 @@ function AssetsPageContent() {
                 Risk Mitigation
               </h3>
               <p className='text-gray-600 mb-4'>
-                Comprehensive risk management through diversification, insurance
-                coverage, and oracle-verified asset monitoring.
+                Risk controls are product-specific: documentation, covenants,
+                insurance where placed, and operational checks—not a blanket
+                “everything is insured to $X” claim on this page.
               </p>
               <ul className='space-y-2 text-sm text-gray-700'>
                 <li className='flex items-center'>
@@ -1359,7 +1369,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Asset-backed security
+                  Collateral tied to identifiable cargo and counterparties
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -1367,7 +1377,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Insurance protection
+                  Insurance only where named in the offering
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -1375,7 +1385,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Real-time monitoring
+                  Monitoring aligned to what the instrument actually receives
                 </li>
               </ul>
             </div>
@@ -1388,8 +1398,10 @@ function AssetsPageContent() {
                 Blockchain Transparency
               </h3>
               <p className='text-gray-600 mb-4'>
-                Complete transparency through blockchain technology with
-                immutable records and real-time asset tracking.
+                Transparency means evidence investors can test: documents,
+                attestations where used, and on-chain references when they add
+                real assurance—not marketing “full blockchain” language ahead of
+                launch.
               </p>
               <ul className='space-y-2 text-sm text-gray-700'>
                 <li className='flex items-center'>
@@ -1398,7 +1410,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Immutable ownership records
+                  Ownership and transfers reflected as designed for that product
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -1406,7 +1418,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Real-time asset tracking
+                  Logistics milestones when data feeds are in scope
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -1414,7 +1426,7 @@ function AssetsPageContent() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Complete audit trails
+                  Audit trail matching the offering’s representations
                 </li>
               </ul>
             </div>
@@ -1593,8 +1605,8 @@ function AssetsPageContent() {
             Ready to Start Investing?
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Join thousands of investors earning returns from tokenized
-            real-world assets. Learn about our{' '}
+            Follow the first Africa–UAE trade pilots as they move toward
+            issuance. Learn about our{' '}
             <Link
               href='/how-it-works'
               className='underline hover:text-global-teal transition-colors'

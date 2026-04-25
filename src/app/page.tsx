@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
-import { getPartnersForLandingPage } from '@/lib/partnersData';
 import WaitlistModal from '@/components/ui/WaitlistModal';
 
 /*
@@ -20,9 +19,6 @@ QA Summary:
 export default function HomePage() {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
 
-  // Get partners for landing page
-  const landingPagePartners = getPartnersForLandingPage();
-
   /*
   QA Summary:
   - Hero copy is long; risk of crowding on small screens. Suggest: constrain text blocks with "max-w-2xl md:max-w-3xl" and add "text-balance" for better wrapping.
@@ -38,72 +34,66 @@ export default function HomePage() {
         <div className='relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center'>
           <div className='max-w-6xl px-4 text-white text-balance leading-relaxed text-left'>
             <h1 className='text-4xl md:text-5xl font-poppins font-bold mb-6 leading-tight break-words max-w-5xl'>
-              Tokenizing Real-World Assets with Confidence
+              Tokenizing Africa–UAE Trade Flows — Starting With Real Cargo
             </h1>
             <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-5xl'>
-              Backed by Compliance. Powered by Innovation.
+              Compliance-first infrastructure for trade-backed issuance
             </h2>
             <p className='text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed'>
-              Invest in asset-backed tokens with complete transparency. Own
-              fractions of{' '}
-              <Link
-                href='/assets?category=containers'
-                className='underline hover:text-global-teal transition-colors'
-              >
-                shipping containers
-              </Link>
-              ,{' '}
-              <Link
-                href='/assets?category=property'
-                className='underline hover:text-global-teal transition-colors'
-              >
-                real estate
-              </Link>
-              , and{' '}
+              We are building fractional exposure to FMCG trade inventory and
+              receivables with on-chain provenance—beginning with live cargo
+              moving from South Africa to the United Arab Emirates. Today that
+              means one active shipment and a tokenization prototype; nothing on
+              this site is marketed as live tokenized AUM until issuance is
+              complete and disclosed.
+            </p>
+            <p className='text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed'>
+              Our roadmap spans{' '}
               <Link
                 href='/assets?category=tradetokens'
                 className='underline hover:text-global-teal transition-colors'
               >
                 trade inventory
-              </Link>{' '}
-              with blockchain-verified provenance.
-            </p>
-            <p className='text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-5xl leading-relaxed'>
-              The Global Edge leads asset tokenization UAE with our
-              comprehensive VARA platform, transforming traditional investments
-              into digital opportunities with regulatory compliance and
-              institutional-grade security.
+              </Link>
+              ,{' '}
+              <Link
+                href='/assets?category=containers'
+                className='underline hover:text-global-teal transition-colors'
+              >
+                container-level logistics
+              </Link>
+              , and eventually other real-world asset classes—always with a
+              target of VARA-aligned distribution in the UAE.
             </p>
             <ul className='text-base md:text-lg space-y-2 mt-4 md:mt-6 font-inter font-light opacity-90 max-w-5xl'>
               <li>
-                • Learn about our{' '}
+                • Read how we approach{' '}
                 <Link
                   href='/how-it-works'
                   className='underline hover:text-global-teal transition-colors'
                 >
-                  tokenization process
+                  issuance and controls
                 </Link>{' '}
-                and VARA compliance framework
+                before tokens go live
               </li>
               <li>
-                • Explore our{' '}
+                • See what will list on{' '}
                 <Link
                   href='/assets'
                   className='underline hover:text-global-teal transition-colors'
                 >
-                  diverse asset portfolio
+                  the asset marketplace
                 </Link>{' '}
-                with real-time performance tracking
+                as pilots mature
               </li>
               <li>
-                • Join thousands of{' '}
+                • If you evaluate early-stage RWA in the Gulf,{' '}
                 <Link
                   href='/investors'
                   className='underline hover:text-global-teal transition-colors'
                 >
-                  investors earning returns
-                </Link>{' '}
-                from tokenized real-world assets
+                  connect with our team
+                </Link>
               </li>
             </ul>
             <div className='flex flex-wrap gap-3 justify-center md:justify-start mt-6'>
@@ -134,40 +124,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* KPI Stripe */}
+      {/* Honest program facts */}
       <section className='bg-white border-b border-gray-200'>
-        <div className='max-w-7xl mx-auto px-6 lg:px-8 py-8'>
-          <div className='grid grid-cols-2 lg:grid-cols-4 gap-8'>
-            <div className='text-center'>
-              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
-                $45.4M
+        <div className='max-w-7xl mx-auto px-6 lg:px-8 py-10'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8'>
+            <div className='text-center lg:text-left'>
+              <div className='text-lg font-poppins font-bold text-global-teal mb-2'>
+                South Africa → UAE
               </div>
-              <div className='text-sm text-gray-600 font-medium'>
-                Assets Under Management
-              </div>
-            </div>
-            <div className='text-center'>
-              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
-                526
-              </div>
-              <div className='text-sm text-gray-600 font-medium'>
-                Assets Tokenized
+              <div className='text-sm text-gray-600 font-medium leading-snug'>
+                Live trade route (active). One container in motion today.
               </div>
             </div>
-            <div className='text-center'>
-              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
-                98.7%
+            <div className='text-center lg:text-left'>
+              <div className='text-lg font-poppins font-bold text-global-teal mb-2'>
+                FMCG inventory & receivables
               </div>
-              <div className='text-sm text-gray-600 font-medium'>
-                On-Time Deliveries
+              <div className='text-sm text-gray-600 font-medium leading-snug'>
+                Asset class for the first issuance pilot.
               </div>
             </div>
-            <div className='text-center'>
-              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
-                10.6%
+            <div className='text-center lg:text-left'>
+              <div className='text-lg font-poppins font-bold text-global-teal mb-2'>
+                Pilot in progress
               </div>
-              <div className='text-sm text-gray-600 font-medium'>
-                Average APR
+              <div className='text-sm text-gray-600 font-medium leading-snug'>
+                First tokenization not yet issued; prototype underway.
+              </div>
+            </div>
+            <div className='text-center lg:text-left'>
+              <div className='text-lg font-poppins font-bold text-global-teal mb-2'>
+                VARA-compliant issuance
+              </div>
+              <div className='text-sm text-gray-600 font-medium leading-snug'>
+                Regulatory target for UAE distribution.
               </div>
             </div>
           </div>
@@ -182,26 +172,20 @@ export default function HomePage() {
               How It Works
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Simple steps to start investing in{' '}
-              <Link
-                href='/assets'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                tokenized real-world assets
-              </Link>
-              . Learn more about our{' '}
+              How participation will work once the first instruments are issued.
+              Details in{' '}
               <Link
                 href='/how-it-works'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                VARA-compliant process
+                how it works
               </Link>{' '}
-              and{' '}
+              and for qualified parties via{' '}
               <Link
                 href='/investors'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                investment opportunities
+                investors
               </Link>
               .
             </p>
@@ -285,16 +269,17 @@ export default function HomePage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Investment Categories
+              What we are building toward
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Diversify across multiple{' '}
+              Pilot focus first; additional{' '}
               <Link
                 href='/how-it-works'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                real-world asset classes
-              </Link>
+                asset classes
+              </Link>{' '}
+              follow as the program matures.
             </p>
           </div>
           <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
@@ -309,14 +294,14 @@ export default function HomePage() {
                 Containers
               </h3>
               <p className='text-gray-600 mb-4'>
-                Shipping containers with GPS tracking and verified cargo
+                Maritime legs and container-level provenance for trade flows
               </p>
               <div className='space-y-2'>
                 <div className='text-sm text-global-teal font-semibold'>
-                  Avg. 8-15% APR
+                  Logistics layer
                 </div>
                 <div className='text-xs text-gray-500'>
-                  247 assets available
+                  Supporting the SA → UAE pilot route
                 </div>
               </div>
             </Link>
@@ -335,13 +320,13 @@ export default function HomePage() {
                 Property
               </h3>
               <p className='text-gray-600 mb-4'>
-                Commercial and residential real estate with rental income
+                Eventual program for income-producing property in the region
               </p>
               <div className='space-y-2'>
                 <div className='text-sm text-global-teal font-semibold'>
-                  Avg. 6-12% APR
+                  On the roadmap
                 </div>
-                <div className='text-xs text-gray-500'>89 assets available</div>
+                <div className='text-xs text-gray-500'>Not part of pilot one</div>
               </div>
             </Link>
             <Link
@@ -359,14 +344,15 @@ export default function HomePage() {
                 TradeTokens
               </h3>
               <p className='text-gray-600 mb-4'>
-                Commodity inventory with verified supply chain data
+                FMCG inventory and receivables tied to verified shipments—where
+                the first pilot sits
               </p>
               <div className='space-y-2'>
                 <div className='text-sm text-global-teal font-semibold'>
-                  Avg. 10-18% APR
+                  Pilot focus
                 </div>
                 <div className='text-xs text-gray-500'>
-                  156 assets available
+                  One live cargo lane today
                 </div>
               </div>
             </Link>
@@ -385,13 +371,14 @@ export default function HomePage() {
                 Vault
               </h3>
               <p className='text-gray-600 mb-4'>
-                Precious metals and secure storage with insurance coverage
+                Reserved structures for vaulted commodities when the program
+                expands
               </p>
               <div className='space-y-2'>
                 <div className='text-sm text-global-teal font-semibold'>
-                  Avg. 4-8% APR
+                  Future program
                 </div>
-                <div className='text-xs text-gray-500'>34 assets available</div>
+                <div className='text-xs text-gray-500'>Not in active pilot</div>
               </div>
             </Link>
           </div>
@@ -403,17 +390,18 @@ export default function HomePage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Asset Performance
+              Where we are today
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Key metrics from our tokenized asset portfolio
+              No marketing AUM or performance stats until an instrument is issued
+              and reporting is live.
             </p>
           </div>
           <div className='grid md:grid-cols-3 gap-8 mb-12'>
             <div className='bg-white rounded-2xl p-8 shadow-lg border-l-4 border-global-teal'>
               <div className='flex items-center justify-between mb-4'>
                 <h3 className='text-lg font-poppins font-semibold text-charcoal'>
-                  Portfolio Value
+                  Live cargo
                 </h3>
                 <Icon
                   name='chart-line-up'
@@ -421,17 +409,18 @@ export default function HomePage() {
                   size={12}
                 />
               </div>
-              <div className='text-3xl font-poppins font-bold text-global-teal mb-2'>
-                $45.4M
+              <div className='text-2xl font-poppins font-bold text-global-teal mb-2'>
+                One container
               </div>
               <div className='text-sm text-gray-600'>
-                Total assets under management
+                South Africa → UAE lane; cargo in motion, not yet wrapped as a
+                marketed token.
               </div>
             </div>
             <div className='bg-white rounded-2xl p-8 shadow-lg border-l-4 border-edge-purple'>
               <div className='flex items-center justify-between mb-4'>
                 <h3 className='text-lg font-poppins font-semibold text-charcoal'>
-                  Active Assets
+                  Tokenization
                 </h3>
                 <Icon
                   name='layer-group'
@@ -439,25 +428,27 @@ export default function HomePage() {
                   size={12}
                 />
               </div>
-              <div className='text-3xl font-poppins font-bold text-edge-purple mb-2'>
-                526
+              <div className='text-2xl font-poppins font-bold text-edge-purple mb-2'>
+                Prototype
               </div>
               <div className='text-sm text-gray-600'>
-                Assets currently tokenized
+                First issuance is in build; we will not claim live tokenized
+                inventory until legal and technical closing conditions are met.
               </div>
             </div>
             <div className='bg-white rounded-2xl p-8 shadow-lg border-l-4 border-green-500'>
               <div className='flex items-center justify-between mb-4'>
                 <h3 className='text-lg font-poppins font-semibold text-charcoal'>
-                  Average Return
+                  Returns
                 </h3>
                 <Icon name='trophy' className='text-green-600' size={12} />
               </div>
-              <div className='text-3xl font-poppins font-bold text-green-600 mb-2'>
-                10.6%
+              <div className='text-2xl font-poppins font-bold text-green-600 mb-2'>
+                TBD
               </div>
               <div className='text-sm text-gray-600'>
-                Annual percentage return
+                Yields will be shown only with offering documents for a specific
+                instrument—not platform-wide averages.
               </div>
             </div>
           </div>
@@ -551,33 +542,32 @@ export default function HomePage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Leading Real-World Asset Tokenization in the UAE
+              Built for UAE distribution — starting with Africa–UAE trade
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              The Global Edge is at the forefront of VARA-compliant asset
-              tokenization, transforming traditional investments into digital
-              opportunities. Our platform enables fractional ownership of{' '}
-              <Link
-                href='/assets?category=containers'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                shipping containers
-              </Link>
-              ,{' '}
-              <Link
-                href='/assets?category=property'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                real estate properties
-              </Link>
-              , and{' '}
+              The Global Edge is an early-stage issuer platform: we are
+              preparing VARA-aligned structures for fractional exposure to{' '}
               <Link
                 href='/assets?category=tradetokens'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
                 trade inventory
+              </Link>
+              , supported by{' '}
+              <Link
+                href='/assets?category=containers'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                logistics data
+              </Link>
+              , with other asset classes like{' '}
+              <Link
+                href='/assets?category=property'
+                className='text-global-teal hover:text-edge-purple transition-colors'
+              >
+                property
               </Link>{' '}
-              with complete transparency and regulatory compliance.
+              on the roadmap—not live at platform scale today.
             </p>
           </div>
 
@@ -591,12 +581,13 @@ export default function HomePage() {
                 />
               </div>
               <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4'>
-                VARA Compliance
+                VARA-aligned issuance
               </h3>
               <p className='text-gray-600 mb-6'>
-                Fully compliant with UAE's Virtual Assets Regulatory Authority
-                (VARA) framework, ensuring all tokenized assets meet the highest
-                regulatory standards.
+                We are designing processes and disclosures around the Virtual
+                Assets Regulatory Authority (VARA) framework in Dubai—targeting
+                compliant distribution, not claiming approvals we have not
+                received.
               </p>
               <ul className='text-left space-y-2 text-sm text-gray-700'>
                 <li className='flex items-center'>
@@ -605,7 +596,7 @@ export default function HomePage() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Regulatory approval for all asset classes
+                  Offering-level legal review before any public sale language
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -613,7 +604,7 @@ export default function HomePage() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Transparent reporting and documentation
+                  Transparent reporting as instruments go live
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -621,7 +612,7 @@ export default function HomePage() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Investor protection mechanisms
+                  Investor suitability and risk disclosures per product
                 </li>
               </ul>
             </div>
@@ -675,12 +666,12 @@ export default function HomePage() {
                 />
               </div>
               <h3 className='text-2xl font-poppins font-bold text-charcoal mb-4'>
-                Proven Returns
+                Why this corridor
               </h3>
               <p className='text-gray-600 mb-6'>
-                Our tokenized assets have consistently delivered competitive
-                returns, with average APRs ranging from 6-18% across different
-                asset classes.
+                Africa–UAE FMCG flows combine real goods, documented receivables,
+                and repeatable shipping—ideal for a first RWA proof where
+                investors can diligence cargo, not just slides.
               </p>
               <ul className='text-left space-y-2 text-sm text-gray-700'>
                 <li className='flex items-center'>
@@ -689,7 +680,7 @@ export default function HomePage() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Diversified asset portfolio
+                  Observable bills of lading and inventory checkpoints
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -697,7 +688,7 @@ export default function HomePage() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Regular income distributions
+                  Clear UAE entry point for settlement and distribution
                 </li>
                 <li className='flex items-center'>
                   <Icon
@@ -705,7 +696,7 @@ export default function HomePage() {
                     className='text-green-600 mr-2'
                     size={12}
                   />
-                  Capital appreciation potential
+                  Room to add more lanes after the first instrument closes
                 </li>
               </ul>
             </div>
@@ -713,30 +704,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Partner Logos */}
+      {/* Partnerships — no marks until agreements are public */}
       <section className='py-16 bg-gray-50'>
-        <div className='max-w-7xl mx-auto px-6 lg:px-8'>
-          <div className='text-center mb-12'>
-            <h3 className='text-lg font-poppins font-medium text-gray-600 mb-8'>
-              Trusted by leading logistics and financial partners
-            </h3>
-          </div>
-          <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60'>
-            {landingPagePartners.map(partner => (
-              <div key={partner.id} className='flex justify-center'>
-                <a
-                  href={partner.website}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='group transition-all duration-300 hover:opacity-100 hover:scale-105'
-                  title={partner.description}
-                >
-                  <span className='text-gray-600 font-medium text-sm group-hover:text-global-teal transition-colors'>
-                    {partner.name}
-                  </span>
-                </a>
-              </div>
-            ))}
+        <div className='max-w-3xl mx-auto px-6 lg:px-8 text-center'>
+          <h3 className='text-2xl font-poppins font-semibold text-charcoal mb-4'>
+            Partnerships
+          </h3>
+          <p className='text-gray-600 mb-6 leading-relaxed'>
+            We do not display bank, asset-manager, or carrier marks unless there
+            is a public or signed relationship. If you are a logistics operator,
+            regulated custodian, or allocator evaluating pilots in the UAE, we
+            would like to talk.
+          </p>
+          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
+            <Link
+              href='/partner-application'
+              className='inline-flex items-center justify-center bg-global-teal text-white px-8 py-3 rounded-full font-poppins font-semibold hover:bg-opacity-90 transition-colors'
+            >
+              Partner application
+              <Icon name='arrow-right' className='ml-2' size={8} />
+            </Link>
+            <a
+              href='https://calendly.com/mohammed-sidat-/global-next-global-edge'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='inline-flex items-center justify-center border-2 border-global-teal text-global-teal px-8 py-3 rounded-full font-poppins font-semibold hover:bg-global-teal hover:text-white transition-colors'
+            >
+              Book a conversation
+            </a>
           </div>
         </div>
       </section>
@@ -851,8 +846,8 @@ export default function HomePage() {
             Ready to Own the Edge of the World?
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Join thousands of investors already earning returns from tokenized
-            real-world assets
+            We are preparing our first issuance pilots—request updates or speak
+            with the team if you evaluate early-stage trade RWA in the Gulf.
           </p>
           <div className='flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6'>
             <Link

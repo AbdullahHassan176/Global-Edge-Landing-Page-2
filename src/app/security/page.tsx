@@ -47,18 +47,9 @@ export default function SecurityPage() {
               Blockchain Integrity Meets Regulatory Trust
             </h2>
             <p className='text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed'>
-              Your{' '}
-              <Link
-                href='/assets'
-                className='underline hover:text-global-teal transition-colors'
-              >
-                assets
-              </Link>{' '}
-              are protected by institutional-grade security measures and{' '}
-              <span className='underline cursor-default opacity-95'>
-                regulatory compliance
-              </span>
-              . Learn about our{' '}
+              We are building security and compliance practices around early
+              trade pilots—no claim that every control is already at full
+              production scale. Learn how we handle data in our{' '}
               <Link
                 href='/privacy'
                 className='underline hover:text-global-teal transition-colors'
@@ -72,20 +63,27 @@ export default function SecurityPage() {
               >
                 terms of service
               </Link>
+              . Program context:{' '}
+              <Link
+                href='/assets'
+                className='underline hover:text-global-teal transition-colors'
+              >
+                assets
+              </Link>
               .
             </p>
             <p className='text-base sm:text-lg md:text-xl font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
-              Our secure tokenized assets UAE platform ensures complete
-              protection of digital investments through advanced blockchain
-              technology, VARA compliance, and institutional-grade security
-              protocols. Every transaction and asset is safeguarded with{' '}
+              Issuance targets VARA-aligned distribution in the UAE; that is a
+              design goal—not a statement that every activity is licensed or that
+              “all investments” are covered by a single insurance tower.               Controls
+              tighten as{' '}
               <Link
-                href='/privacy'
+                href='/assets'
                 className='underline hover:text-global-teal transition-colors'
               >
-                comprehensive privacy protection
+                live products
               </Link>{' '}
-              and regulatory oversight.
+              and counterparties come online.
             </p>
           </div>
         </div>
@@ -118,16 +116,20 @@ export default function SecurityPage() {
             </p>
             <ul className='text-lg text-gray-600 max-w-2xl mx-auto space-y-2 text-left'>
               <li>
-                • <strong>Advanced Encryption:</strong> End-to-end encryption
-                for all data transmission and storage with AES-256 standards
+                • <strong>Encryption:</strong> We use modern TLS for transport and
+                aim for strong standards at rest; exact scopes are documented as
+                services harden for production.
               </li>
               <li>
-                • <strong>Regular Security Audits:</strong> Third-party security
-                audits and penetration testing conducted quarterly
+                • <strong>Assessments:</strong> Third-party reviews and pen tests
+                are part of the roadmap toward issuance—not asserted here on a
+                fixed quarterly cadence until engaged and published.
               </li>
               <li>
-                • <strong>Multi-Signature Wallets:</strong> Multi-signature
-                authentication for all transactions requiring multiple approvals
+                • <strong>Key management:</strong> Where on-chain value moves,
+                we target multi-party approvals and custody practices appropriate
+                to the instrument—not a generic “all txs are multisig” claim
+                before flows are live.
               </li>
             </ul>
           </div>
@@ -141,8 +143,9 @@ export default function SecurityPage() {
                 KYC/KYB Verification
               </h3>
               <p className='text-gray-600'>
-                Comprehensive identity verification for all participants using
-                industry-leading providers and regulatory compliance standards.
+                Identity verification for participants as required by product
+                and jurisdiction—implemented with reputable providers where
+                integrated.
               </p>
             </div>
 
@@ -157,8 +160,9 @@ export default function SecurityPage() {
                 Secure Custody
               </h3>
               <p className='text-gray-600'>
-                Multi-signature wallets and cold storage with
-                institutional-grade security protocols and insurance coverage.
+                Custody architecture depends on the instrument—cold / warm
+                splits, policies, and any insurance are described in offering
+                materials, not as a blanket platform guarantee.
               </p>
             </div>
 
@@ -170,8 +174,9 @@ export default function SecurityPage() {
                 Oracle Attestations
               </h3>
               <p className='text-gray-600'>
-                Third-party verification of asset condition, location, and
-                performance metrics with tamper-proof blockchain records.
+                Third-party or operational attestations when they add diligence
+                value; on-chain references only where they match what the
+                product actually proves.
               </p>
             </div>
 
@@ -196,11 +201,12 @@ export default function SecurityPage() {
                 />
               </div>
               <h3 className='text-xl font-poppins font-semibold text-charcoal mb-4'>
-                24/7 Monitoring
+                Monitoring & response
               </h3>
               <p className='text-gray-600'>
-                Continuous monitoring of all systems with automated threat
-                detection and response capabilities.
+                Logging, alerting, and incident runbooks scale with production
+                traffic—we do not claim a fully staffed 24/7 SOC for an early
+                prototype unless and until that is true.
               </p>
             </div>
 
@@ -212,8 +218,9 @@ export default function SecurityPage() {
                 Regulatory Compliance
               </h3>
               <p className='text-gray-600'>
-                Full compliance with international financial regulations and
-                regular third-party security audits.
+                Regulatory posture is built instrument-by-instrument toward
+                VARA-aligned issuance; “full compliance” statements belong in
+                signed legal opinions for a specific product, not marketing copy.
               </p>
             </div>
           </div>
@@ -225,11 +232,13 @@ export default function SecurityPage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Security Standards & Certifications
+              Security roadmap & posture
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              We maintain the highest security standards and undergo regular
-              audits. Learn about our{' '}
+              We do not list certifications we have not earned. As pilots move to
+              production, we expect SOC reports, pen tests, and payment-scope
+              controls to be scoped with vendors and counsel—and disclosed where
+              appropriate. Read our{' '}
               <Link
                 href='/privacy'
                 className='text-global-teal hover:text-edge-purple transition-colors'
@@ -250,7 +259,7 @@ export default function SecurityPage() {
           <div className='grid md:grid-cols-2 gap-12'>
             <div>
               <h3 className='text-2xl font-poppins font-bold text-charcoal mb-8'>
-                Compliance & Certifications
+                What we are building toward
               </h3>
               <div className='space-y-6'>
                 <div className='flex items-start space-x-4'>
@@ -262,10 +271,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      SOC 2 Type II Certified
+                      Evidence-based claims
                     </h4>
                     <p className='text-gray-600'>
-                      Annual security audits by independent third-party auditors
+                      SOC 2, ISO 27001, PCI DSS, and similar badges belong on this
+                      page only after they are true for the entity and scope
+                      described—ask for the latest diligence pack under NDA.
                     </p>
                   </div>
                 </div>
@@ -279,10 +290,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      ISO 27001 Compliant
+                      Data protection
                     </h4>
                     <p className='text-gray-600'>
-                      International standard for information security management
+                      Privacy practices for the UAE and other jurisdictions we
+                      touch are documented in the privacy policy and updated as
+                      products expand.
                     </p>
                   </div>
                 </div>
@@ -296,10 +309,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      PCI DSS Level 1
+                      Payments scope
                     </h4>
                     <p className='text-gray-600'>
-                      Highest level of payment card industry security standards
+                      Card and fiat rails, when used, are expected to lean on
+                      certified processors to minimize PCI scope rather than
+                      claiming Level 1 merchant certification by default.
                     </p>
                   </div>
                 </div>
@@ -313,10 +328,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      GDPR Compliant
+                      GDPR / EU data
                     </h4>
                     <p className='text-gray-600'>
-                      Full compliance with European data protection regulations
+                      Where EU personal data is processed, we align to GDPR
+                      requirements; applicability depends on who uses the platform
+                      and from where.
                     </p>
                   </div>
                 </div>
@@ -325,7 +342,7 @@ export default function SecurityPage() {
 
             <div>
               <h3 className='text-2xl font-poppins font-bold text-charcoal mb-8'>
-                Security Measures
+                Technical controls (targets)
               </h3>
               <div className='space-y-6'>
                 <div className='flex items-start space-x-4'>
@@ -337,10 +354,11 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      Multi-Factor Authentication
+                      Multi-factor authentication
                     </h4>
                     <p className='text-gray-600'>
-                      Required for all account access and transactions
+                      MFA for privileged and customer accounts as flows go
+                      live—requirements tighten with asset-bearing features.
                     </p>
                   </div>
                 </div>
@@ -354,10 +372,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      Hardware Security Modules
+                      Key protection
                     </h4>
                     <p className='text-gray-600'>
-                      HSM-protected private keys for maximum security
+                      HSMs or cloud KMS patterns where keys protect real value;
+                      exact design is per environment and reviewed before mainnet
+                      funds.
                     </p>
                   </div>
                 </div>
@@ -371,10 +391,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      Zero-Trust Architecture
+                      Least privilege access
                     </h4>
                     <p className='text-gray-600'>
-                      Never trust, always verify security model
+                      Zero-trust style reviews for production systems: verify each
+                      request, minimize standing access, audit trails for admin
+                      actions.
                     </p>
                   </div>
                 </div>
@@ -388,10 +410,12 @@ export default function SecurityPage() {
                   </div>
                   <div>
                     <h4 className='font-poppins font-semibold text-charcoal mb-2'>
-                      Penetration Testing
+                      Penetration testing
                     </h4>
                     <p className='text-gray-600'>
-                      Regular security testing by certified ethical hackers
+                      Engagements scheduled around releases; summaries shared with
+                      counterparties under NDA—not a substitute for your own
+                      testing.
                     </p>
                   </div>
                 </div>
@@ -406,58 +430,26 @@ export default function SecurityPage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Comprehensive Insurance Coverage
+              Insurance & liability
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Your investments are protected by multiple layers of insurance
+              Cargo, custody, errors & omissions, and other policies are placed per
+              instrument and counterparty—not as a single fabricated “$500M”
+              tower across the whole site. When an offering is live, its documents
+              name carriers, limits, exclusions, and beneficiaries.
             </p>
           </div>
 
-          <div className='grid md:grid-cols-3 gap-8'>
-            <div className='bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 text-center'>
-              <div className='w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6'>
-                <Icon name='shield-halved' className='text-white text-2xl' />
-              </div>
-              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-4'>
-                Asset Insurance
-              </h3>
-              <div className='text-3xl font-poppins font-bold text-blue-600 mb-2'>
-                $500M
-              </div>
-              <p className='text-sm text-gray-600'>
-                Total coverage for physical assets
-              </p>
-            </div>
-
-            <div className='bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center'>
-              <div className='w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6'>
-                <Icon name='check-circle' className='text-white text-2xl' />
-              </div>
-              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-4'>
-                Custody Insurance
-              </h3>
-              <div className='text-3xl font-poppins font-bold text-green-600 mb-2'>
-                $100M
-              </div>
-              <p className='text-sm text-gray-600'>
-                Coverage for digital asset custody
-              </p>
-            </div>
-
-            <div className='bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 text-center'>
-              <div className='w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6'>
-                <Icon name='lock-closed' className='text-white text-2xl' />
-              </div>
-              <h3 className='text-xl font-poppins font-semibold text-charcoal mb-4'>
-                Professional Liability
-              </h3>
-              <div className='text-3xl font-poppins font-bold text-purple-600 mb-2'>
-                $50M
-              </div>
-              <p className='text-sm text-gray-600'>
-                Coverage for professional services
-              </p>
-            </div>
+          <div className='max-w-3xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-8 text-center'>
+            <Icon
+              name='shield-halved'
+              className='text-global-teal text-4xl mx-auto mb-4'
+            />
+            <p className='text-gray-700 leading-relaxed'>
+              Ask for the diligence pack on the specific pilot: what is insured,
+              who is the loss payee, and what risks remain uninsured. Marketing
+              pages are not the place for made-up aggregate limits.
+            </p>
           </div>
         </div>
       </section>
@@ -480,10 +472,10 @@ export default function SecurityPage() {
                 How are my assets protected?
               </h3>
               <p className='text-gray-600'>
-                Your assets are protected by multiple layers of security
-                including cold storage, multi-signature wallets, insurance
-                coverage, and regulatory compliance. We use institutional-grade
-                security measures that exceed industry standards.
+                Protection depends on the product: custody design, insurance if
+                placed, and legal structure are described per offering. We do not
+                claim blanket “exceeds industry standards” coverage for assets that
+                have not yet issued.
               </p>
             </div>
 
@@ -492,10 +484,10 @@ export default function SecurityPage() {
                 What happens if there's a security breach?
               </h3>
               <p className='text-gray-600'>
-                In the unlikely event of a security breach, our comprehensive
-                insurance coverage protects your investments. We also have
-                incident response procedures and 24/7 monitoring to detect and
-                respond to any threats immediately.
+                If an incident occurs, response follows documented runbooks,
+                vendor obligations, and applicable law—not a promise that every
+                loss is insured. Monitoring and on-call coverage scale with
+                production systems.
               </p>
             </div>
 
@@ -504,10 +496,10 @@ export default function SecurityPage() {
                 How often are security audits performed?
               </h3>
               <p className='text-gray-600'>
-                We undergo annual SOC 2 Type II audits and quarterly penetration
-                testing by certified security professionals. Our systems are
-                continuously monitored and we maintain regular compliance
-                reviews.
+                Audit and pen-test cadence is tied to releases and institutional
+                requirements—not asserted here as “annual SOC 2 + quarterly pen
+                tests” until those reports exist and are scoped to our
+                environment.
               </p>
             </div>
 
@@ -516,9 +508,10 @@ export default function SecurityPage() {
                 Can I access my account from anywhere?
               </h3>
               <p className='text-gray-600'>
-                Yes, but all access requires multi-factor authentication. We use
-                zero-trust architecture, meaning every access attempt is
-                verified regardless of location or device.
+                Remote access is supported where product features are enabled; we
+                aim for MFA on sensitive accounts and least-privilege access as
+                those flows mature—not a claim that every legacy path is already
+                wired for MFA in prototype sandboxes.
               </p>
             </div>
           </div>
@@ -532,11 +525,11 @@ export default function SecurityPage() {
       >
         <div className='max-w-4xl mx-auto px-6 lg:px-8 text-center'>
           <h2 className='text-4xl lg:text-5xl font-poppins font-bold text-white mb-6'>
-            Invest with Confidence
+            Diligence-first security
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Your security is our top priority. Start investing in tokenized
-            assets with complete peace of mind. Learn about our{' '}
+            Ask direct questions—we are early stage and prefer precise answers
+            over marketing comfort. Review our{' '}
             <Link
               href='/privacy'
               className='underline hover:text-global-teal transition-colors'
@@ -550,14 +543,14 @@ export default function SecurityPage() {
             >
               terms of service
             </Link>
-            .
+            , then decide if the pilot fits your risk framework.
           </p>
           <div className='flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6'>
             <button
               onClick={() => (window.location.href = '/get-started')}
               className='bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors'
             >
-              Start Investing Today
+              Get updates / onboard
             </button>
             <a
               href={`mailto:${contactConfig.support.email}?subject=Security Inquiry`}

@@ -174,13 +174,7 @@ export class AssetMetricsService {
       console.log('Using fallback calculation for assets under management');
     }
 
-    // Fallback calculation using mock data
-    const containerValue = 247 * 40000; // Average container value
-    const propertyValue = 89 * 350000; // Average property value
-    const inventoryValue = 156 * 25000; // Average inventory value
-    const vaultValue = 34 * 15000; // Average vault value
-
-    return containerValue + propertyValue + inventoryValue + vaultValue;
+    return 0;
   }
 
   // Calculate total assets tokenized
@@ -194,14 +188,12 @@ export class AssetMetricsService {
       console.log('Using fallback calculation for assets tokenized');
     }
 
-    // Fallback calculation
-    return 247 + 89 + 156 + 34; // Total from all categories
+    return 0;
   }
 
   // Calculate on-time delivery rate
   static calculateOnTimeDeliveryRate(): number {
-    // Mock calculation - in production, this would come from actual delivery data
-    return 98.7; // Based on industry standards for logistics
+    return 0;
   }
 
   // Calculate average APR across all assets
@@ -219,13 +211,7 @@ export class AssetMetricsService {
       console.log('Using fallback calculation for average APR');
     }
 
-    // Fallback calculation
-    const sampleAPRs = [
-      12.5, 11.8, 13.8, 8.2, 9.5, 7.8, 15.1, 13.2, 14.5, 6.8, 7.5, 6.2,
-    ];
-    const average =
-      sampleAPRs.reduce((sum, apr) => sum + apr, 0) / sampleAPRs.length;
-    return Math.round(average * 10) / 10; // Round to 1 decimal place
+    return 0;
   }
 
   // Calculate total portfolio value
@@ -258,12 +244,11 @@ export class AssetMetricsService {
       console.log('Using fallback category breakdown');
     }
 
-    // Fallback breakdown
     return {
-      containers: 247,
-      property: 89,
-      tradetokens: 156,
-      vault: 34,
+      containers: 0,
+      property: 0,
+      tradetokens: 0,
+      vault: 0,
     };
   }
 
@@ -287,12 +272,7 @@ export class AssetMetricsService {
       console.log('Using fallback risk distribution');
     }
 
-    // Fallback distribution
-    return {
-      low: 45, // Properties and vaults are typically low risk
-      medium: 40, // Most containers and some inventory
-      high: 15, // Some high-risk inventory and volatile assets
-    };
+    return { low: 0, medium: 0, high: 0 };
   }
 
   // Get all metrics with timeout protection
@@ -338,18 +318,18 @@ export class AssetMetricsService {
       console.log('Metrics calculation failed, using fallback:', error);
       // Return fallback metrics
       return {
-        totalAssetsUnderManagement: 45400000,
-        totalAssetsTokenized: 526,
-        onTimeDeliveryRate: 98.7,
-        averageAPR: 10.6,
-        totalValue: 45400000,
+        totalAssetsUnderManagement: 0,
+        totalAssetsTokenized: 0,
+        onTimeDeliveryRate: 0,
+        averageAPR: 0,
+        totalValue: 0,
         categoryBreakdown: {
-          containers: 247,
-          property: 89,
-          tradetokens: 156,
-          vault: 34,
+          containers: 0,
+          property: 0,
+          tradetokens: 0,
+          vault: 0,
         },
-        riskDistribution: { low: 45, medium: 40, high: 15 },
+        riskDistribution: { low: 0, medium: 0, high: 0 },
       };
     }
   }

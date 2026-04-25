@@ -75,7 +75,7 @@ export default function DatabasePage() {
     setLoading(true);
     const queries = [
       { name: 'Get Users', url: '/api/users' },
-      { name: 'Get Assets', url: '/api/assets' },
+      { name: 'Get Assets', url: '/api/marketplace-assets' },
       { name: 'Get Investments', url: '/api/investments' },
     ];
 

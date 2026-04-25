@@ -673,8 +673,8 @@ export default function InvestmentGuidePage() {
               Ready to Start Investing?
             </h2>
             <p className='text-xl text-white opacity-90 mb-8'>
-              Join thousands of investors earning returns from tokenized
-              real-world assets
+              Educational content only—verify any live offering against official
+              disclosures when pilots list
             </p>
             <div className='flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6'>
               <Link

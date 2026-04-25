@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The Global Edge is a VARA-compliant platform for real-world asset tokenization in the UAE. The platform enables fractional ownership of shipping containers, real estate, and trade inventory through blockchain technology.
+The Global Edge is building toward VARA-aligned issuance for real-world asset tokenization in the UAE—starting with Africa–UAE FMCG trade (one live cargo lane; first tokenization in prototype). Roadmap includes containers, property, and vault programs as the stack matures.
 
 ## Architecture & Key Technologies
 
@@ -38,7 +38,7 @@ src/
 - **Asset Management**: Tokenized real-world assets (containers, property, trade tokens, vault)
 - **User Authentication**: Multi-role system (investors, issuers, admins)
 - **Investment Flow**: KYC → Asset Selection → Investment → Portfolio Management
-- **Compliance**: VARA regulatory compliance throughout the platform
+- **Compliance**: Design target is VARA-aligned distribution; do not claim approvals that are not in place
 
 ## Development Guidelines & Conventions
 
@@ -75,7 +75,7 @@ src/
 
 - Graceful degradation for external service failures
 - User-friendly error messages
-- Fallback to mock data when services are unavailable
+- Avoid presenting mock or fallback metrics as live traction on user-facing surfaces
 - Comprehensive logging for debugging
 
 ## Security Considerations
@@ -95,45 +95,17 @@ src/
 
 ## Global Instructions for Code Consistency
 
-### Metadata Migration (Current Priority)
+- Prefer App Router `generateMetadata()` over `next/head` in new work; keep canonicals and OG tags accurate.
+- Asset metrics: `assetIntegration` is source of truth; do not reintroduce fabricated AUM, counts, or APR fallbacks in `assetMetricsService`.
+- UX: loading states, responsive layout, WCAG-minded semantics; optimize images with `next/image`.
 
-1. **Remove all `<Head>` imports and blocks** from page.tsx files
-2. **Move SEO metadata to layout.tsx** using `generateMetadata()` function
-3. **Preserve JSON-LD structured data** in `other` field
-4. **Maintain canonical URLs** and Open Graph tags
-5. **Verify no duplicate metadata** after migration
+## Public positioning (marketing copy)
 
-### Asset Management
-
-- All asset data flows through `assetService` and `assetIntegration`
-- Mock data available for development
-- Real-time data from oracle networks
-- Proper error handling for data loading failures
-
-### User Experience
-
-- Loading states for all async operations
-- Responsive design for all screen sizes
-- Accessibility compliance (WCAG 2.1)
-- Smooth transitions and animations
-
-### Performance
-
-- Image optimization with Next.js Image component
-- Code splitting and lazy loading
-- Efficient state management
-- Minimal bundle size
-
-## Current Migration Status
-
-- **In Progress**: Removing `<Head>` imports and migrating to Metadata API
-- **Target**: All 49 pages with Head imports need migration
-- **Priority**: Start with main pages (home, FAQ, assets, how-it-works)
+- **Truth**: Early stage—Africa–UAE FMCG trade focus, one live cargo lane, first tokenization in prototype; VARA-aligned issuance is a **target**, not a claim of existing approval.
+- **Never** on the public site: invented AUM, asset counts, partner bank/carrier marks without signed/public agreements, “thousands of investors,” or platform-wide performance stats before real offerings list.
+- **Partners**: `src/lib/partnersData.ts` stays empty until real partners are added; home and `/partners` explain that policy.
+- **Key routes**: `/how-it-works`, `/security`, and `/assets` (pages + `layout.tsx` metadata/JSON-LD where present) follow the same pilot-honesty bar as the home page.
 
 ## Notes for AI Assistants
 
-- Always check for existing `ai.md` file for project context
-- Follow the established patterns in the codebase
-- Maintain VARA compliance in all implementations
-- Use the existing design system and component library
-- Test changes thoroughly before deployment
+- Read this file first; match existing patterns; keep diffs scoped to the task.

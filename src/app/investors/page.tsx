@@ -427,8 +427,8 @@ export default function InvestorsPage() {
             Ready to Start Investing?
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Join thousands of investors earning returns from tokenized
-            real-world assets. Get started with our{' '}
+            We are in pilot phase—no mass retail AUM claims. Get started with
+            our{' '}
             <Link
               href='/get-started'
               className='underline hover:text-global-teal transition-colors'

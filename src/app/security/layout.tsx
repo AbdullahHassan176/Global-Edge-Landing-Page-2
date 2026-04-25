@@ -9,9 +9,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title:
       'Security | Blockchain, Compliance & Infrastructure | The Global Edge',
     description:
-      'Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance.',
+      'Security posture for early-stage pilots: data protection, key management targets, and diligence-friendly practices—VARA-aligned issuance is a roadmap goal, not a blanket certification claim.',
     keywords:
-      'blockchain security, VARA compliance, tokenized asset security, data protection, transaction security, infrastructure security, regulatory compliance, blockchain integrity',
+      'blockchain security, VARA-aligned issuance, RWA security, data protection, transaction security, infrastructure security, key management, pilot diligence',
     robots: { index: true, follow: true },
     alternates: {
       canonical: 'https://theglobaledge.io/security',
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title:
         'Security | Blockchain, Compliance & Infrastructure | The Global Edge',
       description:
-        'Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance.',
+        'Security posture for early-stage pilots: data protection, key management targets, and diligence-friendly practices—VARA-aligned issuance is a roadmap goal.',
       url: 'https://theglobaledge.io/security',
       type: 'website',
       images: [
@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title:
         'Security | Blockchain, Compliance & Infrastructure | The Global Edge',
       description:
-        'Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance.',
+        'Security posture for early-stage pilots: data protection, key management targets, and diligence-friendly practices—VARA-aligned issuance is a roadmap goal.',
       images: ['https://theglobaledge.io/og-security.jpg'],
     },
   };
@@ -54,7 +54,7 @@ export default function SecurityLayout({
     '@type': 'TechArticle',
     headline: 'Security: Blockchain, Compliance & Infrastructure',
     description:
-      'Security first: Learn how The Global Edge protects your data, transactions, and tokenized assets using blockchain integrity and VARA compliance',
+      'Security posture for early-stage pilots: data protection, key management targets, and diligence-friendly practices toward VARA-aligned issuance.',
     url: 'https://theglobaledge.io/security',
     datePublished: '2024-01-01',
     dateModified: '2024-01-01',
@@ -71,13 +71,13 @@ export default function SecurityLayout({
       {
         '@type': 'Thing',
         name: 'Blockchain Security',
-        description: 'Security measures for blockchain-based tokenized assets',
+        description: 'Security measures for blockchain-based issuance programs',
       },
       {
         '@type': 'Thing',
-        name: 'VARA Compliance',
+        name: 'VARA-aligned issuance',
         description:
-          'Regulatory compliance with UAE Virtual Asset Regulatory Authority',
+          'Design target for UAE virtual asset distribution—not a claim of existing VARA licensing for every activity',
       },
       {
         '@type': 'Thing',

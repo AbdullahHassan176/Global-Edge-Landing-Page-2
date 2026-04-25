@@ -1,10 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import Icon from '@/components/ui/Icon';
-import HeroSection from '@/components/ui/HeroSection';
 import Link from 'next/link';
-import { partners, getPartnersByCategory } from '@/lib/partnersData';
 
 /*
 Layout Rollback:
@@ -12,26 +9,22 @@ Layout Rollback:
 - Increased text container width (max-w-5xl to max-w-6xl)
 */
 
-const partnerCategories = [
+const collaboratorTypes = [
   {
-    id: 'logistics',
-    title: 'Logistics Partners',
-    description: 'Leading shipping and logistics companies',
+    title: 'Logistics & trade',
+    body: 'Carriers, freight forwarders, and FMCG shippers who can attest cargo, handoffs, and release documentation for a pilot lane.',
   },
   {
-    id: 'financial',
-    title: 'Financial Partners',
-    description: 'Banking and financial service providers',
+    title: 'Capital & distribution',
+    body: 'Allocators, family offices, and regulated intermediaries comfortable diligencing an early instrument—not marketing AUM.',
   },
   {
-    id: 'technology',
-    title: 'Technology Partners',
-    description: 'Blockchain and oracle infrastructure providers',
+    title: 'Technology & attestations',
+    body: 'Blockchain, custody, and data partners that help prove state changes without overstating what is on-chain today.',
   },
   {
-    id: 'legal',
-    title: 'Legal & Compliance',
-    description: 'Legal and regulatory compliance partners',
+    title: 'Legal & compliance',
+    body: 'Counsel and compliance advisors for VARA-aligned issuance and offering documentation in the UAE.',
   },
 ];
 
@@ -44,7 +37,7 @@ const partnershipBenefits = [
   {
     icon: 'users',
     title: 'Access to Investors',
-    description: 'Connect with our global network of qualified investors',
+    description: 'Meet teams evaluating the first trade-backed pilots',
   },
   {
     icon: 'chart-line',
@@ -72,40 +65,39 @@ export default function PartnersPage() {
               </span>
             </div>
             <h1 className='text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight break-words max-w-6xl'>
-              Our Partners
+              Partner with Global Edge
             </h1>
             <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-6xl'>
-              Collaborating for Real-World Asset Innovation
+              Help stand up honest trade-backed issuance
             </h2>
             <p className='text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
-              Join our ecosystem of leading companies in logistics, technology,
-              and finance to unlock new opportunities in asset tokenization.
-              Learn about our{' '}
+              We are pre–public partner announcements: one live South Africa →
+              UAE cargo lane, a tokenization prototype, and a target of
+              VARA-aligned distribution. If your firm operates in logistics,
+              custody, or regulated capital, we want to explore structure—not
+              borrow your logo for marketing.
+            </p>
+            <p className='text-base sm:text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
+              Read our{' '}
               <Link
                 href='/how-it-works'
                 className='underline hover:text-global-teal transition-colors'
               >
-                tokenization process
-              </Link>{' '}
-              and{' '}
-              <Link
-                href='/contact'
-                className='underline hover:text-global-teal transition-colors'
-              >
-                contact us
-              </Link>{' '}
-              for partnership opportunities.
-            </p>
-            <p className='text-base sm:text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
-              Our tokenization ecosystem partners in the UAE work together to
-              create innovative solutions for asset digitization, ensuring
-              regulatory compliance and enhanced market liquidity through
-              strategic collaboration and{' '}
+                issuance approach
+              </Link>
+              , review{' '}
               <Link
                 href='/security'
                 className='underline hover:text-global-teal transition-colors'
               >
-                institutional-grade security
+                security posture
+              </Link>
+              , then{' '}
+              <Link
+                href='/contact'
+                className='underline hover:text-global-teal transition-colors'
+              >
+                get in touch
               </Link>
               .
             </p>
@@ -136,16 +128,16 @@ export default function PartnersPage() {
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Trusted Partners Driving Tokenization Innovation
+              What a credible pilot needs
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto mb-6'>
-              Unlock new revenue streams and market opportunities through
-              strategic partnerships. Learn about our{' '}
+              No invented traction—just the disciplines required to ship a first
+              instrument. See{' '}
               <Link
                 href='/how-it-works'
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
-                tokenization process
+                how it works
               </Link>{' '}
               and{' '}
               <Link
@@ -153,22 +145,21 @@ export default function PartnersPage() {
                 className='text-global-teal hover:text-edge-purple transition-colors'
               >
                 contact us
-              </Link>{' '}
-              for partnership opportunities.
+              </Link>
+              .
             </p>
             <ul className='text-lg text-gray-600 max-w-2xl mx-auto space-y-2 text-left'>
               <li>
-                • <strong>Logistics Partners:</strong> Leading shipping and
-                logistics companies enabling container and cargo tokenization
+                • <strong>Operational truth:</strong> Bills of lading, inventory
+                counts, and release events that match the story in the data room
               </li>
               <li>
-                • <strong>Asset Managers:</strong> Professional asset management
-                firms providing expertise in real estate and trade inventory
+                • <strong>Capital discipline:</strong> Clear waterfalls and
+                triggers—no platform-wide APR marketing before an offering closes
               </li>
               <li>
-                • <strong>Technology Partners:</strong> Blockchain
-                infrastructure providers and oracle networks ensuring secure,
-                transparent operations
+                • <strong>Technical integrity:</strong> Custody, keys, and
+                attestations that match what you tell regulators
               </li>
             </ul>
           </div>
@@ -193,179 +184,90 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Partner Categories */}
+      {/* Collaborator types — no logos until agreements are public */}
       <section className='py-20 bg-gray-50'>
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Our Partner Ecosystem
+              Who we are talking to
             </h2>
             <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Trusted by industry leaders across multiple sectors. Discover our{' '}
-              <Link
-                href='/how-it-works'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                tokenization process
-              </Link>{' '}
-              and{' '}
-              <Link
-                href='/contact'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                contact us
-              </Link>{' '}
-              to join our ecosystem.
+              Categories of collaborators—not a wall of marks. When a
+              relationship is signed and cleared for disclosure, we will say so
+              explicitly.
             </p>
           </div>
 
-          <div className='grid md:grid-cols-2 gap-12'>
-            {partnerCategories.map((category, index) => {
-              const categoryPartners = getPartnersByCategory(
-                category.id as any
-              );
-              return (
-                <div key={index} className='bg-white rounded-2xl p-8 shadow-lg'>
-                  <h3 className='text-2xl font-poppins font-bold text-charcoal mb-3'>
-                    {category.title}
-                  </h3>
-                  <p className='text-gray-600 mb-6'>{category.description}</p>
-                  <div className='grid grid-cols-2 gap-4'>
-                    {categoryPartners.map(partner => (
-                      <a
-                        key={partner.id}
-                        href={partner.website}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='bg-gray-50 rounded-lg p-4 text-center hover:bg-gray-100 transition-colors group'
-                        title={partner.description}
-                      >
-                        <span className='font-semibold text-charcoal text-sm group-hover:text-global-teal transition-colors'>
-                          {partner.name}
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+          <div className='grid md:grid-cols-2 gap-8'>
+            {collaboratorTypes.map((item, index) => (
+              <div key={index} className='bg-white rounded-2xl p-8 shadow-lg'>
+                <h3 className='text-2xl font-poppins font-bold text-charcoal mb-3'>
+                  {item.title}
+                </h3>
+                <p className='text-gray-600 leading-relaxed'>{item.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Partnership Success Stories */}
+      {/* Honest status — no fabricated case studies */}
       <section className='py-20 bg-white'>
         <div className='max-w-7xl mx-auto px-6 lg:px-8'>
-          <div className='text-center mb-16'>
+          <div className='text-center mb-12 max-w-3xl mx-auto'>
             <h2 className='text-4xl font-poppins font-bold text-charcoal mb-4'>
-              Partnership Success Stories
+              Pilot status
             </h2>
-            <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
-              Our partners have achieved remarkable success through strategic
-              collaboration in the tokenization ecosystem. Learn about our{' '}
-              <Link
-                href='/how-it-works'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                tokenization process
-              </Link>{' '}
-              and{' '}
-              <Link
-                href='/contact'
-                className='text-global-teal hover:text-edge-purple transition-colors'
-              >
-                contact us
-              </Link>{' '}
-              to join our success stories.
+            <p className='text-xl text-gray-600'>
+              Case studies with revenue multiples will appear after a first
+              instrument is issued, settled, and reported—not as placeholder
+              metrics. Today: one container on the South Africa → UAE lane, a
+              tokenization prototype in development, and VARA-aligned issuance
+              as the regulatory target.
             </p>
           </div>
-
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16'>
-            <div className='bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8'>
-              <div className='w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-6'>
-                <Icon name='ship' className='text-white text-lg' size={20} />
-              </div>
-              <h3 className='text-xl font-poppins font-bold text-charcoal mb-4'>
-                Logistics Partnership
-              </h3>
-              <p className='text-gray-600 mb-4'>
-                Leading shipping company increased asset liquidity by 300%
-                through container tokenization, generating $2.4M in additional
-                revenue.
-              </p>
-              <div className='space-y-2 text-sm'>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Revenue Increase:</span>
-                  <span className='text-green-600 font-semibold'>+300%</span>
-                </div>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Assets Tokenized:</span>
-                  <span className='font-semibold'>247</span>
-                </div>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Additional Revenue:</span>
-                  <span className='font-semibold'>$2.4M</span>
-                </div>
-              </div>
-            </div>
-
-            <div className='bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8'>
-              <div className='w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-6'>
+          <div className='max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-200'>
+            <ul className='text-left text-gray-700 space-y-3'>
+              <li className='flex gap-3'>
                 <Icon
-                  name='building'
-                  className='text-white text-lg'
-                  size={20}
+                  name='check-circle'
+                  className='text-global-teal shrink-0 mt-1'
+                  size={12}
                 />
-              </div>
-              <h3 className='text-xl font-poppins font-bold text-charcoal mb-4'>
-                Real Estate Partnership
-              </h3>
-              <p className='text-gray-600 mb-4'>
-                Property management firm unlocked $15M in previously illiquid
-                assets through fractional ownership tokenization.
-              </p>
-              <div className='space-y-2 text-sm'>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Liquidity Unlocked:</span>
-                  <span className='text-green-600 font-semibold'>$15M</span>
-                </div>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Properties Tokenized:</span>
-                  <span className='font-semibold'>89</span>
-                </div>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Investor Base:</span>
-                  <span className='font-semibold'>1,200+</span>
-                </div>
-              </div>
-            </div>
-
-            <div className='bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8'>
-              <div className='w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mb-6'>
-                <Icon name='boxes' className='text-white text-lg' size={20} />
-              </div>
-              <h3 className='text-xl font-poppins font-bold text-charcoal mb-4'>
-                Trade Partnership
-              </h3>
-              <p className='text-gray-600 mb-4'>
-                Commodity trading company improved supply chain transparency and
-                reduced financing costs by 40% through inventory tokenization.
-              </p>
-              <div className='space-y-2 text-sm'>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Cost Reduction:</span>
-                  <span className='text-green-600 font-semibold'>-40%</span>
-                </div>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Inventory Tokenized:</span>
-                  <span className='font-semibold'>156</span>
-                </div>
-                <div className='flex justify-between'>
-                  <span className='text-gray-500'>Transparency Score:</span>
-                  <span className='font-semibold'>98%</span>
-                </div>
-              </div>
-            </div>
+                <span>
+                  Operational focus on FMCG inventory and receivables tied to
+                  real cargo.
+                </span>
+              </li>
+              <li className='flex gap-3'>
+                <Icon
+                  name='check-circle'
+                  className='text-global-teal shrink-0 mt-1'
+                  size={12}
+                />
+                <span>
+                  Legal and product workstreams for a first offering—not a
+                  catalog of hundreds of live tokens.
+                </span>
+              </li>
+              <li className='flex gap-3'>
+                <Icon
+                  name='check-circle'
+                  className='text-global-teal shrink-0 mt-1'
+                  size={12}
+                />
+                <span>
+                  If you need diligence materials, start with{' '}
+                  <Link
+                    href='/how-it-works'
+                    className='text-global-teal hover:text-edge-purple transition-colors'
+                  >
+                    how it works
+                  </Link>{' '}
+                  and a direct conversation—not this page’s old marketing copy.
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>

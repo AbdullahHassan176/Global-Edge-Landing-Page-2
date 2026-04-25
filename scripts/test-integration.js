@@ -103,7 +103,7 @@ async function testAPIEndpoints(port) {
 
   const endpoints = [
     { name: 'Users API', url: '/api/users' },
-    { name: 'Assets API', url: '/api/assets' },
+    { name: 'Assets API', url: '/api/marketplace-assets' },
     { name: 'Investments API', url: '/api/investments' },
   ];
 
@@ -190,7 +190,7 @@ function generateSuggestions() {
       priority: 'Medium',
       suggestion: 'Connect assets page to database',
       implementation:
-        'Update src/app/assets/page.tsx to fetch data from /api/assets endpoint',
+        'Update src/app/assets/page.tsx to fetch data from /api/marketplace-assets endpoint',
     });
   }
 

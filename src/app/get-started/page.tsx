@@ -36,8 +36,9 @@ export default function GetStartedPage() {
               Register as an Investor or Issuer
             </h2>
             <p className='text-base sm:text-lg md:text-xl font-inter font-light opacity-90 mb-6 max-w-6xl leading-relaxed'>
-              Join thousands of investors earning returns from real-world
-              assets. Get started in minutes with our simple onboarding process.
+              Create an account to follow issuance pilots and complete onboarding
+              when offerings open. Early stage: one live cargo lane, prototype
+              tokenization in progress.
               Learn about{' '}
               <Link
                 href='/investors'
@@ -560,8 +561,8 @@ export default function GetStartedPage() {
             Ready to Start Your Investment Journey?
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Join thousands of investors earning returns from tokenized
-            real-world assets. Get started today. Learn about{' '}
+            Get on the list for the first Africa–UAE trade instruments. Learn
+            about{' '}
             <Link
               href='/investors'
               className='underline hover:text-global-teal transition-colors'

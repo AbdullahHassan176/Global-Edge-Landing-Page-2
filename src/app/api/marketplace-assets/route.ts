@@ -1,7 +1,8 @@
 /**
- * Assets API Route
+ * Marketplace assets API (CRUD for asset records)
  *
- * This endpoint handles CRUD operations for assets
+ * Served at /api/marketplace-assets. /api/assets is rewritten here for
+ * backward compatibility (see next.config.js).
  */
 
 import { NextRequest, NextResponse } from 'next/server';

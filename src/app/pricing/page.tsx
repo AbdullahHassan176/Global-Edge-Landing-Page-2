@@ -421,8 +421,8 @@ export default function PricingPage() {
             Ready to Start Investing?
           </h2>
           <p className='text-xl text-white opacity-90 mb-8'>
-            Join thousands of investors earning returns from tokenized
-            real-world assets. Learn about our{' '}
+            Pricing supports early pilots and institutional workflows. Learn
+            about our{' '}
             <Link
               href='/how-it-works'
               className='underline hover:text-global-teal transition-colors'
