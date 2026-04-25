@@ -70,8 +70,8 @@ export default function Header() {
   }, []);
 
   return (
-    <nav className='bg-white border-b border-gray-200 sticky top-0 z-50'>
-      <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+    <nav className='sticky top-0 z-50 h-16 border-b border-[rgba(214,195,163,0.22)] bg-[#FBF7F1]/90 backdrop-blur-xl'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between items-center h-16'>
           <div className='flex items-center space-x-8'>
             <Link
@@ -85,10 +85,10 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`font-medium cursor-pointer transition-colors ${
+                  className={`font-medium cursor-pointer transition-colors duration-[250ms] ${
                     pathname === item.href
-                      ? 'text-global-teal border-b-2 border-global-teal pb-1'
-                      : 'text-charcoal hover:text-global-teal'
+                      ? 'text-edge-purple border-b-2 border-gc-gold pb-1'
+                      : 'text-gc-text-muted hover:text-edge-purple'
                   }`}
                 >
                   {item.label}
@@ -100,7 +100,7 @@ export default function Header() {
             <div className='relative' ref={notificationRef}>
               <button
                 onClick={handleNotificationClick}
-                className='hidden md:block text-gray-600 hover:text-charcoal transition-colors relative'
+                className='hidden md:block text-gc-text-muted hover:text-edge-purple transition-colors relative'
               >
                 <Icon name='bell' className='text-lg' size={12} />
                 {/* Notification badge */}
@@ -121,7 +121,7 @@ export default function Header() {
             <div className='relative' ref={adminRef}>
               <button
                 onClick={handleAdminClick}
-                className='hidden md:block text-gray-600 hover:text-charcoal transition-colors'
+                className='hidden md:block text-gc-text-muted hover:text-edge-purple transition-colors'
                 title='Admin Access'
               >
                 <Icon name='cog' className='text-lg' size={12} />
@@ -129,7 +129,7 @@ export default function Header() {
 
               {/* Admin menu dropdown */}
               {isAdminMenuOpen && (
-                <div className='absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50'>
+                <div className='absolute right-0 mt-2 w-56 rounded-gc-card-lg border border-[rgba(214,195,163,0.35)] bg-[#FBF7F1]/95 backdrop-blur-xl shadow-gc-card z-50'>
                   <div className='py-1'>
                     <div className='px-4 py-2 border-b border-gray-100'>
                       <p className='text-xs font-semibold text-gray-500 uppercase tracking-wide'>
@@ -192,14 +192,14 @@ export default function Header() {
             <div className='relative' ref={userRef}>
               <button
                 onClick={handleUserClick}
-                className='hidden md:block text-gray-600 hover:text-charcoal transition-colors'
+                className='hidden md:block text-gc-text-muted hover:text-edge-purple transition-colors'
               >
                 <Icon name='user' className='text-lg' size={12} />
               </button>
 
               {/* User menu dropdown */}
               {isUserMenuOpen && (
-                <div className='absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50'>
+                <div className='absolute right-0 mt-2 w-48 rounded-gc-card-lg border border-[rgba(214,195,163,0.35)] bg-[#FBF7F1]/95 backdrop-blur-xl shadow-gc-card z-50'>
                   <div className='py-1'>
                     <Link
                       href='/profile'
@@ -251,7 +251,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className='md:hidden border-t border-gray-200 py-4'>
+          <div className='md:hidden border-t border-[rgba(214,195,163,0.22)] py-4'>
             <div className='flex flex-col space-y-4'>
               {navigationItems.map(item => (
                 <Link
@@ -259,8 +259,8 @@ export default function Header() {
                   href={item.href}
                   className={`font-medium cursor-pointer transition-colors ${
                     pathname === item.href
-                      ? 'text-global-teal'
-                      : 'text-charcoal hover:text-global-teal'
+                      ? 'text-edge-purple'
+                      : 'text-charcoal hover:text-edge-purple'
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
@@ -269,14 +269,14 @@ export default function Header() {
               ))}
 
               {/* Mobile Admin Section */}
-              <div className='border-t border-gray-200 pt-4 mt-4'>
+              <div className='border-t border-[rgba(214,195,163,0.22)] pt-4 mt-4'>
                 <p className='text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3'>
                   Admin Access
                 </p>
                 <div className='flex flex-col space-y-3'>
                   <Link
                     href='/admin/login'
-                    className='flex items-center text-global-teal hover:text-edge-purple transition-colors'
+                    className='flex items-center text-global-teal hover:text-gc-gold transition-colors'
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Icon name='shield-halved' size={4} className='mr-2' />
@@ -284,7 +284,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href='/admin'
-                    className='flex items-center text-charcoal hover:text-global-teal transition-colors'
+                    className='flex items-center text-charcoal hover:text-edge-purple transition-colors'
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Icon name='chart-line' size={4} className='mr-2' />
@@ -292,7 +292,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href='/test-portal'
-                    className='flex items-center text-charcoal hover:text-global-teal transition-colors'
+                    className='flex items-center text-charcoal hover:text-edge-purple transition-colors'
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Icon name='flask' size={4} className='mr-2' />

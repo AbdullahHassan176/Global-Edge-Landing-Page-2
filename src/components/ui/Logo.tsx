@@ -38,21 +38,18 @@ export default function Logo({
           xmlns='http://www.w3.org/2000/svg'
         >
           {/* Cube faces with isometric perspective */}
-          {/* Top face - teal gradient */}
           <path
             d='M20 5 L35 15 L25 25 L10 15 Z'
             fill='url(#topGradient)'
             stroke='url(#topGradient)'
             strokeWidth='2'
           />
-          {/* Left face - teal to purple gradient */}
           <path
             d='M10 15 L25 25 L25 40 L10 30 Z'
             fill='url(#leftGradient)'
             stroke='url(#leftGradient)'
             strokeWidth='2'
           />
-          {/* Right face - purple */}
           <path
             d='M25 25 L35 15 L35 30 L25 40 Z'
             fill='url(#rightGradient)'
@@ -60,11 +57,10 @@ export default function Logo({
             strokeWidth='2'
           />
 
-          {/* Gradient definitions */}
           <defs>
             <linearGradient id='topGradient' x1='0%' y1='0%' x2='100%' y2='0%'>
-              <stop offset='0%' stopColor='#14B8A6' />
-              <stop offset='100%' stopColor='#8B5CF6' />
+              <stop offset='0%' stopColor='#6B1F2A' />
+              <stop offset='100%' stopColor='#C6A15B' />
             </linearGradient>
             <linearGradient
               id='leftGradient'
@@ -73,8 +69,8 @@ export default function Logo({
               x2='100%'
               y2='100%'
             >
-              <stop offset='0%' stopColor='#14B8A6' />
-              <stop offset='100%' stopColor='#8B5CF6' />
+              <stop offset='0%' stopColor='#6B1F2A' />
+              <stop offset='100%' stopColor='#1F6F54' />
             </linearGradient>
             <linearGradient
               id='rightGradient'
@@ -83,8 +79,8 @@ export default function Logo({
               x2='100%'
               y2='100%'
             >
-              <stop offset='0%' stopColor='#8B5CF6' />
-              <stop offset='100%' stopColor='#6D28D9' />
+              <stop offset='0%' stopColor='#1F6F54' />
+              <stop offset='100%' stopColor='#C6A15B' />
             </linearGradient>
           </defs>
         </svg>
@@ -96,15 +92,15 @@ export default function Logo({
           <span
             className={`font-poppins font-bold ${
               variant === 'white'
-                ? 'text-white'
-                : 'text-transparent bg-clip-text bg-gradient-to-r from-global-teal to-edge-purple'
+                ? 'text-gc-cream-soft'
+                : 'text-transparent bg-clip-text bg-gradient-to-r from-gc-burgundy via-gc-emerald to-gc-gold'
             } ${textSizeClasses[size]}`}
           >
             GLOBAL
           </span>
           <span
             className={`font-poppins font-bold ${
-              variant === 'white' ? 'text-white' : 'text-edge-purple'
+              variant === 'white' ? 'text-gc-gold-light' : 'text-edge-purple'
             } ${textSizeClasses[size]} -mt-1`}
           >
             EDGE

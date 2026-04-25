@@ -67,9 +67,7 @@ src/
 
 ## Environment Configuration
 
-- Development: Local development with mock data
-- Production: Full integration with external services
-- Environment variables managed through `.env` files
+- Dev: mock data; prod: integrations. Secrets in `.env`.
 
 ## Error Handling Approach
 
@@ -86,18 +84,12 @@ src/
 - Input validation and sanitization
 - CORS and security headers
 
-## Testing Requirements
-
-- Unit tests for utility functions
-- Integration tests for API endpoints
-- Component testing for critical UI elements
-- E2E testing for user flows
-
 ## Global Instructions for Code Consistency
 
 - Prefer App Router `generateMetadata()` over `next/head` in new work; keep canonicals and OG tags accurate.
 - Asset metrics: `assetIntegration` is source of truth; do not reintroduce fabricated AUM, counts, or APR fallbacks in `assetMetricsService`.
 - UX: loading states, responsive layout, WCAG-minded semantics; optimize images with `next/image`.
+- **UI**: See `UI_UX_DESIGN_SYSTEM.md` (cream / burgundy / emerald / gold). Tokens: `src/styles/design-tokens.css`, utilities in `globals.css` (`gradient-bg`, `liquid-metal-card`, `gc-metric-panel`, etc.); legacy Tailwind names map via `tailwind.config.js`.
 
 ## Public positioning (marketing copy)
 
@@ -108,4 +100,4 @@ src/
 
 ## Notes for AI Assistants
 
-- Read this file first; match existing patterns; keep diffs scoped to the task.
+- Read this file first; match existing patterns; keep diffs scoped to the task. Tests: unit/integration/E2E as appropriate for the change.

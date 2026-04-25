@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
-import HeroSection from '@/components/ui/HeroSection';
 
 /*
 Layout Rollback:
@@ -18,68 +17,64 @@ QA Summary:
 export default function InvestorsPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className='bg-gradient-to-br from-global-teal via-edge-purple to-aqua-end h-[600px] relative overflow-hidden'>
-        <div className='absolute inset-0 bg-black bg-opacity-20'></div>
-        <div className='relative max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center'>
-          <div className='max-w-6xl text-white text-balance text-left'>
-            <div className='flex items-center mb-4'>
-              <span className='text-sm font-medium bg-white bg-opacity-20 px-3 py-1 rounded-full'>
-                INVESTOR RESOURCES
-              </span>
-            </div>
-            <h1 className='text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight break-words max-w-6xl'>
-              Investor Portal
+      {/* Hero — brand gradient + topology */}
+      <section className='relative min-h-[600px] overflow-hidden gradient-bg'>
+        <div className='absolute inset-0 global-topology opacity-40 pointer-events-none' />
+        <div className='absolute bottom-0 right-0 w-96 h-96 opacity-20'>
+          <div className='w-full h-full bg-gradient-to-tl from-gc-cream-soft/30 to-transparent rounded-full' />
+        </div>
+        <div className='relative max-w-7xl mx-auto px-6 lg:px-8 min-h-[600px] flex items-center py-16 md:py-24'>
+          <div className='max-w-6xl text-gc-cream-soft text-balance text-left'>
+            <p className='text-xs font-mono font-semibold uppercase tracking-wider text-gc-gold-light mb-4'>
+              Investor resources
+            </p>
+            <h1 className='text-5xl lg:text-6xl font-poppins font-bold mb-6 leading-tight break-words max-w-6xl tracking-tight'>
+              Investor portal
             </h1>
-            <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-6xl'>
-              Access Tokenized Assets, Manage Your Portfolio
+            <h2 className='text-2xl lg:text-3xl font-poppins font-semibold mb-6 leading-tight break-words max-w-6xl text-gc-cream-soft/95'>
+              Access tokenized assets, manage your portfolio
             </h2>
-            <p className='text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
+            <p className='text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-inter font-light max-w-6xl leading-relaxed text-gc-cream-soft/95'>
               Access your investment dashboard, track portfolio performance, and
               discover new opportunities in tokenized real-world assets. Get
               started with our{' '}
               <Link
                 href='/get-started'
-                className='underline hover:text-global-teal transition-colors'
+                className='underline decoration-gc-gold/50 underline-offset-4 hover:text-gc-gold-light transition-colors'
               >
                 onboarding process
               </Link>{' '}
               and explore our{' '}
               <Link
                 href='/faq'
-                className='underline hover:text-global-teal transition-colors'
+                className='underline decoration-gc-gold/50 underline-offset-4 hover:text-gc-gold-light transition-colors'
               >
                 FAQ section
               </Link>
               .
             </p>
-            <p className='text-base sm:text-lg md:text-xl mb-6 font-inter font-light opacity-90 max-w-6xl leading-relaxed'>
-              Investing in tokenized assets across the UAE provides access to
-              premium real-world assets including shipping containers,
-              commercial real estate, and trade inventory with fractional
-              ownership opportunities. Our VARA-compliant platform ensures
-              regulatory compliance while offering competitive returns and
-              enhanced liquidity.
+            <p className='text-base sm:text-lg md:text-xl mb-6 font-inter font-light max-w-6xl leading-relaxed text-gc-cream-soft/95'>
+              We are building toward fractional exposure to trade-backed assets
+              in the UAE corridor. Our roadmap targets VARA-aligned issuance; we
+              do not claim approvals we have not received. Pilot-stage access and
+              disclosures apply until instruments are live.
             </p>
-            <div className='flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 mt-4 md:mt-6'>
+            <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6'>
               <Link
                 href='/dashboard'
-                className='bg-white text-global-teal px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-opacity-90 transition-colors flex items-center justify-center'
+                className='bg-gc-cream-soft text-edge-purple px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-gc-cream transition-colors flex items-center justify-center shadow-gc-card'
               >
                 Access Dashboard
                 <Icon name='arrow-right' className='ml-2' size={8} />
               </Link>
               <Link
                 href='/get-started'
-                className='border-2 border-white text-white px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-white hover:text-global-teal transition-colors'
+                className='border-2 border-gc-cream-soft/90 text-gc-cream-soft px-8 py-4 rounded-full font-poppins font-semibold text-lg hover:bg-gc-cream-soft/10 transition-colors text-center'
               >
                 Get Started
               </Link>
             </div>
           </div>
-        </div>
-        <div className='absolute bottom-0 right-0 w-96 h-96 opacity-10'>
-          <div className='w-full h-full bg-gradient-to-tl from-aqua-start to-transparent rounded-full'></div>
         </div>
       </section>
 

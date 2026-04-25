@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { Inter, Poppins } from 'next/font/google';
+import { Inter, JetBrains_Mono, Poppins } from 'next/font/google';
 import '@/styles/globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -14,6 +14,12 @@ const poppins = Poppins({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-poppins',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-mono',
 });
 
 // classic head handled per-page; layout has global scripts and structure
@@ -41,9 +47,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={`${inter.variable} ${poppins.variable}`}>
+    <html
+      lang='en'
+      className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable}`}
+    >
       <head></head>
-      <body className='font-inter bg-soft-white'>
+      <body className='font-inter bg-soft-white text-charcoal antialiased'>
         {/* Google Tag Manager */}
         <Script
           id='google-tag-manager'
