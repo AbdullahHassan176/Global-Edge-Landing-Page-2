@@ -68,7 +68,7 @@ src/
 ## Environment Configuration
 
 - Dev: mock data; prod: integrations. Secrets in `.env`.
-- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` plus `postbuild` → `scripts/standalone-copy.cjs` (static + `public` into `.next/standalone`). CI uses the **Next.js preset**: `output_location: ''`, `skip_app_build: false` (Oryx runs `npm run build` in the deploy action). `src/app/.swa/health.html/route.ts` implements `/.swa/health.html`; `src/middleware.ts` matcher excludes `/.swa` per Microsoft Learn. **Do not** set `NODE_ENV=production` on the SWA deploy step: Oryx runs `npm install` first, and production installs omit devDependencies (TypeScript, Tailwind, husky), which breaks `prepare` and `next build`.
+- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` plus `postbuild` → `scripts/standalone-copy.cjs` (static + `public` into `.next/standalone`). CI uses the **Next.js preset**: `output_location: ''`, `skip_app_build: false` (Oryx runs `npm run build` in the deploy action). `src/app/.swa/health.html/route.ts` implements `/.swa/health.html`; `src/middleware.ts` matcher excludes `/.swa` per Microsoft Learn. **Do not** set `NODE_ENV=production` on the SWA deploy step: Oryx runs `npm install` first, and production installs omit devDependencies (TypeScript, Tailwind, husky), which breaks `prepare` and `next build`. **Node**: SWA only accepts **18, 20, or 22** after the Oryx build; pin with `package.json` `engines.node` (e.g. `20.x`), `.node-version`, and workflow `env.NODE_VERSION: '20'` so Oryx does not pick Node 24+.
 
 ## Error Handling Approach
 

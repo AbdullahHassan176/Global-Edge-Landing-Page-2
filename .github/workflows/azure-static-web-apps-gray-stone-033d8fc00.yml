@@ -35,6 +35,9 @@ jobs:
           output_location: ''
           skip_app_build: false
           ###### End of Repository/Build Configurations ######
+        # Oryx must use a Node major Azure SWA supports (18, 20, 22) — not 24+.
+        env:
+          NODE_VERSION: '20'
         # Do not set NODE_ENV=production here: Oryx runs `npm install` first; production
         # install omits devDependencies (TypeScript, Tailwind, husky) and breaks prepare/build.
 
