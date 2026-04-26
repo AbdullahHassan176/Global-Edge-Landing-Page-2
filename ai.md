@@ -68,7 +68,7 @@ src/
 ## Environment Configuration
 
 - Dev: mock data; prod: integrations. Secrets in `.env`.
-- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` in `next.config.js`; `postbuild` runs `scripts/standalone-copy.cjs` so `.next/static` and `public/` land under `.next/standalone`. GitHub workflow uploads `output_location: .next/standalone` with `skip_app_build: true` after `npm run build`.
+- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` plus `postbuild` → `scripts/standalone-copy.cjs` (static + `public` into `.next/standalone`). CI uses the **Next.js preset**: `output_location: ''`, `skip_app_build: false` (Oryx runs `npm run build` in the deploy action). `src/app/.swa/health.html/route.ts` implements `/.swa/health.html`; `src/middleware.ts` matcher excludes `/.swa` per Microsoft Learn.
 
 ## Error Handling Approach
 

@@ -3,12 +3,16 @@ const nextConfig = {
   /* Azure Static Web Apps hybrid Next.js: deploy `.next/standalone` (see scripts/standalone-copy.cjs) */
   output: 'standalone',
   async rewrites() {
-    return [
-      {
-        source: '/api/assets',
-        destination: '/api/marketplace-assets',
-      },
-    ];
+    return {
+      beforeFiles: [],
+      afterFiles: [
+        {
+          source: '/api/assets',
+          destination: '/api/marketplace-assets',
+        },
+      ],
+      fallback: [],
+    };
   },
   env: {
     NEXT_PUBLIC_API_BASE: process.env.NEXT_PUBLIC_API_BASE || 'mock',
