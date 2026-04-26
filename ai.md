@@ -68,6 +68,7 @@ src/
 ## Environment Configuration
 
 - Dev: mock data; prod: integrations. Secrets in `.env`.
+- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` in `next.config.js`; `postbuild` runs `scripts/standalone-copy.cjs` so `.next/static` and `public/` land under `.next/standalone`. GitHub workflow uploads `output_location: .next/standalone` with `skip_app_build: true` after `npm run build`.
 
 ## Error Handling Approach
 

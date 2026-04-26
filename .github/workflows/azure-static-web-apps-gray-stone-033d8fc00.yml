@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
@@ -46,8 +46,9 @@ jobs:
           ###### Repository/Build Configurations ######
           app_location: '/' # App source code path
           api_location: '' # API source code path - empty for Azure Static Web Apps compatibility
-          output_location: '.next' # Built app content directory
-          skip_app_build: true # Skip app build since we already built it
+          # Hybrid Next.js: upload standalone server + static (see next.config output + postbuild copy)
+          output_location: '.next/standalone'
+          skip_app_build: true # Skip Oryx build; CI runs npm run build first
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

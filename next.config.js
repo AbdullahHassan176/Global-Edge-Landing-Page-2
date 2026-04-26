@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /* Azure Static Web Apps hybrid Next.js: deploy `.next/standalone` (see scripts/standalone-copy.cjs) */
+  output: 'standalone',
   async rewrites() {
     return [
       {
