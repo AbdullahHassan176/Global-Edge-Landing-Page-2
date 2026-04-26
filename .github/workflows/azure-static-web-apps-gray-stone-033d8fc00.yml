@@ -35,8 +35,8 @@ jobs:
           output_location: ''
           skip_app_build: false
           ###### End of Repository/Build Configurations ######
-        env:
-          NODE_ENV: production
+        # Do not set NODE_ENV=production here: Oryx runs `npm install` first; production
+        # install omits devDependencies (TypeScript, Tailwind, husky) and breaks prepare/build.
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

@@ -68,7 +68,7 @@ src/
 ## Environment Configuration
 
 - Dev: mock data; prod: integrations. Secrets in `.env`.
-- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` plus `postbuild` → `scripts/standalone-copy.cjs` (static + `public` into `.next/standalone`). CI uses the **Next.js preset**: `output_location: ''`, `skip_app_build: false` (Oryx runs `npm run build` in the deploy action). `src/app/.swa/health.html/route.ts` implements `/.swa/health.html`; `src/middleware.ts` matcher excludes `/.swa` per Microsoft Learn.
+- **Azure Static Web Apps (hybrid Next.js)**: `output: 'standalone'` plus `postbuild` → `scripts/standalone-copy.cjs` (static + `public` into `.next/standalone`). CI uses the **Next.js preset**: `output_location: ''`, `skip_app_build: false` (Oryx runs `npm run build` in the deploy action). `src/app/.swa/health.html/route.ts` implements `/.swa/health.html`; `src/middleware.ts` matcher excludes `/.swa` per Microsoft Learn. **Do not** set `NODE_ENV=production` on the SWA deploy step: Oryx runs `npm install` first, and production installs omit devDependencies (TypeScript, Tailwind, husky), which breaks `prepare` and `next build`.
 
 ## Error Handling Approach
 
