@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
+import { absoluteUrl } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseMeta = await generateDynamicMetadata({ path: '/insights' });
@@ -14,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'tokenization insights, RWA research, blockchain analysis, real-world assets, market trends, tokenization news, investment research, blockchain technology, asset tokenization, market analysis',
     robots: { index: true, follow: true },
     alternates: {
-      canonical: 'https://theglobaledge.io/insights',
+      canonical: absoluteUrl('/insights'),
     },
     openGraph: {
       ...baseMeta.openGraph,
@@ -22,11 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
         'Insights & Research | Tokenization Market Analysis | The Global Edge',
       description:
         'Stay informed with the latest trends, analysis, and opportunities in tokenized real-world assets. Expert insights on blockchain technology and RWA tokenization.',
-      url: 'https://theglobaledge.io/insights',
+      url: absoluteUrl('/insights'),
       type: 'website',
       images: [
         {
-          url: 'https://theglobaledge.io/og-insights.jpg',
+          url: absoluteUrl('/og-insights.jpg'),
           width: 1200,
           height: 630,
           alt: 'Insights & Research | Tokenization Market Analysis | The Global Edge',
@@ -39,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
         'Insights & Research | Tokenization Market Analysis | The Global Edge',
       description:
         'Stay informed with the latest trends, analysis, and opportunities in tokenized real-world assets. Expert insights on blockchain technology and RWA tokenization.',
-      images: ['https://theglobaledge.io/og-insights.jpg'],
+      images: [absoluteUrl('/og-insights.jpg')],
     },
   };
 }
@@ -55,7 +56,7 @@ export default function InsightsSectionLayout({
     name: 'Insights & Research - Tokenization Market Analysis',
     description:
       'Stay informed with the latest trends, analysis, and opportunities in tokenized real-world assets. Expert insights on blockchain technology and RWA tokenization',
-    url: 'https://theglobaledge.io/insights',
+    url: absoluteUrl('/insights'),
     mainEntity: {
       '@type': 'Article',
       headline: 'Tokenization Market Analysis and Research',
@@ -68,7 +69,7 @@ export default function InsightsSectionLayout({
       publisher: {
         '@type': 'Organization',
         name: 'The Global Edge',
-        url: 'https://theglobaledge.io',
+        url: absoluteUrl('/'),
       },
       datePublished: '2024-01-01',
       dateModified: '2024-01-01',
@@ -81,13 +82,13 @@ export default function InsightsSectionLayout({
           '@type': 'ListItem',
           position: 1,
           name: 'Home',
-          item: 'https://theglobaledge.io',
+          item: absoluteUrl('/'),
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Insights & Research',
-          item: 'https://theglobaledge.io/insights',
+          item: absoluteUrl('/insights'),
         },
       ],
     },

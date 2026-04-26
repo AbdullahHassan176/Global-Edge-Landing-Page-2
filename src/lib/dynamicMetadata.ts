@@ -1,28 +1,32 @@
 import type { Metadata } from 'next';
+import { getSiteOrigin } from '@/lib/site';
 
-const SITE = {
-  name: 'The Global Edge',
-  url: 'https://theglobaledge.io',
-  description:
-    'Tokenizing logistics and real-world assets to unlock global opportunities.',
-  ogImage: '/og-image.jpg',
-};
+function siteMeta() {
+  return {
+    name: 'The Global Edge',
+    url: getSiteOrigin(),
+    description:
+      'Early-stage issuer platform for Africa–UAE FMCG trade: on-chain provenance, pilot issuance, VARA-aligned distribution target in the UAE.',
+    ogImage: '/og-image.jpg',
+  };
+}
 
 const globalKeywords = [
   'real-world asset tokenization',
   'RWA tokens',
   'blockchain',
   'logistics assets',
-  'investment platform',
-  'UAE VARA compliance',
+  'UAE digital assets',
+  'VARA-aligned issuance',
+  'Africa UAE trade corridor',
 ];
 
 // 🟢 Homepage — broad, authority-building keywords
 const homeKeywords = [
   'The Global Edge',
   'asset tokenization UAE',
-  'VARA platform',
-  'VARA licensed blockchain platform',
+  'VARA-aligned issuance',
+  'trade finance tokenization Dubai',
   'rwa',
   'onchain',
   'tokenization of assets',
@@ -179,6 +183,16 @@ const keywordMap: Record<string, string[]> = {
   '/cookies': cookieKeywords,
   '/privacy': privacyKeywords,
   '/terms': termsKeywords,
+  '/how-it-works': homeKeywords,
+  '/security': statusKeywords,
+  '/partners': globalKeywords,
+  '/get-started': investorKeywords,
+  '/faq': insightsKeywords,
+  '/pricing': assetsKeywords,
+  '/register': investorKeywords,
+  '/partner-application': issuerKeywords,
+  '/risk-disclosures': termsKeywords,
+  '/guide': insightsKeywords,
 };
 
 function isPrivatePath(path: string): boolean {
@@ -210,6 +224,7 @@ export async function generateDynamicMetadata({
   defaultTitle?: string;
   defaultDescription?: string;
 }): Promise<Metadata> {
+  const SITE = siteMeta();
   const resolvedRobots =
     robots || (isPrivatePath(path) ? 'noindex, nofollow' : 'index, follow');
   const humanize = (p: string) => {
@@ -224,13 +239,15 @@ export async function generateDynamicMetadata({
     title || defaultTitle || `${humanize(path)} | ${SITE.name}`;
   const pageTitle = computedTitle;
   const pageDescription = description || defaultDescription || SITE.description;
-  const fullUrl = `${SITE.url}${path}`;
+  const pathNorm = path.startsWith('/') ? path : `/${path}`;
+  const fullUrl = `${SITE.url}${pathNorm === '/' ? '' : pathNorm}`;
   const ogImage = image || SITE.ogImage;
-  const keywords = keywordMap[path] || globalKeywords;
+  const keywords = keywordMap[pathNorm] || keywordMap[path] || globalKeywords;
 
   return {
     title: pageTitle,
     description: pageDescription,
+    applicationName: SITE.name,
     robots:
       resolvedRobots === 'noindex, nofollow'
         ? { index: false, follow: false }
@@ -238,6 +255,8 @@ export async function generateDynamicMetadata({
     keywords: keywords.join(', '),
     alternates: { canonical: fullUrl },
     openGraph: {
+      siteName: SITE.name,
+      locale: 'en_AE',
       title: pageTitle,
       description: pageDescription,
       url: fullUrl,
@@ -251,5 +270,6 @@ export async function generateDynamicMetadata({
       images: [ogImage],
     },
     metadataBase: new URL(SITE.url),
+    category: 'finance',
   };
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
+import { absoluteUrl } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseMeta = await generateDynamicMetadata({ path: '/login' });
@@ -13,18 +14,18 @@ export async function generateMetadata(): Promise<Metadata> {
       'login, secure access, Global Edge platform, tokenized asset dashboard, investor tools, portfolio insights, user authentication',
     robots: { index: false, follow: false },
     alternates: {
-      canonical: 'https://theglobaledge.io/login',
+      canonical: absoluteUrl('/login'),
     },
     openGraph: {
       ...baseMeta.openGraph,
       title: 'Login | Secure Access to The Global Edge Platform',
       description:
         'Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights.',
-      url: 'https://theglobaledge.io/login',
+      url: absoluteUrl('/login'),
       type: 'website',
       images: [
         {
-          url: 'https://theglobaledge.io/og-login.jpg',
+          url: absoluteUrl('/og-login.jpg'),
           width: 1200,
           height: 630,
           alt: 'Login | Secure Access to The Global Edge Platform',
@@ -36,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'Login | Secure Access to The Global Edge Platform',
       description:
         'Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights.',
-      images: ['https://theglobaledge.io/og-login.jpg'],
+      images: [absoluteUrl('/og-login.jpg')],
     },
   };
 }
@@ -52,7 +53,7 @@ export default function LoginLayout({
     name: 'Login - Secure Access to The Global Edge Platform',
     description:
       'Sign in to your Global Edge account to access tokenized asset dashboards, investor tools, and portfolio insights',
-    url: 'https://theglobaledge.io/login',
+    url: absoluteUrl('/login'),
     mainEntity: {
       '@type': 'Article',
       headline: 'Login to The Global Edge',
@@ -64,7 +65,7 @@ export default function LoginLayout({
       publisher: {
         '@type': 'Organization',
         name: 'The Global Edge',
-        url: 'https://theglobaledge.io',
+        url: absoluteUrl('/'),
       },
       datePublished: '2024-12-20',
       dateModified: '2024-12-20',
@@ -77,13 +78,13 @@ export default function LoginLayout({
           '@type': 'ListItem',
           position: 1,
           name: 'Home',
-          item: 'https://theglobaledge.io',
+          item: absoluteUrl('/'),
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Login',
-          item: 'https://theglobaledge.io/login',
+          item: absoluteUrl('/login'),
         },
       ],
     },

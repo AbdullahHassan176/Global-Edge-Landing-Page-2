@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
+import { absoluteUrl } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseMeta = await generateDynamicMetadata({ path: '/investors' });
@@ -7,39 +8,39 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     ...baseMeta,
     title:
-      'Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge',
+      'Investors | Africa–UAE trade RWA pilots | The Global Edge',
     description:
-      'Join The Global Edge as an investor. Access tokenized logistics and real estate assets, view documentation, and earn from fractionalized ownership.',
+      'Connect with the team if you evaluate early-stage trade-backed issuance in the Gulf. Pilots in progress—no marketed live tokenized AUM until offerings and disclosures are published.',
     keywords:
-      'investor portal UAE, tokenized asset investment, logistics investment, real estate investment, fractional ownership, blockchain investment, RWA investment',
+      'investor relations UAE, RWA pilots Dubai, trade tokenization, VARA-aligned issuance, Africa UAE corridor, institutional diligence',
     robots: { index: true, follow: true },
     alternates: {
-      canonical: 'https://theglobaledge.io/investors',
+      canonical: absoluteUrl('/investors'),
     },
     openGraph: {
       ...baseMeta.openGraph,
       title:
-        'Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge',
+        'Investors | Africa–UAE trade RWA pilots | The Global Edge',
       description:
-        'Join The Global Edge as an investor. Access tokenized logistics and real estate assets, view documentation, and earn from fractionalized ownership.',
-      url: 'https://theglobaledge.io/investors',
+        'Connect with the team if you evaluate early-stage trade-backed issuance in the Gulf. Pilots in progress—listings follow issued instruments.',
+      url: absoluteUrl('/investors'),
       type: 'website',
       images: [
         {
-          url: 'https://theglobaledge.io/og-investors.jpg',
+          url: absoluteUrl('/og-investors.jpg'),
           width: 1200,
           height: 630,
-          alt: 'Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge',
+          alt: 'Investors | The Global Edge',
         },
       ],
     },
     twitter: {
       ...baseMeta.twitter,
       title:
-        'Investor Access | Secure Tokenized Asset Investment UAE | The Global Edge',
+        'Investors | Africa–UAE trade RWA pilots | The Global Edge',
       description:
-        'Join The Global Edge as an investor. Access tokenized logistics and real estate assets, view documentation, and earn from fractionalized ownership.',
-      images: ['https://theglobaledge.io/og-investors.jpg'],
+        'Connect with the team if you evaluate early-stage trade-backed issuance in the Gulf. Pilots in progress—listings follow issued instruments.',
+      images: [absoluteUrl('/og-investors.jpg')],
     },
   };
 }
@@ -52,48 +53,19 @@ export default function InvestorsLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'Investor Access Portal',
+    name: 'Investor relations — The Global Edge',
     description:
-      'Secure tokenized asset investment platform for accessing logistics and real estate assets with fractionalized ownership',
-    url: 'https://theglobaledge.io/investors',
+      'Information and contact path for qualified parties evaluating Africa–UAE trade-backed issuance pilots; participation is subject to offering documents where applicable.',
+    url: absoluteUrl('/investors'),
     provider: {
       '@type': 'Organization',
       name: 'The Global Edge',
-      url: 'https://theglobaledge.io',
+      url: absoluteUrl('/'),
     },
-    serviceType: 'Financial Services',
+    serviceType: 'Investor relations',
     areaServed: {
       '@type': 'Country',
       name: 'United Arab Emirates',
-    },
-    offers: {
-      '@type': 'Offer',
-      name: 'Tokenized Asset Investment',
-      description:
-        'Access to tokenized logistics and real estate assets with fractionalized ownership',
-      category: 'Investment Services',
-    },
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Investment Opportunities',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Logistics Asset Investment',
-            description: 'Tokenized shipping containers and logistics assets',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Real Estate Investment',
-            description: 'Tokenized commercial and residential properties',
-          },
-        },
-      ],
     },
   };
 

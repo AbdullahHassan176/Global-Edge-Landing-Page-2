@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
+import { absoluteUrl } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseMeta = await generateDynamicMetadata({ path: '/get-started' });
@@ -13,18 +14,18 @@ export async function generateMetadata(): Promise<Metadata> {
       'get started, join platform, investor registration, issuer registration, tokenized assets, digital asset ecosystem, platform onboarding, investment registration',
     robots: { index: true, follow: true },
     alternates: {
-      canonical: 'https://theglobaledge.io/get-started',
+      canonical: absoluteUrl('/get-started'),
     },
     openGraph: {
       ...baseMeta.openGraph,
       title: 'Get Started | Join The Global Edge Platform',
       description:
         'Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today.',
-      url: 'https://theglobaledge.io/get-started',
+      url: absoluteUrl('/get-started'),
       type: 'website',
       images: [
         {
-          url: 'https://theglobaledge.io/og-get-started.jpg',
+          url: absoluteUrl('/og-get-started.jpg'),
           width: 1200,
           height: 630,
           alt: 'Get Started | Join The Global Edge Platform',
@@ -36,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'Get Started | Join The Global Edge Platform',
       description:
         'Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today.',
-      images: ['https://theglobaledge.io/og-get-started.jpg'],
+      images: [absoluteUrl('/og-get-started.jpg')],
     },
   };
 }
@@ -52,7 +53,7 @@ export default function GetStartedLayout({
     name: 'Get Started - Join The Global Edge Platform',
     description:
       'Register as an investor or issuer on The Global Edge. Start accessing tokenized assets and participate in the digital asset ecosystem today.',
-    url: 'https://theglobaledge.io/get-started',
+    url: absoluteUrl('/get-started'),
     mainEntity: {
       '@type': 'Service',
       name: 'Platform Registration',
@@ -61,7 +62,7 @@ export default function GetStartedLayout({
       provider: {
         '@type': 'Organization',
         name: 'The Global Edge',
-        url: 'https://theglobaledge.io',
+        url: absoluteUrl('/'),
       },
       offers: [
         {
@@ -83,13 +84,13 @@ export default function GetStartedLayout({
           '@type': 'ListItem',
           position: 1,
           name: 'Home',
-          item: 'https://theglobaledge.io',
+          item: absoluteUrl('/'),
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Get Started',
-          item: 'https://theglobaledge.io/get-started',
+          item: absoluteUrl('/get-started'),
         },
       ],
     },

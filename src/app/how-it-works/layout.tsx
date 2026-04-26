@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
+import { absoluteUrl } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseMeta = await generateDynamicMetadata({ path: '/how-it-works' });
@@ -13,18 +14,18 @@ export async function generateMetadata(): Promise<Metadata> {
       'RWA tokenization UAE, trade finance tokenization, VARA-aligned issuance, Africa UAE corridor, FMCG inventory tokens, blockchain asset onboarding',
     robots: { index: true, follow: true },
     alternates: {
-      canonical: 'https://theglobaledge.io/how-it-works',
+      canonical: absoluteUrl('/how-it-works'),
     },
     openGraph: {
       ...baseMeta.openGraph,
       title: 'How Tokenization Works | The Global Edge UAE',
       description:
         'Intended issuance workflow for Africa–UAE trade-backed assets: verification, documentation, optional data feeds, contracts, and listing—designed for VARA-aligned distribution in the UAE (pilot in progress).',
-      url: 'https://theglobaledge.io/how-it-works',
+      url: absoluteUrl('/how-it-works'),
       type: 'website',
       images: [
         {
-          url: 'https://theglobaledge.io/og-how-it-works.jpg',
+          url: absoluteUrl('/og-how-it-works.jpg'),
           width: 1200,
           height: 630,
           alt: 'How Tokenization Works | The Global Edge UAE',
@@ -36,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'How Tokenization Works | The Global Edge UAE',
       description:
         'Intended issuance workflow for Africa–UAE trade-backed assets: verification, documentation, optional data feeds, contracts, and listing—designed for VARA-aligned distribution in the UAE (pilot in progress).',
-      images: ['https://theglobaledge.io/og-how-it-works.jpg'],
+      images: [absoluteUrl('/og-how-it-works.jpg')],
     },
   };
 }
@@ -52,7 +53,7 @@ export default function HowItWorksLayout({
     name: 'How Global Edge intends to tokenize real-world trade assets',
     description:
       'Target path from verification through controlled listing; VARA-aligned issuance is a design goal—not a claim that every step is live for all products today.',
-    url: 'https://theglobaledge.io/how-it-works',
+    url: absoluteUrl('/how-it-works'),
     totalTime: 'P60D',
     supply: [
       {

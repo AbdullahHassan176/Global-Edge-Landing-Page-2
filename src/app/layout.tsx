@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { generateDynamicMetadata } from '@/lib/dynamicMetadata';
+import { absoluteUrl, getSiteOrigin } from '@/lib/site';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,14 +33,45 @@ export const viewport = {
 export async function generateMetadata() {
   return generateDynamicMetadata({
     path: '/',
-    title: 'The Global Edge',
+    title: 'The Global Edge | Africa–UAE trade tokenization (pilot)',
     description:
-      'Empowering global trade through tokenization. Manage, track, and invest in logistics assets securely and transparently.',
-    defaultTitle: 'The Global Edge',
+      'Pilot-stage platform for trade-backed RWA: South Africa → UAE FMCG lane, on-chain provenance, and a VARA-aligned issuance target—without claiming live tokenized AUM.',
+    defaultTitle: 'The Global Edge | Africa–UAE trade tokenization (pilot)',
     defaultDescription:
-      'Empowering global trade through tokenization. Manage, track, and invest in logistics assets securely and transparently.',
+      'Pilot-stage platform for trade-backed RWA: South Africa → UAE FMCG lane, on-chain provenance, and a VARA-aligned issuance target—without claiming live tokenized AUM.',
   });
 }
+
+const rootJsonLd = () => {
+  const origin = getSiteOrigin();
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${origin}/#organization`,
+        name: 'The Global Edge',
+        url: origin,
+        logo: absoluteUrl('/favicon.svg'),
+        description:
+          'Early-stage issuer infrastructure for Africa–UAE trade-backed real-world assets; VARA-aligned distribution is a design target.',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'AE',
+          addressRegion: 'Dubai',
+        },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${origin}/#website`,
+        url: origin,
+        name: 'The Global Edge',
+        inLanguage: 'en-AE',
+        publisher: { '@id': `${origin}/#organization` },
+      },
+    ],
+  };
+};
 
 export default function RootLayout({
   children,
@@ -51,8 +83,16 @@ export default function RootLayout({
       lang='en'
       className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable}`}
     >
-      <head></head>
+      <head>
+        <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
+      </head>
       <body className='font-inter bg-soft-white text-charcoal antialiased'>
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(rootJsonLd()),
+          }}
+        />
         {/* Google Tag Manager */}
         <Script
           id='google-tag-manager'
