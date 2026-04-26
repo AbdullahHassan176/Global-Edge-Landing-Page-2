@@ -215,6 +215,35 @@ const MOCK_USERS: User[] = [
   },
 ];
 
+/** Default seed passwords when `user_passwords` is not in localStorage */
+export const USER_DEMO_PASSWORD_DEFAULTS: Record<string, string> = {
+  'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
+  'investor@theglobaledge.io': 'DemoInvestor123!',
+  'issuer@theglobaledge.io': 'DemoIssuer123!',
+};
+
+/**
+ * Show quick demo login on `/login`.
+ * Enabled in local dev, or in any build when `NEXT_PUBLIC_ENABLE_DEMO_LOGIN=true`.
+ */
+export function isDemoLoginUiEnabled(): boolean {
+  return (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_ENABLE_DEMO_LOGIN === 'true'
+  );
+}
+
+export const DEMO_QUICK_LOGIN = {
+  investor: {
+    email: 'investor@theglobaledge.io',
+    password: USER_DEMO_PASSWORD_DEFAULTS['investor@theglobaledge.io'],
+  },
+  issuer: {
+    email: 'issuer@theglobaledge.io',
+    password: USER_DEMO_PASSWORD_DEFAULTS['issuer@theglobaledge.io'],
+  },
+} as const;
+
 const MOCK_INVESTMENTS: Investment[] = [
   {
     id: 'inv-1',
@@ -452,11 +481,7 @@ The Global Edge Team
       const storedPasswords = localStorage.getItem('user_passwords');
       const validPasswords: Record<string, string> = storedPasswords
         ? JSON.parse(storedPasswords)
-        : {
-            'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
-            'investor@theglobaledge.io': 'DemoInvestor123!',
-            'issuer@theglobaledge.io': 'DemoIssuer123!',
-          };
+        : { ...USER_DEMO_PASSWORD_DEFAULTS };
 
       // Update the password for this user
       validPasswords[user.email] = newPassword;
@@ -504,11 +529,7 @@ The Global Edge Team
       const storedPasswords = localStorage.getItem('user_passwords');
       const validPasswords: Record<string, string> = storedPasswords
         ? JSON.parse(storedPasswords)
-        : {
-            'abdullah.hassan@globalnext.rocks': 'DemoAdmin123!',
-            'investor@theglobaledge.io': 'DemoInvestor123!',
-            'issuer@theglobaledge.io': 'DemoIssuer123!',
-          };
+        : { ...USER_DEMO_PASSWORD_DEFAULTS };
 
       // For newly registered users, use a default password or check if they have a stored password
       const expectedPassword =

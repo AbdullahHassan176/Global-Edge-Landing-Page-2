@@ -1,9 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Logo from '../ui/Logo';
 import Icon from '../ui/Icon';
 import { configService } from '@/lib/configService';
+
+function profileUrlFromTwitterField(value: string): string {
+  const v = value.trim();
+  if (!v) return 'https://x.com';
+  if (/^https?:\/\//i.test(v)) return v;
+  return `https://x.com/${v.replace(/^@/, '')}`;
+}
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -12,6 +20,10 @@ export default function Footer() {
   // Get configuration
   const siteConfig = configService.getSiteConfig();
   const businessConfig = configService.getBusinessConfig();
+  const contact = configService.getContactConfig();
+  const statusTwitterHref = profileUrlFromTwitterField(
+    contact.technical.twitter
+  );
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,23 +51,28 @@ export default function Footer() {
             </p>
             <div className='flex space-x-4'>
               <a
-                href='#'
+                href={statusTwitterHref}
+                target='_blank'
+                rel='noopener noreferrer'
                 className='text-gc-text-subtle hover:text-gc-gold transition-colors'
+                aria-label='Status updates on X'
               >
                 <Icon name='twitter' className='text-lg' size={12} />
               </a>
-              <a
-                href='#'
+              <Link
+                href='/investors'
                 className='text-gc-text-subtle hover:text-gc-gold transition-colors'
+                aria-label='Investors'
               >
                 <Icon name='linkedin' className='text-lg' size={12} />
-              </a>
-              <a
-                href='#'
+              </Link>
+              <Link
+                href='/status'
                 className='text-gc-text-subtle hover:text-gc-gold transition-colors'
+                aria-label='Platform status'
               >
                 <Icon name='github' className='text-lg' size={12} />
-              </a>
+              </Link>
             </div>
           </div>
 

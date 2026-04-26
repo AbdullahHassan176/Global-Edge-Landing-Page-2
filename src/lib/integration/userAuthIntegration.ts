@@ -36,6 +36,7 @@ export class UserAuthIntegration {
         return {
           success: false,
           error: mockResult.error,
+          user: mockResult.user,
         };
       }
 

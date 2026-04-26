@@ -11,7 +11,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { oauthService } from '@/lib/oauthService';
-import { userAuthService } from '@/lib/userAuthService';
+import {
+  DEMO_QUICK_LOGIN,
+  isDemoLoginUiEnabled,
+} from '@/lib/userAuthService';
 import { userAuthIntegration } from '@/lib/integration/userAuthIntegration';
 import { loginStorageService } from '@/lib/loginStorageService';
 
@@ -41,36 +44,33 @@ export default function LoginPage() {
     }
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const runLogin = async (loginEmail: string, loginPassword: string) => {
     setIsLoading(true);
     setError('');
 
     try {
-      // Use integration service with database fallback
-      const result = await userAuthIntegration.login(email, password);
+      const result = await userAuthIntegration.login(
+        loginEmail,
+        loginPassword
+      );
 
       if (result.success && result.user) {
-        // Save credentials if remember me is checked
         if (rememberMe) {
           loginStorageService.saveCredentials({
-            email: email,
+            email: loginEmail,
             rememberMe: true,
             loginType: 'user',
           });
         } else {
-          // Clear saved credentials if remember me is unchecked
           loginStorageService.clearSavedCredentials();
         }
 
-        // Redirect to appropriate dashboard based on user role
         if (result.user.role === 'issuer') {
           router.push('/issuer/dashboard');
         } else {
           router.push('/investor/dashboard');
         }
       } else {
-        // Handle different error types
         if (result.user?.status === 'pending') {
           setError('Your account is pending approval.');
         } else if (result.user?.status === 'suspended') {
@@ -85,6 +85,18 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await runLogin(email, password);
+  };
+
+  const handleDemoLogin = async (role: keyof typeof DEMO_QUICK_LOGIN) => {
+    const { email: demoEmail, password: demoPassword } = DEMO_QUICK_LOGIN[role];
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    await runLogin(demoEmail, demoPassword);
   };
 
   const handleGitHubLogin = async () => {
@@ -281,6 +293,39 @@ export default function LoginPage() {
                   </Link>
                 </div>
               </div>
+
+              {isDemoLoginUiEnabled() && (
+                <div className='rounded-xl border border-dashed border-gray-300 bg-gray-50/90 p-4 space-y-3'>
+                  <p className='text-xs font-semibold text-gray-600 uppercase tracking-wide'>
+                    Demo login
+                  </p>
+                  <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+                    <button
+                      type='button'
+                      onClick={() => void handleDemoLogin('investor')}
+                      disabled={isLoading || oauthLoading !== null}
+                      className='inline-flex justify-center items-center py-2.5 px-3 rounded-lg text-sm font-semibold text-edge-purple bg-white border border-gray-200 hover:border-global-teal hover:bg-global-teal/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
+                    >
+                      <Icon name='user' className='h-4 w-4 mr-2 shrink-0' />
+                      Investor demo
+                    </button>
+                    <button
+                      type='button'
+                      onClick={() => void handleDemoLogin('issuer')}
+                      disabled={isLoading || oauthLoading !== null}
+                      className='inline-flex justify-center items-center py-2.5 px-3 rounded-lg text-sm font-semibold text-edge-purple bg-white border border-gray-200 hover:border-global-teal hover:bg-global-teal/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
+                    >
+                      <Icon name='building' className='h-4 w-4 mr-2 shrink-0' />
+                      Issuer demo
+                    </button>
+                  </div>
+                  <p className='text-[11px] text-gray-500 leading-snug'>
+                    Pre-seeded accounts. In production builds, set{' '}
+                    <span className='font-mono'>NEXT_PUBLIC_ENABLE_DEMO_LOGIN=true</span>{' '}
+                    to show this block.
+                  </p>
+                </div>
+              )}
 
               {/* Error Message */}
               {error && (
